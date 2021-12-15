@@ -1,0 +1,4 @@
+[submodule "django_project/fish"]
+	path = django_project/dj-beneficiary
+	url = https://github.com/Digital-Prophets/dj-beneficiary.git
+    branch = main

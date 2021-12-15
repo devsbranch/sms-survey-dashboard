@@ -1,0 +1,318 @@
+body,
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: 'Alegreya', 'Helvetica Neue', Arial, sans-serif;
+}
+
+hr {
+  max-width: 50px;
+  border-width: 3px;
+  border-color: #18A090;
+}
+
+hr.light {
+  border-color: #fff;
+}
+
+a {
+  color: #18A090;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+a:hover {
+  color: #18A090;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Roboto Condensed', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.btn {
+    font-size: 12pt;
+    text-transform: none;
+    border-radius: 5px;
+}
+
+.btn-xl {
+  padding: 1rem 2rem;
+}
+
+.btn-primary {
+  background-color: #18A090;
+  border-color: #18A090;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  color: #fff;
+  background-color: #678155 !important;
+}
+
+.btn-primary:active, .btn-primary:focus {
+  box-shadow: 0 0 0 0.2rem rgba(240, 95, 64, 0.5) !important;
+}
+
+#mainNav {
+  border-bottom: 1px solid rgba(33, 37, 41, 0.1);
+  background-color: transparent;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-transition: all 0.2s;
+  -moz-transition: all 0.2s;
+  transition: all 0.2s;
+  padding-top: 15px;
+  pointer-events: auto;
+}
+
+.modal {
+  overflow: auto;
+}
+
+#mainNav .navbar-brand {
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #F05F40;
+  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+}
+
+#mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+  color: #f05f40;
+}
+
+#mainNav .navbar-nav > li.nav-item > a.nav-link,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
+  font-size: .9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #212529;
+}
+
+#mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+  color: #F05F40;
+}
+
+#mainNav .navbar-nav > li.nav-item > a.nav-link.active,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus.active {
+  color: #F05F40 !important;
+  background-color: transparent;
+}
+
+#mainNav .navbar-nav > li.nav-item > a.nav-link.active:hover,
+#mainNav .navbar-nav > li.nav-item > a.nav-link:focus.active:hover {
+  background-color: transparent;
+}
+
+@media (min-width: 992px) {
+  #mainNav {
+    border-color: transparent;
+  }
+  #mainNav .navbar-brand {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  #mainNav .navbar-brand:focus, #mainNav .navbar-brand:hover {
+    color: #fff;
+  }
+  #mainNav .navbar-nav > li.nav-item > a.nav-link {
+    padding: 0.5rem 1rem;
+  }
+  #mainNav .navbar-nav > li.nav-item > a.nav-link,
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus {
+    color: rgba(255, 255, 255, 0.7);
+  }
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:hover,
+  #mainNav .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+    color: #fff;
+  }
+  #mainNav.navbar-shrink {
+    border-bottom: 1px solid rgba(33, 37, 41, 0.1);
+    background-color: #fff;
+  }
+  #mainNav.navbar-shrink .navbar-brand {
+    color: #F05F40;
+  }
+  #mainNav.navbar-shrink .navbar-brand:focus, #mainNav.navbar-shrink .navbar-brand:hover {
+    color: #f05f40;
+  }
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link,
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus {
+    color: #212529;
+  }
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:hover,
+  #mainNav.navbar-shrink .navbar-nav > li.nav-item > a.nav-link:focus:hover {
+    color: #F05F40;
+  }
+}
+
+.navbar-shrink {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.navbar-shrink .user-icon {
+  color: #526B43 !important;
+  border-color: #526B43 !important;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                   supported by Chrome and Opera */
+}
+
+.fbis-button {
+    background-color: #18A090;
+    border-radius: 3px;
+    margin: 0.25rem;
+    font-weight: normal;
+    color: white;
+}
+
+.fbis-button:hover {
+  background-color: #6BC0B5;
+  color: white;
+}
+
+.fbis-button:active {
+  background-color: #17766B;
+  box-shadow: inset 1px 1px 6px rgba(0,0,0, 0.2);
+  color: white;
+}
+
+.fbis-button-small {
+    background-color: #18A090;
+    border-radius: 2.5px;
+    padding: 0.4rem;
+    font-weight: normal;
+    color: white;
+    border-color: white;
+    border-style: solid;
+    height: 100%;
+    border-width: 1px;
+    text-align: center;
+    border-right: 0;
+    border-bottom: 0;
+}
+
+.fbis-button-small:hover {
+    background-color: #6BC0B5;
+    color: white;
+    cursor: pointer;
+}
+
+.fbis-button-small:active {
+    background-color: #17766B;
+    box-shadow: inset 1px 1px 6px rgba(0,0,0, 0.2);
+    color: white;
+}
+
+.fbis-button-small.disabled {
+    background-color: #a0a0a0 !important;
+}
+
+.fbis-button-small.disabled:active {
+    background-color: #a0a0a0 !important;
+    box-shadow: inset 0 0 0 rgba(0,0,0, 0) !important;
+}
+
+.fbis-button-small.disabled:hover {
+    background-color: #a0a0a0 !important;
+    cursor: default;
+}
+
+.fbis-button-small span {
+    align-items: center;
+    height: 100%;
+    display: inline-flex;
+}
+
+.fbis-center-text {
+    align-items: center;
+    height: 100%;
+    display: inline-flex;
+}
+
+.fbis-red {
+    background-color: #8d2641 !important;
+}
+
+.fbis-red:hover {
+    background-color: #B77282 !important;
+}
+
+.fbis-red:active {
+    background-color: #641F30 !important;
+}
+
+.btn-normal {
+    font-size: 10pt;
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+    text-transform: capitalize;
+}
+
+#siteNoticeModal {
+    line-height: 1.5;
+}
+
+#siteNoticeModal .close span {
+    font-size: 20pt !important;
+}
+
+#siteNoticeModal .modal-body {
+    max-height: 600px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+@media (min-width: 600px) {
+    #siteNoticeModal .modal-dialog {
+        max-width: 550px;
+    }
+}
+
+.git-info {
+    font-size: 10pt;
+    margin-top: 18px;
+    color: darkgrey;
+    float: right;
+}
+
+.git-item {
+    color: whitesmoke;
+    margin-left: 5px;
+}
+
+@keyframes yellowfade {
+  from {
+    background: yellow;
+  }
+  to {
+    background: transparent;
+  }
+}
+
+.item-highlight {
+  animation: yellowfade 1.5s;
+}
+
+.carousel-inner {
+    background-color: rgba(110, 110, 110, 0.34);
+    text-align: center;
+}
+
+.body-form, .header-wrapper {
+    padding-top: 50px !important;
+}
