@@ -25,6 +25,10 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls')),
 ]
 
+admin.site.site_header = "PPCR Administration"                   
+admin.site.site_title = "PPCR Administration" 
+admin.site.index_title = "Project Implementation and Beneficiary Tracking."                 
+
 try:
     from core.urls import urlpatterns as core_urlpatterns
     urlpatterns += core_urlpatterns

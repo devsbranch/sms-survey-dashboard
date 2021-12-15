@@ -33,16 +33,16 @@ RUN echo "Installing GDAL dependencies" && \
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
   && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get -y --force-yes install yui-compressor
-
 COPY REQUIREMENTS.txt /REQUIREMENTS.txt
 RUN pip install -r /REQUIREMENTS.txt
 RUN pip install uwsgi
 
 # Install Node js
-RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get -y --force-yes install nodejs
+# RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN apt-get -qqy --no-install-recommends install nodejs
+# RUN bash nodesource_setup.sh
+# RUN apt-get -y --force-yes install nodejs
 RUN npm -g install yuglify
 
 # Debian is messed up and aliases node as nodejs
