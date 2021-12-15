@@ -27,18 +27,16 @@ AUTHENTICATION_BACKENDS = (
 
 # Django grappelli need to be added before django.contrib.admin
 INSTALLED_APPS = (
-    'grappelli',
+'djangocms_admin_style',
 ) + INSTALLED_APPS
 
-# Grapelli settings
-GRAPPELLI_ADMIN_TITLE = 'HealthyRivers Admin Page'
 
 INSTALLED_APPS += (
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.github',
+    # 'allauth',
+    # 'allauth.account',
+    # 'allauth.socialaccount',
+    # 'allauth.socialaccount.providers.google',
+    # 'allauth.socialaccount.providers.github',
     'easyaudit',
     'rolepermissions',
     'rest_framework',

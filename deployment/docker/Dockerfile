@@ -31,7 +31,9 @@ RUN echo "Installing GDAL dependencies" && \
   apt-get install -y --reinstall build-essential \
   # cleaning up unused files
   && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
-  && rm -rf /var/lib/apt/lists/*
+  && rm -rf /var/lib/apt/lists/* \
+  && apt-get -y update && \
+  apt-get -y auto-remove
 
 COPY REQUIREMENTS.txt /REQUIREMENTS.txt
 RUN pip install -r /REQUIREMENTS.txt

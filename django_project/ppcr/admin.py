@@ -2,37 +2,29 @@
 
 from django.contrib import admin
 
-from .models import (
-   Beneficiary,
-   Facility,
-   Province,
-   District,
-   Ward,
+from ppcr.models import (
+   Program,
+   Project,
+   SubProject,
+   Funding
 )
 
-
-@admin.register(Beneficiary)
-class BeneficiaryAdmin(admin.ModelAdmin):
+@admin.register(Program)
+class ProgramAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Facility)
-class FacilityAdmin(admin.ModelAdmin):
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
     pass
 
 
-@admin.register(Province)
-class ProvinceAdmin(admin.ModelAdmin):
+@admin.register(SubProject)
+class SubProjectAdmin(admin.ModelAdmin):
     pass
 
-
-@admin.register(District)
-class DistrictAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Ward)
-class WardAdmin(admin.ModelAdmin):
+@admin.register(Funding)
+class FundingAdmin(admin.ModelAdmin):
     pass
 
 

@@ -1,8 +1,7 @@
 from django.db import models
-from model_util.models import TimestampModel
 
 
-class Program(TimestampModel):
+class Program(models.Model):
     """
     High level Program definition i.e PPCR, TRALARD
     """

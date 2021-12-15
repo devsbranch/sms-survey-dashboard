@@ -19,8 +19,8 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^accounts/', include('allauth.urls')),
-    url(r'^', include('beneficiary.urls')),
+    # url(r'^accounts/', include('allauth.urls')),
+    url(r'^', include('dj_beneficiary.urls')),
     url(r'^', include('base.urls')),
     url(r'^api-auth/', include('rest_framework.urls')),
 ]

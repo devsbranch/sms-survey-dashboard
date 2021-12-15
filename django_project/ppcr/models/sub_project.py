@@ -1,8 +1,6 @@
 from django.db import models
-from model_util.models import TimestampModel
 
-
-class SubProject(TimestampModel):
+class SubProject(models.Model):
     """
     Sub-Project definition i.e fish farming, chicken rearing etc.
     """

@@ -1,8 +1,6 @@
 from django.db import models
-from model_util.models import TimestampModel
 
-
-class Funding(TimestampModel):
+class Funding(models.Model):
     """
     Project Funding definition.
     """
