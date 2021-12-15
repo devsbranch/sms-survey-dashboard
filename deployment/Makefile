@@ -76,14 +76,15 @@ migrate:
 	@#http://stackoverflow.com/questions/3143635/how-to-ignore-mv-error
 	@# We add the '-' prefix to the next line as the migration may fail
 	@# but we want to continue anyway.
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py migrate ppcr
 
 update-migrations:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Running update migrations in production mode"
 	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations ppcr
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations dj_beneficiary
 
 collectstatic:
 	@echo
