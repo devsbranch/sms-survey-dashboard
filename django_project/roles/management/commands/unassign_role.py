@@ -13,7 +13,8 @@ logger = logging.getLogger(__name__)
 
 
 class Command(BaseCommand):
-    """ Unassign role to user.
+    """ 
+    Unassign role to user.
     """
     args = '<message>'
 

@@ -108,3 +108,4 @@ Thank you to the individual contributors who have helped to build PPCR-TRALARD:
 * Jachin Manda: jachin@digiprophets.com
 * Chriford Siame: chriford@digiprophets.com
 * Cephas Zulu: cephas@digiprophets.com
+* Gift Muyembe: gift@digiprophets.com

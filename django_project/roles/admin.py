@@ -11,18 +11,11 @@ from django.contrib.gis import admin
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
-from bims.models.profile import Profile
 from rolepermissions.admin import RolePermissionsUserAdminMixin
 from rolepermissions.roles import RolesManager
 
 admin.site.unregister(User)
 admin.site.unregister(Group)
-
-
-class ProfileInline(admin.StackedInline):
-    model = Profile
-    classes = ('collapse open',)
-    inline_classes = ('collapse open',)
 
 
 class RolePermissionsUserForm(UserChangeForm):
