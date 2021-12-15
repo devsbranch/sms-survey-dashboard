@@ -1,10 +1,10 @@
 
-__author__ = 'rischan'
+__author__ = 'sonlinux'
 
 # -*- coding: utf-8 -*-
 from .test import *  # noqa
 
-STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
+# STATICFILES_STORAGE = 'pipeline.storage.PipelineStorage'
 
 DATABASES = {
     'default': {

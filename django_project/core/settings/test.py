@@ -5,7 +5,7 @@ INSTALLED_APPS += (
     'django_nose',  # don't remove this comma
 )
 
-PIPELINE['PIPELINE_ENABLED'] = False
+# PIPELINE['PIPELINE_ENABLED'] = False
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 NOSE_ARGS = (

@@ -11,11 +11,14 @@ STOP_WORDS = (
     'this', 'that', 'to',
 )
 
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-STATICFILES_FINDERS += (
-    'pipeline.finders.PipelineFinder',
-)
-
+# STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+# STATICFILES_FINDERS += (
+#     'pipeline.finders.PipelineFinder',
+# )
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 # Django-allauth related settings
 AUTHENTICATION_BACKENDS = (
     # Needed to login by username in Django admin, regardless of `allauth`
@@ -32,17 +35,10 @@ INSTALLED_APPS = (
 
 
 INSTALLED_APPS += (
-    # 'allauth',
-    # 'allauth.account',
-    # 'allauth.socialaccount',
-    # 'allauth.socialaccount.providers.google',
-    # 'allauth.socialaccount.providers.github',
     'easyaudit',
     'rolepermissions',
     'rest_framework',
     'celery',
-    'pipeline',
-    # 'haystack',
 )
 
 # Defines whether to log model related events,

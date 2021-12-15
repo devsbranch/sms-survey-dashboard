@@ -81,27 +81,27 @@ VALID_DOMAIN = [
     '0.0.0.0',
 ]
 
-PIPELINE = {
-    'STYLESHEETS': {
-        'healthyriver-base': {
-            'source_filenames': {
-                'js/libs/bootstrap-4.0.0/css/bootstrap.min.css',
-                'js/libs/font-awesome/css/font-awesome.min.css',
-                'js/libs/magnific-popup/magnific-popup.css',
-                'js/libs/openlayers-4.6.4/ol.css',
-                'js/libs/jquery-ui-1.12.1/jquery-ui.min.css',
-                'css/base.css',
-            },
-            'output_filename': 'css/healthyriver-base.css',
-            'extra_content': {
-                'media': 'screen, projection',
-            }
-        }
-    },
-    'JAVASCRIPT': {
+# PIPELINE = {
+#     'STYLESHEETS': {
+#         'base': {
+#             'source_filenames': {
+#                 'js/libs/bootstrap-4.0.0/css/bootstrap.min.css',
+#                 'js/libs/font-awesome/css/font-awesome.min.css',
+#                 'js/libs/magnific-popup/magnific-popup.css',
+#                 'js/libs/openlayers-4.6.4/ol.css',
+#                 'js/libs/jquery-ui-1.12.1/jquery-ui.min.css',
+#                 'css/base.css',
+#             },
+#             'output_filename': 'css/base.css',
+#             'extra_content': {
+#                 'media': 'screen, projection',
+#             }
+#         }
+#     },
+#     'JAVASCRIPT': {
 
-    }
-}
+#     }
+# }
 
 REQUIRE_JS_PATH = '/static/js/libs/requirejs-2.3.5/require.js'
 
