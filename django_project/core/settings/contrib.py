@@ -37,7 +37,7 @@ INSTALLED_APPS = (
 INSTALLED_APPS += (
     'easyaudit',
     'rolepermissions',
-    'rest_framework',
+    # 'rest_framework',
     'celery',
 )
 

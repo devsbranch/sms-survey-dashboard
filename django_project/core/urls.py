@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import url, include
+from django.urls import include, path
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from dj_beneficiary import urls as dj_beneficiary_urls
 
 urlpatterns = [
-    url(r'^admin/', admin.site.urls),
-    # url(r'^accounts/', include('allauth.urls')),
-    url(r'^', include(dj_beneficiary_urls)),
-    url(r'^', include('base.urls')),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    path('admin/', admin.site.urls),
+    path('', include(dj_beneficiary_urls)),
+    path('', include('base.urls')),
 ]
 
 admin.site.site_header = "PPCR Administration"                   
