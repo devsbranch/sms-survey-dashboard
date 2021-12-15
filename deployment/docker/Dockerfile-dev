@@ -1,6 +1,6 @@
 #--------- Generic stuff all our Dockerfiles should start with so we get caching ------------
 # Note this base image is based on debian
-FROM ppcr_tralard_uwsgi
+FROM ppcr_uwsgi
 LABEL maintainer="Alision Mukoma <mukomalison@gmail.com>"
 
 # This section taken on 2 July 2015 from

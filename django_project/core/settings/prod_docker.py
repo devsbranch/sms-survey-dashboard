@@ -4,7 +4,7 @@
 from .prod import *  # noqa
 import os
 
-DEBUG = False
+DEBUG = True # just to quickly get dev work going until ready for prod rollout
 
 ALLOWED_HOSTS = ['*']
 

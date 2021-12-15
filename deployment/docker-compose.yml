@@ -12,7 +12,7 @@ services:
 
   smtp:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-smtp
+    container_name: ppcr-smtp
     image: catatnight/postfix
     hostname: postfix
     environment:
@@ -25,7 +25,7 @@ services:
 
   db:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-db
+    container_name: ppcr-db
     image: kartoza/postgis:9.6-2.4
     volumes:
       #- ./pg/postgres_data:/var/lib/postgresql
@@ -46,7 +46,7 @@ services:
 
   uwsgi:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-uwsgi
+    container_name: ppcr-uwsgi
     build:
       context: ./docker
       dockerfile: Dockerfile
@@ -59,7 +59,7 @@ services:
       - DATABASE_PASSWORD=docker
       - DATABASE_HOST=db
       - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-      - VIRTUAL_HOST=ppcr-tralard.digiprophets.com
+      - VIRTUAL_HOST=ppcr.digiprophets.com
       - VIRTUAL_PORT=8080
       - RABBITMQ_HOST=rabbitmq
       # - HAYSTACK_HOST=elasticsearch
@@ -79,7 +79,7 @@ services:
 
   dbbackups:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-db-backups
+    container_name: ppcr-db-backups
     image: kartoza/pg-backup:9.4
     hostname: pg-backups
     volumes:
@@ -87,7 +87,7 @@ services:
     environment:
       # take care to let the project name below match that
       # declared in the top of the makefile
-      - DUMPPREFIX=PG_ppcr-tralard
+      - DUMPPREFIX=PG_ppcr
       # These are all defaults anyway, but setting explicitly in
       # case we ever want to ever use different credentials
       - PGUSER=docker
@@ -102,7 +102,7 @@ services:
   # This is normally the main entry point for a production server
   web:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-web
+    container_name: ppcr-web
     image: nginx
     hostname: nginx
     depends_on:
@@ -125,7 +125,7 @@ services:
   # from produ environment if wanted
   devweb:
     # Note you cannot scale if you use container_name
-    container_name: ppcr-tralard-dev-web
+    container_name: ppcr-dev-web
     build:
       context: ./docker
       dockerfile: Dockerfile-dev
@@ -141,7 +141,7 @@ services:
       - DATABASE_HOST=db
       - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
       - PYTHONPATH=/home/web/django_project
-      - VIRTUAL_HOST=ppcr-tralard.digiprophets.com
+      - VIRTUAL_HOST=ppcr.digiprophets.com
       - VIRTUAL_PORT=8080
       - RABBITMQ_HOST=rabbitmq
     volumes:
@@ -216,7 +216,7 @@ services:
       - DATABASE_HOST=db
       - RABBITMQ_HOST=rabbitmq
       - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-      - VIRTUAL_HOST=ppcr-tralard.digiprophets.com
+      - VIRTUAL_HOST=ppcr.digiprophets.com
       - VIRTUAL_PORT=8080
       - C_FORCE_ROOT=true
     volumes:
@@ -231,7 +231,7 @@ services:
 
   # elasticsearch:
   #   # Note you cannot scale if you use conteiner_name
-  #   container_name: ppcr-tralard-elasticsearch
+  #   container_name: ppcr-elasticsearch
   #   restart: on-failure:5
   #   #  read_only: true
   #   image: elasticsearch:2.4.2
