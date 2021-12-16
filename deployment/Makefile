@@ -264,7 +264,7 @@ enable-machine:
 sync-roles:
 	@echo
 	@echo "------------------------------------------------------------------"
-	@echo "Running update migrations in production mode"
+	@echo "Running create roles in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py sync_roles
 
