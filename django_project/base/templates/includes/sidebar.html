@@ -570,23 +570,23 @@
     
             <!-- Sidebar menu 1 -->
             <ul id="dashboard-menu" class="sidebar-menu is-active animated preFadeInRIght fadeInRight">
-                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">dashboard</span>Dashboard</a>
+                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">dashboard</span>Project</a>
                     <ul>
-                        <li><a href="/">Main layout</a></li>
-                        <li><a href="/dashboard-blank.html">Blank page</a></li>
+                        <li><a href="{% url 'tralard:project_list' %}">List</a></li>
+                        <li><a href="{% url 'tralard:sub_project_list' %}">Sub Project List</a></li>
                     </ul>
                 </li>
-                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">insert_chart</span>Analytics</a>
+                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">insert_chart</span>Beneficiary</a>
                     <ul>
-                        <li><a href="/dashboard-chartjs.html">Chart js</a></li>
+                        <li><a href="{% url 'tralard:beneficiary_list' %}">List</a></li>
                         <li><a href="/dashboard-billboardjs.html">Billboard js</a></li>
                         <li><a href="/dashboard-peityjs.html">Peity js</a></li>
                     </ul>
                 </li>
-                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">developer_board</span>Widgets</a>
+                <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">developer_board</span>Training</a>
                     <ul>
-                        <li><a href="/dashboard-widgets-data.html">Data widgets</a></li>
-                        <li><a href="/dashboard-widgets-social.html">Social widgets</a></li>
+                        <li><a href="/dashboard-widgets-data.html">Lessons</a></li>
+                        <li><a href="/dashboard-widgets-social.html">Worksheets</a></li>
                     </ul>
                 </li>
                 <li class="have-children"><a class="parent-link" href="#"><span class="material-icons">view_agenda</span>Feed</a>

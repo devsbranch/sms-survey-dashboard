@@ -70,7 +70,7 @@ TABLE OF CONTENTS
 3. Pageloader
 ========================================================================== */
 .pageloader {
-  background: #7F00FF !important; }
+  background: #21546d !important; }
 
 /*! _pageloader.scss | Bulkit | CSS Ninja */
 /* ==========================================================================
@@ -281,12 +281,12 @@ TABLE OF CONTENTS
   .navigation-tabs.simple-tabs .tabs ul li a {
     color: #A9ABAC; }
   .navigation-tabs.simple-tabs .tabs ul li:hover a {
-    border-bottom-color: #7F00FF; }
+    border-bottom-color: #21546d; }
   .navigation-tabs.simple-tabs .tabs ul li.is-active a {
     color: #444F60;
-    border-bottom: 2px solid #7F00FF; }
+    border-bottom: 2px solid #21546d; }
   .navigation-tabs.simple-tabs .tabs ul li.is-active a .icon i {
-    color: #7F00FF; }
+    color: #21546d; }
   .navigation-tabs.boxed-tabs .tabs ul li a {
     color: #A9ABAC; }
   .navigation-tabs.boxed-tabs .tabs ul li.is-active a {
@@ -327,8 +327,8 @@ TABLE OF CONTENTS
     box-shadow: 0 14px 26px -12px rgba(0, 209, 178, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 209, 178, 0.2) !important; }
   .navigation-tabs.full-pills.secondary .tabs ul li.is-active a {
     color: #fff;
-    border: 1px solid #7F00FF;
-    background-color: #7F00FF;
+    border: 1px solid #21546d;
+    background-color: #21546d;
     border-radius: 3px;
     box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
   .navigation-tabs.full-pills.accent .tabs ul li.is-active a {
@@ -600,8 +600,8 @@ TABLE OF CONTENTS
 ========================================================================== */
 .button.secondary-btn {
   outline: none;
-  border-color: #7F00FF;
-  background-color: #7F00FF;
+  border-color: #21546d;
+  background-color: #21546d;
   color: #fff;
   transition: all 0.5s; }
   .button.secondary-btn:hover {
@@ -610,14 +610,14 @@ TABLE OF CONTENTS
     box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important;
     opacity: 0.95; }
   .button.secondary-btn.btn-outlined {
-    border-color: #7F00FF;
-    color: #7F00FF;
+    border-color: #21546d;
+    color: #21546d;
     background-color: transparent; }
     .button.secondary-btn.btn-outlined:hover {
       color: #fff;
-      background-color: #7F00FF; }
+      background-color: #21546d; }
   .button.secondary-btn:focus {
-    border-color: #7F00FF; }
+    border-color: #21546d; }
 
 /* ==========================================================================
 5. Accent button
@@ -1418,7 +1418,7 @@ TABLE OF CONTENTS
     top: 3px;
     margin-right: 10px; }
     .feature-card .bookmark i:hover {
-      color: #7F00FF; }
+      color: #21546d; }
 
 /* ==========================================================================
 1. Flex card
@@ -1467,7 +1467,7 @@ TABLE OF CONTENTS
       .flex-card .flex-card-header.primary .header-info div, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.primary .header-info div, .dashboard-wrapper .dashboard-chart-card .flex-card-header.primary .header-info div, .dashboard-wrapper .map-card .flex-card-header.primary .header-info div, .dashboard-wrapper .members-card .flex-card-header.primary .header-info div, .dashboard-wrapper .tasks-card .flex-card-header.primary .header-info div, .dashboard-wrapper .achievement-card .flex-card-header.primary .header-info div, .dashboard-wrapper .dash-card .flex-card-header.primary .header-info div, .dashboard-wrapper .peity-widget .flex-card-header.primary .header-info div, .auth-card .flex-card-header.primary .header-info div, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.primary .header-info div, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.primary .header-info div, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.primary .header-info div, .company-card .flex-card-header.primary .header-info div, .feed-channels .flex-card-header.primary .header-info div, .activity-card .flex-card-header.primary .header-info div, .compose-card .flex-card-header.primary .header-info div, .post-item .flex-card-header.primary .header-info div, .audio.green-audio-player .flex-card-header.primary .header-info div, .feed-card .flex-card-header.primary .header-info div, .widget-card .flex-card-header.primary .header-info div, .table-widget .flex-card-header.primary .header-info div, .pills-widget .flex-card-header.primary .header-info div, .follow-card .flex-card-header.primary .header-info div, .stats-card .flex-card-header.primary .header-info div, .stats-card-portrait .flex-card-header.primary .header-info div, .rating-card .flex-card-header.primary .header-info div, .following-card .flex-card-header.primary .header-info div, .skype-card .flex-card-header.primary .header-info div, .tweet-card .flex-card-header.primary .header-info div, .social-card .flex-card-header.primary .header-info div, .is-document-list .flex-card-header.primary .header-info div, .is-document .flex-card-header.primary .header-info div, .projects-list-wrapper .list-body .project-card .flex-card-header.primary .header-info div, .is-contacts-grid .contact-card .flex-card-header.primary .header-info div, .deal-content .deal-card .flex-card-header.primary .header-info div, .flex-card .flex-card-header.primary .header-control i, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.primary .header-control i, .dashboard-wrapper .dashboard-chart-card .flex-card-header.primary .header-control i, .dashboard-wrapper .map-card .flex-card-header.primary .header-control i, .dashboard-wrapper .members-card .flex-card-header.primary .header-control i, .dashboard-wrapper .tasks-card .flex-card-header.primary .header-control i, .dashboard-wrapper .achievement-card .flex-card-header.primary .header-control i, .dashboard-wrapper .dash-card .flex-card-header.primary .header-control i, .dashboard-wrapper .peity-widget .flex-card-header.primary .header-control i, .auth-card .flex-card-header.primary .header-control i, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.primary .header-control i, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.primary .header-control i, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.primary .header-control i, .company-card .flex-card-header.primary .header-control i, .feed-channels .flex-card-header.primary .header-control i, .activity-card .flex-card-header.primary .header-control i, .compose-card .flex-card-header.primary .header-control i, .post-item .flex-card-header.primary .header-control i, .audio.green-audio-player .flex-card-header.primary .header-control i, .feed-card .flex-card-header.primary .header-control i, .widget-card .flex-card-header.primary .header-control i, .table-widget .flex-card-header.primary .header-control i, .pills-widget .flex-card-header.primary .header-control i, .follow-card .flex-card-header.primary .header-control i, .stats-card .flex-card-header.primary .header-control i, .stats-card-portrait .flex-card-header.primary .header-control i, .rating-card .flex-card-header.primary .header-control i, .following-card .flex-card-header.primary .header-control i, .skype-card .flex-card-header.primary .header-control i, .tweet-card .flex-card-header.primary .header-control i, .social-card .flex-card-header.primary .header-control i, .is-document-list .flex-card-header.primary .header-control i, .is-document .flex-card-header.primary .header-control i, .projects-list-wrapper .list-body .project-card .flex-card-header.primary .header-control i, .is-contacts-grid .contact-card .flex-card-header.primary .header-control i, .deal-content .deal-card .flex-card-header.primary .header-control i {
         color: #fff !important; }
     .flex-card .flex-card-header.secondary, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.secondary, .dashboard-wrapper .dashboard-chart-card .flex-card-header.secondary, .dashboard-wrapper .map-card .flex-card-header.secondary, .dashboard-wrapper .members-card .flex-card-header.secondary, .dashboard-wrapper .tasks-card .flex-card-header.secondary, .dashboard-wrapper .achievement-card .flex-card-header.secondary, .dashboard-wrapper .dash-card .flex-card-header.secondary, .dashboard-wrapper .peity-widget .flex-card-header.secondary, .auth-card .flex-card-header.secondary, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.secondary, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.secondary, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.secondary, .company-card .flex-card-header.secondary, .feed-channels .flex-card-header.secondary, .activity-card .flex-card-header.secondary, .compose-card .flex-card-header.secondary, .post-item .flex-card-header.secondary, .audio.green-audio-player .flex-card-header.secondary, .feed-card .flex-card-header.secondary, .widget-card .flex-card-header.secondary, .table-widget .flex-card-header.secondary, .pills-widget .flex-card-header.secondary, .follow-card .flex-card-header.secondary, .stats-card .flex-card-header.secondary, .stats-card-portrait .flex-card-header.secondary, .rating-card .flex-card-header.secondary, .following-card .flex-card-header.secondary, .skype-card .flex-card-header.secondary, .tweet-card .flex-card-header.secondary, .social-card .flex-card-header.secondary, .is-document-list .flex-card-header.secondary, .is-document .flex-card-header.secondary, .projects-list-wrapper .list-body .project-card .flex-card-header.secondary, .is-contacts-grid .contact-card .flex-card-header.secondary, .deal-content .deal-card .flex-card-header.secondary {
-      background: #7F00FF; }
+      background: #21546d; }
       .flex-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.secondary .header-info div, .dashboard-wrapper .dashboard-chart-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .map-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .members-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .tasks-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .achievement-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .dash-card .flex-card-header.secondary .header-info div, .dashboard-wrapper .peity-widget .flex-card-header.secondary .header-info div, .auth-card .flex-card-header.secondary .header-info div, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.secondary .header-info div, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.secondary .header-info div, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.secondary .header-info div, .company-card .flex-card-header.secondary .header-info div, .feed-channels .flex-card-header.secondary .header-info div, .activity-card .flex-card-header.secondary .header-info div, .compose-card .flex-card-header.secondary .header-info div, .post-item .flex-card-header.secondary .header-info div, .audio.green-audio-player .flex-card-header.secondary .header-info div, .feed-card .flex-card-header.secondary .header-info div, .widget-card .flex-card-header.secondary .header-info div, .table-widget .flex-card-header.secondary .header-info div, .pills-widget .flex-card-header.secondary .header-info div, .follow-card .flex-card-header.secondary .header-info div, .stats-card .flex-card-header.secondary .header-info div, .stats-card-portrait .flex-card-header.secondary .header-info div, .rating-card .flex-card-header.secondary .header-info div, .following-card .flex-card-header.secondary .header-info div, .skype-card .flex-card-header.secondary .header-info div, .tweet-card .flex-card-header.secondary .header-info div, .social-card .flex-card-header.secondary .header-info div, .is-document-list .flex-card-header.secondary .header-info div, .is-document .flex-card-header.secondary .header-info div, .projects-list-wrapper .list-body .project-card .flex-card-header.secondary .header-info div, .is-contacts-grid .contact-card .flex-card-header.secondary .header-info div, .deal-content .deal-card .flex-card-header.secondary .header-info div, .flex-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.secondary .header-control i, .dashboard-wrapper .dashboard-chart-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .map-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .members-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .tasks-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .achievement-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .dash-card .flex-card-header.secondary .header-control i, .dashboard-wrapper .peity-widget .flex-card-header.secondary .header-control i, .auth-card .flex-card-header.secondary .header-control i, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.secondary .header-control i, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.secondary .header-control i, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.secondary .header-control i, .company-card .flex-card-header.secondary .header-control i, .feed-channels .flex-card-header.secondary .header-control i, .activity-card .flex-card-header.secondary .header-control i, .compose-card .flex-card-header.secondary .header-control i, .post-item .flex-card-header.secondary .header-control i, .audio.green-audio-player .flex-card-header.secondary .header-control i, .feed-card .flex-card-header.secondary .header-control i, .widget-card .flex-card-header.secondary .header-control i, .table-widget .flex-card-header.secondary .header-control i, .pills-widget .flex-card-header.secondary .header-control i, .follow-card .flex-card-header.secondary .header-control i, .stats-card .flex-card-header.secondary .header-control i, .stats-card-portrait .flex-card-header.secondary .header-control i, .rating-card .flex-card-header.secondary .header-control i, .following-card .flex-card-header.secondary .header-control i, .skype-card .flex-card-header.secondary .header-control i, .tweet-card .flex-card-header.secondary .header-control i, .social-card .flex-card-header.secondary .header-control i, .is-document-list .flex-card-header.secondary .header-control i, .is-document .flex-card-header.secondary .header-control i, .projects-list-wrapper .list-body .project-card .flex-card-header.secondary .header-control i, .is-contacts-grid .contact-card .flex-card-header.secondary .header-control i, .deal-content .deal-card .flex-card-header.secondary .header-control i {
         color: #fff !important; }
     .flex-card .flex-card-header.accent, .dashboard-wrapper .dashboard-tiles .dashboard-tile .flex-card-header.accent, .dashboard-wrapper .dashboard-chart-card .flex-card-header.accent, .dashboard-wrapper .map-card .flex-card-header.accent, .dashboard-wrapper .members-card .flex-card-header.accent, .dashboard-wrapper .tasks-card .flex-card-header.accent, .dashboard-wrapper .achievement-card .flex-card-header.accent, .dashboard-wrapper .dash-card .flex-card-header.accent, .dashboard-wrapper .peity-widget .flex-card-header.accent, .auth-card .flex-card-header.accent, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .flex-card-header.accent, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .flex-card-header.accent, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .flex-card-header.accent, .company-card .flex-card-header.accent, .feed-channels .flex-card-header.accent, .activity-card .flex-card-header.accent, .compose-card .flex-card-header.accent, .post-item .flex-card-header.accent, .audio.green-audio-player .flex-card-header.accent, .feed-card .flex-card-header.accent, .widget-card .flex-card-header.accent, .table-widget .flex-card-header.accent, .pills-widget .flex-card-header.accent, .follow-card .flex-card-header.accent, .stats-card .flex-card-header.accent, .stats-card-portrait .flex-card-header.accent, .rating-card .flex-card-header.accent, .following-card .flex-card-header.accent, .skype-card .flex-card-header.accent, .tweet-card .flex-card-header.accent, .social-card .flex-card-header.accent, .is-document-list .flex-card-header.accent, .is-document .flex-card-header.accent, .projects-list-wrapper .list-body .project-card .flex-card-header.accent, .is-contacts-grid .contact-card .flex-card-header.accent, .deal-content .deal-card .flex-card-header.accent {
@@ -1498,12 +1498,12 @@ TABLE OF CONTENTS
     .flex-card.primary-card .content, .dashboard-wrapper .dashboard-tiles .primary-card.dashboard-tile .content, .dashboard-wrapper .primary-card.dashboard-chart-card .content, .dashboard-wrapper .primary-card.map-card .content, .dashboard-wrapper .primary-card.members-card .content, .dashboard-wrapper .primary-card.tasks-card .content, .dashboard-wrapper .primary-card.achievement-card .content, .dashboard-wrapper .primary-card.dash-card .content, .dashboard-wrapper .primary-card.peity-widget .content, .primary-card.auth-card .content, .profile-container .profile-sections-wrapper .profile-details .profile-view .primary-card.info-card .content, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .primary-card.profile-notifications-title .content, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .primary-card.notification-inner .content, .primary-card.company-card .content, .primary-card.feed-channels .content, .primary-card.activity-card .content, .primary-card.compose-card .content, .primary-card.post-item .content, .primary-card.audio.green-audio-player .content, .primary-card.feed-card .content, .primary-card.widget-card .content, .primary-card.table-widget .content, .primary-card.pills-widget .content, .primary-card.follow-card .content, .primary-card.stats-card .content, .primary-card.stats-card-portrait .content, .primary-card.rating-card .content, .primary-card.following-card .content, .primary-card.skype-card .content, .primary-card.tweet-card .content, .primary-card.social-card .content, .primary-card.is-document-list .content, .primary-card.is-document .content, .projects-list-wrapper .list-body .primary-card.project-card .content, .is-contacts-grid .primary-card.contact-card .content, .deal-content .primary-card.deal-card .content, .flex-card.primary-card .content h2, .dashboard-wrapper .dashboard-tiles .primary-card.dashboard-tile .content h2, .dashboard-wrapper .primary-card.dashboard-chart-card .content h2, .dashboard-wrapper .primary-card.map-card .content h2, .dashboard-wrapper .primary-card.members-card .content h2, .dashboard-wrapper .primary-card.tasks-card .content h2, .dashboard-wrapper .primary-card.achievement-card .content h2, .dashboard-wrapper .primary-card.dash-card .content h2, .dashboard-wrapper .primary-card.peity-widget .content h2, .primary-card.auth-card .content h2, .profile-container .profile-sections-wrapper .profile-details .profile-view .primary-card.info-card .content h2, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .primary-card.profile-notifications-title .content h2, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .primary-card.notification-inner .content h2, .primary-card.company-card .content h2, .primary-card.feed-channels .content h2, .primary-card.activity-card .content h2, .primary-card.compose-card .content h2, .primary-card.post-item .content h2, .primary-card.audio.green-audio-player .content h2, .primary-card.feed-card .content h2, .primary-card.widget-card .content h2, .primary-card.table-widget .content h2, .primary-card.pills-widget .content h2, .primary-card.follow-card .content h2, .primary-card.stats-card .content h2, .primary-card.stats-card-portrait .content h2, .primary-card.rating-card .content h2, .primary-card.following-card .content h2, .primary-card.skype-card .content h2, .primary-card.tweet-card .content h2, .primary-card.social-card .content h2, .primary-card.is-document-list .content h2, .primary-card.is-document .content h2, .projects-list-wrapper .list-body .primary-card.project-card .content h2, .is-contacts-grid .primary-card.contact-card .content h2, .deal-content .primary-card.deal-card .content h2 {
       color: #fff !important; }
   .flex-card.secondary-card, .dashboard-wrapper .dashboard-tiles .secondary-card.dashboard-tile, .dashboard-wrapper .secondary-card.dashboard-chart-card, .dashboard-wrapper .secondary-card.map-card, .dashboard-wrapper .secondary-card.members-card, .dashboard-wrapper .secondary-card.tasks-card, .dashboard-wrapper .secondary-card.achievement-card, .dashboard-wrapper .secondary-card.dash-card, .dashboard-wrapper .secondary-card.peity-widget, .secondary-card.auth-card, .profile-container .profile-sections-wrapper .profile-details .profile-view .secondary-card.info-card, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .secondary-card.profile-notifications-title, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .secondary-card.notification-inner, .secondary-card.company-card, .secondary-card.feed-channels, .secondary-card.activity-card, .secondary-card.compose-card, .secondary-card.post-item, .secondary-card.audio.green-audio-player, .secondary-card.feed-card, .secondary-card.widget-card, .secondary-card.table-widget, .secondary-card.pills-widget, .secondary-card.follow-card, .secondary-card.stats-card, .secondary-card.stats-card-portrait, .secondary-card.rating-card, .secondary-card.following-card, .secondary-card.skype-card, .secondary-card.tweet-card, .secondary-card.social-card, .secondary-card.is-document-list, .secondary-card.is-document, .projects-list-wrapper .list-body .secondary-card.project-card, .is-contacts-grid .secondary-card.contact-card, .deal-content .secondary-card.deal-card {
-    background: #7F00FF; }
+    background: #21546d; }
     .flex-card.secondary-card .content, .dashboard-wrapper .dashboard-tiles .secondary-card.dashboard-tile .content, .dashboard-wrapper .secondary-card.dashboard-chart-card .content, .dashboard-wrapper .secondary-card.map-card .content, .dashboard-wrapper .secondary-card.members-card .content, .dashboard-wrapper .secondary-card.tasks-card .content, .dashboard-wrapper .secondary-card.achievement-card .content, .dashboard-wrapper .secondary-card.dash-card .content, .dashboard-wrapper .secondary-card.peity-widget .content, .secondary-card.auth-card .content, .profile-container .profile-sections-wrapper .profile-details .profile-view .secondary-card.info-card .content, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .secondary-card.profile-notifications-title .content, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .secondary-card.notification-inner .content, .secondary-card.company-card .content, .secondary-card.feed-channels .content, .secondary-card.activity-card .content, .secondary-card.compose-card .content, .secondary-card.post-item .content, .secondary-card.audio.green-audio-player .content, .secondary-card.feed-card .content, .secondary-card.widget-card .content, .secondary-card.table-widget .content, .secondary-card.pills-widget .content, .secondary-card.follow-card .content, .secondary-card.stats-card .content, .secondary-card.stats-card-portrait .content, .secondary-card.rating-card .content, .secondary-card.following-card .content, .secondary-card.skype-card .content, .secondary-card.tweet-card .content, .secondary-card.social-card .content, .secondary-card.is-document-list .content, .secondary-card.is-document .content, .projects-list-wrapper .list-body .secondary-card.project-card .content, .is-contacts-grid .secondary-card.contact-card .content, .deal-content .secondary-card.deal-card .content, .flex-card.secondary-card .content h2, .dashboard-wrapper .dashboard-tiles .secondary-card.dashboard-tile .content h2, .dashboard-wrapper .secondary-card.dashboard-chart-card .content h2, .dashboard-wrapper .secondary-card.map-card .content h2, .dashboard-wrapper .secondary-card.members-card .content h2, .dashboard-wrapper .secondary-card.tasks-card .content h2, .dashboard-wrapper .secondary-card.achievement-card .content h2, .dashboard-wrapper .secondary-card.dash-card .content h2, .dashboard-wrapper .secondary-card.peity-widget .content h2, .secondary-card.auth-card .content h2, .profile-container .profile-sections-wrapper .profile-details .profile-view .secondary-card.info-card .content h2, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .secondary-card.profile-notifications-title .content h2, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .secondary-card.notification-inner .content h2, .secondary-card.company-card .content h2, .secondary-card.feed-channels .content h2, .secondary-card.activity-card .content h2, .secondary-card.compose-card .content h2, .secondary-card.post-item .content h2, .secondary-card.audio.green-audio-player .content h2, .secondary-card.feed-card .content h2, .secondary-card.widget-card .content h2, .secondary-card.table-widget .content h2, .secondary-card.pills-widget .content h2, .secondary-card.follow-card .content h2, .secondary-card.stats-card .content h2, .secondary-card.stats-card-portrait .content h2, .secondary-card.rating-card .content h2, .secondary-card.following-card .content h2, .secondary-card.skype-card .content h2, .secondary-card.tweet-card .content h2, .secondary-card.social-card .content h2, .secondary-card.is-document-list .content h2, .secondary-card.is-document .content h2, .projects-list-wrapper .list-body .secondary-card.project-card .content h2, .is-contacts-grid .secondary-card.contact-card .content h2, .deal-content .secondary-card.deal-card .content h2 {
       color: #fff !important; }
   .flex-card.gradient-card, .dashboard-wrapper .dashboard-tiles .gradient-card.dashboard-tile, .dashboard-wrapper .gradient-card.dashboard-chart-card, .dashboard-wrapper .gradient-card.map-card, .dashboard-wrapper .gradient-card.members-card, .dashboard-wrapper .gradient-card.tasks-card, .dashboard-wrapper .gradient-card.achievement-card, .dashboard-wrapper .gradient-card.dash-card, .dashboard-wrapper .gradient-card.peity-widget, .gradient-card.auth-card, .profile-container .profile-sections-wrapper .profile-details .profile-view .gradient-card.info-card, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .gradient-card.profile-notifications-title, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .gradient-card.notification-inner, .gradient-card.company-card, .gradient-card.feed-channels, .gradient-card.activity-card, .gradient-card.compose-card, .gradient-card.post-item, .gradient-card.audio.green-audio-player, .gradient-card.feed-card, .gradient-card.widget-card, .gradient-card.table-widget, .gradient-card.pills-widget, .gradient-card.follow-card, .gradient-card.stats-card, .gradient-card.stats-card-portrait, .gradient-card.rating-card, .gradient-card.following-card, .gradient-card.skype-card, .gradient-card.tweet-card, .gradient-card.social-card, .gradient-card.is-document-list, .gradient-card.is-document, .projects-list-wrapper .list-body .gradient-card.project-card, .is-contacts-grid .gradient-card.contact-card, .deal-content .gradient-card.deal-card {
-    background: #7F00FF;
-    background: linear-gradient(to right, #E100FF, #7F00FF); }
+    background: #21546d;
+    background: linear-gradient(to right, #E100FF, #21546d); }
     .flex-card.gradient-card .content, .dashboard-wrapper .dashboard-tiles .gradient-card.dashboard-tile .content, .dashboard-wrapper .gradient-card.dashboard-chart-card .content, .dashboard-wrapper .gradient-card.map-card .content, .dashboard-wrapper .gradient-card.members-card .content, .dashboard-wrapper .gradient-card.tasks-card .content, .dashboard-wrapper .gradient-card.achievement-card .content, .dashboard-wrapper .gradient-card.dash-card .content, .dashboard-wrapper .gradient-card.peity-widget .content, .gradient-card.auth-card .content, .profile-container .profile-sections-wrapper .profile-details .profile-view .gradient-card.info-card .content, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .gradient-card.profile-notifications-title .content, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .gradient-card.notification-inner .content, .gradient-card.company-card .content, .gradient-card.feed-channels .content, .gradient-card.activity-card .content, .gradient-card.compose-card .content, .gradient-card.post-item .content, .gradient-card.audio.green-audio-player .content, .gradient-card.feed-card .content, .gradient-card.widget-card .content, .gradient-card.table-widget .content, .gradient-card.pills-widget .content, .gradient-card.follow-card .content, .gradient-card.stats-card .content, .gradient-card.stats-card-portrait .content, .gradient-card.rating-card .content, .gradient-card.following-card .content, .gradient-card.skype-card .content, .gradient-card.tweet-card .content, .gradient-card.social-card .content, .gradient-card.is-document-list .content, .gradient-card.is-document .content, .projects-list-wrapper .list-body .gradient-card.project-card .content, .is-contacts-grid .gradient-card.contact-card .content, .deal-content .gradient-card.deal-card .content, .flex-card.gradient-card .content h2, .dashboard-wrapper .dashboard-tiles .gradient-card.dashboard-tile .content h2, .dashboard-wrapper .gradient-card.dashboard-chart-card .content h2, .dashboard-wrapper .gradient-card.map-card .content h2, .dashboard-wrapper .gradient-card.members-card .content h2, .dashboard-wrapper .gradient-card.tasks-card .content h2, .dashboard-wrapper .gradient-card.achievement-card .content h2, .dashboard-wrapper .gradient-card.dash-card .content h2, .dashboard-wrapper .gradient-card.peity-widget .content h2, .gradient-card.auth-card .content h2, .profile-container .profile-sections-wrapper .profile-details .profile-view .gradient-card.info-card .content h2, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .gradient-card.profile-notifications-title .content h2, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .gradient-card.notification-inner .content h2, .gradient-card.company-card .content h2, .gradient-card.feed-channels .content h2, .gradient-card.activity-card .content h2, .gradient-card.compose-card .content h2, .gradient-card.post-item .content h2, .gradient-card.audio.green-audio-player .content h2, .gradient-card.feed-card .content h2, .gradient-card.widget-card .content h2, .gradient-card.table-widget .content h2, .gradient-card.pills-widget .content h2, .gradient-card.follow-card .content h2, .gradient-card.stats-card .content h2, .gradient-card.stats-card-portrait .content h2, .gradient-card.rating-card .content h2, .gradient-card.following-card .content h2, .gradient-card.skype-card .content h2, .gradient-card.tweet-card .content h2, .gradient-card.social-card .content h2, .gradient-card.is-document-list .content h2, .gradient-card.is-document .content h2, .projects-list-wrapper .list-body .gradient-card.project-card .content h2, .is-contacts-grid .gradient-card.contact-card .content h2, .deal-content .gradient-card.deal-card .content h2 {
       color: #fff !important; }
   .flex-card.accent-card, .dashboard-wrapper .dashboard-tiles .accent-card.dashboard-tile, .dashboard-wrapper .accent-card.dashboard-chart-card, .dashboard-wrapper .accent-card.map-card, .dashboard-wrapper .accent-card.members-card, .dashboard-wrapper .accent-card.tasks-card, .dashboard-wrapper .accent-card.achievement-card, .dashboard-wrapper .accent-card.dash-card, .dashboard-wrapper .accent-card.peity-widget, .accent-card.auth-card, .profile-container .profile-sections-wrapper .profile-details .profile-view .accent-card.info-card, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .accent-card.profile-notifications-title, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .accent-card.notification-inner, .accent-card.company-card, .accent-card.feed-channels, .accent-card.activity-card, .accent-card.compose-card, .accent-card.post-item, .accent-card.audio.green-audio-player, .accent-card.feed-card, .accent-card.widget-card, .accent-card.table-widget, .accent-card.pills-widget, .accent-card.follow-card, .accent-card.stats-card, .accent-card.stats-card-portrait, .accent-card.rating-card, .accent-card.following-card, .accent-card.skype-card, .accent-card.tweet-card, .accent-card.social-card, .accent-card.is-document-list, .accent-card.is-document, .projects-list-wrapper .list-body .accent-card.project-card, .is-contacts-grid .accent-card.contact-card, .deal-content .accent-card.deal-card {
@@ -1612,7 +1612,7 @@ TABLE OF CONTENTS
   .flex-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .dashboard-tiles .dashboard-tile .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .dashboard-chart-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .map-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .members-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .tasks-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .achievement-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .dash-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .dashboard-wrapper .peity-widget .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .auth-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .company-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .feed-channels .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .activity-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .compose-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .post-item .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .audio.green-audio-player .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .feed-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .widget-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .table-widget .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .pills-widget .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .follow-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .stats-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .stats-card-portrait .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .rating-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .following-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .skype-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .tweet-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .social-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .is-document-list .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .is-document .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .projects-list-wrapper .list-body .project-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .is-contacts-grid .contact-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary, .deal-content .deal-card .navigation-tabs.outlined-pills .tabs.tabs-header.primary {
     background-color: #00D1B2; }
   .flex-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .dashboard-tiles .dashboard-tile .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .dashboard-chart-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .map-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .members-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .tasks-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .achievement-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .dash-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .dashboard-wrapper .peity-widget .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .auth-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .company-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .feed-channels .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .activity-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .compose-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .post-item .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .audio.green-audio-player .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .feed-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .widget-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .table-widget .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .pills-widget .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .follow-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .stats-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .stats-card-portrait .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .rating-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .following-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .skype-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .tweet-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .social-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .is-document-list .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .is-document .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .projects-list-wrapper .list-body .project-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .is-contacts-grid .contact-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary, .deal-content .deal-card .navigation-tabs.outlined-pills .tabs.tabs-header.secondary {
-    background-color: #7F00FF; }
+    background-color: #21546d; }
   .flex-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .dashboard-tiles .dashboard-tile .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .dashboard-chart-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .map-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .members-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .tasks-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .achievement-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .dash-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .dashboard-wrapper .peity-widget .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .auth-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .company-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .feed-channels .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .activity-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .compose-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .post-item .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .audio.green-audio-player .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .feed-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .widget-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .table-widget .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .pills-widget .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .follow-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .stats-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .stats-card-portrait .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .rating-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .following-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .skype-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .tweet-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .social-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .is-document-list .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .is-document .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .projects-list-wrapper .list-body .project-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .is-contacts-grid .contact-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent, .deal-content .deal-card .navigation-tabs.outlined-pills .tabs.tabs-header.accent {
     background-color: #536dfe; }
   .flex-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .dashboard-tiles .dashboard-tile .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .dashboard-chart-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .map-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .members-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .tasks-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .achievement-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .dash-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .dashboard-wrapper .peity-widget .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .auth-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .company-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .feed-channels .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .activity-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .compose-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .post-item .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .audio.green-audio-player .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .feed-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .widget-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .table-widget .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .pills-widget .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .follow-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .stats-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .stats-card-portrait .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .rating-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .following-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .skype-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .tweet-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .social-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .is-document-list .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .is-document .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .projects-list-wrapper .list-body .project-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .is-contacts-grid .contact-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a, .deal-content .deal-card .navigation-tabs.outlined-pills .tabs.tabs-header ul li a {
@@ -1665,7 +1665,7 @@ TABLE OF CONTENTS
         color: #fff;
         box-shadow: 0 14px 26px -12px rgba(0, 209, 178, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 209, 178, 0.2) !important; }
       .flex-card.auth-card .auth-card-header.header-secondary, .dashboard-wrapper .dashboard-tiles .auth-card.dashboard-tile .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.dashboard-chart-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.map-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.members-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.tasks-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.achievement-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.dash-card .auth-card-header.header-secondary, .dashboard-wrapper .auth-card.peity-widget .auth-card-header.header-secondary, .auth-card .auth-card-header.header-secondary, .profile-container .profile-sections-wrapper .profile-details .profile-view .auth-card.info-card .auth-card-header.header-secondary, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .auth-card.profile-notifications-title .auth-card-header.header-secondary, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .auth-card.notification-inner .auth-card-header.header-secondary, .auth-card.company-card .auth-card-header.header-secondary, .auth-card.feed-channels .auth-card-header.header-secondary, .auth-card.activity-card .auth-card-header.header-secondary, .auth-card.compose-card .auth-card-header.header-secondary, .auth-card.post-item .auth-card-header.header-secondary, .auth-card.audio.green-audio-player .auth-card-header.header-secondary, .auth-card.feed-card .auth-card-header.header-secondary, .auth-card.widget-card .auth-card-header.header-secondary, .auth-card.table-widget .auth-card-header.header-secondary, .auth-card.pills-widget .auth-card-header.header-secondary, .auth-card.follow-card .auth-card-header.header-secondary, .auth-card.stats-card .auth-card-header.header-secondary, .auth-card.stats-card-portrait .auth-card-header.header-secondary, .auth-card.rating-card .auth-card-header.header-secondary, .auth-card.following-card .auth-card-header.header-secondary, .auth-card.skype-card .auth-card-header.header-secondary, .auth-card.tweet-card .auth-card-header.header-secondary, .auth-card.social-card .auth-card-header.header-secondary, .auth-card.is-document-list .auth-card-header.header-secondary, .auth-card.is-document .auth-card-header.header-secondary, .projects-list-wrapper .list-body .auth-card.project-card .auth-card-header.header-secondary, .is-contacts-grid .auth-card.contact-card .auth-card-header.header-secondary, .deal-content .auth-card.deal-card .auth-card-header.header-secondary {
-        background-color: #7F00FF;
+        background-color: #21546d;
         color: #fff;
         box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
       .flex-card.auth-card .auth-card-header.header-accent, .dashboard-wrapper .dashboard-tiles .auth-card.dashboard-tile .auth-card-header.header-accent, .dashboard-wrapper .auth-card.dashboard-chart-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.map-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.members-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.tasks-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.achievement-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.dash-card .auth-card-header.header-accent, .dashboard-wrapper .auth-card.peity-widget .auth-card-header.header-accent, .auth-card .auth-card-header.header-accent, .profile-container .profile-sections-wrapper .profile-details .profile-view .auth-card.info-card .auth-card-header.header-accent, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .auth-card.profile-notifications-title .auth-card-header.header-accent, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .auth-card.notification-inner .auth-card-header.header-accent, .auth-card.company-card .auth-card-header.header-accent, .auth-card.feed-channels .auth-card-header.header-accent, .auth-card.activity-card .auth-card-header.header-accent, .auth-card.compose-card .auth-card-header.header-accent, .auth-card.post-item .auth-card-header.header-accent, .auth-card.audio.green-audio-player .auth-card-header.header-accent, .auth-card.feed-card .auth-card-header.header-accent, .auth-card.widget-card .auth-card-header.header-accent, .auth-card.table-widget .auth-card-header.header-accent, .auth-card.pills-widget .auth-card-header.header-accent, .auth-card.follow-card .auth-card-header.header-accent, .auth-card.stats-card .auth-card-header.header-accent, .auth-card.stats-card-portrait .auth-card-header.header-accent, .auth-card.rating-card .auth-card-header.header-accent, .auth-card.following-card .auth-card-header.header-accent, .auth-card.skype-card .auth-card-header.header-accent, .auth-card.tweet-card .auth-card-header.header-accent, .auth-card.social-card .auth-card-header.header-accent, .auth-card.is-document-list .auth-card-header.header-accent, .auth-card.is-document .auth-card-header.header-accent, .projects-list-wrapper .list-body .auth-card.project-card .auth-card-header.header-accent, .is-contacts-grid .auth-card.contact-card .auth-card-header.header-accent, .deal-content .auth-card.deal-card .auth-card-header.header-accent {
@@ -1843,7 +1843,7 @@ TABLE OF CONTENTS
         background: #00D1B2;
         opacity: 0.6; }
       .card.ressource-card .card-image .card-image-overlay.secondary {
-        background: #7F00FF;
+        background: #21546d;
         opacity: 0.6; }
       .card.ressource-card .card-image .card-image-overlay.accent {
         background: #536dfe;
@@ -2026,9 +2026,9 @@ TABLE OF CONTENTS
     .input.is-primary-focus:focus ~ span.icon i {
       color: #00D1B2; }
   .input.is-secondary-focus:focus {
-    border-color: #7F00FF; }
+    border-color: #21546d; }
     .input.is-secondary-focus:focus ~ span.icon i {
-      color: #7F00FF; }
+      color: #21546d; }
   .input.is-accent-focus:focus {
     border-color: #536dfe; }
     .input.is-accent-focus:focus ~ span.icon i {
@@ -2062,9 +2062,9 @@ textarea.textarea {
     textarea.textarea.is-primary-focus:focus ~ span.icon i {
       color: #00D1B2; }
   textarea.textarea.is-secondary-focus:focus {
-    border-color: #7F00FF; }
+    border-color: #21546d; }
     textarea.textarea.is-secondary-focus:focus ~ span.icon i {
-      color: #7F00FF; }
+      color: #21546d; }
   textarea.textarea.is-accent-focus:focus {
     border-color: #536dfe; }
     textarea.textarea.is-accent-focus:focus ~ span.icon i {
@@ -2199,11 +2199,11 @@ textarea.textarea {
   .control-material.is-primary.has-icon input:focus ~ i {
     color: #00D1B2 !important; }
   .control-material.is-secondary input.material-input:focus ~ label, .control-material.is-secondary input:valid ~ label, .control-material.is-secondary textarea:focus ~ label {
-    color: #7F00FF; }
+    color: #21546d; }
   .control-material.is-secondary .bar:before, .control-material.is-secondary .bar:after {
-    background: #7F00FF; }
+    background: #21546d; }
   .control-material.is-secondary.has-icon input:focus ~ i {
-    color: #7F00FF !important; }
+    color: #21546d !important; }
   .control-material.is-accent input.material-input:focus ~ label, .control-material.is-accent input:valid ~ label, .control-material.is-accent textarea:focus ~ label {
     color: #536dfe; }
   .control-material.is-accent .bar:before, .control-material.is-accent .bar:after {
@@ -2623,7 +2623,7 @@ textarea.textarea {
   background: #00D1B2; }
 
 .radio-wrap.is-secondary input:checked + span::after {
-  background: #7F00FF; }
+  background: #21546d; }
 
 .radio-wrap.is-accent input:checked + span::after {
   background: #536dfe; }
@@ -2663,7 +2663,7 @@ textarea.textarea {
         height: 40px;
         padding-left: 8px; }
         .is-combo .combo-box .box-inner .combo-item i, .is-combo .image-combo-box .box-inner .combo-item i, .is-combo .stacked-combo-box .box-inner .combo-item i, .is-combo .user-combo-box .box-inner .combo-item i {
-          color: #7F00FF;
+          color: #21546d;
           font-size: 20px;
           margin-right: 8px; }
         .is-combo .combo-box .box-inner .combo-item .fa, .is-combo .image-combo-box .box-inner .combo-item .fa, .is-combo .stacked-combo-box .box-inner .combo-item .fa, .is-combo .user-combo-box .box-inner .combo-item .fa {
@@ -2679,7 +2679,7 @@ textarea.textarea {
           .is-combo .combo-box .box-inner .combo-item .fa.is-red, .is-combo .image-combo-box .box-inner .combo-item .fa.is-red, .is-combo .stacked-combo-box .box-inner .combo-item .fa.is-red, .is-combo .user-combo-box .box-inner .combo-item .fa.is-red {
             color: #FF7273; }
           .is-combo .combo-box .box-inner .combo-item .fa.is-secondary, .is-combo .image-combo-box .box-inner .combo-item .fa.is-secondary, .is-combo .stacked-combo-box .box-inner .combo-item .fa.is-secondary, .is-combo .user-combo-box .box-inner .combo-item .fa.is-secondary {
-            color: #7F00FF; }
+            color: #21546d; }
         .is-combo .combo-box .box-inner .combo-item img, .is-combo .image-combo-box .box-inner .combo-item img, .is-combo .stacked-combo-box .box-inner .combo-item img, .is-combo .user-combo-box .box-inner .combo-item img {
           display: block;
           height: 26px;
@@ -2815,7 +2815,7 @@ textarea.textarea {
                 .is-combo .combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-red, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-red, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-red, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-red {
                   color: #FF7273; }
                 .is-combo .combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-secondary, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-secondary, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-secondary, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li .item-icon .fa.is-secondary {
-                  color: #7F00FF; }
+                  color: #21546d; }
               .is-combo .combo-box .box-dropdown .dropdown-inner ul li .item-icon img, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li .item-icon img, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li .item-icon img, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li .item-icon img {
                 display: block;
                 height: 22px;
@@ -2851,13 +2851,13 @@ textarea.textarea {
               opacity: 0;
               transition: all .3s; }
               .is-combo .combo-box .box-dropdown .dropdown-inner ul li .checkmark svg, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li .checkmark svg, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li .checkmark svg, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li .checkmark svg {
-                stroke: #7F00FF;
+                stroke: #21546d;
                 stroke-width: 3px;
                 height: 16px;
                 width: 16px; }
               .is-combo .combo-box .box-dropdown .dropdown-inner ul li .checkmark i, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li .checkmark i, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li .checkmark i, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li .checkmark i {
                 font-size: 16px;
-                color: #7F00FF; }
+                color: #21546d; }
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li span, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li span, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li span, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li span {
               display: block;
               color: #999;
@@ -2866,7 +2866,7 @@ textarea.textarea {
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li:hover, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li:hover, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li:hover, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li:hover {
               background: #f2f2f2; }
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon i, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon i, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon i, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon i {
-              color: #7F00FF; }
+              color: #21546d; }
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon .faded-img, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon .faded-img, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon .faded-img, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon .faded-img {
               opacity: 1; }
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li.is-active span, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li.is-active span, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li.is-active span, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li.is-active span {
@@ -2874,7 +2874,7 @@ textarea.textarea {
             .is-combo .combo-box .box-dropdown .dropdown-inner ul li.is-active .checkmark, .is-combo .image-combo-box .box-dropdown .dropdown-inner ul li.is-active .checkmark, .is-combo .stacked-combo-box .box-dropdown .dropdown-inner ul li.is-active .checkmark, .is-combo .user-combo-box .box-dropdown .dropdown-inner ul li.is-active .checkmark {
               opacity: 1; }
     .is-combo .combo-box.is-active, .is-combo .image-combo-box.is-active, .is-combo .stacked-combo-box.is-active, .is-combo .user-combo-box.is-active {
-      border-color: #7F00FF; }
+      border-color: #21546d; }
       .is-combo .combo-box.is-active .box-chevron svg, .is-combo .combo-box.is-active .box-chevron i, .is-combo .image-combo-box.is-active .box-chevron svg, .is-combo .image-combo-box.is-active .box-chevron i, .is-combo .stacked-combo-box.is-active .box-chevron svg, .is-combo .stacked-combo-box.is-active .box-chevron i, .is-combo .user-combo-box.is-active .box-chevron svg, .is-combo .user-combo-box.is-active .box-chevron i {
         -webkit-transform: rotate(180deg);
                 transform: rotate(180deg); }
@@ -2911,7 +2911,7 @@ textarea.textarea {
         height: 58px;
         padding-left: 8px; }
         .is-combo .big-combo-box .box-inner .combo-item i {
-          color: #7F00FF;
+          color: #21546d;
           font-size: 1.6rem; }
         .is-combo .big-combo-box .box-inner .combo-item .combo-text {
           margin-left: 16px; }
@@ -3010,11 +3010,11 @@ textarea.textarea {
             .is-combo .big-combo-box .box-dropdown .dropdown-inner ul li:hover {
               background: #f2f2f2; }
             .is-combo .big-combo-box .box-dropdown .dropdown-inner ul li.is-active .item-icon i {
-              color: #7F00FF; }
+              color: #21546d; }
             .is-combo .big-combo-box .box-dropdown .dropdown-inner ul li.is-active span {
               color: #444F60; }
     .is-combo .big-combo-box.is-active {
-      border-color: #7F00FF; }
+      border-color: #21546d; }
       .is-combo .big-combo-box.is-active .box-chevron svg {
         -webkit-transform: rotate(180deg);
                 transform: rotate(180deg); }
@@ -3044,7 +3044,7 @@ Custom checkbox
     opacity: 0;
     cursor: pointer; }
     .custom-checkbox input:checked ~ .toggler {
-      border-color: #7F00FF; }
+      border-color: #21546d; }
       .custom-checkbox input:checked ~ .toggler .active, .custom-checkbox input:checked ~ .toggler .inactive {
         -webkit-transform: translateX(100%) rotate(360deg);
                 transform: translateX(100%) rotate(360deg); }
@@ -3092,8 +3092,8 @@ Custom checkbox
       opacity: 1;
       z-index: 1; }
     .custom-checkbox .toggler .active {
-      background: #7F00FF;
-      border-color: #7F00FF;
+      background: #21546d;
+      border-color: #21546d;
       opacity: 0;
       z-index: 0; }
 
@@ -3150,7 +3150,7 @@ TABLE OF CONTENTS
   background-color: #00D1B2; }
 
 .simple-accordion-wrapper.is-secondary a.active {
-  background-color: #7F00FF; }
+  background-color: #21546d; }
 
 .simple-accordion-wrapper.is-accent a.active {
   background-color: #536dfe; }
@@ -3453,8 +3453,8 @@ TABLE OF CONTENTS
   .modal.is-active.modal-sm .modal-card-body {
     max-height: 400px; }
   .modal.is-active.modal-hero .modal-background {
-    background: linear-gradient(to right, #536dfe, #7F00FF);
-    background-color: #7F00FF; }
+    background: linear-gradient(to right, #536dfe, #21546d);
+    background-color: #21546d; }
   .modal.is-active.modal-success .modal-background {
     background: #00b289; }
   .modal.is-active.modal-error .modal-background {
@@ -3520,11 +3520,11 @@ TABLE OF CONTENTS
       border: 1px solid #00D1B2;
       color: #00D1B2; }
   .b-badge.is-secondary {
-    background: #7F00FF; }
+    background: #21546d; }
     .b-badge.is-secondary.badge-outlined {
       background: transparent;
-      border: 1px solid #7F00FF;
-      color: #7F00FF; }
+      border: 1px solid #21546d;
+      color: #21546d; }
   .b-badge.is-accent {
     background: #536dfe; }
     .b-badge.is-accent.badge-outlined {
@@ -3573,12 +3573,12 @@ TABLE OF CONTENTS
       border: 1px solid #00D1B2;
       color: #00D1B2; }
   .tag.is-secondary {
-    background: #7F00FF;
+    background: #21546d;
     color: #fff; }
     .tag.is-secondary.is-outlined {
       background: transparent;
-      border: 1px solid #7F00FF;
-      color: #7F00FF; }
+      border: 1px solid #21546d;
+      color: #21546d; }
   .tag.is-accent {
     background: #536dfe;
     color: #fff; }
@@ -3779,7 +3779,7 @@ ul, ol {
   .list-block .b-badge {
     float: right; }
   .list-block.is-secondary li.is-active {
-    background: #7F00FF; }
+    background: #21546d; }
   .list-block.is-accent li.is-active {
     background: #536dfe; }
 
@@ -3951,7 +3951,7 @@ TABLE OF CONTENTS
   .responsive-table.is-primary tr:first-child {
     background: #00D1B2; }
   .responsive-table.is-secondary tr:first-child {
-    background: #7F00FF; }
+    background: #21546d; }
   .responsive-table.is-accent tr:first-child {
     background: #536dfe; }
   .responsive-table tr:first-child {
@@ -4026,10 +4026,10 @@ TABLE OF CONTENTS
   border: 1px solid #00D1B2; }
 
 .message.msg-secondary .message-header {
-  background: #7F00FF; }
+  background: #21546d; }
 
 .message.msg-secondary .message-body {
-  border: 1px solid #7F00FF; }
+  border: 1px solid #21546d; }
 
 .message.msg-accent .message-header {
   background: #536dfe; }
@@ -4082,7 +4082,7 @@ TABLE OF CONTENTS
   .message.icon-msg.primary-msg i {
     background: #00D1B2; }
   .message.icon-msg.secondary-msg i {
-    background: #7F00FF; }
+    background: #21546d; }
   .message.icon-msg.accent-msg i {
     background: #536dfe; }
   .message.icon-msg.info-msg i {
@@ -4364,7 +4364,7 @@ body {
           background-color: #00D1B2;
           box-shadow: 0 14px 26px -12px rgba(0, 209, 178, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 209, 178, 0.2) !important; }
         .dashboard-wrapper .dashboard-tiles .dashboard-tile .icon-header i.secondary {
-          background-color: #7F00FF;
+          background-color: #21546d;
           box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
         .dashboard-wrapper .dashboard-tiles .dashboard-tile .icon-header i.accent {
           background-color: #536dfe;
@@ -4400,7 +4400,7 @@ body {
             align-items: center;
         transition: all .3s; }
         .dashboard-wrapper .dashboard-tiles .dashboard-tile .view-all-button:hover {
-          background: #7F00FF;
+          background: #21546d;
           box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
           .dashboard-wrapper .dashboard-tiles .dashboard-tile .view-all-button:hover i {
             color: #fff; }
@@ -4488,11 +4488,11 @@ body {
       background: #00D1B2;
       box-shadow: 0 14px 26px -12px rgba(0, 209, 178, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 209, 178, 0.2) !important; }
     .dashboard-wrapper .flex-card .material-header.is-secondary, .dashboard-wrapper .dashboard-tiles .dashboard-tile .material-header.is-secondary, .dashboard-wrapper .dashboard-chart-card .material-header.is-secondary, .dashboard-wrapper .map-card .material-header.is-secondary, .dashboard-wrapper .members-card .material-header.is-secondary, .dashboard-wrapper .tasks-card .material-header.is-secondary, .dashboard-wrapper .achievement-card .material-header.is-secondary, .dashboard-wrapper .dash-card .material-header.is-secondary, .dashboard-wrapper .peity-widget .material-header.is-secondary, .dashboard-wrapper .auth-card .material-header.is-secondary, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .material-header.is-secondary, .profile-container .profile-sections-wrapper .profile-details .profile-view .dashboard-wrapper .info-card .material-header.is-secondary, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .material-header.is-secondary, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .dashboard-wrapper .profile-notifications-title .material-header.is-secondary, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .material-header.is-secondary, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .dashboard-wrapper .notification-inner .material-header.is-secondary, .dashboard-wrapper .company-card .material-header.is-secondary, .dashboard-wrapper .feed-channels .material-header.is-secondary, .dashboard-wrapper .activity-card .material-header.is-secondary, .dashboard-wrapper .compose-card .material-header.is-secondary, .dashboard-wrapper .post-item .material-header.is-secondary, .dashboard-wrapper .audio.green-audio-player .material-header.is-secondary, .dashboard-wrapper .feed-card .material-header.is-secondary, .dashboard-wrapper .widget-card .material-header.is-secondary, .dashboard-wrapper .table-widget .material-header.is-secondary, .dashboard-wrapper .pills-widget .material-header.is-secondary, .dashboard-wrapper .follow-card .material-header.is-secondary, .dashboard-wrapper .stats-card .material-header.is-secondary, .dashboard-wrapper .stats-card-portrait .material-header.is-secondary, .dashboard-wrapper .rating-card .material-header.is-secondary, .dashboard-wrapper .following-card .material-header.is-secondary, .dashboard-wrapper .skype-card .material-header.is-secondary, .dashboard-wrapper .tweet-card .material-header.is-secondary, .dashboard-wrapper .social-card .material-header.is-secondary, .dashboard-wrapper .is-document-list .material-header.is-secondary, .dashboard-wrapper .is-document .material-header.is-secondary, .dashboard-wrapper .projects-list-wrapper .list-body .project-card .material-header.is-secondary, .projects-list-wrapper .list-body .dashboard-wrapper .project-card .material-header.is-secondary, .dashboard-wrapper .is-contacts-grid .contact-card .material-header.is-secondary, .is-contacts-grid .dashboard-wrapper .contact-card .material-header.is-secondary, .dashboard-wrapper .deal-content .deal-card .material-header.is-secondary, .deal-content .dashboard-wrapper .deal-card .material-header.is-secondary {
-      background: #7F00FF;
+      background: #21546d;
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
     .dashboard-wrapper .flex-card .material-header.is-gradient, .dashboard-wrapper .dashboard-tiles .dashboard-tile .material-header.is-gradient, .dashboard-wrapper .dashboard-chart-card .material-header.is-gradient, .dashboard-wrapper .map-card .material-header.is-gradient, .dashboard-wrapper .members-card .material-header.is-gradient, .dashboard-wrapper .tasks-card .material-header.is-gradient, .dashboard-wrapper .achievement-card .material-header.is-gradient, .dashboard-wrapper .dash-card .material-header.is-gradient, .dashboard-wrapper .peity-widget .material-header.is-gradient, .dashboard-wrapper .auth-card .material-header.is-gradient, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .material-header.is-gradient, .profile-container .profile-sections-wrapper .profile-details .profile-view .dashboard-wrapper .info-card .material-header.is-gradient, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .material-header.is-gradient, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .dashboard-wrapper .profile-notifications-title .material-header.is-gradient, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .material-header.is-gradient, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .dashboard-wrapper .notification-inner .material-header.is-gradient, .dashboard-wrapper .company-card .material-header.is-gradient, .dashboard-wrapper .feed-channels .material-header.is-gradient, .dashboard-wrapper .activity-card .material-header.is-gradient, .dashboard-wrapper .compose-card .material-header.is-gradient, .dashboard-wrapper .post-item .material-header.is-gradient, .dashboard-wrapper .audio.green-audio-player .material-header.is-gradient, .dashboard-wrapper .feed-card .material-header.is-gradient, .dashboard-wrapper .widget-card .material-header.is-gradient, .dashboard-wrapper .table-widget .material-header.is-gradient, .dashboard-wrapper .pills-widget .material-header.is-gradient, .dashboard-wrapper .follow-card .material-header.is-gradient, .dashboard-wrapper .stats-card .material-header.is-gradient, .dashboard-wrapper .stats-card-portrait .material-header.is-gradient, .dashboard-wrapper .rating-card .material-header.is-gradient, .dashboard-wrapper .following-card .material-header.is-gradient, .dashboard-wrapper .skype-card .material-header.is-gradient, .dashboard-wrapper .tweet-card .material-header.is-gradient, .dashboard-wrapper .social-card .material-header.is-gradient, .dashboard-wrapper .is-document-list .material-header.is-gradient, .dashboard-wrapper .is-document .material-header.is-gradient, .dashboard-wrapper .projects-list-wrapper .list-body .project-card .material-header.is-gradient, .projects-list-wrapper .list-body .dashboard-wrapper .project-card .material-header.is-gradient, .dashboard-wrapper .is-contacts-grid .contact-card .material-header.is-gradient, .is-contacts-grid .dashboard-wrapper .contact-card .material-header.is-gradient, .dashboard-wrapper .deal-content .deal-card .material-header.is-gradient, .deal-content .dashboard-wrapper .deal-card .material-header.is-gradient {
-      background: #7F00FF;
-      background: linear-gradient(to right, #E100FF, #7F00FF);
+      background: #21546d;
+      background: linear-gradient(to right, #E100FF, #21546d);
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
   .dashboard-wrapper .flex-card .card-heading, .dashboard-wrapper .dashboard-tiles .dashboard-tile .card-heading, .dashboard-wrapper .dashboard-chart-card .card-heading, .dashboard-wrapper .map-card .card-heading, .dashboard-wrapper .members-card .card-heading, .dashboard-wrapper .tasks-card .card-heading, .dashboard-wrapper .achievement-card .card-heading, .dashboard-wrapper .dash-card .card-heading, .dashboard-wrapper .peity-widget .card-heading, .dashboard-wrapper .auth-card .card-heading, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .card-heading, .profile-container .profile-sections-wrapper .profile-details .profile-view .dashboard-wrapper .info-card .card-heading, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .card-heading, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .dashboard-wrapper .profile-notifications-title .card-heading, .dashboard-wrapper .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .card-heading, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .dashboard-wrapper .notification-inner .card-heading, .dashboard-wrapper .company-card .card-heading, .dashboard-wrapper .feed-channels .card-heading, .dashboard-wrapper .activity-card .card-heading, .dashboard-wrapper .compose-card .card-heading, .dashboard-wrapper .post-item .card-heading, .dashboard-wrapper .audio.green-audio-player .card-heading, .dashboard-wrapper .feed-card .card-heading, .dashboard-wrapper .widget-card .card-heading, .dashboard-wrapper .table-widget .card-heading, .dashboard-wrapper .pills-widget .card-heading, .dashboard-wrapper .follow-card .card-heading, .dashboard-wrapper .stats-card .card-heading, .dashboard-wrapper .stats-card-portrait .card-heading, .dashboard-wrapper .rating-card .card-heading, .dashboard-wrapper .following-card .card-heading, .dashboard-wrapper .skype-card .card-heading, .dashboard-wrapper .tweet-card .card-heading, .dashboard-wrapper .social-card .card-heading, .dashboard-wrapper .is-document-list .card-heading, .dashboard-wrapper .is-document .card-heading, .dashboard-wrapper .projects-list-wrapper .list-body .project-card .card-heading, .projects-list-wrapper .list-body .dashboard-wrapper .project-card .card-heading, .dashboard-wrapper .is-contacts-grid .contact-card .card-heading, .is-contacts-grid .dashboard-wrapper .contact-card .card-heading, .dashboard-wrapper .deal-content .deal-card .card-heading, .deal-content .dashboard-wrapper .deal-card .card-heading {
     padding: 20px;
@@ -4581,8 +4581,8 @@ body {
     padding: 20px 0 10px 0;
     text-align: center; }
     .auth-card .button-wrap.is-secondary .button {
-      background: #7F00FF;
-      border: 1px solid #7F00FF;
+      background: #21546d;
+      border: 1px solid #21546d;
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
     .auth-card .button-wrap .button {
       height: 44px;
@@ -4655,9 +4655,9 @@ TABLE OF CONTENTS
         font-size: 1.5rem;
         color: #A9ABAC; }
       .main-menu .main-menu-inner .side-icon.is-active i {
-        color: #7F00FF; }
+        color: #21546d; }
       .main-menu .main-menu-inner .side-icon:hover i {
-        color: #7F00FF; }
+        color: #21546d; }
     .main-menu .main-menu-inner .main-logo {
       display: -ms-flexbox;
       display: flex;
@@ -4734,7 +4734,7 @@ TABLE OF CONTENTS
 1. Menu items
 ========================================================================== */
 .child-menu {
-  background: #7F00FF;
+  background: #21546d;
   border-right: 1px solid #e5e5e5;
   position: fixed;
   top: 0;
@@ -4757,7 +4757,7 @@ TABLE OF CONTENTS
         justify-content: flex-end;
     -ms-flex-align: center;
         align-items: center;
-    border-bottom: 1px solid ligthen(#7F00FF, 15%); }
+    border-bottom: 1px solid ligthen(#21546d, 15%); }
     .child-menu .child-header .cross-container {
       margin-right: 15px;
       -webkit-transform: scale(1.1);
@@ -4793,19 +4793,19 @@ TABLE OF CONTENTS
     text-decoration: none;
     color: #fff; }
   .child-menu .sidebar-menu li a:hover {
-    background-color: #7200e6;
+    background-color: #3c6382;
     padding: 20px 25px;
     text-decoration: none;
     color: #fff; }
   .child-menu li.have-children.active {
-    background-color: #7200e6; }
+    background-color: #3c6382; }
   .child-menu li.have-children ul {
     padding: 0;
     background-color: #6600cc; }
   .child-menu li.have-children ul li {
     min-height: 10px !important; }
   .child-menu li.have-children ul li a {
-    background-color: #4c0099;
+    background-color: #0a3d62;
     padding: 12px 25px 12px 62px; }
     .child-menu li.have-children ul li a span {
       margin-left: auto;
@@ -4814,7 +4814,7 @@ TABLE OF CONTENTS
       content: ''; }
   .child-menu li.have-children ul li a:hover, .child-menu li.have-children ul li.is-active a {
     color: #fff;
-    background-color: #400080;
+    background-color: #3c6382;
     padding: 12px 25px 12px 62px; }
   .child-menu li.have-children, .child-menu li {
     position: relative; }
@@ -4862,7 +4862,7 @@ TABLE OF CONTENTS
   .fab.is-active .fab__ripple {
     transform: scale(1);
     -webkit-transform: scale(1);
-    background-color: #7F00FF; }
+    background-color: #21546d; }
   .fab.is-active .profile-container {
     transform: scale(1);
     -webkit-transform: scale(1); }
@@ -4872,7 +4872,7 @@ TABLE OF CONTENTS
   height: 450vw;
   margin-top: -225vw;
   margin-left: -225vw;
-  background-color: #7F00FF;
+  background-color: #21546d;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -5086,7 +5086,7 @@ TABLE OF CONTENTS
             margin-bottom: 12px; }
             .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .info-block i {
               font-size: 2rem;
-              color: #7F00FF; }
+              color: #21546d; }
             .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .info-block .meta {
               margin-left: 12px; }
               .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .info-block .meta label {
@@ -5118,7 +5118,7 @@ TABLE OF CONTENTS
             font-family: 'Nexa Bold', sans-serif;
             font-size: 1.6rem; }
           .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .tag {
-            background: #7F00FF;
+            background: #21546d;
             box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important;
             color: #fff; }
       .profile-container .profile-sections-wrapper .profile-notifications .notifications-center {
@@ -5174,7 +5174,7 @@ TABLE OF CONTENTS
           font-size: 2rem;
           font-weight: bolder;
           padding-right: 10px;
-          color: #7F00FF; }
+          color: #21546d; }
       .profile-container .profile-sections-wrapper .profile-team .team-avatars {
         display: -ms-flexbox;
         display: flex;
@@ -5192,7 +5192,7 @@ TABLE OF CONTENTS
           margin-left: 10px;
           font-size: 1.2rem;
           font-weight: bolder;
-          color: #7F00FF; }
+          color: #21546d; }
       .profile-container .profile-sections-wrapper .profile-team .team-card .avatar {
         width: 100%;
         height: 80px;
@@ -5289,7 +5289,7 @@ TABLE OF CONTENTS
           box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
           border-color: #e3e3e3; }
           .dashboard-nav .navbar-brand .searchbox input:focus + .form-icon svg {
-            stroke: #7F00FF; }
+            stroke: #21546d; }
       .dashboard-nav .navbar-brand .searchbox .form-icon {
         position: absolute;
         top: 0;
@@ -5428,7 +5428,7 @@ TABLE OF CONTENTS
         border-radius: 50%;
         background: #00D1B2; }
         .dashboard-nav .navbar-menu .navbar-end .icon-button .indicator.is-alt {
-          background: #7F00FF; }
+          background: #21546d; }
   .dashboard-nav .nav-toggle {
     height: 65px !important;
     width: 65px !important; }
@@ -5626,7 +5626,7 @@ TABLE OF CONTENTS
           .emails-drop .emails-body .emails-list li img.is-primary, .emails-drop .emails-body .emails-list li .fake-avatar.is-primary {
             background: #00D1B2; }
           .emails-drop .emails-body .emails-list li img.is-secondary, .emails-drop .emails-body .emails-list li .fake-avatar.is-secondary {
-            background: #7F00FF; }
+            background: #21546d; }
         .emails-drop .emails-body .emails-list li .fake-avatar {
           line-height: 2.4; }
       .emails-drop .emails-body .emails-list .email-content {
@@ -5948,7 +5948,7 @@ TABLE OF CONTENTS
       height: 42px;
       width: calc(33.3% - 12px);
       border-radius: 6px;
-      background: #7F00FF;
+      background: #21546d;
       z-index: 0;
       transition: all .3s; }
     .quickview .tabs ul .tab-item {
@@ -5980,7 +5980,7 @@ TABLE OF CONTENTS
     -ms-flex-align: center;
         align-items: center; }
     .quickview .navtab-content .panel-title:hover i {
-      color: #7F00FF; }
+      color: #21546d; }
     .quickview .navtab-content .panel-title h3 {
       font-weight: 500;
       text-transform: uppercase;
@@ -6007,7 +6007,7 @@ TABLE OF CONTENTS
         box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
         border-color: #e3e3e3; }
         .quickview .field .searchbox input:focus + .form-icon svg {
-          stroke: #7F00FF; }
+          stroke: #21546d; }
     .quickview .field .searchbox .form-icon {
       position: absolute;
       top: 0;
@@ -6154,7 +6154,7 @@ TABLE OF CONTENTS
         transition: opacity 0.3s;
         cursor: pointer; }
         .quickview .reminders-list .reminder .reminder-controls i:hover {
-          color: #7F00FF; }
+          color: #21546d; }
     .quickview .reminders-list .reminder:hover .reminder-controls i {
       opacity: 1; }
 
@@ -6230,7 +6230,7 @@ TABLE OF CONTENTS
     .is-chat .message-container .chat-message.from .chat-bubble {
       margin-left: 20px;
       color: #fff;
-      background: #7F00FF;
+      background: #21546d;
       border-radius: 0 15px 15px 15px; }
     .is-chat .message-container .chat-message.from .timestamp {
       right: 10px;
@@ -6498,7 +6498,7 @@ TABLE OF CONTENTS
     color: #707070;
     margin-left: 15px; }
     .post-item .item-title a {
-      color: #7F00FF; }
+      color: #21546d; }
     .post-item .item-title .feed-time-small {
       font-size: .9rem;
       color: #999;
@@ -6581,7 +6581,7 @@ TABLE OF CONTENTS
   position: absolute;
   bottom: 0px;
   right: 0px;
-  background: #7F00FF;
+  background: #21546d;
   box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important;
   box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
   .social-fab .fab-wrapper .pop-fab .plus-toggle {
@@ -6596,7 +6596,7 @@ TABLE OF CONTENTS
               transform: rotate(135deg); }
 
 .comment, .share {
-  background: #7F00FF !important;
+  background: #21546d !important;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: center;
@@ -6712,7 +6712,7 @@ TABLE OF CONTENTS
     cursor: pointer;
     position: relative; }
     .audio.green-audio-player .slider .progress {
-      background-color: #7F00FF;
+      background-color: #21546d;
       border-radius: inherit;
       position: absolute;
       pointer-events: none; }
@@ -6720,7 +6720,7 @@ TABLE OF CONTENTS
         height: 16px;
         width: 16px;
         border-radius: 8px;
-        background-color: #7F00FF;
+        background-color: #21546d;
         position: absolute;
         pointer-events: all;
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.32); }
@@ -6757,7 +6757,7 @@ TABLE OF CONTENTS
     .audio.green-audio-player .volume .volume-btn {
       cursor: pointer; }
       .audio.green-audio-player .volume .volume-btn.open path {
-        fill: #7F00FF; }
+        fill: #21546d; }
     .audio.green-audio-player .volume .volume-controls {
       width: 30px;
       height: 135px;
@@ -6910,7 +6910,7 @@ TABLE OF CONTENTS
     color: #999; }
     .featured-feed-post .author-meta .author-name span {
       font-weight: 500;
-      color: #7F00FF; }
+      color: #21546d; }
   .featured-feed-post .author-meta .post-timestamp {
     font-size: 85%;
     color: #999;
@@ -6948,7 +6948,7 @@ TABLE OF CONTENTS
       color: #cecece;
       cursor: pointer; }
       .featured-feed-post .post-share i:hover {
-        color: #7F00FF; }
+        color: #21546d; }
   .featured-feed-post a {
     font-weight: 500; }
 
@@ -7042,7 +7042,7 @@ TABLE OF CONTENTS
       color: #444F60;
       transition: color .3s; }
       .recent-post .post-meta a:hover {
-        color: #7F00FF; }
+        color: #21546d; }
     .recent-post .post-meta span {
       display: block;
       color: #999;
@@ -7168,7 +7168,7 @@ TABLE OF CONTENTS
     color: #444F60;
     font-weight: 500; }
     .project-table a:hover {
-      color: #7F00FF; }
+      color: #21546d; }
   .project-table b {
     font-weight: 500 !important;
     font-size: 94%;
@@ -7381,7 +7381,7 @@ TABLE OF CONTENTS
     padding-left: 35px; }
     .pills-widget .messages-list .message-meta span {
       font-weight: 500;
-      color: #7F00FF; }
+      color: #21546d; }
     .pills-widget .messages-list .message-meta .small-avatar {
       width: 28px;
       height: 28px;
@@ -7431,7 +7431,7 @@ TABLE OF CONTENTS
     padding-left: 35px; }
     .pills-widget .task-list .task-meta span {
       font-weight: 500;
-      color: #7F00FF; }
+      color: #21546d; }
     .pills-widget .task-list .task-meta .small-avatar {
       width: 28px;
       height: 28px;
@@ -7484,7 +7484,7 @@ TABLE OF CONTENTS
     padding-left: 40px; }
     .pills-widget .invoices-list .invoice-meta span {
       font-weight: 600;
-      color: #7F00FF;
+      color: #21546d;
       font-size: .9rem; }
     .pills-widget .invoices-list .invoice-meta i {
       font-size: 32px;
@@ -7638,7 +7638,7 @@ TABLE OF CONTENTS
             transform: skewY(-8deg);
     margin-top: -50px;
     min-height: 270px;
-    background: #7F00FF; }
+    background: #21546d; }
   .stats-card.is-skewed .img-block {
     -webkit-transform: skewY(8deg);
             transform: skewY(8deg);
@@ -7676,7 +7676,7 @@ TABLE OF CONTENTS
   .stats-card-portrait .img-header {
     min-height: 300px;
     width: 75%;
-    background: #7F00FF;
+    background: #21546d;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-pack: center;
@@ -7949,7 +7949,7 @@ TABLE OF CONTENTS
   min-height: 300px; }
   .logo-card .lib-logo {
     height: 100px;
-    background: #7F00FF;
+    background: #21546d;
     position: relative;
     display: -ms-flexbox;
     display: flex;
@@ -8121,7 +8121,7 @@ TABLE OF CONTENTS
         width: 200px; }
       .is-document-list .table th .dropdown.filter-dropdown .dropdown-item span .fa {
         margin-right: 10px;
-        color: #7F00FF;
+        color: #21546d;
         visibility: hidden; }
       .is-document-list .table th .dropdown.filter-dropdown .dropdown-item.is-spaced {
         display: -ms-flexbox;
@@ -8138,7 +8138,7 @@ TABLE OF CONTENTS
           line-height: 0; }
       .is-document-list .table th .dropdown.filter-dropdown .dropdown-item.is-active {
         background-color: transparent !important;
-        color: #7F00FF !important;
+        color: #21546d !important;
         font-weight: 500; }
         .is-document-list .table th .dropdown.filter-dropdown .dropdown-item.is-active .fa {
           visibility: visible; }
@@ -8186,7 +8186,7 @@ TABLE OF CONTENTS
           font-weight: 500;
           color: #444F60; }
           .is-document-list .table td.document-preview .inner a:hover {
-            color: #7F00FF; }
+            color: #21546d; }
         .is-document-list .table td.document-preview .inner i {
           visibility: hidden;
           pointer-events: none;
@@ -8196,7 +8196,7 @@ TABLE OF CONTENTS
           color: #999;
           cursor: pointer; }
           .is-document-list .table td.document-preview .inner i:hover {
-            color: #7F00FF; }
+            color: #21546d; }
       .is-document-list .table td.modifications span {
         display: block; }
         .is-document-list .table td.modifications span small {
@@ -8254,10 +8254,10 @@ TABLE OF CONTENTS
         border-color: #cecece;
         background: #fff !important; }
       .is-document-list .table tr:hover .button:hover {
-        border-color: #7F00FF;
-        color: #7F00FF; }
+        border-color: #21546d;
+        color: #21546d; }
         .is-document-list .table tr:hover .button:hover i {
-          color: #7F00FF; }
+          color: #21546d; }
 
 .right-options .members img {
   height: 46px;
@@ -8483,7 +8483,7 @@ TABLE OF CONTENTS
     .right-options .controls a:hover {
       background: white; }
       .right-options .controls a:hover i {
-        color: #7F00FF; }
+        color: #21546d; }
 
 /* ==========================================================================
 1. Document details
@@ -8508,7 +8508,7 @@ TABLE OF CONTENTS
         border-bottom: 2px solid transparent !important;
         margin-bottom: 0 !important; }
       .document-details-tabs ul li.is-active a {
-        border-color: #7F00FF !important;
+        border-color: #21546d !important;
         font-weight: 500; }
   .document-details-tabs .navtab-content {
     padding: 0; }
@@ -8656,7 +8656,7 @@ TABLE OF CONTENTS
     .is-invoice .bottom-page .company, .is-invoice .bottom-page .url {
       font-weight: 500; }
     .is-invoice .bottom-page .url {
-      color: #7F00FF; }
+      color: #21546d; }
     .is-invoice .bottom-page .code, .is-invoice .bottom-page .id {
       color: #444F60;
       font-weight: 500;
@@ -8769,7 +8769,7 @@ TABLE OF CONTENTS
     .is-invoice .sub-table .total-value {
       font-size: 1.5rem;
       font-weight: 600;
-      color: #7F00FF; }
+      color: #21546d; }
       .is-invoice .sub-table .total-value:before {
         content: '$';
         font-size: 1.2rem; }
@@ -8843,7 +8843,7 @@ TABLE OF CONTENTS
           justify-content: center;
       -ms-flex-align: center;
           align-items: center;
-      background: #7F00FF;
+      background: #21546d;
       color: #fff;
       border: 4px solid #f4f6fb; }
       .project-members-avatars .face.is-fake span {
@@ -8882,7 +8882,7 @@ TABLE OF CONTENTS
   .add-button:hover {
     background: #fff; }
     .add-button:hover i {
-      color: #7F00FF; }
+      color: #21546d; }
 
 /* ==========================================================================
 1. Tabs
@@ -8944,7 +8944,7 @@ TABLE OF CONTENTS
           box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
           border-color: #ededed; }
           .projects-list-wrapper .list-header .list-filter .control input:focus + .form-icon svg {
-            stroke: #7F00FF; }
+            stroke: #21546d; }
       .projects-list-wrapper .list-header .list-filter .control .form-icon {
         position: absolute;
         left: 0;
@@ -9008,7 +9008,7 @@ TABLE OF CONTENTS
               justify-content: center;
           -ms-flex-align: center;
               align-items: center;
-          background: #7F00FF;
+          background: #21546d;
           color: #fff;
           border: 2px solid #f4f6fb; }
           .projects-list-wrapper .list-body .project-card .project-members .face.is-fake span {
@@ -9058,11 +9058,11 @@ TABLE OF CONTENTS
         .projects-list-wrapper .list-body .project-card .progress-block .progress.is-high::-ms-fill {
           background-color: #00dbbb; }
         .projects-list-wrapper .list-body .project-card .progress-block .progress.is-secondary::-webkit-progress-value {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
         .projects-list-wrapper .list-body .project-card .progress-block .progress.is-secondary::-moz-progress-bar {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
         .projects-list-wrapper .list-body .project-card .progress-block .progress.is-secondary::-ms-fill {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
       .projects-list-wrapper .list-body .project-card .progress-block .task-count {
         display: -ms-flexbox;
         display: flex;
@@ -9117,7 +9117,7 @@ TABLE OF CONTENTS
               justify-content: center;
           -ms-flex-align: center;
               align-items: center;
-          background: #7F00FF;
+          background: #21546d;
           color: #fff;
           font-weight: 600;
           font-size: .9rem;
@@ -9193,7 +9193,7 @@ TABLE OF CONTENTS
           justify-content: center;
       -ms-flex-align: center;
           align-items: center;
-      background: #7F00FF;
+      background: #21546d;
       color: #fff;
       font-weight: 600;
       font-size: .9rem;
@@ -9252,7 +9252,7 @@ TABLE OF CONTENTS
       padding: 20px;
       border-radius: 6px;
       line-height: 0;
-      background: #7F00FF; }
+      background: #21546d; }
       .create-project-modal .card-body .form-footer button:hover, .create-task-modal .card-body .form-footer button:hover {
         box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
   .create-project-modal .card-body .members-select .member-row, .create-task-modal .card-body .members-select .member-row {
@@ -9278,8 +9278,8 @@ TABLE OF CONTENTS
       .create-project-modal .card-body .members-select .member-row .b-checkbox label:before, .create-task-modal .card-body .members-select .member-row .b-checkbox label:before {
         background: #ededed; }
       .create-project-modal .card-body .members-select .member-row .b-checkbox input:checked + label::before, .create-task-modal .card-body .members-select .member-row .b-checkbox input:checked + label::before {
-        background-color: #7F00FF;
-        border-color: #7F00FF; }
+        background-color: #21546d;
+        border-color: #21546d; }
 
 .invite-user-modal h2, .icon-action-modal h2 {
   padding: 14px 20px;
@@ -9325,7 +9325,7 @@ TABLE OF CONTENTS
   cursor: pointer;
   font-weight: 500;
   font-size: .9rem;
-  color: #7F00FF; }
+  color: #21546d; }
   .invite-user-modal .add-more i, .icon-action-modal .add-more i {
     margin: 0 5px;
     color: inherit;
@@ -9341,7 +9341,7 @@ TABLE OF CONTENTS
     padding: 20px;
     border-radius: 4px;
     line-height: 0;
-    background: #7F00FF; }
+    background: #21546d; }
     .invite-user-modal .modal-footer button:hover, .icon-action-modal .modal-footer button:hover {
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
     .invite-user-modal .modal-footer button.modal-dismiss, .icon-action-modal .modal-footer button.modal-dismiss {
@@ -9365,11 +9365,11 @@ TABLE OF CONTENTS
     .top-progress-block .progress.is-xs {
       height: .35rem !important; }
     .top-progress-block .progress.is-secondary::-webkit-progress-value {
-      background-color: #7F00FF; }
+      background-color: #21546d; }
     .top-progress-block .progress.is-secondary::-moz-progress-bar {
-      background-color: #7F00FF; }
+      background-color: #21546d; }
     .top-progress-block .progress.is-secondary::-ms-fill {
-      background-color: #7F00FF; }
+      background-color: #21546d; }
   .top-progress-block .project-meta {
     display: -ms-flexbox;
     display: flex;
@@ -9393,7 +9393,7 @@ TABLE OF CONTENTS
         color: #999; }
       .top-progress-block .project-meta .task-count i {
         font-size: 26px;
-        color: #7F00FF; }
+        color: #21546d; }
 
 /* ==========================================================================
 4. Tasks
@@ -9452,7 +9452,7 @@ TABLE OF CONTENTS
       height: 4px;
       width: 0;
       min-width: 0;
-      background: #7F00FF;
+      background: #21546d;
       transition: all .5s; }
     .tasks-wrapper .task-card .card-inner {
       display: -ms-flexbox;
@@ -9496,7 +9496,7 @@ TABLE OF CONTENTS
                   justify-content: center;
               -ms-flex-align: center;
                   align-items: center;
-              background: #7F00FF;
+              background: #21546d;
               color: #fff;
               font-weight: 600;
               font-size: .9rem;
@@ -9589,7 +9589,7 @@ TABLE OF CONTENTS
         width: 24px;
         border-radius: 50%;
         border: 2px solid #fff;
-        background: #7F00FF; }
+        background: #21546d; }
         .project-files-wrapper .file-item .image .file-action.is-alt, .project-files-wrapper .activity-item .image .file-action.is-alt, .project-activity-wrapper .file-item .image .file-action.is-alt, .project-activity-wrapper .activity-item .image .file-action.is-alt {
           background: #00D1B2; }
         .project-files-wrapper .file-item .image .file-action i, .project-files-wrapper .activity-item .image .file-action i, .project-activity-wrapper .file-item .image .file-action i, .project-activity-wrapper .activity-item .image .file-action i {
@@ -9821,7 +9821,7 @@ TABLE OF CONTENTS
         box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
         border-color: #ededed; }
         .contacts-title-wrapper .control input:focus + .form-icon svg {
-          stroke: #7F00FF; }
+          stroke: #21546d; }
     .contacts-title-wrapper .control .form-icon {
       position: absolute;
       left: 0;
@@ -9901,7 +9901,7 @@ TABLE OF CONTENTS
             color: #556378;
             transition: color .3s; }
             .is-contacts-grid .contact-card .contact-block .contact-meta span.email:hover {
-              color: #7F00FF; }
+              color: #21546d; }
     .is-contacts-grid .contact-card .contact-actions {
       display: -ms-flexbox;
       display: flex;
@@ -9965,11 +9965,11 @@ TABLE OF CONTENTS
         .is-contacts-grid .contact-card .progress-block .progress.is-high::-ms-fill {
           background-color: #00dbbb; }
         .is-contacts-grid .contact-card .progress-block .progress.is-secondary::-webkit-progress-value {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
         .is-contacts-grid .contact-card .progress-block .progress.is-secondary::-moz-progress-bar {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
         .is-contacts-grid .contact-card .progress-block .progress.is-secondary::-ms-fill {
-          background-color: #7F00FF; }
+          background-color: #21546d; }
       .is-contacts-grid .contact-card .progress-block .task-count {
         display: -ms-flexbox;
         display: flex;
@@ -10054,7 +10054,7 @@ TABLE OF CONTENTS
         width: 200px; }
       .is-contact-list .table th .dropdown.filter-dropdown .dropdown-item span .fa {
         margin-right: 10px;
-        color: #7F00FF;
+        color: #21546d;
         visibility: hidden; }
       .is-contact-list .table th .dropdown.filter-dropdown .dropdown-item.is-spaced {
         display: -ms-flexbox;
@@ -10071,7 +10071,7 @@ TABLE OF CONTENTS
           line-height: 0; }
       .is-contact-list .table th .dropdown.filter-dropdown .dropdown-item.is-active {
         background-color: transparent !important;
-        color: #7F00FF !important;
+        color: #21546d !important;
         font-weight: 500; }
         .is-contact-list .table th .dropdown.filter-dropdown .dropdown-item.is-active .fa {
           visibility: visible; }
@@ -10119,7 +10119,7 @@ TABLE OF CONTENTS
           font-weight: 500;
           color: #444F60; }
           .is-contact-list .table td.contact-preview .inner a:hover {
-            color: #7F00FF; }
+            color: #21546d; }
         .is-contact-list .table td.contact-preview .inner i {
           display: none;
           margin-left: 16px;
@@ -10128,7 +10128,7 @@ TABLE OF CONTENTS
           color: #999;
           cursor: pointer; }
           .is-contact-list .table td.contact-preview .inner i:hover {
-            color: #7F00FF; }
+            color: #21546d; }
       .is-contact-list .table td.modifications span {
         display: block; }
         .is-contact-list .table td.modifications span small {
@@ -10185,10 +10185,10 @@ TABLE OF CONTENTS
         border-color: #cecece;
         background: #fff !important; }
       .is-contact-list .table tr:hover .button:hover {
-        border-color: #7F00FF;
-        color: #7F00FF; }
+        border-color: #21546d;
+        color: #21546d; }
         .is-contact-list .table tr:hover .button:hover i {
-          color: #7F00FF; }
+          color: #21546d; }
 
 /* ==========================================================================
 3. Single contact
@@ -10226,7 +10226,7 @@ TABLE OF CONTENTS
         height: 90px;
         width: 90px;
         border-radius: 50%;
-        border: 2px solid #7F00FF;
+        border: 2px solid #21546d;
         margin: 0 auto; }
         .is-avatar .inner .contact-block .avatar-wrapper img {
           display: block;
@@ -10280,7 +10280,7 @@ TABLE OF CONTENTS
           border-bottom: 2px solid transparent !important;
           margin-bottom: 0 !important; }
         .is-contact-info .single-contact-tabs ul li.is-active a {
-          border-color: #7F00FF !important;
+          border-color: #21546d !important;
           font-weight: 500; }
     .is-contact-info .single-contact-tabs .navtab-content {
       padding: 16px 16px 0 16px;
@@ -10296,7 +10296,7 @@ TABLE OF CONTENTS
         .is-contact-info .single-contact-tabs .navtab-content .info-block .info-content {
           color: #999; }
           .is-contact-info .single-contact-tabs .navtab-content .info-block .info-content.is-email {
-            color: #7F00FF;
+            color: #21546d;
             font-weight: 600; }
           .is-contact-info .single-contact-tabs .navtab-content .info-block .info-content.is-notes {
             margin-top: 10px; }
@@ -10393,7 +10393,7 @@ TABLE OF CONTENTS
       .is-contact-info .single-contact-tabs .navtab-content .is-phone-block {
         margin-bottom: 16px; }
         .is-contact-info .single-contact-tabs .navtab-content .is-phone-block.is-inner .fa {
-          color: #7F00FF; }
+          color: #21546d; }
         .is-contact-info .single-contact-tabs .navtab-content .is-phone-block.is-outer .fa {
           color: #ffad36; }
         .is-contact-info .single-contact-tabs .navtab-content .is-phone-block .trigger a {
@@ -10494,7 +10494,7 @@ TABLE OF CONTENTS
     padding: 20px;
     border-radius: 4px;
     line-height: 0;
-    background: #7F00FF; }
+    background: #21546d; }
     .message-contact-modal .modal-footer button:hover, .call-contact-modal .modal-footer button:hover, .create-event-modal .modal-footer button:hover {
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
     .message-contact-modal .modal-footer button.modal-dismiss, .call-contact-modal .modal-footer button.modal-dismiss, .create-event-modal .modal-footer button.modal-dismiss {
@@ -10571,7 +10571,7 @@ TABLE OF CONTENTS
     padding: 20px;
     border-radius: 4px;
     line-height: 0;
-    background: #7F00FF; }
+    background: #21546d; }
     .create-contact-modal .modal-footer button:hover {
       box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
     .create-contact-modal .modal-footer button.modal-dismiss {
@@ -10597,7 +10597,7 @@ TABLE OF CONTENTS
       .is-event-tiles .event-tile .event-circle.is-red {
         border-color: #FF7273; }
       .is-event-tiles .event-tile .event-circle.is-secondary {
-        border-color: #7F00FF; }
+        border-color: #21546d; }
       .is-event-tiles .event-tile .event-circle.is-green {
         border-color: #00b289; }
       .is-event-tiles .event-tile .event-circle.is-orange {
@@ -10626,9 +10626,9 @@ TABLE OF CONTENTS
       background: #FF7273 !important;
       color: #fcfcfc !important; }
     .is-subevent-cards .subevent-card.is-secondary .event-date {
-      border-color: #7F00FF; }
+      border-color: #21546d; }
     .is-subevent-cards .subevent-card.is-secondary .is-more {
-      background: #7F00FF !important;
+      background: #21546d !important;
       color: #fcfcfc !important; }
     .is-subevent-cards .subevent-card.is-green .event-date {
       border-color: #00b289; }
@@ -11219,11 +11219,11 @@ TABLE OF CONTENTS
           height: 38px;
           width: 38px;
           font-weight: 500;
-          background: #7F00FF; }
+          background: #21546d; }
     .kanban-box .box-meta .deal-value {
       margin-left: auto;
       font-size: 1.2rem;
-      color: #7F00FF;
+      color: #21546d;
       font-weight: 700; }
     .kanban-box .box-meta .dropdown {
       height: 30px;
@@ -11453,8 +11453,8 @@ TABLE OF CONTENTS
                 color: #fff;
                 font-size: 18px; }
             .boards-grid .flex-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .dashboard-tiles .dashboard-tile .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .dashboard-tiles .boards-grid .dashboard-tile .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .dashboard-chart-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .dashboard-chart-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .map-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .map-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .members-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .members-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .tasks-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .tasks-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .achievement-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .achievement-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .dash-card .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .dash-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .dashboard-wrapper .peity-widget .card-inner .board-meta .mood-toggle .toggler .sad, .dashboard-wrapper .boards-grid .peity-widget .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .auth-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .card-inner .board-meta .mood-toggle .toggler .sad, .profile-container .profile-sections-wrapper .profile-details .profile-view .boards-grid .info-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .card-inner .board-meta .mood-toggle .toggler .sad, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .boards-grid .profile-notifications-title .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .card-inner .board-meta .mood-toggle .toggler .sad, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .boards-grid .notification-inner .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .company-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .feed-channels .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .activity-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .compose-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .post-item .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .audio.green-audio-player .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .feed-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .widget-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .table-widget .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .pills-widget .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .follow-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .stats-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .stats-card-portrait .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .rating-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .following-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .skype-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .tweet-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .social-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .is-document-list .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .is-document .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .projects-list-wrapper .list-body .project-card .card-inner .board-meta .mood-toggle .toggler .sad, .projects-list-wrapper .list-body .boards-grid .project-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .is-contacts-grid .contact-card .card-inner .board-meta .mood-toggle .toggler .sad, .is-contacts-grid .boards-grid .contact-card .card-inner .board-meta .mood-toggle .toggler .sad, .boards-grid .deal-content .deal-card .card-inner .board-meta .mood-toggle .toggler .sad, .deal-content .boards-grid .deal-card .card-inner .board-meta .mood-toggle .toggler .sad {
-              background: #7F00FF;
-              border-color: #7F00FF;
+              background: #21546d;
+              border-color: #21546d;
               opacity: 1;
               z-index: 1; }
             .boards-grid .flex-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .dashboard-tiles .dashboard-tile .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .dashboard-tiles .boards-grid .dashboard-tile .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .dashboard-chart-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .dashboard-chart-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .map-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .map-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .members-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .members-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .tasks-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .tasks-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .achievement-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .achievement-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .dash-card .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .dash-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .dashboard-wrapper .peity-widget .card-inner .board-meta .mood-toggle .toggler .happy, .dashboard-wrapper .boards-grid .peity-widget .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .auth-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .profile-container .profile-sections-wrapper .profile-details .profile-view .info-card .card-inner .board-meta .mood-toggle .toggler .happy, .profile-container .profile-sections-wrapper .profile-details .profile-view .boards-grid .info-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .profile-notifications-title .card-inner .board-meta .mood-toggle .toggler .happy, .profile-container .profile-sections-wrapper .profile-notifications .profile-notifications-inner .boards-grid .profile-notifications-title .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .notification-inner .card-inner .board-meta .mood-toggle .toggler .happy, .profile-container .profile-sections-wrapper .profile-notifications .notifications-center .profile-notification .boards-grid .notification-inner .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .company-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .feed-channels .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .activity-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .compose-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .post-item .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .audio.green-audio-player .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .feed-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .widget-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .table-widget .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .pills-widget .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .follow-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .stats-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .stats-card-portrait .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .rating-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .following-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .skype-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .tweet-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .social-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .is-document-list .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .is-document .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .projects-list-wrapper .list-body .project-card .card-inner .board-meta .mood-toggle .toggler .happy, .projects-list-wrapper .list-body .boards-grid .project-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .is-contacts-grid .contact-card .card-inner .board-meta .mood-toggle .toggler .happy, .is-contacts-grid .boards-grid .contact-card .card-inner .board-meta .mood-toggle .toggler .happy, .boards-grid .deal-content .deal-card .card-inner .board-meta .mood-toggle .toggler .happy, .deal-content .boards-grid .deal-card .card-inner .board-meta .mood-toggle .toggler .happy {
@@ -11637,7 +11637,7 @@ TABLE OF CONTENTS
         visibility: hidden; }
       .stage-wrapper .stages .stage.is-done span i {
         display: inline-block;
-        color: #7F00FF; }
+        color: #21546d; }
       .stage-wrapper .stages .stage span {
         position: absolute;
         bottom: 0;
@@ -11650,7 +11650,7 @@ TABLE OF CONTENTS
           position: relative;
           top: 1px;
           display: none;
-          color: #7F00FF;
+          color: #21546d;
           margin-right: 4px; }
   .stage-wrapper .stage-inner {
     padding: 3px;
@@ -11659,13 +11659,13 @@ TABLE OF CONTENTS
     .stage-wrapper .stage-inner .progress {
       height: .45rem !important; }
       .stage-wrapper .stage-inner .progress::-webkit-progress-value {
-        background-color: #7F00FF;
+        background-color: #21546d;
         border-radius: 100px; }
       .stage-wrapper .stage-inner .progress::-moz-progress-bar {
-        background-color: #7F00FF;
+        background-color: #21546d;
         border-radius: 100px; }
       .stage-wrapper .stage-inner .progress::-ms-fill {
-        background-color: #7F00FF;
+        background-color: #21546d;
         border-radius: 100px; }
 
 /* ==========================================================================
@@ -11796,9 +11796,9 @@ TABLE OF CONTENTS
         color: #999;
         transition: all .3s; }
         .deal-content .deal-card .deal-card-content .details-placeholder a:hover {
-          color: #7F00FF; }
+          color: #21546d; }
           .deal-content .deal-card .deal-card-content .details-placeholder a:hover i {
-            color: #7F00FF; }
+            color: #21546d; }
         .deal-content .deal-card .deal-card-content .details-placeholder a i {
           position: relative;
           top: 1px;
@@ -11840,7 +11840,7 @@ TABLE OF CONTENTS
           .deal-content .deal-card .deal-card-content .info-block.is-add:hover .block-icon i {
             color: #999; }
           .deal-content .deal-card .deal-card-content .info-block.is-add:hover .block-icon:hover {
-            background: #7F00FF;
+            background: #21546d;
             box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important;
             cursor: pointer; }
             .deal-content .deal-card .deal-card-content .info-block.is-add:hover .block-icon:hover i {
@@ -11947,7 +11947,7 @@ TABLE OF CONTENTS
           padding-left: 40px;
           transition: all .3s; }
           .deal-content .action-card .action-card-body .action-wrap .deal-field .control input:focus + .form-icon i {
-            color: #7F00FF; }
+            color: #21546d; }
         .deal-content .action-card .action-card-body .action-wrap .deal-field .control .form-icon {
           position: absolute;
           top: 0;
@@ -12248,7 +12248,7 @@ TABLE OF CONTENTS
       .forum-title-wrapper .inner-wrap .title-meta .meta a {
         transition: all .3s; }
         .forum-title-wrapper .inner-wrap .title-meta .meta a:hover {
-          color: #7F00FF; }
+          color: #21546d; }
   .forum-title-wrapper .actions {
     display: -ms-flexbox;
     display: flex;
@@ -12271,9 +12271,9 @@ TABLE OF CONTENTS
       .forum-title-wrapper .actions .forum-back:hover {
         -webkit-transform: rotate(360deg);
                 transform: rotate(360deg);
-        border-color: #7F00FF; }
+        border-color: #21546d; }
         .forum-title-wrapper .actions .forum-back:hover i {
-          color: #7F00FF; }
+          color: #21546d; }
           .forum-title-wrapper .actions .forum-back:hover i:first-child {
             display: none; }
           .forum-title-wrapper .actions .forum-back:hover i:nth-child(2) {
@@ -12315,7 +12315,7 @@ TABLE OF CONTENTS
       border-color: #e5e5e5;
       box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06) !important; }
       .forum-search .input:focus + .search-icon i {
-        color: #7F00FF; }
+        color: #21546d; }
   .forum-search .search-icon {
     position: absolute;
     top: 0;
@@ -12370,7 +12370,7 @@ TABLE OF CONTENTS
         min-width: 38px;
         border-radius: 50%;
         border: 3px solid #fff;
-        background: #7F00FF; }
+        background: #21546d; }
         .forum-wrap .latest-posts .avatars .avatar span {
           position: relative;
           left: -2px;
@@ -12438,7 +12438,7 @@ TABLE OF CONTENTS
         min-width: 38px;
         border-radius: 50%;
         border: 3px solid #fff;
-        background: #7F00FF; }
+        background: #21546d; }
         .forum-wrap .channel-moderators .avatars .avatar span {
           position: relative;
           left: -2px;
@@ -12528,7 +12528,7 @@ TABLE OF CONTENTS
         min-width: 30px;
         border-radius: 50%;
         border: 2px solid #f2f2f2;
-        background: #7F00FF; }
+        background: #21546d; }
         .forum-wrap .topic-stats .participants .participant span {
           position: relative;
           left: -2px;
@@ -12607,9 +12607,9 @@ TABLE OF CONTENTS
       margin-bottom: 10px; }
     .forum-container .forum-channel:hover {
       box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06);
-      border-color: #7F00FF; }
+      border-color: #21546d; }
       .forum-container .forum-channel:hover .channel-icon {
-        background: #7F00FF;
+        background: #21546d;
         box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
         .forum-container .forum-channel:hover .channel-icon i {
           color: #fcfcfc; }
@@ -12722,7 +12722,7 @@ TABLE OF CONTENTS
         .forum-container .pagination li:hover i {
           color: #fcfcfc; }
       .forum-container .pagination li.is-active {
-        background: #7F00FF;
+        background: #21546d;
         opacity: 1;
         color: #fff; }
       .forum-container .pagination li span {
@@ -12817,7 +12817,7 @@ TABLE OF CONTENTS
         transition: color .3s;
         margin-bottom: 4px; }
         .topic-list .topic-card .topic-meta .topic-title:hover {
-          color: #7F00FF; }
+          color: #21546d; }
       .topic-list .topic-card .topic-meta .flex-block {
         display: -ms-flexbox;
         display: flex;
@@ -12883,7 +12883,7 @@ TABLE OF CONTENTS
               color: #999; }
               .topic-list .topic-card .topic-actions .last-reply .last-reply-meta span:nth-child(2) a {
                 font-size: .9rem;
-                color: #7F00FF;
+                color: #21546d;
                 font-weight: 500; }
       .topic-list .topic-card .topic-actions .dropdown {
         margin-left: 30px; }
@@ -12958,7 +12958,7 @@ TABLE OF CONTENTS
           font-weight: 500;
           color: #444F60; }
           .full-topic .post .post-content .top-wrap .name-wrap .name:hover {
-            color: #7F00FF; }
+            color: #21546d; }
         .full-topic .post .post-content .top-wrap .name-wrap span {
           display: block;
           font-weight: .9rem;
@@ -12993,8 +12993,8 @@ TABLE OF CONTENTS
               .full-topic .post .post-content .top-wrap .top-actions .top-action.is-like:hover i, .full-topic .post .post-content .top-wrap .top-actions .top-action.is-like.is-active i {
                 color: #fcfcfc; }
             .full-topic .post .post-content .top-wrap .top-actions .top-action.is-secondary:hover, .full-topic .post .post-content .top-wrap .top-actions .top-action.is-secondary.is-active {
-              border-color: #7F00FF;
-              background: #7F00FF; }
+              border-color: #21546d;
+              background: #21546d; }
               .full-topic .post .post-content .top-wrap .top-actions .top-action.is-secondary:hover i, .full-topic .post .post-content .top-wrap .top-actions .top-action.is-secondary.is-active i {
                 color: #fcfcfc; }
             .full-topic .post .post-content .top-wrap .top-actions .top-action i {
@@ -13162,7 +13162,7 @@ TABLE OF CONTENTS
     min-width: 120px !important;
     border-radius: 100px !important;
     font-weight: 500 !important;
-    background: #7F00FF !important;
+    background: #21546d !important;
     transition: all .3s; }
 
 /* ==========================================================================
@@ -13395,7 +13395,7 @@ TABLE OF CONTENTS
       .support-title-wrapper .inner-wrap .title-meta .meta a {
         transition: all .3s; }
         .support-title-wrapper .inner-wrap .title-meta .meta a:hover {
-          color: #7F00FF; }
+          color: #21546d; }
   .support-title-wrapper .actions {
     display: -ms-flexbox;
     display: flex;
@@ -13416,7 +13416,7 @@ TABLE OF CONTENTS
       .support-title-wrapper .actions .activity-button:hover, .support-title-wrapper .actions .action-button:hover {
         background: #DEE3E7; }
         .support-title-wrapper .actions .activity-button:hover i, .support-title-wrapper .actions .action-button:hover i {
-          color: #7F00FF; }
+          color: #21546d; }
       .support-title-wrapper .actions .activity-button i, .support-title-wrapper .actions .action-button i {
         font-size: 20px;
         color: #999;
@@ -13712,7 +13712,7 @@ TABLE OF CONTENTS
           width: 200px; }
         .support-tickets .is-ticket-list .table th .dropdown.filter-dropdown .dropdown-item span .fa {
           margin-right: 10px;
-          color: #7F00FF;
+          color: #21546d;
           visibility: hidden; }
         .support-tickets .is-ticket-list .table th .dropdown.filter-dropdown .dropdown-item.is-spaced {
           display: -ms-flexbox;
@@ -13729,7 +13729,7 @@ TABLE OF CONTENTS
             line-height: 0; }
         .support-tickets .is-ticket-list .table th .dropdown.filter-dropdown .dropdown-item.is-active {
           background-color: transparent !important;
-          color: #7F00FF !important;
+          color: #21546d !important;
           font-weight: 500; }
           .support-tickets .is-ticket-list .table th .dropdown.filter-dropdown .dropdown-item.is-active .fa {
             visibility: visible; }
@@ -13821,7 +13821,7 @@ TABLE OF CONTENTS
             background: #039BE5;
             color: #fcfcfc; }
           .support-tickets .is-ticket-list .table td.status.is-in-progress .tag {
-            background: #7F00FF;
+            background: #21546d;
             color: #fcfcfc; }
           .support-tickets .is-ticket-list .table td.status.is-escalated .tag {
             background: #ffad36;
@@ -13879,10 +13879,10 @@ TABLE OF CONTENTS
           border-color: #cecece;
           background: #fff !important; }
         .support-tickets .is-ticket-list .table tr:hover .button:hover {
-          border-color: #7F00FF;
-          color: #7F00FF; }
+          border-color: #21546d;
+          color: #21546d; }
           .support-tickets .is-ticket-list .table tr:hover .button:hover i {
-            color: #7F00FF; }
+            color: #21546d; }
   .support-tickets .support-pagination {
     margin: 0 auto;
     max-width: 308px;
@@ -13910,7 +13910,7 @@ TABLE OF CONTENTS
       .support-tickets .support-pagination .pagination-item:hover {
         background: #f7f7f7; }
       .support-tickets .support-pagination .pagination-item.is-active {
-        background: #7F00FF;
+        background: #21546d;
         box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
         .support-tickets .support-pagination .pagination-item.is-active span, .support-tickets .support-pagination .pagination-item.is-active .material-icons {
           color: #fcfcfc; }
@@ -14121,8 +14121,8 @@ TABLE OF CONTENTS
       padding: 0;
       transition: all .3s; }
       .ticket-wrapper .compose-message .control .send-button:hover {
-        background: #7F00FF;
-        border-color: #7F00FF;
+        background: #21546d;
+        border-color: #21546d;
         box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
         .ticket-wrapper .compose-message .control .send-button:hover i {
           color: #fcfcfc; }
@@ -14151,7 +14151,7 @@ TABLE OF CONTENTS
     -ms-flex-align: center;
         align-items: center;
     margin-left: 20px;
-    color: #7F00FF;
+    color: #21546d;
     font-weight: 500;
     cursor: pointer;
     -webkit-user-select: none;
@@ -14479,7 +14479,7 @@ TABLE OF CONTENTS
         display: flex;
         -ms-flex-align: center;
             align-items: center;
-        color: #7F00FF;
+        color: #21546d;
         margin-top: 16px; }
         .ticket-details-quickview .quickview-body .body-inner .field .add-tags span {
           position: relative;
@@ -14499,7 +14499,7 @@ TABLE OF CONTENTS
         padding-left: 40px;
         transition: all .3s; }
         .ticket-details-quickview .quickview-body .body-inner .datepicker-field .control input:focus + .form-icon i {
-          color: #7F00FF; }
+          color: #21546d; }
       .ticket-details-quickview .quickview-body .body-inner .datepicker-field .control .form-icon {
         position: absolute;
         top: 0;
@@ -14594,7 +14594,7 @@ TABLE OF CONTENTS
       padding: 0 5px;
       cursor: pointer; }
     .pagination li.active {
-      background: #7F00FF !important; }
+      background: #21546d !important; }
       .pagination li.active a {
         cursor: default;
         color: #fcfcfc !important; }
@@ -14792,7 +14792,7 @@ Mailbox styles
                 margin-bottom: 0;
                 font-size: .85rem;
                 height: 22px;
-                background: #7F00FF;
+                background: #21546d;
                 padding: 0 12px;
                 line-height: 1.8;
                 color: #fcfcfc !important;
@@ -15106,13 +15106,13 @@ Mailbox styles
             cursor: pointer;
             transition: all .3s; }
             .inbox-wrapper .wrapper-inner .inbox-message-details .message-wrapper .attachments-list .attachment:hover {
-              border-color: #7F00FF;
+              border-color: #21546d;
               box-shadow: -1px 3px 10px 0 rgba(0, 0, 0, 0.06); }
               .inbox-wrapper .wrapper-inner .inbox-message-details .message-wrapper .attachments-list .attachment:hover .download-icon {
                 -webkit-transform: rotate(360deg);
                         transform: rotate(360deg);
-                background: #7F00FF;
-                border-color: #7F00FF;
+                background: #21546d;
+                border-color: #21546d;
                 box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
                 .inbox-wrapper .wrapper-inner .inbox-message-details .message-wrapper .attachments-list .attachment:hover .download-icon i {
                   color: #fff; }
@@ -15200,8 +15200,8 @@ Mailbox styles
                 height: 38px;
                 bottom: 8px;
                 right: 8px;
-                background: #7F00FF;
-                border-color: #7F00FF;
+                background: #21546d;
+                border-color: #21546d;
                 color: #fcfcfc;
                 font-weight: 500; }
                 .inbox-wrapper .wrapper-inner .inbox-message-details .message-wrapper .reply-box-wrap .reply-bubble .control .button:hover {
@@ -15344,8 +15344,8 @@ Mailbox styles
             height: 38px;
             bottom: 8px;
             right: 8px;
-            background: #7F00FF;
-            border-color: #7F00FF;
+            background: #21546d;
+            border-color: #21546d;
             color: #fcfcfc;
             font-weight: 500; }
             .compose-panel .panel-inner .field-wrap .field .control .send-button:hover {
@@ -15674,7 +15674,7 @@ Chat app styles
           border-radius: 50%;
           transition: border .3s; }
           .chat-wrapper .chat-inner .chat-nav .nav-end .chat-nav-item.is-account:hover {
-            border-color: #7F00FF; }
+            border-color: #21546d; }
           .chat-wrapper .chat-inner .chat-nav .nav-end .chat-nav-item.is-account img {
             display: block;
             height: 32px;
@@ -15696,7 +15696,7 @@ Chat app styles
             .chat-wrapper .chat-inner .chat-nav .nav-end .chat-search .input:focus {
               border-color: #ededed; }
               .chat-wrapper .chat-inner .chat-nav .nav-end .chat-search .input:focus + .form-icon i {
-                color: #7F00FF; }
+                color: #21546d; }
           .chat-wrapper .chat-inner .chat-nav .nav-end .chat-search .form-icon {
             position: absolute;
             top: 0;
@@ -15789,9 +15789,9 @@ Chat app styles
           transition: all .3s;
           cursor: pointer; }
           .chat-wrapper .chat-inner .users-sidebar .footer-item .add-button:hover {
-            border: 1.8px solid #7F00FF; }
+            border: 1.8px solid #21546d; }
             .chat-wrapper .chat-inner .users-sidebar .footer-item .add-button:hover i {
-              color: #7F00FF; }
+              color: #21546d; }
           .chat-wrapper .chat-inner .users-sidebar .footer-item .add-button i {
             font-size: 18px;
             color: #444F60;
@@ -15893,10 +15893,10 @@ Chat app styles
             text-align: right; }
           .chat-wrapper .chat-inner .chat-body .chat-body-inner .chat-message.is-received .message-block .message-text {
             color: #fafafa;
-            background-color: #7F00FF; }
+            background-color: #21546d; }
             .chat-wrapper .chat-inner .chat-body .chat-body-inner .chat-message.is-received .message-block .message-text:before {
               left: -5px;
-              border-top: 5px solid #7F00FF; }
+              border-top: 5px solid #21546d; }
           .chat-wrapper .chat-inner .chat-body .chat-body-inner .chat-message.is-received + .is-received {
             margin-top: -16px !important; }
             .chat-wrapper .chat-inner .chat-body .chat-body-inner .chat-message.is-received + .is-received img {
@@ -15960,7 +15960,7 @@ Chat app styles
               max-width: 34px;
               border: 1px solid #536dfe;
               border-radius: 4px;
-              background: #7F00FF;
+              background: #21546d;
               transition: all .3s;
               cursor: pointer; }
             .chat-wrapper .chat-inner .chat-action .chat-action-inner .control .add-button:hover .button-inner {
@@ -16082,7 +16082,7 @@ Chat app styles
                 width: 42px;
                 border-radius: 50%;
                 border: 3px solid #fff;
-                background: #7F00FF;
+                background: #21546d;
                 cursor: pointer;
                 transition: all .3s; }
                 .chat-wrapper .chat-inner .chat-panel .panel-inner .panel-body.is-user-details .panel-body-inner .details-avatar .call-me:hover {
@@ -16313,9 +16313,9 @@ Chat app styles
     .chat-wrapper .dropdown.is-spaced .dropdown-item:hover {
       background: white; }
       .chat-wrapper .dropdown.is-spaced .dropdown-item:hover h3 {
-        color: #7F00FF; }
+        color: #21546d; }
       .chat-wrapper .dropdown.is-spaced .dropdown-item:hover i {
-        color: #7F00FF; }
+        color: #21546d; }
   .chat-wrapper .dropdown.is-spaced.is-accent .dropdown-item:hover {
     background: white; }
     .chat-wrapper .dropdown.is-spaced.is-accent .dropdown-item:hover h3 {
@@ -16394,7 +16394,7 @@ Chat app styles
       border: none;
       cursor: pointer; }
       .add-conversation-modal .modal-content .list-body .list-item:hover img {
-        border: 2px solid #7F00FF;
+        border: 2px solid #21546d;
         -webkit-filter: grayscale(0);
                 filter: grayscale(0);
         opacity: 1; }
@@ -16425,9 +16425,9 @@ Chat app styles
         border: 2px dashed #999;
         transition: border .3s; }
         .add-conversation-modal .modal-content .list-body .list-item.is-add a:hover {
-          border: 2px solid #7F00FF; }
+          border: 2px solid #21546d; }
           .add-conversation-modal .modal-content .list-body .list-item.is-add a:hover i {
-            color: #7F00FF; }
+            color: #21546d; }
         .add-conversation-modal .modal-content .list-body .list-item.is-add a i {
           font-size: 1.4rem;
           color: #999;
@@ -16451,7 +16451,7 @@ Chat app styles
             justify-content: center;
         -ms-flex-align: center;
             align-items: center;
-        background: #7F00FF;
+        background: #21546d;
         border-radius: 50%;
         border: 2px solid #fff; }
   .add-conversation-modal .modal-content img {
@@ -16761,7 +16761,7 @@ TABLE OF CONTENTS
   position: absolute;
   bottom: 0px;
   right: 0px;
-  background: #7F00FF;
+  background: #21546d;
   box-shadow: 0 14px 26px -12px rgba(127, 0, 255, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(127, 0, 255, 0.2) !important; }
   .profile-fab .fab-wrapper .pop-fab .profile-menu-wrapper {
     position: relative;
@@ -16839,13 +16839,13 @@ TABLE OF CONTENTS
       transition: all .2s ease; }
 
 .details {
-  background: #7F00FF !important; }
+  background: #21546d !important; }
 
 .team {
-  background: #7F00FF !important; }
+  background: #21546d !important; }
 
 .notifications {
-  background: #7F00FF !important; }
+  background: #21546d !important; }
 
 .profile-fab.is-open {
   width: 150px;
@@ -16890,7 +16890,7 @@ TABLE OF CONTENTS
   margin: 0 auto; }
 
 .button-dropdown > .button.secondary-btn {
-  background-color: #7F00FF !important; }
+  background-color: #21546d !important; }
 
 .button-dropdown .dropdown-menu {
   width: 280px; }
@@ -16975,7 +16975,7 @@ TABLE OF CONTENTS
   .switcher .switcher-block.is-primary {
     background-color: #00D1B2; }
   .switcher .switcher-block.is-secondary {
-    background-color: #7F00FF; }
+    background-color: #21546d; }
   .switcher .switcher-block.is-accent {
     background-color: #536dfe; }
   .switcher .switcher-block:hover {
@@ -17005,7 +17005,7 @@ TABLE OF CONTENTS
     opacity: 0.8;
     color: #00D1B2 !important; }
   .forgot.is-secondary, .no-account.is-secondary, .return.is-secondary {
-    color: #7F00FF !important; }
+    color: #21546d !important; }
   .forgot.is-accent, .no-account.is-accent, .return.is-accent {
     color: #536dfe !important; }
 
@@ -17223,7 +17223,7 @@ TABLE OF CONTENTS
   color: #00D1B2 !important; }
 
 .color-secondary {
-  color: #7F00FF !important; }
+  color: #21546d !important; }
 
 .color-accent {
   color: #536dfe !important; }
@@ -17244,7 +17244,7 @@ TABLE OF CONTENTS
   color: #00D1B2 !important; }
 
 .secondary-text {
-  color: #7F00FF !important; }
+  color: #21546d !important; }
 
 .accent-text {
   color: #536dfe !important; }
@@ -17906,7 +17906,7 @@ TABLE OF CONTENTS
   .quickview-header .title {
     margin-bottom: 0; }
   .quickview-header.is-secondary {
-    background: #7F00FF; }
+    background: #21546d; }
     .quickview-header.is-secondary p {
       color: #fff;
       font-size: 1.4rem;
@@ -18607,18 +18607,18 @@ TABLE OF CONTENTS
   .switch[type="checkbox"].is-primary.is-thin.is-outlined + label::after {
     box-shadow: none; }
   .switch[type="checkbox"].is-secondary:checked + label::before {
-    background: #7F00FF; }
+    background: #21546d; }
   .switch[type="checkbox"].is-secondary:checked:focus:not(:active) + label::before {
     box-shadow: 0 0 0 0.125em rgba(127, 0, 255, 0.25); }
   .switch[type="checkbox"].is-secondary:checked:hover + label::before {
     background: #7900f2; }
   .switch[type="checkbox"].is-secondary:checked:active + label::before {
-    background: #7200e6; }
+    background: #3c6382; }
   .switch[type="checkbox"].is-secondary.is-outlined:checked + label::before {
     background-color: transparent;
-    border-color: #7F00FF; }
+    border-color: #21546d; }
   .switch[type="checkbox"].is-secondary.is-outlined:checked + label::after {
-    background: #7F00FF; }
+    background: #21546d; }
   .switch[type="checkbox"].is-secondary.is-outlined:checked:hover + label::before {
     border-color: #7900f2; }
   .switch[type="checkbox"].is-secondary.is-outlined:checked:hover + label::after {
@@ -18626,7 +18626,7 @@ TABLE OF CONTENTS
   .switch[type="checkbox"].is-secondary.is-outlined:checked:active + label::before {
     border-color: #7900f2; }
   .switch[type="checkbox"].is-secondary.is-outlined:checked:active + label::after {
-    background: #7200e6; }
+    background: #3c6382; }
   .switch[type="checkbox"].is-secondary.is-thin.is-outlined + label::after {
     box-shadow: none; }
   .switch[type="checkbox"].is-accent:checked + label::before {
@@ -18820,8 +18820,8 @@ TABLE OF CONTENTS
   .b-checkbox.is-primary input[type="checkbox"]:checked + label::after {
     color: #fff; }
   .b-checkbox.is-secondary input[type="checkbox"]:checked + label::before {
-    background-color: #7F00FF;
-    border-color: #7F00FF; }
+    background-color: #21546d;
+    border-color: #21546d; }
   .b-checkbox.is-secondary input[type="checkbox"]:checked + label::after {
     color: #fff; }
   .b-checkbox.is-accent input[type="checkbox"]:checked + label::before {
@@ -19118,7 +19118,7 @@ TABLE OF CONTENTS
   overflow: visible; }
 
 a {
-  color: #7F00FF; }
+  color: #21546d; }
   a:hover {
     color: #536dfe;
     text-decoration: none; }

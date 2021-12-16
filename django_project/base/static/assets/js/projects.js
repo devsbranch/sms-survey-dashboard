@@ -45,7 +45,7 @@ $(document).ready(function($){
         if (progress_value > 66) {
             $(this).css({
                 'width': progress_value + '%',
-                'background-color': '#7F00FF',
+                'background-color': '#21546d',
             })
         }
 

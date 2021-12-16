@@ -27,14 +27,14 @@ $(document).ready(function(){
     })
 
     $(".widget-bars-secondary").peity("bar", {
-        fill: ["#7F00FF"],
+        fill: ["#21546d"],
         height: 85,
         width: '100%'
     })
 
     //Projects widget pies
     $(".project-pies").peity("pie", {
-        fill: ["#7F00FF", "#ddd"],
+        fill: ["#21546d", "#ddd"],
         innerRadius: null,
         radius: 8,
         height: 32,
@@ -98,7 +98,7 @@ $(document).ready(function(){
         $(".peityjs-pieAlt").peity("pie", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#7F00FF", "#536dfe", "#999"],
+            fill: ["#00D1B2", "#21546d", "#536dfe", "#999"],
         })
         //Peity donuts
         $(".peityjs-donut").peity("donut", {
@@ -111,7 +111,7 @@ $(document).ready(function(){
         $(".peityjs-donutAlt").peity("donut", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#7F00FF", "#536dfe", "#999"],
+            fill: ["#00D1B2", "#21546d", "#536dfe", "#999"],
         })
         //Peity lines
         $(".peityjs-line").peity("line", {
@@ -284,7 +284,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "Last month Sales ($)",
-                        backgroundColor: ["#00D1B2", "#7F00FF", "#536dfe", "#039BE5", "#999"],
+                        backgroundColor: ["#00D1B2", "#21546d", "#536dfe", "#039BE5", "#999"],
                         data: [12478, 15267, 11734, 19784, 12433]
                     }
                 ]
@@ -447,7 +447,7 @@ $(document).ready(function(){
                 labels: ["Paid invoices", "Rejected invoices", "Pending invoices", "Overdue invoices"],
                 datasets: [{
                     label: "",
-                    backgroundColor: ["#00D1B2", "#999", "#7F00FF", "#536dfe"],
+                    backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
                     data: [421, 49, 208, 39]
                 }]
             },
@@ -552,7 +552,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "",
-                        backgroundColor: ["#00D1B2", "#999", "#7F00FF", "#536dfe"],
+                        backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
                         data: [108, 49, 89, 39]
                     }
                 ]
@@ -603,7 +603,7 @@ $(document).ready(function(){
                 labels: ["Paid invoices", "Rejected invoices", "Pending invoices", "Overdue invoices"],
                 datasets: [{
                     label: "",
-                    backgroundColor: ["#00D1B2", "#999", "#7F00FF", "#536dfe"],
+                    backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
                     data: [421, 49, 208, 39]
                 }]
             },
@@ -650,7 +650,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "Last month Sales ($)",
-                        backgroundColor: ["#00D1B2", "#7F00FF", "#536dfe", "#039BE5", "#999"],
+                        backgroundColor: ["#00D1B2", "#21546d", "#536dfe", "#039BE5", "#999"],
                         data: [12478, 15267, 11734, 19784, 12433]
                     }
                 ]
@@ -722,7 +722,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "Paid",
-                        backgroundColor: "#7F00FF",
+                        backgroundColor: "#21546d",
                         data: [154, 134, 189, 161]
                     }, {
                         label: "Pending",
@@ -998,7 +998,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Paid": "#00D1B2",
-                    "Canceled": "#7F00FF",
+                    "Canceled": "#21546d",
                     "Pending": "#536dfe"
                 },
             },
@@ -1022,7 +1022,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Paid": "#00D1B2",
-                    "Canceled": "#7F00FF",
+                    "Canceled": "#21546d",
                     "Pending": "#536dfe"
                 },
             },
@@ -1159,7 +1159,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Deals won": "#00D1B2",
-                    "Deals lost": "#7F00FF",
+                    "Deals lost": "#21546d",
                     "Deals canceled": "#536dfe"
                 },
                 "type": "bar"
@@ -1187,7 +1187,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Deals won": "#00D1B2",
-                    "Deals lost": "#7F00FF",
+                    "Deals lost": "#21546d",
                     "Deals canceled": "#536dfe"
                 },
                 "type": "bar",
@@ -1232,7 +1232,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "setosa": "#00D1B2",
-                    "versicolor": "#7F00FF",
+                    "versicolor": "#21546d",
                 },
                 "type": "scatter"
             },
@@ -1264,7 +1264,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Completed tasks": "#00D1B2",
-                    "Pending tasks": "#7F00FF",
+                    "Pending tasks": "#21546d",
                 },
                 "type": "pie",
                 "onclick": function (d, i) { console.log("onclick", d, i); },
@@ -1288,7 +1288,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "Completed tasks": "#00D1B2",
-                    "Pending tasks": "#7F00FF",
+                    "Pending tasks": "#21546d",
                 },
                 "type": "donut",
                 "onclick": function (d, i) { console.log("onclick", d, i); },
@@ -1323,7 +1323,7 @@ $(document).ready(function(){
                     "#FF0000",
                     "#F97600",
                     "#F6C600",
-                    "#7F00FF"
+                    "#21546d"
                 ],
                 "threshold": {
                     "values": [
@@ -1354,7 +1354,7 @@ $(document).ready(function(){
                 ],
                 "colors": {
                     "data1": "#00D1B2",
-                    "data2": "#7F00FF",
+                    "data2": "#21546d",
                     "data3": "#536dfe",
                     "data4": "#999",
                     "data5": "#536dfe",

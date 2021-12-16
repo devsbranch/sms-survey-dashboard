@@ -351,7 +351,7 @@ $(document).ready(function ($) {
             data: [
                 {
                     picture: '<img class="datatable-avatar" src="https://via.placeholder.com/250x250" data-demo-src="/static/assets/images/avatars/nick.jpg">',
-                    firstname: 'Nick',
+                    firstname: 'Nicky',
                     lastname: 'Schwartz',
                     position: 'Manager',
                     status: '<span class="tag">Available</span>',
@@ -362,7 +362,7 @@ $(document).ready(function ($) {
                             </div>
                             <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
                                 <div class="dropdown-content">
-                                    <a href="#" class="dropdown-item">
+                                    <a href="/project/subproject/detail/" class="dropdown-item">
                                         <i class="sl sl-icon-eye"></i>
                                         <span>
                                             <span>View</span>

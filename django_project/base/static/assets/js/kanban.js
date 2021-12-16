@@ -172,7 +172,7 @@ $(document).ready(function(){
                         titleColor: '#fff',
                         messageColor: '#fff',
                         iconColor: "#fff",
-                        backgroundColor: '#7F00FF',
+                        backgroundColor: '#21546d',
                         progressBarColor: '#444F60',
                         position: 'bottomRight',
                         transitionIn: 'fadeInDown',
