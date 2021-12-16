@@ -1,0 +1,149 @@
+[
+    {
+        "type": "user",
+        "title": "Helen Miller",
+        "content": "Los Angeles",
+        "photoUrl": "assets/images/avatars/helen.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Shane Black",
+        "content": "Los Angeles",
+        "photoUrl": null,
+        "color": "#7F00FF"
+    },
+    {
+        "type": "user",
+        "title": "Daniella Walters",
+        "content": "San Francisco",
+        "photoUrl": null,
+        "color": "#00D1B2"
+    },
+    {
+        "type": "user",
+        "title": "Elie Daniels",
+        "content": "Dublin",
+        "photoUrl": "assets/images/avatars/elie.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Terry Daniels",
+        "content": "New York",
+        "photoUrl": "assets/images/avatars/terry.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Alex Walsh",
+        "content": "Irvine",
+        "photoUrl": "assets/images/avatars/alex.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Adam Klinsky",
+        "content": "Seattle",
+        "photoUrl": "assets/images/avatars/eric.png",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Christina Song",
+        "content": "Mystic Falls",
+        "photoUrl": "assets/images/avatars/christina.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Barry Smithers",
+        "content": "Miami",
+        "photoUrl": "assets/images/avatars/barry.jpg",
+        "color": null
+    },
+    {
+        "type": "user",
+        "title": "Sally Mitchells",
+        "content": "San Francisco",
+        "photoUrl": "assets/images/avatars/sally.jpg",
+        "color": null
+    },
+    {
+        "type": "file",
+        "title": "INV-49465",
+        "content": "Pending invoice",
+        "photoUrl": "assets/images/icons/search/1.svg",
+        "color": null
+    },
+    {
+        "type": "file",
+        "title": "INV-49789",
+        "content": "Pending invoice",
+        "photoUrl": "assets/images/icons/search/1.svg",
+        "color": null
+    },
+    {
+        "type": "transaction",
+        "title": "TR-8066",
+        "content": "Transaction amount: + $874.99",
+        "photoUrl": "assets/images/icons/search/2.svg",
+        "color": null
+    },
+    {
+        "type": "transaction",
+        "title": "TR-8067",
+        "content": "Transaction amount: + $1042.99",
+        "photoUrl": "assets/images/icons/search/2.svg",
+        "color": null
+    },
+    {
+        "type": "transaction",
+        "title": "TR-9078",
+        "content": "Transaction amount: - $2500.00",
+        "photoUrl": "assets/images/icons/search/2.svg",
+        "color": null
+    },
+    {
+        "type": "transaction",
+        "title": "TR-8066",
+        "content": "Transaction amount: - $139.99",
+        "photoUrl": "assets/images/icons/search/2.svg",
+        "color": null
+    },
+    {
+        "type": "company",
+        "title": "Airbnb",
+        "content": "Company",
+        "photoUrl": "assets/images/dashboard/companies/airbnb.svg",
+        "color": null
+    },
+    {
+        "type": "company",
+        "title": "Tesla",
+        "content": "Company",
+        "photoUrl": "assets/images/dashboard/companies/tesla.svg",
+        "color": null
+    },
+    {
+        "type": "company",
+        "title": "Alfresco",
+        "content": "Company",
+        "photoUrl": "assets/images/dashboard/companies/alfresco.svg",
+        "color": null
+    },
+    {
+        "type": "company",
+        "title": "H&M",
+        "content": "Company",
+        "photoUrl": "assets/images/dashboard/companies/hm.svg",
+        "color": null
+    },
+    {
+        "type": "company",
+        "title": "Amazon",
+        "content": "Company",
+        "photoUrl": "assets/images/dashboard/companies/amazon.svg",
+        "color": null
+    }
+]

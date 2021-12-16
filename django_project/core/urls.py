@@ -8,6 +8,7 @@ from dj_beneficiary import urls as dj_beneficiary_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(dj_beneficiary_urls)),
+    path('', include("authentication.urls")), # Auth routes - login / register
     path('', include('ppcr.urls', namespace='ppcr')),
     path('', include('tralard.urls', namespace='tralard')),
     path('', include('base.urls')),

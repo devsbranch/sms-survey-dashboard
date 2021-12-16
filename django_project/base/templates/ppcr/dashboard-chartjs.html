@@ -1,0 +1,126 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} ChartJS {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="columns dashboard-columns is-multiline">
+    
+                        <div class="column is-4">
+                            <div class="logo-card flex-card light-bordered light-raised">
+                                <div class="lib-logo">
+                                    <img src="{% static 'assets/images/logos/stacks/chartjs-logo.svg' %}" alt="">
+                                </div>
+                                <div class="logo-card-content">
+                                    <div class="lib-name">Chart JS</div>
+                                    <div class="subname">Javascript charting library</div>
+                                </div>
+                                <div class="filigrane"><i class="sl sl-icon-pie-chart"></i></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Bar chart" data-trigger="hover"
+                                data-content="Find and use the dashboard.js file to customize the chart">
+                                <canvas id="cjs-barChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Line chart" data-trigger="hover"
+                                data-content="Lines can be filled or not, check Chart js documentation for more details">
+                                <canvas id="cjs-lineChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Pie chart" data-trigger="hover"
+                                data-content="Pies and doughnuts share the same settings, only the type differs">
+                                <canvas id="cjs-pieChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Radar chart" data-trigger="hover"
+                                data-content="Find and use the dashboard.js file to customize the chart">
+                                <canvas id="cjs-radarChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Polar chart" data-trigger="hover"
+                                data-content="A polar area chart is created by setting type to polarArea. Polar area charts are closely related to pie charts">
+                                <canvas id="cjs-polarChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Doughnut chart" data-trigger="hover"
+                                data-content="Doughnut charts are created by setting type to doughnut. They are almost identical to pie charts, and will work the same configurations.">
+                                <canvas id="cjs-doughnutChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Horizontal bar chart" data-trigger="hover"
+                                data-content="Horizontal bar charts are created by setting type to horizontalBar. They are identical to regular bar charts in every other aspect, and will work with the same configurations.">
+                                <canvas id="cjs-hbarChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Grouped bar chart" data-trigger="hover"
+                                data-content="A grouped bar chart is not a unique chart type per say, but it requires you to setup your data a bit differently compared to the bar charts we’ve seen so far.">
+                                <canvas id="cjs-gbarChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Mixed chart" data-trigger="hover"
+                                data-content="You can mix several charts and overlay them on top of each other. This is done by setting type to bar (not to e.g. mixed or line — it has to be bar), and then setting the bar type for every dataset object in your datasets array.">
+                                <canvas id="cjs-mixedChart"></canvas>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Bubble chart" data-trigger="hover"
+                                data-content="Bubble charts can be great for visualizing a lot of different data points simultaneously.">
+                                <canvas id="cjs-bubbleChart"></canvas>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

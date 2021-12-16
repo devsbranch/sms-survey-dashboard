@@ -1,0 +1,202 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} PeityJS {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="columns dashboard-columns is-multiline">
+    
+                        <div class="column is-4">
+                            <div class="logo-card flex-card light-bordered light-raised">
+                                <div class="lib-logo">
+                                    <img src="{% static 'assets/images/logos/stacks/peity-logo.svg' %}" alt="">
+                                </div>
+                                <div class="logo-card-content">
+                                    <div class="lib-name">Peity JS</div>
+                                    <div class="subname">Javascript mini charts</div>
+                                </div>
+                                <div class="filigrane"><i class="sl sl-icon-graph"></i></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card peity-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Pie charts" data-trigger="hover"
+                                data-content="You can display multiple small pies. There are several ways to setup datatsets.">
+                                <div class="columns is-multiline">
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pie">3/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pieAlt">42,35,15,8</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pie">7/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pieAlt">80,10,5,5</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pie">1/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-pieAlt">45,45,5,5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card peity-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Donut charts" data-trigger="hover"
+                                data-content="Donut charts share almost the same configuration as pie charts.">
+                                <div class="columns is-multiline">
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donut">3/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donutAlt">42,35,15,8</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donut">7/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donutAlt">80,10,5,5</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donut">1/10</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-donutAlt">45,45,5,5</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card peity-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Line charts" data-trigger="hover"
+                                data-content="You can also display multiple small line charts, with both positive and negative values.">
+                                <div class="columns is-multiline">
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line">5,3,9,6,5,9,7,3,5,2</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line"
+                                                data-peity='{"fill": "#b7c2ff", "stroke": "#536dfe"}'>9,5,2,6,9,4,2,6,5,2</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line"
+                                                data-peity='{"fill": "#6ff7e3", "stroke": "#00d1b2"}'>5,3,2,-1,-3,-2,2,3,5,2</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line"
+                                                data-peity='{"fill": "#ededed", "stroke": "#999"}'>5,3,2,4,7,2,9,3,5,2</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line"
+                                                data-peity='{"fill": "#d7b3fc", "stroke": "#7F00FF"}'>0,-3,-6,-4,-5,-4,-7,-3,-5,-2</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-line"
+                                                data-peity='{"fill": "#c9f0ff", "stroke": "#4FC1EA"}'>9,5,2,6,9,4,2,6,5,2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card peity-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Bar charts" data-trigger="hover"
+                                data-content="Bar charts configuration is very similar to line charts. You can also display negative values.">
+                                <div class="columns is-multiline">
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar">5,3,9,6,5,9,7,3,5,2,6,5,1</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar"
+                                                data-peity='{"fill": ["#536dfe"]}'>9,5,2,6,9,4,2,6,5,2</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar"
+                                                data-peity='{"fill": ["#00d1b2"]}'>5,3,2,1,3,2,2,3,5,2</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar"
+                                                data-peity='{"fill": ["#999"]}'>5,3,2,4,7,2,9,3,5,2</span>
+                                        </div>
+                                    </div>
+                                    <div class="column">
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar"
+                                                data-peity='{"fill": ["#7F00FF"]}'>0,-3,-6,-4,-5,-4,-7,-3,-5,-2</span>
+                                        </div>
+                                        <div class="peity-chart">
+                                            <span class="peityjs-bar"
+                                                data-peity='{"fill": ["#4FC1EA"]}'>9,5,2,6,9,4,2,6,5,2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card peity-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Updating charts" data-trigger="hover"
+                                data-content="You can also set a line chart to update automatically, to show a live data stream.">
+                                <div class="columns is-multiline">
+                                    <div class="column">
+                                        <div class="peity-chart is-full">
+                                            <span class="peityjs-line-updating"
+                                                data-peity='{"fill": "#c9f0ff", "stroke": "#4FC1EA"}'>9,5,2,6,9,4,2,6,5,2</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

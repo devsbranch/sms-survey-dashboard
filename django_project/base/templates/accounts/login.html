@@ -1,0 +1,89 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% load static %}
+
+{% block title %} Login {% endblock %}
+
+{% block content %}   
+
+    <section class="hero is-fullheight is-light-grey is-bold">
+    
+        <div class="hero-body">
+            <div class="container">
+    
+                <!-- Classic inputs -->
+                <div id="classic" class="login-form-wrapper">
+
+                    <!-- Classic login form -->
+                    <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+
+                        <form role="form" method="post" action="">
+
+                            {% csrf_token %}
+
+                            <div class="auth-card">
+                                <div class="auth-card-header header-primary">
+                                    <h2 class="has-text-centered">Dashkit</h2>
+                                </div>
+                                <div class="field has-text-centered">
+                                    <p>
+                                        {% if msg %}
+                                            {{ msg | safe }}
+                                        {% else %}
+                                            Add your credentials 
+                                        {% endif %}                                        
+                                    </p>    
+                                </div>
+
+                                <br />
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.username }}
+                                        <div class="form-icon">
+                                            <i data-feather="user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.password }}
+                                        <div class="form-icon">
+                                            <i data-feather="lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br />
+                                <p class="has-text-centered">
+                                    Dont have an account? <a class="no-account" href="{% url 'register' %}" >Register</a>
+                                </p>
+                                <div class="button-wrap">
+                                    <button type="submit" name="login" class="button">Login</button>
+                                </div>
+                            </div>
+                        
+                        </form>
+
+                        <p class="has-text-centered">
+                            &copy; <a href="https://cssninja.io/">CSSNinja</a> - coded by AppSeed.
+                            <br />
+                            <a target="_blank" href="https://appseed.us/admin-dashboards/django-dashboard-dashkit-pro">Django Dashkit PRO</a>
+                        </p>
+                    </div>
+                    <!-- /Classic login form -->
+
+                </div>
+                <!-- /Classic inputs -->
+    
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/js/auth.js' %}"></script>
+{% endblock javascripts %}

@@ -1,0 +1,149 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} BilboardJS {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="columns dashboard-columns is-multiline">
+    
+                        <div class="column is-4">
+                            <div class="logo-card flex-card light-bordered light-raised">
+                                <div class="lib-logo">
+                                    <img src="{% static 'assets//images/logos/stacks/c3js-logo.svg' %}" alt="">
+                                </div>
+                                <div class="logo-card-content">
+                                    <div class="lib-name">Billboard JS</div>
+                                    <div class="subname">Javascript charting library</div>
+                                </div>
+                                <div class="filigrane"><i class="sl sl-icon-chart"></i></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Line chart" data-trigger="hover"
+                                data-content="A simple line chart that lets you display multiple datasets simultaneously.">
+                                <div id="billboard-lineChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="bottom" title="Timeseries chart" data-trigger="hover"
+                                data-content="Another variant of the line chart type, focused on diplaying data over time.">
+                                <div id="billboard-timeseriesChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Spline chart" data-trigger="hover"
+                                data-content="Spline charts work the same way than classic line charts, with smooth curves.">
+                                <div id="billboard-splineChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Line chart with regions" data-trigger="hover"
+                                data-content="Line charts can have regions, if you want to focus on specific data parts.">
+                                <div id="billboard-lineRegionChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Step chart" data-trigger="hover"
+                                data-content="Step charts let you display data in the ways of cubic patterns.">
+                                <div id="billboard-stepChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Area chart" data-trigger="hover"
+                                data-content="Area charts are similar to line charts, but filled. Curves can be smoothened or not.">
+                                <div id="billboard-areaChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Bar chart" data-trigger="hover"
+                                data-content="Bar charts let you display grouped data very easily, in a friendly way.">
+                                <div id="billboard-barChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Stacked Bar chart" data-trigger="hover"
+                                data-content="Bar charts can be configured to display stacked datasets, giving more visual power.">
+                                <div id="billboard-stackedbarChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Scatter plot chart" data-trigger="hover"
+                                data-content="Scatter plot charts let you display complex multi entry data. Each pont has 3 coordinates.">
+                                <div id="billboard-scatterPlotChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Pie chart" data-trigger="hover"
+                                data-content="No need to introduce pie charts, everyone knows them. Pie charts are very easy to setup.">
+                                <div id="billboard-pieChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Donut chart" data-trigger="hover"
+                                data-content="Donut charts are very similar to pie charts, and have almost the same configuration options.">
+                                <div id="billboard-donutChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Gauge chart" data-trigger="hover"
+                                data-content="Gauge charts are a very visual way to display some data progress. It is percentage based.">
+                                <div id="billboard-gaugeChart"></div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-4">
+                            <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                data-placement="top" title="Combination chart" data-trigger="hover"
+                                data-content="You can combine multiple chart types together if you want to display very complex datasets.">
+                                <div id="billboard-combinationChart"></div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

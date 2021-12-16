@@ -1,0 +1,46 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} 403 Page {% endblock %}
+
+{% block content %}   
+
+    <section class="hero is-fullheight is-light-grey is-bold">
+    
+        <div class="hero-body">
+            <div class="container">
+    
+                <!-- Classic inputs -->
+                <div id="classic" class="login-form-wrapper">
+
+                    <div class="auth-card">
+                        <div class="auth-card-header header-primary">
+                            <h2 class="has-text-centered">
+                                Error 403
+                            </h2>
+                        </div>
+                        <div class="field has-text-centered">
+                            <p>
+                                Access denied - <a href="/">Home</a>
+                            </p>    
+                        </div>
+
+                        <br />
+
+                    </div>
+
+                    <p class="has-text-centered">
+                        &copy; Design <a href="https://cssninja.io/">CSSNinja</a> - 
+                        <a href="https://appseed.us/admin-dashboards/django-dashboard-dashkit-pro">Django Dashkit PRO</a> coded by AppSeed.
+                    </p>
+
+                </div>
+                <!-- /Classic inputs -->
+    
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

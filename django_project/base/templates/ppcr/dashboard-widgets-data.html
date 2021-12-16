@@ -1,0 +1,1162 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Widgets Data {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div id="dashboard-wrapper" class="dashboard-outer">
+    <div class="dashboard-inner">
+
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+
+            <div id="main-dashboard" class="section-wrapper">
+                <!-- Dashboard content -->
+                <div id="basic-layout" class="columns dashboard-columns is-multiline">
+
+                    <!-- Support tickets widget -->
+                    <div class="column is-6">
+                        <div class="widget-card has-margin">
+                            <div class="card-heading has-icon is-bordered no-margin">
+                                <span>Support ticket</span>
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                    <div class="button">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                        <div class="dropdown-content">
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-refresh"></i>
+                                                <span>
+                                                    <span>Reload</span>
+                                                    <span>Reload widget data</span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-pencil"></i>
+                                                <span>
+                                                    <span>Settings</span>
+                                                    <span>Edit widget settings</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-bell"></i>
+                                                <span>
+                                                    <span>Notifications</span>
+                                                    <span>Notify me of changes</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-trash"></i>
+                                                <span>
+                                                    <span>Delete</span>
+                                                    <span>Delete this widget</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>                            </div>
+
+                            <div class="card-body no-padding is-responsive">
+                                <ul class="ticket-list">
+                                    <li>
+                                        <div class="ticket-data">
+                                            <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/william.jpg' %}">
+                                            <div class="ticket-info">
+                                                <span class="ticket-title">[#223] Can't connect to account</span>
+                                                <span>Will Brettner | 3 min ago</span>
+                                            </div>
+                                        </div>
+                                        <div class="ticket-action">
+                                            <span class="tag is-accent">New</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ticket-data">
+                                            <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
+                                            <div class="ticket-info">
+                                                <span class="ticket-title">[#518] Upload problem</span>
+                                                <span>Marjory Cambell | 15 min ago</span>
+                                            </div>
+                                        </div>
+                                        <div class="ticket-action">
+                                            <span class="tag is-secondary">In progress</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ticket-data">
+                                            <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                            <div class="ticket-info">
+                                                <span class="ticket-title">[#248] Invoices are not sent by email</span>
+                                                <span>Terry Daniels | 1 day ago</span>
+                                            </div>
+                                        </div>
+                                        <div class="ticket-action">
+                                            <span class="tag is-secondary">In progress</span>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="ticket-data">
+                                            <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}">
+                                            <div class="ticket-info">
+                                                <span class="ticket-title">[#154] Uploads are not shown in project history</span>
+                                                <span>Stella Henriks | 1 day ago</span>
+                                            </div>
+                                        </div>
+                                        <div class="ticket-action">
+                                            <span class="tag">Closed</span>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!--Pills widget-->
+                        <div class="pills-widget has-margin">
+                            <div class="navigation-tabs full-pills secondary animated-tabs">
+                                <div class="tabs">
+                                    <ul>
+                                        <li class="tab-link is-active" data-tab="messages"><a>Messages</a></li>
+                                        <li class="tab-link" data-tab="tasks"><a>Tasks</a></li>
+                                        <li class="tab-link" data-tab="invoices"><a>Invoices</a></li>
+                                    </ul>
+                                </div>
+                                <div id="messages" class="navtab-content is-active">
+                                    <ul class="messages-list">
+                                        <li>
+                                            <div class="message-data">
+                                                <div class="message-info">
+                                                    <span class="message-title">Next-meeting is rescheduled to
+                                                        monday</span>
+                                                </div>
+                                                <div class="message-meta">
+                                                    from
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                                    <span>Alan Maynard</span>
+                                                </div>
+                                                <div class="message-timestamp">
+                                                    5 hours ago
+                                                </div>
+                                            </div>
+                                            <div class="message-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-paper-clip"></i> <span>2</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                        <li>
+                                            <div class="message-data">
+                                                <div class="message-info">
+                                                    <span class="message-title">We got feedback from the devops
+                                                        team</span>
+                                                </div>
+                                                <div class="message-meta">
+                                                    from
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                                    <span>Terry Daniels</span>
+                                                </div>
+                                                <div class="message-timestamp">
+                                                    8 hours ago
+                                                </div>
+                                            </div>
+                                            <div class="message-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-paper-clip"></i> <span>5</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                        <li>
+                                            <div class="message-data">
+                                                <div class="message-info">
+                                                    <span class="message-title">Please review the attached
+                                                        contract</span>
+                                                </div>
+                                                <div class="message-meta">
+                                                    from
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                                    <span>Russel Chevalier</span>
+                                                </div>
+                                                <div class="message-timestamp">
+                                                    Yesterday
+                                                </div>
+                                            </div>
+                                            <div class="message-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-paper-clip"></i> <span>1</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="tasks" class="navtab-content">
+                                    <ol class="task-list">
+                                        <li>
+                                            <div class="task-data">
+                                                <div class="task-info">
+                                                    <span class="task-title">Review components javascript files</span>
+                                                </div>
+                                                <div class="task-meta">
+                                                    Created by
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/thomas.jpg' %}">
+                                                    <span>Thomas Schmitt</span>
+                                                </div>
+                                                <div class="task-timestamp">
+                                                    oct 25 2017
+                                                </div>
+                                            </div>
+                                            <div class="task-action">
+                                                <div class="users">
+                                                    <i class="sl sl-icon-people"></i> <span>9</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">View</a>
+                                        </li>
+                                        <li>
+                                            <div class="task-data">
+                                                <div class="task-info">
+                                                    <span class="task-title">Deploy the client's website</span>
+                                                </div>
+                                                <div class="task-meta">
+                                                    Created by
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                                                    <span>Lakisha Jackson</span>
+                                                </div>
+                                                <div class="task-timestamp">
+                                                    oct 18 2017
+                                                </div>
+                                            </div>
+                                            <div class="task-action">
+                                                <div class="users">
+                                                    <i class="sl sl-icon-people"></i> <span>3</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">View</a>
+                                        </li>
+                                        <li>
+                                            <div class="task-data">
+                                                <div class="task-info">
+                                                    <span class="task-title">Fix pending issues on dev branch</span>
+                                                </div>
+                                                <div class="task-meta">
+                                                    Created by
+                                                    <img class="small-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                                        data-demo-src="{% static 'assets/images/avatars/sayid.jpg' %}">
+                                                    <span>Sayid Abdullah</span>
+                                                </div>
+                                                <div class="task-timestamp">
+                                                    oct 16 2017
+                                                </div>
+                                            </div>
+                                            <div class="task-action">
+                                                <div class="users">
+                                                    <i class="sl sl-icon-people"></i> <span>7</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">View</a>
+                                        </li>
+                                    </ol>
+                                </div>
+                                <div id="invoices" class="navtab-content">
+                                    <ul class="invoices-list">
+                                        <li>
+                                            <div class="invoice-data">
+                                                <div class="invoice-info">
+                                                    <span class="invoice-title">Blake & Daniels</span>
+                                                </div>
+                                                <div class="invoice-meta">
+                                                    <i class="im im-icon-File-Excel"></i> <span>$2854,49</span>
+                                                </div>
+                                                <div class="invoice-timestamp">
+                                                    nov 19 2017
+                                                </div>
+                                            </div>
+                                            <div class="invoice-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-clock"></i> <span>2</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                        <li>
+                                            <div class="invoice-data">
+                                                <div class="invoice-info">
+                                                    <span class="invoice-title">Mortimer & Sons</span>
+                                                </div>
+                                                <div class="invoice-meta">
+                                                    <i class="im im-icon-File-HTML"></i> <span>$6823,76</span>
+                                                </div>
+                                                <div class="invoice-timestamp">
+                                                    dec 28 2017
+                                                </div>
+                                            </div>
+                                            <div class="invoice-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-clock"></i> <span>24</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                        <li>
+                                            <div class="invoice-data">
+                                                <div class="invoice-info">
+                                                    <span class="invoice-title">Software Ltd.</span>
+                                                </div>
+                                                <div class="invoice-meta">
+                                                    <i class="im im-icon-File-Word"></i> <span>$4255,15</span>
+                                                </div>
+                                                <div class="invoice-timestamp">
+                                                    nov 29 2017
+                                                </div>
+                                            </div>
+                                            <div class="invoice-action">
+                                                <div class="attachments">
+                                                    <i class="sl sl-icon-clock"></i> <span>9</span>
+                                                </div>
+                                            </div>
+                                            <a class="button simple-button">Open</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- User table widget -->
+                    <div class="column is-6 is-hidden-mobile">
+                        <div class="table-widget has-margin">
+                            <h3 class="card-heading is-bordered has-icon">
+                                <span>For hire</span>
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                    <div class="button">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                        <div class="dropdown-content">
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-refresh"></i>
+                                                <span>
+                                                    <span>Reload</span>
+                                                    <span>Reload widget data</span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-pencil"></i>
+                                                <span>
+                                                    <span>Settings</span>
+                                                    <span>Edit widget settings</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-bell"></i>
+                                                <span>
+                                                    <span>Notifications</span>
+                                                    <span>Notify me of changes</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-trash"></i>
+                                                <span>
+                                                    <span>Delete</span>
+                                                    <span>Delete this widget</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>                            </h3>
+                            <table class="table hire-table">
+                                <thead>
+                                    <tr>
+                                        <th class="has-text-centered muted-text">
+                                            <i class="sl sl-icon-camera"></i>
+                                        </th>
+                                        <th>Username</th>
+                                        <th>Position</th>
+                                        <th>Experience</th>
+                                        <th>Skills</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                        </td>
+                                        <td><a>Terry Daniels</a></td>
+                                        <td class="position">Engineer</td>
+                                        <td class="experience">8 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-secondary">Php</span>
+                                            <span class="tag squared is-warning">Javascript</span>
+                                            <span class="tag squared is-accent">CSS 3</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
+                                        </td>
+                                        <td><a>Marjory Cambell</a></td>
+                                        <td class="position">Sales Manager</td>
+                                        <td class="experience">5 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-success">Sales</span>
+                                            <span class="tag squared is-success">Marketing</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/kareem.jpg' %}">
+                                        </td>
+                                        <td><a>Kareem Jabbar</a></td>
+                                        <td class="position">Accountant</td>
+                                        <td class="experience">9 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-secondary">Budget</span>
+                                            <span class="tag squared is-secondary">Accounting</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                                        </td>
+                                        <td><a>Adrian Fallow</a></td>
+                                        <td class="position">Project Manager</td>
+                                        <td class="experience">10 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-secondary">Projects</span>
+                                            <span class="tag squared is-info">Sales</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                        </td>
+                                        <td><a>Helen Miller</a></td>
+                                        <td class="position">Sales Manager</td>
+                                        <td class="experience">7 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-secondary">Marketing</span>
+                                            <span class="tag squared is-info">Sales</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/nina.jpg' %}">
+                                        </td>
+                                        <td><a>Sarah Mitchells</a></td>
+                                        <td class="position">Records Manager</td>
+                                        <td class="experience">4 <span>years</span></td>
+                                        <td>
+                                            <span class="tag squared is-secondary">ECM</span>
+                                            <span class="tag squared is-success">Management</span>
+                                        </td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trophy"></i>
+                                                            <span>
+                                                                <span>Hire</span>
+                                                                <span>Add user to hire list</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-energy"></i>
+                                                            <span>
+                                                                <span>Save</span>
+                                                                <span>Save in bookmarks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-user"></i>
+                                                            <span>
+                                                                <span>View Profile</span>
+                                                                <span>View this user profile</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Reject</span>
+                                                                <span>Reject this candidate</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Projects table widget -->
+                        <div class="table-widget">
+                            <h3 class="card-heading is-bordered has-icon">
+                                <span>Projects</span>
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                    <div class="button">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                        <div class="dropdown-content">
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-refresh"></i>
+                                                <span>
+                                                    <span>Reload</span>
+                                                    <span>Reload widget data</span>
+                                                </span>
+                                            </a>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-pencil"></i>
+                                                <span>
+                                                    <span>Settings</span>
+                                                    <span>Edit widget settings</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-bell"></i>
+                                                <span>
+                                                    <span>Notifications</span>
+                                                    <span>Notify me of changes</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-trash"></i>
+                                                <span>
+                                                    <span>Delete</span>
+                                                    <span>Delete this widget</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>                            </h3>
+                            <table class="table project-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Completed</th>
+                                        <th>Deadline</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><b>P-089</b></td>
+                                        <td><a>Blake & Daniels</a></td>
+                                        <td><span class="project-pies">82/100</span> <span class="percent">82<span>%</span></span></td>
+                                        <td class="deadline">nov 30 2017</td>
+                                        <td><span class="tag squared is-secondary">In progress</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>P-090</b></td>
+                                        <td><a>Fresh Wear Ltd.</a></td>
+                                        <td><span class="project-pies">61/100</span> <span class="percent">61<span>%</span></span></td>
+                                        <td class="deadline">may 1 2018</td>
+                                        <td><span class="tag squared is-warning">Needs info</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>P-091</b></td>
+                                        <td><a>Gallagher</a></td>
+                                        <td><span class="project-pies">27/100</span> <span class="percent">27<span>%</span></span></td>
+                                        <td class="deadline">jun 31 2018</td>
+                                        <td><span class="tag squared is-secondary">In progress</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>P-092</b></td>
+                                        <td><a>Crash Records</a></td>
+                                        <td><span class="project-pies">34/100</span> <span class="percent">34<span>%</span></span></td>
+                                        <td class="deadline">mar 31 2018</td>
+                                        <td><span class="tag squared is-secondary">In progress</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>P-093</b></td>
+                                        <td><a>Someco Inc.</a></td>
+                                        <td><span class="project-pies">05/100</span> <span class="percent">5<span>%</span></span></td>
+                                        <td class="deadline">Aug 31 2018</td>
+                                        <td><span class="tag squared is-danger">Has issues</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td><b>P-094</b></td>
+                                        <td><a>Mortimer & Sons</a></td>
+                                        <td><span class="project-pies">03/100</span> <span class="percent">3<span>%</span></span></td>
+                                        <td class="deadline">Jun 31 2018</td>
+                                        <td><span class="tag squared">Canceled</span></td>
+                                        <td class="has-text-centered">
+                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                <div class="button">
+                                                    <i class="material-icons">more_horiz</i>
+                                                </div>
+                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-layers"></i>
+                                                            <span>
+                                                                <span>View</span>
+                                                                <span>Open this project</span>
+                                                            </span>
+                                                        </a>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-check"></i>
+                                                            <span>
+                                                                <span>Tasks</span>
+                                                                <span>View project tasks</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <i class="sl sl-icon-people"></i>
+                                                            <span>
+                                                                <span>Invite People</span>
+                                                                <span>Add users to project</span>
+                                                            </span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item">
+                                                            <i class="sl sl-icon-trash"></i>
+                                                            <span>
+                                                                <span>Delete</span>
+                                                                <span>Delete this project</span>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    
+
+                    <!-- Ring widget -->
+                    <div class="column is-3">
+                        <div class="flex-card is-squared light-bordered light-raised padding-30 has-text-centered">
+                            <svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="140" height="140"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle class="circle-chart-background" stroke="#efefef" stroke-width="2" fill="none"
+                                    cx="16.91549431" cy="16.91549431" r="15.91549431" />
+                                <circle class="circle-chart-circle" stroke="#00D1B2" stroke-width="2"
+                                    stroke-dasharray="95,100" stroke-linecap="round" fill="none" cx="16.91549431"
+                                    cy="16.91549431" r="15.91549431" />
+                            </svg>
+                            <div class="stat-number">
+                                95<span>%</span>
+                            </div>
+                            <div class="ring-title has-text-centered">
+                                <span>Tasks completed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Ring widget -->
+
+                    <!-- Ring widget -->
+                    <div class="column is-3">
+                        <div class="flex-card is-squared light-bordered light-raised padding-30 has-text-centered">
+                            <svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="140" height="140"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <circle class="circle-chart-background" stroke="#efefef" stroke-width="2" fill="none"
+                                    cx="16.91549431" cy="16.91549431" r="15.91549431" />
+                                <circle class="circle-chart-circle" stroke="#7F00FF" stroke-width="2"
+                                    stroke-dasharray="77,100" stroke-linecap="round" fill="none" cx="16.91549431"
+                                    cy="16.91549431" r="15.91549431" />
+                            </svg>
+                            <div class="chart-avatar">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                            </div>
+                            <div class="ring-title has-text-centered">
+                                <span>77% Deals Won</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Ring widget -->
+
+                    <!-- Stat widget -->
+                    <div class="column is-3">
+                        <div class="flex-card is-squared light-bordered light-raised card-overflow has-text-centered">
+                            <div class="material-header is-gradient has-text-centered">
+                                <h3> Sales income</h3>
+                                <span class="widget-bars">5,3,9,6,5,9,7,3,5,16,5,7,2,8,6,4,8,2,5,6,8,9</span>
+                            </div>
+                            <div class="card-body has-text-centered">
+                                <div class="stat-text">
+                                    <div class="stat-average">
+                                        <span>$</span><span>118 595,49</span>
+                                    </div>
+                                    <div class="stat-subtitle">
+                                        Average sales per month
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Stat widget -->
+
+                    <!-- Stat widget -->
+                    <div class="column is-3">
+                        <div class="flex-card is-squared light-bordered light-raised card-overflow has-text-centered">
+                            <div class="material-header is-primary has-text-centered">
+                                <h3> Activity stream</h3>
+                                <span class="widget-lines">5,3,9,6,5,9,7,3,5,16,5,7,2,8,6,4,8,2,5,6,8,9</span>
+                            </div>
+                            <div class="card-body has-text-centered">
+                                <div class="stat-text">
+                                    <div class="stat-average">
+                                        <span></span><span>543</span>
+                                    </div>
+                                    <div class="stat-subtitle">
+                                        Average comments per month
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /Stat widget -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

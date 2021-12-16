@@ -1,0 +1,102 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Datatable variations {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="dashboard-columns">
+    
+                        <h2 class="demo-title">Bordered Datatable</h2>
+                        <!-- Bordered Datatable -->
+                        <div class="table-wrapper has-margin-bottom">
+                            <table id="bordered-datatable" class="table is-datatable is-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div id="paging-bordered-datatable" class="pagination"></div>
+                        </div>
+                        <!-- /Bordered Datatable -->
+                        <h2 class="demo-title">Striped Datatable</h2>
+                        <!-- Striped Datatable -->
+                        <div class="table-wrapper has-margin-bottom">
+                            <table id="striped-datatable" class="table is-datatable is-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div id="paging-striped-datatable" class="pagination"></div>
+                        </div>
+                        <!-- /Striped Datatable -->
+    
+                        <h2 class="demo-title">Narrow Datatable</h2>
+    
+                        <!-- Narrow Datatable -->
+                        <div class="table-wrapper has-margin-bottom">
+                            <table id="narrow-datatable" class="table is-datatable is-narrow">
+                                <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div id="paging-narrow-datatable" class="pagination"></div>
+                        </div>
+                        <!-- /Narrow Datatable -->
+    
+                        <h2 class="demo-title">Hoverable Datatable</h2>
+    
+                        <!-- Hoverable Datatable -->
+                        <div class="table-wrapper has-margin-bottom">
+                            <table id="hoverable-datatable" class="table is-datatable is-hoverable">
+                                <thead>
+                                    <tr>
+                                        <th>Firstname</th>
+                                        <th>Lastname</th>
+                                        <th>Position</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                            <div id="paging-hoverable-datatable" class="pagination"></div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
