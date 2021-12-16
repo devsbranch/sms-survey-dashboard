@@ -38,7 +38,7 @@ make migrate
 make collectstatic
 
 # or simply
-make start
+make run
 ```
 
 At this point the project should be up and running at http://127.0.0.1:8009
