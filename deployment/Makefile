@@ -128,7 +128,6 @@ logs:
 	@echo "Showing uwsgi logs in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) logs uwsgi
-
 logs-all:
 	@echo
 	@echo "------------------------------------------------------------------"
