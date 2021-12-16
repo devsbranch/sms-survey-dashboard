@@ -28,12 +28,17 @@ git clone git://github.com/Digital-Prophets/ppcr-tralard.git
 cd ppcr-tralard/deployment
 cp btsync-db.env.EXAMPLE btsync-db.env
 cp btsync-media.env.EXAMPLE btsync-media.env
+
+# Either
 make build
 make permissions
 make web
 # Wait a few seconds for the DB to start before to running the next command
 make migrate
 make collectstatic
+
+# or simply
+make start
 ```
 
 At this point the project should be up and running at http://127.0.0.1:8009
