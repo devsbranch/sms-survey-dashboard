@@ -31,6 +31,7 @@ coreapi==2.3.3
 pygbif==0.2.0
 
 djangocms-admin-style==2.0.2
+django-money==2.1 # https://django-money.readthedocs.io/en/stable/
 
 # Django beneficiary
 git+https://github.com/Digital-Prophets/dj-beneficiary.git
