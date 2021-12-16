@@ -5,12 +5,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 from dj_beneficiary import urls as dj_beneficiary_urls
 
-from ppcr import urls as ppcr_urls
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(dj_beneficiary_urls)),
-    path('', include('ppcr_urls', namespace='ppcr')),
+    path('', include('ppcr.urls', namespace='ppcr')),
+    path('', include('tralard.urls', namespace='tralard')),
     path('', include('base.urls')),
 ]
 

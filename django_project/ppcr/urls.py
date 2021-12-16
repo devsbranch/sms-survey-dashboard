@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import url, path
-from django.views.generic import TemplateView
-
-from ppcr.views import ProgramListView
+from django.urls import path
 
 
 app_name = 'ppcr'
