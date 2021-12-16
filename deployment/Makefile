@@ -129,6 +129,13 @@ logs:
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) logs uwsgi
 
+logs-all:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Showing all container logs in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) logs --follow
+
 dblogs:
 	@echo
 	@echo "------------------------------------------------------------------"

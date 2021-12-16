@@ -33,7 +33,7 @@ class RolePermissionsUserAdmin(RolePermissionsUserAdminMixin, UserAdmin):
     Hide permissions because it will be
     automatically assign if groups is changed.
     """
-    inlines = (ProfileInline,)
+    # inlines = (ProfileInline,)
     form = RolePermissionsUserForm
     list_display = (
         'username', 'email',

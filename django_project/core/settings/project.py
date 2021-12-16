@@ -17,6 +17,7 @@ from .utils import absolute_path
 
 # Project apps
 INSTALLED_APPS += (
+    'roles',
     'dj_beneficiary',
     'base',
     'ppcr',
