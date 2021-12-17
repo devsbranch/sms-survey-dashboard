@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
+
 from djmoney.models.fields import MoneyField
 
 
@@ -8,22 +10,33 @@ class Funding(models.Model):
     """
 
     amount_approved = MoneyField(
+        _("Amount Approved"),
         max_digits=14,
         decimal_places=2,
+        null=True,
         default_currency="ZMW",
         help_text="Amount approved for the project.",
     )
     disbursed_amount_to_date = MoneyField(
-        max_digits=14, decimal_places=2, default_currency="ZMW"
-    )
-    expenditure = MoneyField(
+        _("Disbursed amount to date"),
         max_digits=14,
         decimal_places=2,
+        null=True,
+        default_currency="ZMW",
+    )
+    expenditure = MoneyField(
+        _("Expenditure"),
+        max_digits=14,
+        decimal_places=2,
+        null=True,
         default_currency="ZMW",
         help_text="Amount spent on the project to date.",
     )
     funding_date = models.DateField(
-        null=True, blank=True, help_text="The date the project was funded."
+        _("Funding Date"),
+        null=True,
+        blank=True,
+        help_text="The date the project was funded.",
     )
     created = models.DateTimeField(auto_now_add=True)
 
