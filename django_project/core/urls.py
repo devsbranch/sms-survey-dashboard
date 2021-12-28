@@ -10,7 +10,7 @@ urlpatterns = [
     path('', include('base.urls')),
     path('', include('ppcr.urls', namespace='ppcr')),
     path('', include('tralard.urls', namespace='tralard')),
-    path('', include("authentication.urls")), # Auth routes - login / register
+    path('accounts/', include("authentication.urls")), # Auth routes - login / register
     path('', include(dj_beneficiary_urls)),
 ]
 
