@@ -29,7 +29,6 @@ cd ppcr-tralard/deployment
 cp btsync-db.env.EXAMPLE btsync-db.env
 cp btsync-media.env.EXAMPLE btsync-media.env
 
-# Either
 make build
 make permissions
 make web
@@ -37,8 +36,6 @@ make web
 make migrate
 make collectstatic
 
-# or simply
-make run
 ```
 
 At this point the project should be up and running at http://127.0.0.1:8009
