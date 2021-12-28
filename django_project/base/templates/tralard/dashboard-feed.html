@@ -1,0 +1,586 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Feed {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="columns dashboard-columns">
+    
+                        <div class="column">
+    
+                            <!--Menu-->
+                            <div class="feed-channels">
+                                <h3 class="card-heading">Channels</h3>
+                                <div class="menu-items">
+                                    <a class="menu-item">
+                                        <i class="im im-icon-Megaphone"></i>
+                                        <div class="meta">
+                                            <span>Annoucements</span>
+                                            <span>Important stuff is here</span>
+                                        </div>
+                                    </a>
+                                    <a class="menu-item">
+                                        <i class="im im-icon-Embassy"></i>
+                                        <div class="meta">
+                                            <span>Finance</span>
+                                            <span>The financial channel</span>
+                                        </div>
+                                    </a>
+                                    <a class="menu-item">
+                                        <i class="im im-icon-Knight"></i>
+                                        <div class="meta">
+                                            <span>Marketing</span>
+                                            <span>The marketing channel</span>
+                                        </div>
+                                    </a>
+                                    <a class="menu-item">
+                                        <i class="im im-icon-Chrysler-Building"></i>
+                                        <div class="meta">
+                                            <span>Corporate</span>
+                                            <span>The corporate channel</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+    
+                            <!--Illustration card-->
+                            <div class="company-card has-text-centered">
+                                <img src="{% static 'assets/images/illustrations/feed/1.svg' %}" alt="">
+                                <h3>Configure Feed</h3>
+                                <p>Configure your feed and <a>select the type of contents</a> you'd like to see.</p>
+                            </div>
+    
+                            <!-- Widget -->
+                            <div class="activity-card">
+                                <h3 class="card-heading">Live activity</h3>
+                                <div class="activity-content">
+                                    <div class="avatar-list">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/nina.jpg' %}">
+                                        </a>
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                        </a>
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                        </a>
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                                        </a>
+                                    </div>
+                                    <span class="updating-chart">15,13,19,16,15,19,17,13,15,24,15,13,19,16,15,19,17,13,15,32</span>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="column is-5">
+                            <div class="compose-card is-flex is-start is-vcenter">
+                                <figure class="avatar image is-hidden-mobile">
+                                    <img class="img-circle" src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                </figure>
+                                <div class="status-wrapper">
+                                    <textarea class="textarea is-grow" rows="5"
+                                        placeholder="Write something ..."></textarea>
+                                </div>
+                                <div class="icon-button">
+                                    <i data-feather="upload-cloud"></i>
+                                </div>
+                            </div>
+                            <!-- Feed item with featured image -->
+                            <div class="post-item animated preFadeInLeft fadeInLeft">
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <img class="feed-avatar" src="https://via.placeholder.com/250x250g" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                                    <div class="item-title">Posted by <a href="#" class="ml-5">Ray O'Driscol</a> <br><span
+                                            class="feed-time-small">45 minutes ago</span></div>
+                                    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                        <div class="button">
+                                            <i class="material-icons">more_vert</i>
+                                        </div>
+                                        <div class="dropdown-menu is-text-bigger" role="menu">
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-refresh"></i>
+                                                    <span>
+                                                        <span>Reload</span>
+                                                        <span>Reload widget data</span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-pencil"></i>
+                                                    <span>
+                                                        <span>Settings</span>
+                                                        <span>Edit widget settings</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-bell"></i>
+                                                    <span>
+                                                        <span>Notifications</span>
+                                                        <span>Notify me of changes</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-trash"></i>
+                                                    <span>
+                                                        <span>Delete</span>
+                                                        <span>Delete this widget</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>                            </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <p>
+                                        <span class="post-title"><a href="#">How team building boosts
+                                                productivity</a></span>
+                                        <br>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem
+                                        Ipsum is simply
+                                        dummy text Lorem Ipsum ...
+                                    </p>
+                                </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <div class="feed-image-container">
+                                        <div class="soft-overlay"></div>
+                                        <img src="https://via.placeholder.com/1280x853" alt=""
+                                            data-demo-src="https://source.unsplash.com/QckxruozjRg/1280x853">
+                                        <div class="social-fab">
+                                            <div class="fab-wrapper">
+                                                <button class="like fab-btn mini" data-toggle="tooltip"
+                                                    data-placement="left" data-title="Like">
+                                                    <span class="like-wrapper">
+                                                        <i class="material-icons unliked">favorite_border</i>
+                                                        <i class="material-icons liked">favorite</i>
+                                                        <span class="like-overlay"></span>
+                                                    </span>
+                                                </button>
+                                                <button class="share fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Share">
+                                                    <i class="material-icons">share</i>
+                                                </button>
+                                                <button class="comment fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Comment">
+                                                    <i class="material-icons">chat_bubble</i>
+                                                </button>
+                                                <button class="fab-btn pop-fab social-fab-trigger ripple">
+                                                    <span class="plus-toggle">
+                                                        <i class="material-icons">add</i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <div class="is-flex is-start is-vcenter feed-item-footer">
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Heart-2 im-footer"></span>
+                                            <div class="rating-counter small">31</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Speach-Bubble11 im-footer"></span>
+                                            <div class="rating-counter small">5</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="sl sl-icon-paper-clip im-footer"></span>
+                                            <div class="rating-counter small">1</div>
+                                        </div>
+                                    </div>
+                                    <span class="like-icon liked"></span>
+                                </div>
+                            </div>
+                            <!-- Feed item with featured image -->
+    
+                            <!-- Feed item simple -->
+                            <div class="post-item animated preFadeInLeft fadeInLeft">
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <img class="feed-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}">
+                                    <div class="item-title">Posted by <a href="#" class="ml-5">Anthony Briggs</a> <br><span
+                                            class="feed-time-small">2 hours ago</span></div>
+                                    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                        <div class="button">
+                                            <i class="material-icons">more_vert</i>
+                                        </div>
+                                        <div class="dropdown-menu is-text-bigger" role="menu">
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-refresh"></i>
+                                                    <span>
+                                                        <span>Reload</span>
+                                                        <span>Reload widget data</span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-pencil"></i>
+                                                    <span>
+                                                        <span>Settings</span>
+                                                        <span>Edit widget settings</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-bell"></i>
+                                                    <span>
+                                                        <span>Notifications</span>
+                                                        <span>Notify me of changes</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-trash"></i>
+                                                    <span>
+                                                        <span>Delete</span>
+                                                        <span>Delete this widget</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>                            </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <p>
+                                        <span class="post-title"><a href="#">Important announcement</a></span>
+                                        <br>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem
+                                        Ipsum is simply
+                                        dummy text Lorem Ipsum ...
+                                    </p>
+                                </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <div class="fab-container">
+                                        <div class="social-fab">
+                                            <div class="fab-wrapper">
+                                                <button class="like fab-btn mini" data-toggle="tooltip"
+                                                    data-placement="left" data-title="Like">
+                                                    <span class="like-wrapper">
+                                                        <i class="material-icons unliked">favorite_border</i>
+                                                        <i class="material-icons liked">favorite</i>
+                                                        <span class="like-overlay"></span>
+                                                    </span>
+                                                </button>
+                                                <button class="share fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Share">
+                                                    <i class="material-icons">share</i>
+                                                </button>
+                                                <button class="comment fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Comment">
+                                                    <i class="material-icons">chat_bubble</i>
+                                                </button>
+                                                <button class="fab-btn pop-fab social-fab-trigger ripple">
+                                                    <span class="plus-toggle">
+                                                        <i class="material-icons">add</i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <div class="is-flex is-start is-vcenter feed-item-footer">
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Heart-2 im-footer"></span>
+                                            <div class="rating-counter small">3</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Speach-Bubble11 im-footer"></span>
+                                            <div class="rating-counter small">2</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="sl sl-icon-paper-clip im-footer"></span>
+                                            <div class="rating-counter small">3</div>
+                                        </div>
+                                    </div>
+                                    <span class="like-icon liked"></span>
+                                </div>
+                            </div>
+                            <!-- Feed item simple -->
+    
+                            <!-- Audio post -->
+                            <div class="audio green-audio-player">
+                                <div class="avatar">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                </div>
+                                <div class="loading">
+                                    <div class="spinner"></div>
+                                </div>
+                                <div class="play-pause-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="24" viewBox="0 0 18 24">
+                                        <path fill="#566574" fill-rule="evenodd" d="M18 12L0 24V0" class="play-pause-icon"
+                                            id="playPause" />
+                                    </svg>
+                                </div>
+    
+                                <div class="controls">
+                                    <span class="current-time">0:00</span>
+                                    <div class="slider" data-direction="horizontal">
+                                        <div class="progress">
+                                            <div class="pin" id="progress-pin" data-method="rewind"></div>
+                                        </div>
+                                    </div>
+                                    <span class="total-time">0:00</span>
+                                </div>
+    
+                                <div class="volume">
+                                    <div class="volume-btn">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                                            <path fill="#566574" fill-rule="evenodd"
+                                                d="M14.667 0v2.747c3.853 1.146 6.666 4.72 6.666 8.946 0 4.227-2.813 7.787-6.666 8.934v2.76C20 22.173 24 17.4 24 11.693 24 5.987 20 1.213 14.667 0zM18 11.693c0-2.36-1.333-4.386-3.333-5.373v10.707c2-.947 3.333-2.987 3.333-5.334zm-18-4v8h5.333L12 22.36V1.027L5.333 7.693H0z"
+                                                id="speaker" />
+                                        </svg>
+                                    </div>
+                                    <div class="volume-controls hidden">
+                                        <div class="slider" data-direction="vertical">
+                                            <div class="progress">
+                                                <div class="pin" id="volume-pin" data-method="changeVolume"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <audio crossorigin>
+                                    <source src="" type="audio/mpeg">
+                                </audio>
+                            </div>
+                            <!-- /Audio post -->
+    
+                            <!-- Feed item with featured image -->
+                            <div class="post-item animated preFadeInLeft fadeInLeft">
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <img class="feed-avatar" src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}">
+                                    <div class="item-title">Posted by <a href="#" class="ml-5">Elisa Lopez</a> <br><span
+                                            class="feed-time-small">Yesterday</span></div>
+                                    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                        <div class="button">
+                                            <i class="material-icons">more_vert</i>
+                                        </div>
+                                        <div class="dropdown-menu is-text-bigger" role="menu">
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-refresh"></i>
+                                                    <span>
+                                                        <span>Reload</span>
+                                                        <span>Reload widget data</span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-pencil"></i>
+                                                    <span>
+                                                        <span>Settings</span>
+                                                        <span>Edit widget settings</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-bell"></i>
+                                                    <span>
+                                                        <span>Notifications</span>
+                                                        <span>Notify me of changes</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-trash"></i>
+                                                    <span>
+                                                        <span>Delete</span>
+                                                        <span>Delete this widget</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>                            </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <p>
+                                        <span class="post-title"><a href="#">Handling customer support</a></span>
+                                        <br>Lorem Ipsum is simply dummy text of the printing and typesetting industry Lorem
+                                        Ipsum is simply
+                                        dummy text Lorem Ipsum ...
+                                    </p>
+                                </div>
+                                <div class="is-flex is-start is-vcenter">
+                                    <div class="feed-image-container">
+                                        <div class="soft-overlay"></div>
+                                        <img src="https://via.placeholder.com/1280x853" alt=""
+                                            data-demo-src="https://source.unsplash.com/FWVMhUa_wbY/1280x853">
+                                        <div class="social-fab">
+                                            <div class="fab-wrapper">
+                                                <button class="like fab-btn mini" data-toggle="tooltip"
+                                                    data-placement="left" data-title="Like">
+                                                    <span class="like-wrapper">
+                                                        <i class="material-icons unliked">favorite_border</i>
+                                                        <i class="material-icons liked">favorite</i>
+                                                        <span class="like-overlay"></span>
+                                                    </span>
+                                                </button>
+                                                <button class="share fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Share">
+                                                    <i class="material-icons">share</i>
+                                                </button>
+                                                <button class="comment fab-btn mini ripple" data-toggle="tooltip"
+                                                    data-placement="top" data-title="Comment">
+                                                    <i class="material-icons">chat_bubble</i>
+                                                </button>
+                                                <button class="fab-btn pop-fab social-fab-trigger ripple">
+                                                    <span class="plus-toggle">
+                                                        <i class="material-icons">add</i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="is-flex is-start is-vcenter padding-10">
+                                    <div class="is-flex is-start is-vcenter feed-item-footer">
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Heart-2 im-footer"></span>
+                                            <div class="rating-counter small">23</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="im im-icon-Speach-Bubble11 im-footer"></span>
+                                            <div class="rating-counter small">2</div>
+                                        </div>
+                                        <div class="counter-block">
+                                            <span class="sl sl-icon-paper-clip im-footer"></span>
+                                            <div class="rating-counter small">0</div>
+                                        </div>
+                                    </div>
+                                    <span class="like-icon liked"></span>
+                                </div>
+                            </div>
+    
+                            <div class="load-more-wrapper has-text-centered">
+                                <button class="button btn-dash is-fullwidth secondary-btn raised ripple rounded no-lh">Load more</button>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="feed-card is-users">
+                                <h3 class="card-heading">Active users</h3>
+                                <ul class="user-list">
+                                    <li>
+                                        <div class="user-list-avatar">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                        </div>
+                                        <div class="user-list-info">
+                                            <div class="name">Terry Daniels</div>
+                                            <div class="position">CEO</div>
+                                        </div>
+                                        <div class="user-list-status is-online"></div>
+                                    </li>
+                                    <li>
+                                        <div class="user-list-avatar">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
+                                        </div>
+                                        <div class="user-list-info">
+                                            <div class="name">Marjory Cambell</div>
+                                            <div class="position">CFO</div>
+                                        </div>
+                                        <div class="user-list-status is-busy"></div>
+                                    </li>
+                                    <li>
+                                        <div class="user-list-avatar">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}">
+                                        </div>
+                                        <div class="user-list-info">
+                                            <div class="name">Kevin Smith</div>
+                                            <div class="position">Software Engineer</div>
+                                        </div>
+                                        <div class="user-list-status is-offline"></div>
+                                    </li>
+                                    <li>
+                                        <div class="user-list-avatar">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
+                                        </div>
+                                        <div class="user-list-info">
+                                            <div class="name">Melany Wright</div>
+                                            <div class="position">Sales Manager</div>
+                                        </div>
+                                        <div class="user-list-status is-online"></div>
+                                    </li>
+                                    <li>
+                                        <div class="user-list-avatar">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                        </div>
+                                        <div class="user-list-info">
+                                            <div class="name">Helen Miller</div>
+                                            <div class="position">Sales Manager</div>
+                                        </div>
+                                        <div class="user-list-status is-online"></div>
+                                    </li>
+                                </ul>
+                            </div>
+    
+                            <div class="feed-card is-latest-posts">
+                                <h3 class="card-heading">Latest posts</h3>
+    
+                                <div class="recent-post">
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}">
+                                    <div class="post-meta">
+                                        <a>How team building boosts productivity</a>
+                                        <span>oct 19 2019</span>
+                                    </div>
+                                </div>
+    
+                                <div class="recent-post">
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                    <div class="post-meta">
+                                        <a>New Adobe updates this winter</a>
+                                        <span>oct 15 2019</span>
+                                    </div>
+                                </div>
+    
+                                <div class="recent-post">
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                    <div class="post-meta">
+                                        <a>Important annoucement</a>
+                                        <span>oct 11 2019</span>
+                                    </div>
+                                </div>
+    
+                                <div class="recent-post">
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
+                                    <div class="post-meta">
+                                        <a>Get the most from customer feedback</a>
+                                        <span>oct 03 2019</span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

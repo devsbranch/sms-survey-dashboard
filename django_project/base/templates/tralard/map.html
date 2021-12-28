@@ -1,0 +1,26 @@
+{% extends "layouts/map_base.html" %}
+
+{% load static %}
+
+{% block title %} Beneficiary Map {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div>
+            <h2 class="project-title">Beneficiary Map</h2>
+            <h4 class="project-tagline no-margin-bottom">Map showing beneficiaries in Provinces, Districts and Wards</h4>
+        </div>
+            {{ map|safe }}
+        
+    </div>
+    
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

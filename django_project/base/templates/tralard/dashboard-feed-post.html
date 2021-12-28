@@ -1,0 +1,450 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Feed Post {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+<div id="dashboard-wrapper" class="dashboard-outer">
+    <div class="dashboard-inner">
+
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+
+            <div id="main-dashboard" class="section-wrapper">
+                <!-- Dashboard content -->
+                <div id="basic-layout" class="columns dashboard-columns feed-post-columns">
+
+                    <div class="column is-7 is-offset-1">
+                        <div class="flex-card featured-feed-post light-bordered light-raised">
+                            <div class="image">
+                                <img src="https://via.placeholder.com/1280x450" alt=""
+                                    data-demo-src="{% static 'assets/images/dashboard/feed-post-1.jpg' %}">
+                                <div class="image-overlay"></div>
+                                <div class="author-avatar">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}">
+                                </div>
+                                <button class="like fab-btn mini">
+                                    <span class="like-wrapper">
+                                        <i class="material-icons unliked">favorite_border</i>
+                                        <i class="material-icons liked">favorite</i>
+                                        <span class="like-overlay"></span>
+                                    </span>
+                                </button>
+                                <button class="back fab-btn mini">
+                                    <i class="material-icons">arrow_back</i>
+                                </button>
+                            </div>
+                            <div class="card-body is-responsive">
+                                <h2 class="responsive-title">How the new prototyping tools
+                                    impact the design process
+                                </h2>
+                                <div class="post-meta">
+                                    <div class="author-meta">
+                                        <div class="author-name">Published by <span>Christina Wong</span></div>
+                                        <div class="post-timestamp">
+                                            <i class="sl sl-icon-clock"></i> Oct 27 2019, 18:49
+                                        </div>
+                                    </div>
+                                    <div class="comments-meta">
+                                        <i data-feather="message-square"></i>
+                                        <div class="counter">
+                                            8
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-body">
+                                    <p>Lorem ipsum dolor sit amet, id qui elit explicari, mel ne stet semper. Duo audiam
+                                        antiopam petentium
+                                        in, diceret appetere aliquando pri id. Qui porro dolor deserunt ad, nec inani
+                                        dolorum qualisque in,
+                                        vidit apeirian partiendo ea est. Duo cu qualisque mediocritatem, graece iuvaret
+                                        eripuit in usu, usu
+                                        congue impedit percipitur no. <a href="#">Cu vim ludus equidem facilisis</a>,
+                                        dico ullum labitur ad
+                                        mel. Id odio aperiam eripuit quo, dolores forensibus per te. </p>
+
+                                    <p>Lorem ipsum dolor sit amet, id qui elit explicari, mel ne stet semper. Duo audiam
+                                        antiopam petentium
+                                        in, diceret appetere aliquando pri id. Qui porro dolor deserunt ad, nec inani
+                                        dolorum qualisque in,
+                                        vidit apeirian partiendo ea est. Duo cu qualisque mediocritatem, graece iuvaret
+                                        eripuit in usu, usu
+                                        congue impedit percipitur no. Cu vim ludus equidem facilisis, dico ullum labitur
+                                        ad mel. Id odio
+                                        aperiam eripuit quo, dolores forensibus per te. </p>
+
+                                    <p>Lorem ipsum dolor sit amet, id qui elit explicari, mel ne stet semper. Duo audiam
+                                        antiopam petentium
+                                        in, diceret appetere aliquando pri id. Qui porro dolor deserunt ad, nec inani
+                                        dolorum qualisque in,
+                                        vidit apeirian partiendo ea est. Duo cu qualisque mediocritatem, graece iuvaret
+                                        eripuit in usu, usu
+                                        congue impedit percipitur no. Cu vim ludus equidem facilisis, dico ullum labitur
+                                        ad mel. Id odio
+                                        aperiam eripuit quo, dolores forensibus per te. </p>
+
+                                    <p>Lorem ipsum dolor sit amet, id qui elit explicari, mel ne stet semper. Duo audiam
+                                        antiopam petentium
+                                        in, diceret appetere aliquando pri id. Qui porro dolor deserunt ad, nec inani
+                                        dolorum qualisque in,
+                                        vidit apeirian partiendo ea est. Duo cu qualisque mediocritatem, graece iuvaret
+                                        eripuit in usu, usu
+                                        congue impedit percipitur no. Cu vim ludus equidem facilisis, dico ullum labitur
+                                        ad mel. Id odio
+                                        aperiam eripuit quo, dolores forensibus per te. </p>
+                                </div>
+                                <div class="post-share">
+                                    <i class="fa fa-facebook-f"></i>
+                                    <i class="fa fa-twitter"></i>
+                                    <i class="fa fa-linkedin"></i>
+                                    <i class="fa fa-tumblr"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="comments-wrapper">
+                            <h3 class="wrapper-title">Comments (8)</h3>
+
+                            <div
+                                class="compose-card is-flex is-start is-vcenter">
+                                <figure class="avatar image is-48x48 is-hidden-mobile">
+                                    <img class="img-circle" src="https://via.placeholder.com/250x250" alt=""
+                                        data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                </figure>
+                                <div class="status-wrapper">
+                                    <div class="control">
+                                        <textarea class="textarea is-button" placeholder="Post a comment..."></textarea>
+                                        <div class="textarea-button">
+                                            <button class="button secondary-btn btn-align raised">Publish</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <ul class="comment-list">
+                                <li class="media">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/henry.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Henry Rodstein</a>
+                                            <span class="timestamp">2 minutes ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren. Sit cu diceret
+                                            officiis perpetua.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>2 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Marjory Cambell</a>
+                                            <span class="timestamp">30 minutes ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren. Sit cu diceret
+                                            officiis perpetua. Amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren</p>
+
+                                        <ul class="comment-controls">
+                                            <li>7 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media is-answer">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/nina.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Betty Sanders</a>
+                                            <span class="timestamp">24 minutes ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>1 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media is-answer">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Anthony Briggs</a>
+                                            <span class="timestamp">12 minutes ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>0 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Kevin Smith</a>
+                                            <span class="timestamp">1 hour ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren. Sit cu diceret
+                                            officiis perpetua.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>8 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Helen-Miller</a>
+                                            <span class="timestamp">2 hours ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>12 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media is-answer">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/nicole.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Nicole Ferrier</a>
+                                            <span class="timestamp">1 hour ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi
+                                            gubergren.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>4 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                                <li class="media is-answer">
+                                    <div class="media-left is-hidden-mobile">
+                                        <a href="#">
+                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                data-demo-src="{% static 'assets/images/avatars/kareem.jpg' %}">
+                                        </a>
+                                    </div>
+
+                                    <div class="media-body">
+                                        <div class="media-heading">
+                                            <a href="#" class="text-semibold">Kareem Jabbar</a>
+                                            <span class="timestamp">47 minutes ago</span>
+                                        </div>
+
+                                        <p>Lorem ipsum dolor sit amet, nec ea error laoreet. Usu ex magna docendi.</p>
+
+                                        <ul class="comment-controls">
+                                            <li>3 <a href="#"><i class="material-icons">thumb_up</i></a><a href="#"><i
+                                                        class="icon-arrow-down22 text-danger"></i></a></li>
+                                            <li><a href="#">Answer</a></li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <!--Latest posts-->
+                        <div class="feed-card is-latest-posts">
+                            <h3 class="card-heading">Latest posts</h3>
+
+                            <div class="recent-post">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}">
+                                <div class="post-meta">
+                                    <a>How team building boosts productivity</a>
+                                    <span>oct 19 2019</span>
+                                </div>
+                            </div>
+
+                            <div class="recent-post">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                <div class="post-meta">
+                                    <a>New Adobe updates this winter</a>
+                                    <span>oct 15 2019</span>
+                                </div>
+                            </div>
+
+                            <div class="recent-post">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                <div class="post-meta">
+                                    <a>Important annoucement</a>
+                                    <span>oct 11 2019</span>
+                                </div>
+                            </div>
+
+                            <div class="recent-post">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
+                                <div class="post-meta">
+                                    <a>Get the most from customer feedback</a>
+                                    <span>oct 03 2019</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--User List-->
+                        <div class="feed-card is-users">
+                            <h3 class="card-heading">Active users</h3>
+                            <ul class="user-list">
+                                <li>
+                                    <div class="user-list-avatar">
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                    </div>
+                                    <div class="user-list-info">
+                                        <div class="name">Terry Daniels</div>
+                                        <div class="position">CEO</div>
+                                    </div>
+                                    <div class="user-list-status is-online"></div>
+                                </li>
+                                <li>
+                                    <div class="user-list-avatar">
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
+                                    </div>
+                                    <div class="user-list-info">
+                                        <div class="name">Marjory Cambell</div>
+                                        <div class="position">CFO</div>
+                                    </div>
+                                    <div class="user-list-status is-busy"></div>
+                                </li>
+                                <li>
+                                    <div class="user-list-avatar">
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}">
+                                    </div>
+                                    <div class="user-list-info">
+                                        <div class="name">Kevin Smith</div>
+                                        <div class="position">Software Engineer</div>
+                                    </div>
+                                    <div class="user-list-status is-offline"></div>
+                                </li>
+                                <li>
+                                    <div class="user-list-avatar">
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
+                                    </div>
+                                    <div class="user-list-info">
+                                        <div class="name">Melany Wright</div>
+                                        <div class="position">Sales Manager</div>
+                                    </div>
+                                    <div class="user-list-status is-online"></div>
+                                </li>
+                                <li>
+                                    <div class="user-list-avatar">
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                    </div>
+                                    <div class="user-list-info">
+                                        <div class="name">Helen Miller</div>
+                                        <div class="position">Sales Manager</div>
+                                    </div>
+                                    <div class="user-list-status is-online"></div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

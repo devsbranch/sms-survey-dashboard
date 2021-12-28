@@ -1,0 +1,125 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% load static %}
+
+{% block title %} Register {% endblock %}
+
+{% block content %}   
+        
+    <section class="hero is-fullheight is-light-grey is-bold">
+    
+        <div class="hero-body">
+            <div class="container">
+    
+                <!-- Classic inputs -->
+                <div id="classic" class="login-form-wrapper">
+
+                    <!-- Classic login form -->
+                    <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+
+                        <form role="form" method="post" action="">
+
+                            {% csrf_token %} 
+
+                            <div class="auth-card">
+                                <div class="auth-card-header header-primary">
+                                    <h2 class="has-text-centered">PPCR-TRALARD</h2>
+                                </div>
+                                <div class="field has-text-centered">
+                                    <p>
+                                        {% if msg %}
+                                            {{ msg | safe }}
+                                        {% else %}
+                                            Add your credentials 
+                                        {% endif %}    
+                                    </p>    
+                                </div>
+
+                                <br />
+                            
+                            <!-- Hide form fields, if the registration is successfull -->    
+                            {% if not success %}    
+                            
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.username }}
+                                        <div class="form-icon">
+                                            <i data-feather="user"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <span class="text-error">{{ form.username.errors }}</span>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.email }}
+                                        <div class="form-icon">
+                                            <i data-feather="mail"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <span class="text-error">{{ form.email.errors }}</span>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.password1 }}
+                                        <div class="form-icon">
+                                            <i data-feather="lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <span class="text-error">{{ form.password1.errors }}</span>
+                                </div>
+
+                                <div class="field">
+                                    <div class="control">
+                                        {{ form.password2 }}
+                                        <div class="form-icon">
+                                            <i data-feather="lock"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <span class="text-error">{{ form.password2.errors }}</span>
+                                </div>
+
+                                <br />
+                                <p class="has-text-centered">
+                                    Have an account? <a class="no-account" href="{% url 'login' %}" >Login</a>
+                                </p>
+                                <div class="button-wrap">
+                                    <button type="submit" name="register" class="button">Register</button>
+                                </div>
+                            
+                            {% endif %}
+
+                            </div>
+                        
+                        </form>
+
+                        <p class="has-text-centered">
+                            &copy; Design <a href="https://cssninja.io/">PPCR</a> - 
+                            <a href="#">TRALARD</a>.                        
+                        </p>
+
+                    </div>
+                    <!-- /Classic login form -->
+
+                </div>
+                <!-- /Classic inputs -->
+    
+            </div>
+        </div>
+    </section>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/js/auth.js' %}"></script>
+{% endblock javascripts %}

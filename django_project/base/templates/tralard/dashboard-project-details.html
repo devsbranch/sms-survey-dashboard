@@ -1,0 +1,1488 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Project Details {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="dashboard-columns">
+    
+                        <div class="projects-wrapper">
+                            <div class="project-header-wrap">
+                                <div class="title-wrap">
+                                    <h2 class="project-title">Webapp Release</h2>
+                                    <h4 class="project-tagline">Finishing Code related tasks and Launching the Marketing Campaign.</h4>
+                                </div>
+                                <div class="project-members-avatars">
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                    </div>
+                                    <div class="face">
+                                        <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/mila.jpg' %}">
+                                    </div>
+                                    <div class="face is-fake">
+                                        <span>+6</span>
+                                    </div>
+                                    <div class="add-button modal-trigger" data-modal="invite-user-modal">
+                                        <i class="material-icons">add</i>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="top-progress-block">
+                                <progress class="progress is-xs is-secondary" value="82" max="100">82%</progress>
+                                <div class="project-meta">
+                                    <div class="task-count">
+                                        <i class="sl sl-icon-check"></i>
+                                        <span>38/42</span>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="navigation-tabs layout-tabs animated-tabs">
+                                <div class="tabs is-toggle is-fullwidth">
+                                    <ul>
+                                        <li class="tab-link is-active" data-tab="project-tasks"><a>Tasks</a></li>
+                                        <li class="tab-link" data-tab="project-files"><a>Files</a></li>
+                                        <li class="tab-link" data-tab="project-activity"><a>Activity</a></li>
+                                    </ul>
+                                </div>
+                                <div id="project-tasks" class="navtab-content is-active">
+    
+                                    <!-- Task Group -->
+                                    <div class="projects-list-wrapper">
+                                        <div class="list-header">
+                                            <div class="list-title">
+                                                <span>Tasks</span>
+                                                <div class="add-button modal-trigger" data-modal="create-task-modal">
+                                                    <i class="material-icons">add</i>
+                                                </div>
+                                            </div>
+                                            <div class="list-filter">
+                                                <div class="control">
+                                                    <input class="input" type="text" placeholder="Filter Projects">
+                                                    <div class="form-icon">
+                                                        <i data-feather="filter"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-body">
+                                            <div class="columns is-multiline">
+                                                <div class="column">
+    
+                                                    <!-- Task group -->
+                                                    <div class="tasks-wrapper">
+                                                        <div class="header">
+                                                            <h4 class="no-margin-bottom">Reviews <small>(3)</small></h4>
+    
+                                                            <!-- Task wrapper dropdown -->
+                                                            <div class="dropdown is-right dropdown-trigger">
+                                                                <div class="button" aria-haspopup="true"
+                                                                    aria-controls="dropdown-menu">
+                                                                    <span class="material-icons">more_vert</span>
+                                                                </div>
+    
+                                                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                                    <div class="dropdown-content">
+                                                                        <a href="#" class="dropdown-item">
+                                                                            Rename
+                                                                        </a>
+                                                                        <a class="dropdown-item">
+                                                                            Archive
+                                                                        </a>
+                                                                        <hr class="dropdown-divider">
+                                                                        <a href="#" class="dropdown-item is-flex">
+                                                                            <span class="material-icons">add</span>
+                                                                            Add Task
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="83"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Project documents review
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        5 days remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"
+                                                                                alt=""
+                                                                                data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"
+                                                                                alt=""
+                                                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"
+                                                                                alt=""
+                                                                                data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"
+                                                                                alt=""
+                                                                                data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"
+                                                                                alt=""
+                                                                                data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>7/9</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="20"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Code Review
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        2 weeks remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>2/10</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="55"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        ICO Presales Report
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        1 month remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>8/15</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /Task Group -->
+    
+                                                    <!-- Task group -->
+                                                    <div class="tasks-wrapper">
+                                                        <div class="header">
+                                                            <h4 class="no-margin-bottom">Conception <small>(3)</small></h4>
+                                                            <!-- Task wrapper dropdown -->
+                                                            <div class="dropdown is-right dropdown-trigger">
+                                                                <div class="button" aria-haspopup="true"
+                                                                    aria-controls="dropdown-menu">
+                                                                    <span class="material-icons">more_vert</span>
+                                                                </div>
+    
+                                                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                                    <div class="dropdown-content">
+                                                                        <a href="#" class="dropdown-item">
+                                                                            Rename
+                                                                        </a>
+                                                                        <a class="dropdown-item">
+                                                                            Archive
+                                                                        </a>
+                                                                        <hr class="dropdown-divider">
+                                                                        <a href="#" class="dropdown-item is-flex">
+                                                                            <span class="material-icons">add</span>
+                                                                            Add Task
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="52"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Ecommerce Platform
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        3 days remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>13/24</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="94"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Icon Set Design
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        5 days remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/nicole.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>7/8</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="12"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Website Concept
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        3 weeks remaining
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/matt.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/stella.jpg' %}" alt="">
+                                                                        </div>
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>3/43</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div class="dropdown is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- /Task Group -->
+    
+                                                    <!-- Task group -->
+                                                    <div class="tasks-wrapper">
+                                                        <div class="header">
+                                                            <h4 class="no-margin-bottom">Ideas <small>(1)</small></h4>
+                                                            <!-- Task wrapper dropdown -->
+                                                            <div class="dropdown is-right dropdown-trigger">
+                                                                <div class="button" aria-haspopup="true"
+                                                                    aria-controls="dropdown-menu">
+                                                                    <span class="material-icons">more_vert</span>
+                                                                </div>
+    
+                                                                <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                                                                    <div class="dropdown-content">
+                                                                        <a href="#" class="dropdown-item">
+                                                                            Rename
+                                                                        </a>
+                                                                        <a class="dropdown-item">
+                                                                            Archive
+                                                                        </a>
+                                                                        <hr class="dropdown-divider">
+                                                                        <a href="#" class="dropdown-item is-flex">
+                                                                            <span class="material-icons">add</span>
+                                                                            Add Task
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Task Card -->
+                                                        <div class="task-card">
+                                                            <div class="card-progress" data-progress="20"></div>
+                                                            <div class="card-inner">
+                                                                <div class="task-meta">
+                                                                    <span class="task-title">
+                                                                        Cryptocurrency Social Platform
+                                                                    </span>
+                                                                    <span class="task-due-date">
+                                                                        No Due Date
+                                                                    </span>
+                                                                </div>
+                                                                <div class="task-info">
+                                                                    <div class="task-members">
+                                                                        <div class="face">
+                                                                            <img src="https://via.placeholder.com/250x250"data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}" alt="">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="subtasks-count">
+                                                                        <i class="sl sl-icon-check"></i>
+                                                                        <span>2/10</span>
+                                                                    </div>
+                                                                    <div class="more-drop">
+                                                                        <!-- Task dropdown -->
+                                                                        <div
+                                                                            class="dropdown is-up is-right dropdown-trigger">
+                                                                            <div class="button" aria-haspopup="true"
+                                                                                aria-controls="dropdown-menu">
+                                                                                <span
+                                                                                    class="material-icons">more_vert</span>
+                                                                            </div>
+    
+                                                                            <div class="dropdown-menu" id="dropdown-menu"
+                                                                                role="menu">
+                                                                                <div class="dropdown-content">
+                                                                                    <a href="#" class="dropdown-item">
+                                                                                        Edit
+                                                                                    </a>
+                                                                                    <a class="dropdown-item">
+                                                                                        Settings
+                                                                                    </a>
+                                                                                    <hr class="dropdown-divider">
+                                                                                    <a href="#"
+                                                                                        class="dropdown-item is-flex">
+                                                                                        <span
+                                                                                            class="material-icons">person_add</span>
+                                                                                        Invite
+                                                                                    </a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                                <div id="project-files" class="navtab-content">
+    
+                                    <!-- Files List -->
+                                    <div class="projects-list-wrapper">
+                                        <div class="list-header">
+                                            <div class="list-title">
+                                                <span>Files</span>
+                                                <div class="add-button">
+                                                    <i class="material-icons">add</i>
+                                                </div>
+                                            </div>
+                                            <div class="list-filter">
+                                                <div class="control">
+                                                    <input class="input" type="text" placeholder="Filter Projects">
+                                                    <div class="form-icon">
+                                                        <i data-feather="filter"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-body">
+                                            <div class="columns is-multiline">
+                                                <div class="column">
+                                                    <div class="project-files-wrapper">
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">insert_drive_file</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">Budget Notes</a>
+                                                                    <span><small>75KB</small> <i class="fa fa-circle"></i>
+                                                                        Word File</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action is-alt">
+                                                                        <i class="material-icons">invert_colors</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">Website Prototype</a>
+                                                                    <span><small>95MB</small> <i class="fa fa-circle"></i>
+                                                                        Illustrator File</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">folder</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">App Master Layout</a>
+                                                                    <span><small>43MB</small> <i class="fa fa-circle"></i>
+                                                                        Zip File</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action is-alt">
+                                                                        <i class="material-icons">photo</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">Account Page Screenshot</a>
+                                                                    <span><small>0.7MB</small> <i class="fa fa-circle"></i>
+                                                                        JPEG Image</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">insert_drive_file</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">Operations Report</a>
+                                                                    <span><small>43KB</small> <i class="fa fa-circle"></i>
+                                                                        Word File</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div class="media file-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">insert_drive_file</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <a href="#">Finance Plan</a>
+                                                                    <span><small>29KB</small> <i class="fa fa-circle"></i>
+                                                                        Spreadsheet</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Task dropdown -->
+                                                                <div class="dropdown is-up is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                Download
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Share
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Delete
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+    
+                                <div id="project-activity" class="navtab-content">
+    
+                                    <!-- Acticity List -->
+                                    <div class="projects-list-wrapper">
+                                        <div class="list-header">
+                                            <div class="list-title">
+                                                <span>Activity</span>
+                                            </div>
+                                            <div class="list-filter">
+                                                <div class="control">
+                                                    <input class="input" type="text" placeholder="Filter Projects">
+                                                    <div class="form-icon">
+                                                        <i data-feather="filter"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-body">
+                                            <div class="columns is-multiline">
+                                                <div class="column">
+                                                    <div class="project-activity-wrapper">
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">check_circle</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Rayan Harris</a>
+                                                                        has completed the <a class="is-activity"
+                                                                            href="#">Website Review</a>
+                                                                        task.</span>
+                                                                    <time>Just now</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">add_circle</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Helen Miller</a>
+                                                                        has created a <a class="is-activity" href="#">New
+                                                                            Task</a></span>
+                                                                    <time>3 hours ago</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">person_add</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Terry Daniels</a>
+                                                                        has joined the project</span>
+                                                                    <time>5 hours ago</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">add_circle</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Aaron Stone</a>
+                                                                        has created a <a class="is-activity" href="#">New
+                                                                            Task</a></span>
+                                                                    <time>Yesterday</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">timer</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Helen Miller</a>
+                                                                        changed the due date of <a class="is-activity"
+                                                                            href="#">a Task</a></span>
+                                                                    <time>3 hours ago</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                        <!-- Activity item -->
+                                                        <div class="media activity-item">
+                                                            <div class="media-left">
+                                                                <div class="image is-48x48">
+                                                                    <img src="https://via.placeholder.com/250x250">
+                                                                    <div class="file-action">
+                                                                        <i class="material-icons">event</i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-content">
+                                                                <div class="meta">
+                                                                    <span class="activity-content"><a class="is-activity"
+                                                                            href="#">Aaron Stone</a>
+                                                                        has created <a class="is-activity" href="#">the
+                                                                            Project</a></span>
+                                                                    <time>Last week</time>
+                                                                </div>
+                                                            </div>
+                                                            <div class="media-right">
+                                                                <!-- Activity dropdown -->
+                                                                <div class="dropdown is-up is-right dropdown-trigger">
+                                                                    <div class="button" aria-haspopup="true"
+                                                                        aria-controls="dropdown-menu">
+                                                                        <span class="material-icons">more_vert</span>
+                                                                    </div>
+    
+                                                                    <div class="dropdown-menu" id="dropdown-menu"
+                                                                        role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                View item
+                                                                            </a>
+                                                                            <a class="dropdown-item">
+                                                                                Comment
+                                                                            </a>
+                                                                            <hr class="dropdown-divider">
+                                                                            <a href="#" class="dropdown-item is-flex">
+                                                                                <span
+                                                                                    class="material-icons">delete_sweep</span>
+                                                                                Remove
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                </div>
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Create Task Modal -->
+    <div id="create-task-modal" class="modal create-task-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <h2 class="has-text-centered dark-text">New Task</h2>
+                <div class="navigation-tabs layout-tabs animated-tabs">
+                    <div class="tabs is-toggle is-fullwidth no-margin-bottom">
+                        <ul>
+                            <li class="tab-link is-active" data-tab="task-details"><a>Details</a></li>
+                            <li class="tab-link" data-tab="task-members"><a>Members</a></li>
+                        </ul>
+                    </div>
+    
+                    <div id="task-details" class="navtab-content is-active">
+                        <div class="card-body">
+                            <div class="content">
+                                <!-- New Project form -->
+                                <form>
+    
+                                    <div class="field mb-10">
+                                        <label class="label dark-text">Due Date</label>
+                                        <div class="columns is-vcentered is-fieldset">
+                                            <div class="column is-3">
+                                                <div class="field-label">Start date*</div>
+                                            </div>
+                                            <div class="column is-9">
+                                                <div class="control has-icons-right">
+                                                    <input data-toggle="datepicker" type="text" class="input is-medium"
+                                                        placeholder="Start Date">
+                                                    <span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="columns is-fieldset">
+                                            <div class="column is-3">
+                                                <div class="field-label">End Date*</div>
+                                            </div>
+                                            <div class="column is-9">
+                                                <div class="control has-icons-right">
+                                                    <input data-toggle="datepicker" type="text" class="input is-medium"
+                                                        placeholder="End Date">
+                                                    <span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="field mb-10">
+                                        <label class="label dark-text">Task Meta</label>
+                                        <div class="columns is-vcentered is-fieldset">
+                                            <div class="column is-3">
+                                                <div class="field-label">Task Title*</div>
+                                            </div>
+                                            <div class="column is-9">
+                                                <input type="text" class="input is-medium">
+                                            </div>
+                                        </div>
+                                        <div class="columns is-fieldset">
+                                            <div class="column is-3">
+                                                <div class="field-label">Description*</div>
+                                            </div>
+                                            <div class="column is-9">
+                                                <textarea class="textarea" rows="4"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                                    <div class="form-footer">
+                                        <button type="submit" class="button is-modal">Create Task</button>
+                                    </div>
+    
+                                </form>
+                                <!-- /New Project form -->
+                            </div>
+                        </div>
+                    </div>
+    
+                    <div id="task-members" class="navtab-content">
+    
+                        <div class="task-members">
+                            <div class="face">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                            </div>
+                            <div class="face">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                            </div>
+                            <div class="face">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
+                            </div>
+                            <div class="face">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}">
+                            </div>
+                        </div>
+    
+                        <div class="modal-filter">
+                            <div class="control">
+                                <input class="input is-medium is-rounded" type="text" placeholder="Filter Members">
+                                <span class="material-icons">filter_list</span>
+                            </div>
+                        </div>
+    
+                        <div class="card-body">
+                            <div class="members-select">
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/eric.png' %}">
+                                    <span>Eric Daniels</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user1" class="styled" type="checkbox" checked>
+                                        <label for="task-user1"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}">
+                                    <span>Anthony Briggs</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user2" class="styled" type="checkbox" checked>
+                                        <label for="task-user2"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/janet.jpg' %}">
+                                    <span>Jenna De Camp</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user3" class="styled" type="checkbox" checked>
+                                        <label for="task-user3"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}">
+                                    <span>Rolf Van Buren</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user4" class="styled" type="checkbox">
+                                        <label for="task-user4"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}">
+                                    <span>Magda Hilden</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user5" class="styled" type="checkbox">
+                                        <label for="task-user5"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}">
+                                    <span>Alex Sheller</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user6" class="styled" type="checkbox">
+                                        <label for="task-user6"></label>
+                                    </div>
+                                </div>
+                                <div class="member-row">
+                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/jane.jpg' %}">
+                                    <span>Katarina Vosniak</span>
+                                    <div class="b-checkbox is-secondary">
+                                        <input id="task-user7" class="styled" type="checkbox">
+                                        <label for="task-user7"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+    </div>
+    <!-- Create task Modal -->
+    
+    <!-- Invite User Modal -->
+    <div id="invite-user-modal" class="modal modal-md invite-user-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <h2 class="dark-text">Invite Users</h2>
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/invitation.svg' %}">
+                        </div>
+                        <div class="help-text has-text-left">Send an invite link via email to add members to this team</div>
+    
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input class="input is-medium" type="text" placeholder="Recipient email address">
+                                <span class="icon is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="add-more">
+                            <i class="material-icons">add</i>
+                            <span>Add another</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button is-modal">Invite Users</button>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+    </div>
+    <!-- /Invite User Modal -->  
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

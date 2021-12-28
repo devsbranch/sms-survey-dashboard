@@ -1,0 +1,1837 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% load static %}
+
+{% block title %} Chat App {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+<div class="chat-wrapper">
+    <div class="chat-inner">
+
+        <!-- Chat top navigation -->
+        <div class="chat-nav">
+            <div class="nav-start">
+                <div class="recipient-block">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                    </div>
+                    <div class="username">
+                        <span>Dan Walker</span>
+                        <span><i class="sl sl-icon-star"></i> <span>| Online</span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-end">
+        
+                <!-- Settings icon dropdown -->
+                <div class="dropdown is-spaced is-right dropdown-trigger">
+                    <div>
+                        <a class="chat-nav-item is-icon">
+                            <i class="sl sl-icon-settings"></i>
+                        </a>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <div class="dropdown-item is-header">
+                                <h5>Settings</h5>
+                            </div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-speech"></i>
+                                    <div class="media-content">
+                                        <h3>Details</h3>
+                                        <small>View this conversation's details.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-equalizer"></i>
+                                    <div class="media-content">
+                                        <h3>Preferences</h3>
+                                        <small>Define your preferences.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-bell"></i>
+                                    <div class="media-content">
+                                        <h3>Notifications</h3>
+                                        <small>Set notifications settings.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-options"></i>
+                                    <div class="media-content">
+                                        <h3>Silence</h3>
+                                        <small>Disable notifications.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-folder-alt"></i>
+                                    <div class="media-content">
+                                        <h3>Archive</h3>
+                                        <small>Archive this conversation.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-trash"></i>
+                                    <div class="media-content">
+                                        <h3>Delete</h3>
+                                        <small>Delete this conversation.</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-search">
+                    <div class="control has-icon">
+                        <input type="text" class="input" placeholder="Search messages">
+                        <div class="form-icon">
+                            <i class="material-icons">search</i>
+                        </div>
+                    </div>
+                </div>
+                <a class="chat-nav-item is-icon is-hidden-mobile">
+                    <i class="sl sl-icon-bell"></i>
+                </a>
+                <a class="chat-nav-item is-icon is-hidden-mobile">
+                    <i class="sl sl-icon-star"></i>
+                </a>
+        
+                <!-- More dropdown -->
+                <div class="dropdown is-spaced is-right dropdown-trigger">
+                    <div>
+                        <a class="chat-nav-item is-icon">
+                            <i class="material-icons">more_vert</i>
+                        </a>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <div class="dropdown-item is-header">
+                                <h5>Menu</h5>
+                            </div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-docs"></i>
+                                    <div class="media-content">
+                                        <h3>Files</h3>
+                                        <small>View all your files.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-people"></i>
+                                    <div class="media-content">
+                                        <h3>Users</h3>
+                                        <small>View all users you're talking to.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-present"></i>
+                                    <div class="media-content">
+                                        <h3>Daily bonus</h3>
+                                        <small>Get your daily bonus.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-cloud-download"></i>
+                                    <div class="media-content">
+                                        <h3>Downloads</h3>
+                                        <small>See all your downloads.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-support"></i>
+                                    <div class="media-content">
+                                        <h3>Support</h3>
+                                        <small>Reach our support team.</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-nav-item is-spacer is-hidden-mobile"></div>
+        
+                <!-- User dropdown -->
+                <div class="dropdown is-spaced is-right dropdown-trigger">
+                    <div>
+                        <a class="chat-nav-item is-account">
+                            <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                        </a>
+                    </div>
+                    <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                            <div class="dropdown-item is-header">
+                                <h5 class="is-narrow">Helen Miller</h5>
+                                <h6>helenmiller@bulkit.io</h6>
+                            </div>
+                            <a href="#" class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-grid"></i>
+                                    <div class="media-content">
+                                        <h3>Dashboard</h3>
+                                        <small>Back to Dashboard.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-user"></i>
+                                    <div class="media-content">
+                                        <h3>Profile</h3>
+                                        <small>View your user profile.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-envelope-open"></i>
+                                    <div class="media-content">
+                                        <h3>Inbox</h3>
+                                        <small>Open your messages inbox.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-check"></i>
+                                    <div class="media-content">
+                                        <h3>Tasks</h3>
+                                        <small>View your pending tasks.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-rocket"></i>
+                                    <div class="media-content">
+                                        <h3>My Projects</h3>
+                                        <small>View your projects board.</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <hr class="dropdown-divider">
+                            <a class="dropdown-item">
+                                <div class="media">
+                                    <i class="sl sl-icon-logout"></i>
+                                    <div class="media-content">
+                                        <h3>Logout</h3>
+                                        <small>Logout from your account</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+
+        <!-- Chat sidebar -->
+        <div id="chat-sidebar" class="users-sidebar">
+            <!-- Header -->
+            <a href="/" class="header-item">
+                <img src="{% static 'assets/images/logos/square-violet.svg' %}" alt="">
+            </a>
+            <!-- User list -->
+            <div class="conversations-list has-slimscroll-xs">
+                <!-- User -->
+                <div class="user-item is-active" data-chat-user="dan" data-full-name="Dan Walker" data-status="Online">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                        <div class="user-status is-online"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="elie" data-full-name="Elie Daniels" data-status="Busy">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt="">
+                        <div class="user-status is-busy"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="lakisha" data-full-name="Lakisha Williams" data-status="Away">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt="">
+                        <div class="user-status is-away"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="alex" data-full-name="Alex Walsh" data-status="Busy">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                        <div class="user-status is-busy"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="anthony" data-full-name="Anthony Briggs" data-status="Online">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt="">
+                        <div class="user-status is-online"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="ray" data-full-name="Ray Stockton" data-status="Away">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}" alt="">
+                        <div class="user-status is-away"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="sally" data-full-name="Sally Mitchells" data-status="Busy">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                        <div class="user-status is-busy"></div>
+                    </div>
+                </div>
+                <!-- User -->
+                <div class="user-item" data-chat-user="nick" data-full-name="Nick Frost" data-status="Busy">
+                    <div class="avatar-container">
+                        <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}" alt="">
+                        <div class="user-status is-busy"></div>
+                    </div>
+                </div>            </div>
+            <!-- Add Conversation -->
+            <div class="footer-item">
+                <div class="add-button modal-trigger" data-modal="add-conversation-modal"><i class="material-icons">add</i></div>
+            </div>
+        </div>
+
+        <!-- Chat body -->
+        <div id="chat-body" class="chat-body is-opened">
+            <!-- Conversation with Dan -->
+            <div id="dan-conversation" class="chat-body-inner has-slimscroll">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Today</span>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                    <div class="message-block">
+                        <span>8:03am</span>
+                        <div class="message-text">Hi Helen! I made a new design, and i wanted to show it to you.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                    <div class="message-block">
+                        <span>8:03am</span>
+                        <div class="message-text">It's quite clean and it's inspired from Bulkit.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>8:12am</span>
+                        <div class="message-text">Oh really??! I want to see that.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                    <div class="message-block">
+                        <span>8:13am</span>
+                        <div class="message-text">FYI it was done in less than a day.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>8:17am</span>
+                        <div class="message-text">Great to hear it. Just send me the PSD files so i can have a look at it.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>8:18am</span>
+                        <div class="message-text">And if you have a prototype, you can also send me the link to it.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Elie -->
+            <div id="elie-conversation" class="chat-body-inner has-slimscroll is-hidden">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Yesterday</span>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>3:24pm</span>
+                        <div class="message-text">Elie, Amanda told me about your issue, how can I help?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>3:42pm</span>
+                        <div class="message-text">Hey Helen, thanks for answering so quickly. Iam stuck, i need a car.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>3:43pm</span>
+                        <div class="message-text">Can i borrow your car for a quick ride to San Fransisco? Iam running behind and there' no train in sight.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Lakisha -->
+            <div id="lakisha-conversation" class="chat-body-inner has-slimscroll is-hidden">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Today</span>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>10:34am</span>
+                        <div class="message-text">Hey Lakisha! Aren't we supposed to go the theatre after work?.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>10:37am</span>
+                        <div class="message-text">Just remembered it.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>11:22am</span>
+                        <div class="message-text">Yeah you always do that, forget about everything.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Anthony -->
+            <div id="anthony-conversation" class="chat-body-inner has-slimscroll is-hidden">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Today</span>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>12:34pm</span>
+                        <div class="message-text">Damn you! Why would they even implement this in the game?.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>12:32pm</span>
+                        <div class="message-text">I just HATE zergs.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>13:09pm</span>
+                        <div class="message-text">C'mon, you just gotta learn the tricks. You can't expect zergs to behave like terrans. I mean that's how the mechanics are.</div>
+                    </div>
+                </div>
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>13:11pm</span>
+                        <div class="message-text">I checked the replay and for example, you always get supply blocked. That's not the right thing to do.</div>
+                    </div>
+                </div>
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>13:12pm</span>
+                        <div class="message-text">I know but i struggle when i have to decide what to make from larvas.</div>
+                    </div>
+                </div>
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>13:17pm</span>
+                        <div class="message-text">Join me in game, i'll show you.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Alex -->
+            <div id="alex-conversation" class="chat-body-inner has-slimscroll">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Monday</span>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>4:55pm</span>
+                        <div class="message-text">Hey Helen, what's up?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>4:56pm</span>
+                        <div class="message-text">Iam coming to LA tomorrow. Interested in having lunch?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>5:21pm</span>
+                        <div class="message-text">Hey mate, it's been a while. Sure I would love to.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>5:27pm</span>
+                        <div class="message-text">Ok. Let's say i pick you up at 12:30 at work, works?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>5:43pm</span>
+                        <div class="message-text">Yup, that works great.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>5:44pm</span>
+                        <div class="message-text">And yeah, don't forget to bring some of my favourite cheese cake.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>5:27pm</span>
+                        <div class="message-text">No worries</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Ray -->
+            <div id="ray-conversation" class="chat-body-inner has-slimscroll is-hidden">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">September 28</span>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>11:53am</span>
+                        <div class="message-text">Ray, i forgot my folder at your place yesterday.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>11:53am</span>
+                        <div class="message-text">I need it badly, it's work stuff.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>12:19pm</span>
+                        <div class="message-text">Yeah i noticed. I'll drop it in half an hour at your office.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Nick -->
+            <div id="nick-conversation" class="chat-body-inner has-slimscroll is-hidden">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">September 17</span>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>8:22pm</span>
+                        <div class="message-text">So you watched the movie?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>8:22pm</span>
+                        <div class="message-text">Was it scary?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>9:03pm</span>
+                        <div class="message-text">It was so frightening, i felt my heart was about to blow inside my chest.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Conversation with Sally -->
+            <div id="sally-conversation" class="chat-body-inner has-slimscroll">
+                <div class="date-divider">
+                    <hr class="date-divider-line">
+                    <span class="date-divider-text">Today</span>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:01pm</span>
+                        <div class="message-text">Hello Helen, did you read my proposal?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:01pm</span>
+                        <div class="message-text">Didn't hear from you since i sent it.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:02pm</span>
+                        <div class="message-text">Hello Sally, Iam really sorry, Iam so busy recently, but i had the time to read it.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:04pm</span>
+                        <div class="message-text">And what did you think about it?</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:05pm</span>
+                        <div class="message-text">Actually it's quite good, there might be some small changes but overall it's great.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-sent">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:07pm</span>
+                        <div class="message-text">I think that i can give it to my boss at this stage.</div>
+                    </div>
+                </div>
+            
+                <div class="chat-message is-received">
+                    <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                    <div class="message-block">
+                        <span>2:09pm</span>
+                        <div class="message-text">Crossing fingers then</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Compose message area -->
+            <div class="chat-action">
+                <div class="chat-action-inner">
+                    <div class="control">
+                        <textarea class="textarea comment-textarea" rows="1"></textarea>
+                        <div class="dropdown compose-dropdown is-spaced is-up dropdown-trigger">
+                            <div>
+                                <div class="add-button">
+                                    <div class="button-inner">
+                                        <i class="material-icons">add</i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dropdown-menu" role="menu">
+                                <div class="dropdown-content">
+                                    <div class="dropdown-item is-header">
+                                        <h5>Add a new</h5>
+                                    </div>
+                                    <a href="#" class="dropdown-item">
+                                        <div class="media">
+                                            <i class="material-icons">code</i>
+                                            <div class="media-content">
+                                                <h3>Code snippet</h3>
+                                                <small>Add and paste a code snippet.</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <div class="media">
+                                            <i class="sl sl-icon-doc"></i>
+                                            <div class="media-content">
+                                                <h3>Note</h3>
+                                                <small>Add and paste a note.</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <hr class="dropdown-divider">
+                                    <a class="dropdown-item">
+                                        <div class="media">
+                                            <i class="sl sl-icon-globe"></i>
+                                            <div class="media-content">
+                                                <h3>Remote file</h3>
+                                                <small>Add a file from a remote drive.</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a class="dropdown-item">
+                                        <div class="media">
+                                            <i class="sl sl-icon-screen-desktop"></i>
+                                            <div class="media-content">
+                                                <h3>Local file</h3>
+                                                <small>Add a file from your computer.</small>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="chat-panel" class="chat-panel is-opened">
+            <div class="panel-inner">
+                <div class="panel-header">
+                    <h3>Details</h3>
+                    <div class="panel-close">
+                        <i class="material-icons">close</i>
+                    </div>
+                </div>
+
+                <!-- Dan details -->
+                <div id="dan-details" class="panel-body is-user-details">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Dan Walker</h3>
+                            <h4>Business Developer</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Asana Inc.</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">school</i>
+                                <div class="about-text">
+                                    <span>Studied at</span>
+                                    <span><a class="is-inverted" href="#">Georgetown University</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Lakisha details -->
+                <div id="lakisha-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Lakisha Williams</h3>
+                            <h4>HR Manager</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Trending Fashions</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Oklahoma City</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Elie details -->
+                <div id="elie-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Elie Daniels</h3>
+                            <h4>Head of Marketing</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Peelman & Sons</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Los Angeles</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Anthony details -->
+                <div id="anthony-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Anthony Briggs</h3>
+                            <h4>Software Engineer</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Blizzard Entertainment</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Chicago</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Alex details -->
+                <div id="alex-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Alex Walsh</h3>
+                            <h4>Financial analyst</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Brettmann Bank</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Santa Fe</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Ray details -->
+                <div id="ray-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Ray Stockton</h3>
+                            <h4>Legal Affairs</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Mortimer & Sons</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">London</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Nick details -->
+                <div id="nick-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Nick Frost</h3>
+                            <h4>Head of Sales</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Carrefour</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Melbourne</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+                <!-- Sally details -->
+                <div id="sally-details" class="panel-body is-user-details is-hidden">
+                    <div class="panel-body-inner">
+                
+                        <div class="subheader">
+                            <div class="action-icon">
+                                <i class="material-icons">videocam</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">photo_camera</i>
+                            </div>
+                            <div class="action-icon">
+                                <i class="material-icons">mic</i>
+                            </div>
+                            <div class="dropdown details-dropdown is-spaced is-right dropdown-trigger ml-auto">
+                                <div>
+                                    <div class="action-icon">
+                                        <i class="material-icons">more_vert</i>
+                                    </div>
+                                </div>
+                                <div class="dropdown-menu" role="menu">
+                                    <div class="dropdown-content">
+                                        <div class="dropdown-item is-header">
+                                            <h5>User actions</h5>
+                                        </div>
+                                        <a href="#" class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-eye"></i>
+                                                <div class="media-content">
+                                                    <h3>View profile</h3>
+                                                    <small>View this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                                <div class="media-content">
+                                                    <h3>Send message</h3>
+                                                    <small>Send a message to the user's inbox.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <hr class="dropdown-divider">
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-share-alt"></i>
+                                                <div class="media-content">
+                                                    <h3>Share profile</h3>
+                                                    <small>Share this user's profile.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a class="dropdown-item">
+                                            <div class="media">
+                                                <i class="sl sl-icon-ban"></i>
+                                                <div class="media-content">
+                                                    <h3>Block user</h3>
+                                                    <small>Block this user permanently.</small>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>        </div>
+                
+                        <div class="details-avatar">
+                            <img src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt="">
+                            <div class="call-me">
+                                <i class="material-icons">phone</i>
+                            </div>
+                        </div>
+                
+                        <div class="user-meta has-text-centered">
+                            <h3>Sally Mitchells</h3>
+                            <h4>Sales Manager</h4>
+                        </div>
+                
+                        <div class="user-actions">
+                            <a class="user-action">
+                                <i class="material-icons">add</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">phone</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">mail</i>
+                            </a>
+                            <a class="user-action">
+                                <i class="material-icons">notifications</i>
+                            </a>
+                        </div>
+                
+                        <div class="user-about">
+                            <label>About Me</label>
+                            <div class="about-block">
+                                <i class="material-icons">domain</i>
+                                <div class="about-text">
+                                    <span>Works at</span>
+                                    <span><a class="is-inverted" href="#">Salesforce</a></span>
+                                </div>
+                            </div>
+                            <div class="about-block">
+                                <i class="material-icons">place</i>
+                                <div class="about-text">
+                                    <span>From</span>
+                                    <span><a class="is-inverted" href="#">Seattle</a></span>
+                                </div>
+                            </div>
+                        </div>
+                
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+<div id="add-conversation-modal" class="modal modal-white add-conversation-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+
+        <div class="new-list">
+            <div class="list-header">
+                <h3>New Conversation</h3>
+                <!-- Close X button -->
+                <div class="close-wrap">
+                    <span class="close-modal modal-dismiss">
+                        <i class="material-icons">close</i>
+                    </span>
+                </div>
+            </div>
+            <div id="user-list" class="list-body has-slimscroll">
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt=""
+                    data-username="Alex Walsh" data-position="Financial analyst">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}" alt=""
+                    data-username="Elie Daniels" data-position="Head of Marketing">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}" alt=""
+                    data-username="Terry Slone" data-position="Software Engineer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}" alt=""
+                    data-username="Alan Maynard" data-position="Web Developer">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt=""
+                    data-username="Lakisha Williams" data-position="HR Manager">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/marc.jpg' %}" alt=""
+                    data-username="Mark Walters" data-position="graphic Designer">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/dan.png' %}" alt=""
+                    data-username="Dan Walker" data-position="Business Developer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/carolin.png' %}" alt=""
+                    data-username="Marjory Cambell" data-position="Business Analyst">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/kareem.jpg' %}" alt=""
+                    data-username="Kareem Jabbar" data-position="Accountant">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}" alt=""
+                    data-username="Christina Chu" data-position="Marketing Manager">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}" alt=""
+                    data-username="Anthony Briggs" data-position="Software Engineer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}" alt=""
+                    data-username="Aaron Brettner" data-position="HR Consultant">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/eric.jpg' %}" alt=""
+                    data-username="Eric White" data-position="Web Designer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/elisabeth.jpg' %}" alt=""
+                    data-username="Elisabeth Brennings" data-position="Accountant">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/mila.jpg' %}" alt=""
+                    data-username="Mila Mariani" data-position="Development Coach">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/thomas.jpg' %}" alt=""
+                    data-username="Thomas Schuller" data-position="CFO">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}" alt=""
+                    data-username="Nick Frost" data-position="Head of Sales">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nicole.jpg' %}" alt=""
+                    data-username="Nicole Ferrier" data-position="Financial analyst">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}" alt=""
+                    data-username="Ray Stockton" data-position="Business Developer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/nina.jpg' %}" alt=""
+                    data-username="Nina Wallace" data-position="Head of Research">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}" alt=""
+                    data-username="Terry Whyatt" data-position="Senior Engineer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/william.jpg' %}" alt=""
+                    data-username="William Bulugga" data-position="Junior Developer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/mira.jpg' %}" alt=""
+                    data-username="Mira Shandayar" data-position="Software Architect">
+                </div>
+                <div class="list-item is-chatting">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/sally.jpg' %}" alt=""
+                    data-username="Sally Mitchells" data-position="Lead Developer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}" alt=""
+                    data-username="Barry Bronsfield" data-position="CTO">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}" alt=""
+                    data-username="Ben Smith" data-position="Financial analyst">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/anwar.jpg' %}" alt=""
+                    data-username="Anwar Ibrahim" data-position="Financial Consutant">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/eric.png' %}" alt=""
+                    data-username="John Statterfield" data-position="Mobile Developer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/eleanor.jpg' %}" alt=""
+                    data-username="Eleanor Harris" data-position="Photographer">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}" alt=""
+                    data-username="Harry Chipovski" data-position="Sales Analyst">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/john.jpg' %}" alt=""
+                    data-username="Eddie Mac Farlane" data-position="Virtual Reality">
+                </div>
+                <div class="list-item">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}" alt=""
+                    data-username="Marge Simpson" data-position="Outfit Designer">
+                </div>
+                <div class="list-item is-add">
+                    <a>
+                        <i class="sl sl-icon-people"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div id="user-details" class="list-body is-flex is-hidden">
+                <div class="details-inner">
+                    <img class="user-avatar" src="https://via.placeholder.com/150x150" data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}" alt="">
+                    <h3 class="username">Alex Walsh</h3>
+                    <p class="user-position">Business Developer</p>
+                    <div class="button-wrap">
+                        <a class="button cancel-new-chat">Cancel</a>
+                        <a class="button primary-btn raised ripple modal-dismiss confirm-new-chat">Chat</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+    <script src="{% static 'assets/js/chat.js' %}"></script>
+{% endblock javascripts %}

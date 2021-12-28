@@ -1,0 +1,372 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Widgets Social {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+<div id="dashboard-wrapper" class="dashboard-outer">
+    <div class="dashboard-inner">
+
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+
+            <div id="main-dashboard" class="section-wrapper">
+                <!-- Dashboard content -->
+                <div id="basic-layout" class="columns dashboard-columns">
+
+                    <div class="column is-4">
+                        <div class="follow-card">
+                            <div class="header">
+                                <img class="cover" src="https://via.placeholder.com/400x100" alt=""
+                                    data-demo-src="{% static 'assets/images/dashboard/social1.png' %}">
+                                <img class="avatar" src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                <span>Alan Maynard <br> <span>@alanmaynard</span></span>
+                            </div>
+                            <div class="has-text-right">
+                                <button class="button dash-btn accent-btn raised ripple"><i class="fa fa-twitter"></i>
+                                    Follow me</button>
+                            </div>
+                        </div>
+
+                        <div class="follow-card is-minimal">
+                            <div class="header">
+                                <div class="twitter-icon">
+                                    <i class="fa fa-twitter"></i>
+                                </div>
+                                <span>Alan Maynard <br> <span>@alanmaynard</span></span>
+                            </div>
+                            <div class="has-text-right">
+                                <button class="button dash-btn info-btn raised ripple"><i class="fa fa-twitter"></i>
+                                    Follow me</button>
+                            </div>
+                        </div>
+
+                        <div class="rating-card">
+                            <div class="rating-avatar">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                            </div>
+                            <div class="rating-content">
+                                <div class="star-rating">
+                                    <i class="material-icons">star</i>
+                                    <i class="material-icons">star</i>
+                                    <i class="material-icons">star</i>
+                                    <i class="material-icons">star</i>
+                                    <i class="material-icons unstared">star</i>
+                                </div>
+                                <div class="rating-title">Awesome product !</div>
+                                <div class="rating-text">Lorem ipsum dolor sit amet, ut graece recusabo prodesset eam,
+                                    in vim alterum
+                                    urbanitas. Enim sanctus quaestio et mea.</div>
+                            </div>
+                        </div>
+
+                        <div class="rating-card">
+                            <div class="rating-avatar">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
+                            </div>
+                            <div class="rating-content">
+                                <div class="star-rating is-heart">
+                                    <i class="material-icons">favorite</i>
+                                    <i class="material-icons">favorite</i>
+                                    <i class="material-icons">favorite</i>
+                                    <i class="material-icons unstared">favorite</i>
+                                    <i class="material-icons unstared">favorite</i>
+                                </div>
+                                <div class="rating-title">Nice product !</div>
+                                <div class="rating-text">Lorem ipsum dolor sit amet, ut graece recusabo prodesset eam,
+                                    in vim alterum
+                                    urbanitas. Enim sanctus quaestio et mea.</div>
+                            </div>
+                        </div>
+
+                        <div class="tweet-card">
+                            <div class="tweet-header">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                                <div class="user-info">
+                                    <div class="name">Alan Maynard</div>
+                                    <div class="alias">@amaynard</div>
+                                </div>
+                                <div class="twitter-icon">
+                                    <i class="fa fa-twitter"></i>
+                                </div>
+                            </div>
+                            <p class="tweet-content">Lorem ipsum dolor sit amet, integre explicari has in, justo ipsum
+                                viderer mea ad.
+                                Aliquid tractatos vis at, sit ne case malis saperet.</p>
+                            <div class="hashtags"><span>#codeTalk</span> <span>#iLoveCode</span></div>
+                        </div>
+
+                        <div class="tweet-card is-branded">
+                            <div class="tweet-header">
+                                <div class="user-info">
+                                    <div class="name">Alan Maynard</div>
+                                    <div class="alias">@amaynard</div>
+                                </div>
+                                <div class="twitter-icon">
+                                    <i class="fa fa-twitter"></i>
+                                </div>
+                            </div>
+                            <p class="tweet-content">Lorem ipsum dolor sit amet, integre explicari has in, justo ipsum
+                                viderer mea ad.
+                                Aliquid tractatos vis at, sit ne case malis saperet.</p>
+                            <div class="hashtags"><span>#codeTalk</span> <span>#iLoveCode</span></div>
+                        </div>
+                    </div>
+
+                    <div class="column is-4">
+                        <div class="stats-card">
+                            <div class="img-header">
+                                <div class="img-block has-text-centered">
+                                    <div><img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/marc.jpg' %}"></div>
+                                    <div class="name">Marc Walters</div>
+                                    <div class="name-details">Senior Designer</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="inline-stats has-text-centered">
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Followers
+                                        </div>
+                                        <div class="stat-data">
+                                            15K
+                                        </div>
+                                    </div>
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Following
+                                        </div>
+                                        <div class="stat-data">
+                                            876
+                                        </div>
+                                    </div>
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Tweets
+                                        </div>
+                                        <div class="stat-data">
+                                            1231
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="following-card card-overflow padding-20">
+                            <div class="icon-heading has-text-centered">
+                                <div class="counter">6 </div>
+                                <div class="light-text">new followers</div>
+                            </div>
+                            <div class="avatars">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/barry.jpg' %}">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
+                            </div>
+                        </div>
+
+                        <div class="skype-card padding-20">
+                            <div class="skype-avatar">
+                                <img src="https://via.placeholder.com/250x250" alt=""
+                                    data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
+                                <i class="fa fa-skype"></i>
+                            </div>
+                            <div class="skype-info">
+                                <div class="name">Lakisha Jackson</div>
+                                <div class="status">Available</div>
+                            </div>
+                            <div class="call">
+                                <button class="button is-small info-btn rounded raised ripple"><i
+                                        class="fa fa-phone"></i>Call</button>
+                                <button class="button is-small primary-btn rounded raised ripple"><i
+                                        class="fa fa-video-camera"></i>Video</button>
+                            </div>
+                        </div>
+
+                        <div class="social-card is-facebook padding-20">
+                            <div class="social-icon">
+                                <i class="fa fa-facebook"></i>
+                            </div>
+                            <div class="stat-count">
+                                <div class="count">11k <span>people</span></div>
+                                <div class="count-info">like your company page</div>
+                            </div>
+                            <div class="symbol">
+                                <i class="fa fa-thumbs-o-up"></i>
+                            </div>
+                        </div>
+
+                        <div class="social-card is-twitter padding-20">
+                            <div class="social-icon">
+                                <i class="fa fa-twitter"></i>
+                            </div>
+                            <div class="stat-count">
+                                <div class="count">15k <span>people</span></div>
+                                <div class="count-info">are following you</div>
+                            </div>
+                            <div class="symbol">
+                                <i class="fa fa-check"></i>
+                            </div>
+                        </div>
+
+                        <div class="social-card is-github padding-20">
+                            <div class="social-icon">
+                                <i class="fa fa-github"></i>
+                            </div>
+                            <div class="stat-count">
+                                <div class="count">4856 <span>people</span></div>
+                                <div class="count-info">stared your repository</div>
+                            </div>
+                            <div class="symbol">
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column is-4">
+                        <div class="stats-card-portrait">
+                            <div class="vertical-stats has-text-centered">
+                                <div class="stats-item">
+                                    <div class="stat-name">
+                                        Followers
+                                    </div>
+                                    <div class="stat-data">
+                                        15K
+                                    </div>
+                                </div>
+                                <div class="stats-item">
+                                    <div class="stat-name">
+                                        Following
+                                    </div>
+                                    <div class="stat-data">
+                                        876
+                                    </div>
+                                </div>
+                                <div class="stats-item">
+                                    <div class="stat-name">
+                                        Tweets
+                                    </div>
+                                    <div class="stat-data">
+                                        1231
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="img-header">
+                                <div class="img-block has-text-centered">
+                                    <div>
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/marc.jpg' %}">
+                                    </div>
+                                    <div class="name">Marc Walters</div>
+                                    <div class="name-details">Senior Designer</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="stats-card is-skewed">
+                            <div class="img-header">
+                                <div class="img-block has-text-centered">
+                                    <div>
+                                        <img src="https://via.placeholder.com/250x250" alt=""
+                                            data-demo-src="{% static 'assets/images/avatars/marc.jpg' %}">
+                                    </div>
+                                    <div class="name">Marc Walters</div>
+                                    <div class="name-details">Senior Designer</div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="inline-stats has-text-centered">
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Followers
+                                        </div>
+                                        <div class="stat-data">
+                                            15K
+                                        </div>
+                                    </div>
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Following
+                                        </div>
+                                        <div class="stat-data">
+                                            876
+                                        </div>
+                                    </div>
+                                    <div class="stats-item">
+                                        <div class="stat-name">
+                                            Tweets
+                                        </div>
+                                        <div class="stat-data">
+                                            1231
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="social-metro">
+                            <div class="columns is-gapless is-multiline">
+                                <div class="column is-6">
+                                    <div class="metro-icon is-big is-facebook">
+                                        <i class="fa fa-facebook"></i>
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <div class="metro-icon is-small is-twitter">
+                                        <i class="fa fa-twitter"></i>
+                                    </div>
+                                    <div class="metro-icon is-small is-github">
+                                        <i class="fa fa-github"></i>
+                                    </div>
+                                </div>
+                                <div class="column is-3">
+                                    <div class="metro-icon is-small is-google-plus">
+                                        <i class="fa fa-google-plus"></i>
+                                    </div>
+                                    <div class="metro-icon is-small is-linkedin">
+                                        <i class="fa fa-linkedin"></i>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <div class="metro-icon is-small is-youtube">
+                                        <i class="fa fa-youtube"></i>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <div class="metro-icon is-small is-rss">
+                                        <i class="fa fa-rss"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
