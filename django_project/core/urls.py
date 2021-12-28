@@ -7,11 +7,11 @@ from dj_beneficiary import urls as dj_beneficiary_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(dj_beneficiary_urls)),
-    path('', include("authentication.urls")), # Auth routes - login / register
-    path('', include('tralard.urls', namespace='tralard')),
-    path('', include('ppcr.urls', namespace='ppcr')),
     path('', include('base.urls')),
+    path('', include('ppcr.urls', namespace='ppcr')),
+    path('', include('tralard.urls', namespace='tralard')),
+    path('', include("authentication.urls")), # Auth routes - login / register
+    path('', include(dj_beneficiary_urls)),
 ]
 
 admin.site.site_header = "PPCR Administration"                   

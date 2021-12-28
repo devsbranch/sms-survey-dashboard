@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         //Wait time
         $(".support-pie").peity("pie", {
-            fill: ["#00D1B2", "#c6fff6"],
+            fill: ["#21546d", "#c6fff6"],
             innerRadius: null,
             radius: 8,
             height: 90,

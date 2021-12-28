@@ -34,3 +34,5 @@ djangocms-admin-style==2.0.2
 
 # Django beneficiary
 git+https://github.com/Digital-Prophets/dj-beneficiary.git
+
+folium

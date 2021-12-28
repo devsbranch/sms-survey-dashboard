@@ -12,12 +12,18 @@ from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     BeneficiaryOrgDetailView
 )
+from tralard.views.map import MapTemplateView
 
 app_name = 'tralard'
 urlpatterns = [
     # home
     path('', HomeTemplateView.as_view(), name='home'),
-
+    
+    path(
+        'map/', 
+        MapTemplateView.as_view(), 
+        name='map'
+    ),
     # -------- project --------
     path(
         'project/list/', 
@@ -46,5 +52,4 @@ urlpatterns = [
         BeneficiaryOrgDetailView.as_view(), 
         name='beneficiary_detail'
     ),
-
 ]

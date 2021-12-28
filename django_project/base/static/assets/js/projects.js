@@ -39,7 +39,7 @@ $(document).ready(function($){
         if (progress_value > 33) {
             $(this).css({
                 'width': progress_value + '%',
-                'background-color': '#00D1B2',
+                'background-color': '#21546d',
             })
         }
         if (progress_value > 66) {

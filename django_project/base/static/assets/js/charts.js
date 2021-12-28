@@ -50,15 +50,15 @@ $(document).ready(function(){
     })
 
     $(".widget-lines-primary").peity("line", {
-        fill: ["#00D1B2"],
-        stroke: "#00D1B2",
+        fill: ["#21546d"],
+        stroke: "#21546d",
         height: 85,
         width: '100%'
     })
 
     //Best managers widget donuts
     $(".manager-pies").peity("pie", {
-        fill: ["#00D1B2", "#fff"],
+        fill: ["#21546d", "#fff"],
         innerRadius: null,
         radius: 8,
         height: 45,
@@ -92,26 +92,26 @@ $(document).ready(function(){
         $(".peityjs-pie").peity("pie", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#999"],
+            fill: ["#21546d", "#999"],
         })
 
         $(".peityjs-pieAlt").peity("pie", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#21546d", "#536dfe", "#999"],
+            fill: ["#21546d", "#21546d", "#536dfe", "#999"],
         })
         //Peity donuts
         $(".peityjs-donut").peity("donut", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#999"],
+            fill: ["#21546d", "#999"],
             innerRadius: 20,
         })
 
         $(".peityjs-donutAlt").peity("donut", {
             height: 55,
             width: 55,
-            fill: ["#00D1B2", "#21546d", "#536dfe", "#999"],
+            fill: ["#21546d", "#21546d", "#536dfe", "#999"],
         })
         //Peity lines
         $(".peityjs-line").peity("line", {
@@ -284,7 +284,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "Last month Sales ($)",
-                        backgroundColor: ["#00D1B2", "#21546d", "#536dfe", "#039BE5", "#999"],
+                        backgroundColor: ["#21546d", "#21546d", "#536dfe", "#039BE5", "#999"],
                         data: [12478, 15267, 11734, 19784, 12433]
                     }
                 ]
@@ -447,7 +447,7 @@ $(document).ready(function(){
                 labels: ["Paid invoices", "Rejected invoices", "Pending invoices", "Overdue invoices"],
                 datasets: [{
                     label: "",
-                    backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
+                    backgroundColor: ["#21546d", "#999", "#21546d", "#536dfe"],
                     data: [421, 49, 208, 39]
                 }]
             },
@@ -552,7 +552,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "",
-                        backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
+                        backgroundColor: ["#21546d", "#999", "#21546d", "#536dfe"],
                         data: [108, 49, 89, 39]
                     }
                 ]
@@ -603,7 +603,7 @@ $(document).ready(function(){
                 labels: ["Paid invoices", "Rejected invoices", "Pending invoices", "Overdue invoices"],
                 datasets: [{
                     label: "",
-                    backgroundColor: ["#00D1B2", "#999", "#21546d", "#536dfe"],
+                    backgroundColor: ["#21546d", "#999", "#21546d", "#536dfe"],
                     data: [421, 49, 208, 39]
                 }]
             },
@@ -650,7 +650,7 @@ $(document).ready(function(){
                 datasets: [
                     {
                         label: "Last month Sales ($)",
-                        backgroundColor: ["#00D1B2", "#21546d", "#536dfe", "#039BE5", "#999"],
+                        backgroundColor: ["#21546d", "#21546d", "#536dfe", "#039BE5", "#999"],
                         data: [12478, 15267, 11734, 19784, 12433]
                     }
                 ]
@@ -726,7 +726,7 @@ $(document).ready(function(){
                         data: [154, 134, 189, 161]
                     }, {
                         label: "Pending",
-                        backgroundColor: "#00D1B2",
+                        backgroundColor: "#21546d",
                         data: [121, 92, 142, 112]
                     }
                 ]
@@ -997,7 +997,7 @@ $(document).ready(function(){
                     ['Pending', 75, 87, 56, 68, 62, 41]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Canceled": "#21546d",
                     "Pending": "#536dfe"
                 },
@@ -1021,7 +1021,7 @@ $(document).ready(function(){
                     ['Canceled', 12, 17, 14, 21, 28, 19]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Canceled": "#21546d",
                     "Pending": "#536dfe"
                 },
@@ -1051,7 +1051,7 @@ $(document).ready(function(){
                     ["Pending", 130, 100, 140, 200, 150, 50]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Pending": "#536dfe"
                 },
                 "type": "spline"
@@ -1072,7 +1072,7 @@ $(document).ready(function(){
                     ["Pending", 50, 20, 10, 40, 15, 25]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Pending": "#536dfe"
                 },
                 "regions": {
@@ -1109,7 +1109,7 @@ $(document).ready(function(){
                     ["pending", 130, 100, 140, 200, 150, 50]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Pending": "#536dfe"
                 },
                 "types": {
@@ -1133,7 +1133,7 @@ $(document).ready(function(){
                     ["Pending", 130, 100, 140, 200, 150, 50]
                 ],
                 "colors": {
-                    "Paid": "#00D1B2",
+                    "Paid": "#21546d",
                     "Pending": "#536dfe"
                 },
                 "types": {
@@ -1158,7 +1158,7 @@ $(document).ready(function(){
                     ['Deals canceled', 1, 0, 2, 5, 3, 2]
                 ],
                 "colors": {
-                    "Deals won": "#00D1B2",
+                    "Deals won": "#21546d",
                     "Deals lost": "#21546d",
                     "Deals canceled": "#536dfe"
                 },
@@ -1186,7 +1186,7 @@ $(document).ready(function(){
                     ['Deals canceled', 1, 0, 2, 5, 3, 2]
                 ],
                 "colors": {
-                    "Deals won": "#00D1B2",
+                    "Deals won": "#21546d",
                     "Deals lost": "#21546d",
                     "Deals canceled": "#536dfe"
                 },
@@ -1231,7 +1231,7 @@ $(document).ready(function(){
                     ["versicolor", 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1, 1.3, 1.4, 1, 1.5, 1, 1.4, 1.3, 1.4, 1.5, 1, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1, 1.1, 1, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3]
                 ],
                 "colors": {
-                    "setosa": "#00D1B2",
+                    "setosa": "#21546d",
                     "versicolor": "#21546d",
                 },
                 "type": "scatter"
@@ -1263,7 +1263,7 @@ $(document).ready(function(){
                     ["Pending tasks", 49]
                 ],
                 "colors": {
-                    "Completed tasks": "#00D1B2",
+                    "Completed tasks": "#21546d",
                     "Pending tasks": "#21546d",
                 },
                 "type": "pie",
@@ -1287,7 +1287,7 @@ $(document).ready(function(){
                     ["Pending tasks", 49]
                 ],
                 "colors": {
-                    "Completed tasks": "#00D1B2",
+                    "Completed tasks": "#21546d",
                     "Pending tasks": "#21546d",
                 },
                 "type": "donut",
@@ -1353,7 +1353,7 @@ $(document).ready(function(){
                     ["data5", 130, 120, 150, 140, 160, 150],
                 ],
                 "colors": {
-                    "data1": "#00D1B2",
+                    "data1": "#21546d",
                     "data2": "#21546d",
                     "data3": "#536dfe",
                     "data4": "#999",
