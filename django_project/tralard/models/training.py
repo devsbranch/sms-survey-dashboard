@@ -21,6 +21,7 @@ class TrainingType(models.Model):
     def __str__(self):
         return self.name
 
+
 class Training(models.Model):
     """
     Training and Training schedule definition.
