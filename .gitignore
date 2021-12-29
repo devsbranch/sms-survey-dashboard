@@ -23,6 +23,7 @@ xmlrunner
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
+.vscode/
 *.py[cod]
 
 # C extensions
