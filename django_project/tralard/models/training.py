@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 
 from tralard.models.sub_project import SubProject
 
+from tinymce import HTMLField
+
 logger = logging.getLogger(__name__)
 
 class TrainingType(models.Model):
@@ -53,7 +55,7 @@ class Training(models.Model):
         null=True,
         blank=False,
     )
-    notes = models.TextField(
+    notes = HTMLField(
         verbose_name=_('Training notes. Rich text editing is supported.'),
         help_text=_('Training notes.'),
         blank=False,
@@ -75,7 +77,7 @@ class Attendance(models.Model):
         null=True, 
         blank=True, 
     )
-    notes = models.TextField(
+    notes = HTMLField(
         verbose_name=_('Training Outcome notes. Rich text editing is supported.'),
         help_text=_('Training Outcome notes.'),
         blank=False,

@@ -7,6 +7,8 @@ import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from tinymce import HTMLField
+
 logger = logging.getLogger(__name__)
 
 
@@ -32,10 +34,9 @@ class Program(models.Model):
         null=True,
         blank=True
     )
-    description = models.TextField(
+    description = HTMLField(
         help_text=_(
             'A detailed summary of the program. Rich text edditing is supported.'),
-        max_length=2000,
         blank=True,
         null=True
     )

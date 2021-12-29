@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from tralard.models.sub_project import SubProject
 
+from tinymce import HTMLField
 
 logger = logging.getLogger(__name__)
 
@@ -31,10 +32,9 @@ class FollowUp(models.Model):
         blank=True,
         null=True
     )
-    follow_up_action_personnel = models.TextField(
+    follow_up_action_personnel = HTMLField(
         help_text=_(
             'Who will conduct what follow up action items.'),
-        max_length=255,
         blank=True,
         null=True
     )
@@ -44,10 +44,9 @@ class FollowUp(models.Model):
         blank=True,
         null=True
     )
-    comments = models.TextField(
+    comments = HTMLField(
         help_text=_(
             'Comments (If project is complete, has completion certificate been issued, when?).'),
-        max_length=255,
         blank=True,
         null=True
     )

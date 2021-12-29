@@ -10,6 +10,8 @@ from django.utils.translation import gettext_lazy as _
 
 from tralard.models.program import Program
 
+from tinymce import HTMLField
+
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
@@ -54,10 +56,9 @@ class Representative(models.Model):
         null=True,
         blank=True
     )
-    address = models.TextField(
+    address = HTMLField(
         help_text=_(
             'Address details and other information necesarry.'),
-        max_length=2000,
         blank=True,
         null=True
     )
@@ -82,10 +83,9 @@ class Project(models.Model):
         blank=True,
         null=True
     )
-    precis = models.TextField(
+    precis = HTMLField(
         help_text=_(
             'A detailed summary of the project. Rich text edditing is supported.'),
-        max_length=2000,
         blank=True,
         null=True
     )
@@ -102,11 +102,10 @@ class Project(models.Model):
         help_text=_('Whether this project has been approved yet.'),
         default=False,
     )
-    focus_area = models.TextField(
+    focus_area = HTMLField(
         help_text=_(
             'Please describe the focus areas of the project.'
             '(if any). Rich text editing is supported'),
-        max_length=10000,
         blank=True,
         null=True
     )
