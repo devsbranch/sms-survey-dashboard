@@ -22,7 +22,7 @@ test when new versions of PyCharm come out in case they have improved the direct
 **Note:** You don't need to use this architecture, you can deploy as a standard
 django app using virtualenv and locally installed postgis, nginx etc.
 
-## Setup pycharm to work with a remove docker development environment
+## Setup pycharm to work with a remote docker development environment
 
 ### Build and run your dev docker image
 
