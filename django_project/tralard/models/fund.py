@@ -56,6 +56,14 @@ class Fund(models.Model):
         default_currency="ZMW",
         help_text="Amount spent on the project to date.",
     )
+    variation = MoneyField(
+        _("Variation"),
+        max_digits=14,
+        decimal_places=2,
+        null=True,
+        default_currency="ZMW",
+        help_text="Variation if any.",
+    )
     funding_date = models.DateField(
         _("Funding Date"),
         null=True,

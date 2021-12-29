@@ -5,7 +5,10 @@ from tralard.models import (
     Program, 
     Project, 
     SubProject, 
-    Training
+    Training,
+    TrainingType,
+    Attendance,
+    FollowUp
 )
 
 
@@ -14,3 +17,6 @@ admin.site.register(Program)
 admin.site.register(Project)
 admin.site.register(SubProject)
 admin.site.register(Training)
+admin.site.register(TrainingType)
+admin.site.register(Attendance)
+admin.site.register(FollowUp)

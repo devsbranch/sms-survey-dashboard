@@ -111,7 +111,7 @@ class Project(models.Model):
         null=True
     )
     project_representative = models.ForeignKey(
-        'Representative',
+        Representative,
         related_name='project_representative',
         help_text=_(
             'Project representative. '

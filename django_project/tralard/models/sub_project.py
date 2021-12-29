@@ -41,20 +41,19 @@ class SubProject(models.Model):
         blank=False,
         unique=True
     )
+    size = models.TextField(
+        help_text=_(
+            'Size (number of Hectors, SquareMeters, Products etc,).'),
+        max_length=2000,
+        blank=True,
+        null=True
+    )
     description = models.TextField(
         help_text=_(
             'A detailed summary of the Sub Project. Rich text edditing is supported.'),
         max_length=2000,
         blank=True,
         null=True
-    )
-    image_file = models.ImageField(
-        help_text=_(
-            'A banner image for this Sub Project. Most browsers support dragging '
-            'the image directly on to the "Choose File" button above. The '
-            'ideal size for your image is 512 x 512 pixels.'),
-        upload_to='images/projects',
-        blank=True
     )
     approved = models.BooleanField(
         help_text=_('Whether this project has been approved yet.'),
@@ -90,6 +89,14 @@ class SubProject(models.Model):
     )
     # Organisation where a project belongs, when the organisation is deleted,
     #  the project will automatically belongs to default organisation.
+    image_file = models.ImageField(
+        help_text=_(
+            'A banner image for this Sub Project. Most browsers support dragging '
+            'the image directly on to the "Choose File" button above. The '
+            'ideal size for your image is 512 x 512 pixels.'),
+        upload_to='images/projects',
+        blank=True
+    )
     project = models.ForeignKey(
         Project, 
         default='',
