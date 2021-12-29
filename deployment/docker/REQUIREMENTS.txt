@@ -37,3 +37,4 @@ django-money==2.1 # https://django-money.readthedocs.io/en/stable/
 git+https://github.com/Digital-Prophets/dj-beneficiary.git
 
 folium
+psycopg2
