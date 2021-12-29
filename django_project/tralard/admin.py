@@ -8,7 +8,8 @@ from tralard.models import (
     Training,
     TrainingType,
     Attendance,
-    FollowUp
+    FollowUp,
+    Beneficiary,
 )
 
 
@@ -20,3 +21,4 @@ admin.site.register(Training)
 admin.site.register(TrainingType)
 admin.site.register(Attendance)
 admin.site.register(FollowUp)
+admin.site.register(Beneficiary)
