@@ -5,13 +5,11 @@ Sub Project model definitions for tralard app.
 import logging
 
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from tralard.models.project import Project, Representative
 
 
-User = get_user_model()
 logger = logging.getLogger(__name__)
 
 class Indicator(models.Model):
