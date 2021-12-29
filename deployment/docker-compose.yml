@@ -28,7 +28,7 @@ services:
     container_name: ppcr-db
     image: kartoza/postgis:9.6-2.4
     volumes:
-      #- ./pg/postgres_data:/var/lib/postgresql
+      # - ./pg/postgres_data:/var/lib/postgresql
       - ./backups:/backups
       - ./sql:/sql
     environment:
