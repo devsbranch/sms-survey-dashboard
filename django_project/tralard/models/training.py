@@ -61,6 +61,9 @@ class Training(models.Model):
         blank=False,
         null=False,
     )
+    is_comppleted = models.BooleanField(
+        default=False
+    )
 
     def __str__(self):
         return self.title
