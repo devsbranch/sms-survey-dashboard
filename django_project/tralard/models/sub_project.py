@@ -119,3 +119,6 @@ class SubProject(models.Model):
     def __str__(self):
         return self.name.title()
         
+    @property 
+    def get_related_project(self):
+        return self.project.name

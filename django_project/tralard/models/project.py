@@ -204,4 +204,3 @@ class Project(models.Model):
         # return reverse('project-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return self.name.title()
-
