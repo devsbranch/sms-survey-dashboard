@@ -16,6 +16,25 @@ from tralard.models.project import Project
 logger = logging.getLogger(__name__)
 
 
+class ApprovedFundManager(models.Manager):
+    """Custom manager that shows pproved project funds."""
+    def get_queryset(self):
+        return super(
+            ApprovedFundManager, self
+        ).get_queryset().filter(
+            approved=True,)
+
+
+class UnapprovedFundManager(models.Manager):
+    """Custom fund manager that shows only unapproved records."""
+
+    def get_queryset(self):
+        """Query set generator."""
+        return super(
+            UnapprovedFundManager, self).get_queryset().filter(
+                approved=False)
+
+
 class Fund(models.Model):
     """
     Project Fund definition.
@@ -78,7 +97,11 @@ class Fund(models.Model):
         blank=True,
     )
     created = models.DateTimeField(auto_now_add=True)
+    objects = models.Manager()
+    approved_objects = ApprovedFundManager()
+    unapproved_objects = UnapprovedFundManager()
 
+    # noinspecti
     class Meta:
         verbose_name = _('Fund')
         verbose_name_plural = _('Funds')
