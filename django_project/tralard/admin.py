@@ -10,6 +10,8 @@ from tralard.models import (
     Attendance,
     FollowUp,
     Beneficiary,
+    FundExpenditure,
+    FundDisbursed,
 )
 
 
@@ -22,3 +24,5 @@ admin.site.register(TrainingType)
 admin.site.register(Attendance)
 admin.site.register(FollowUp)
 admin.site.register(Beneficiary)
+admin.site.register(FundExpenditure)
+admin.site.register(FundDisbursed)
