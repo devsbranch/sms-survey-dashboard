@@ -1,8 +1,10 @@
 {% extends "layouts/base.html" %}
-
+<!--  -->
+{% load crispy_forms_tags %}
+<!--  -->
 {% load static %}
-
-{% block title %} Contact List {% endblock %} 
+<!--  -->
+{% block title %} Funds List {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -10,993 +12,497 @@
 <!-- PAGE content goes HERE -->
 {% block content %}
 
-    <!-- Main dashboard container -->
-    <div id="dashboard-wrapper" class="dashboard-outer">
-        <div class="dashboard-inner">
-    
-            <!-- Dashboard Wrapper -->
-            <div class="dashboard-wrapper">
-    
-                <div id="main-dashboard" class="section-wrapper">
-                    <!-- Dashboard content -->
-                    <div id="basic-layout" class="dashboard-columns">
-    
-                        <!-- Page title -->
-                        <div class="contacts-title-wrapper">
-                            <h3 class="contacts-title">Project Funds</h3>
-                            <!-- Filter input -->
-                            <div class="list-filter">
-                                <div class="control is-hidden-phones">
-                                    <input class="input" type="text" placeholder="Filter Contacts">
-                                    <div class="form-icon">
-                                        <i data-feather="filter"></i>
-                                    </div>
-                                </div>
-    
-                                <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                                    data-ripple-color="" data-modal="create-contact-modal">
-                                    <i class="material-icons">add</i>
-                                    Create
-                                </a>
-                            </div>
-                        </div>
-    
-                        <div class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile">
-                            <!-- Contacts table -->
-                            <table class="table contacts-table">
-                                <!-- Table header -->
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-docs-all" class="styled" type="checkbox">
-                                                <label for="checkbox-docs-all"></label>
-                                            </div>
-                                        </th>
-                                        <th class="w-50">
-                                            <!-- Filter dropdown -->
-                                            <div class="dropdown filter-dropdown dropdown-trigger">
-                                                <div class="button">
-                                                    <span>Project</span>
-                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                </div>
-    
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item filter-title">
-                                                            Order
-                                                        </div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Ascending</span>
-                                                        </a>
-                                                        <a class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Descending</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </th>
+<!-- Main dashboard container -->
+<div id="dashboard-wrapper" class="dashboard-outer">
+  <div class="dashboard-inner">
+    <!-- Dashboard Wrapper -->
+    <div class="dashboard-wrapper">
+      <div id="main-dashboard" class="section-wrapper">
+        <!-- Dashboard content -->
+        <div id="basic-layout" class="dashboard-columns">
+          <!-- Page title -->
+          <div class="contacts-title-wrapper">
+            <h3 class="contacts-title">Project Funds</h3>
+            <!-- Filter input -->
+            <div class="list-filter">
+              <div class="control is-hidden-phones">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Filter Contacts"
+                />
+                <div class="form-icon">
+                  <i data-feather="filter"></i>
+                </div>
+              </div>
 
-                                        <th>
-                                            <!-- Filter dropdown -->
-                                            <div class="dropdown filter-dropdown dropdown-trigger">
-                                                <div class="button">
-                                                    <span>Modification</span>
-                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                </div>
-    
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item filter-title">
-                                                            Order
-                                                        </div>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Ascending</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Descending</span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <div class="dropdown-item filter-title">
-                                                            Display
-                                                        </div>
-                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
-                                                            <span><i class="fa fa-check"></i> Modification</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
-                                                            <span><i class="fa fa-check"></i> Projects</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Type</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Size</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th>
-                                            <!-- Filter dropdown -->
-                                            <div class="dropdown filter-dropdown dropdown-trigger">
-                                                <div class="button">
-                                                    <span>subprojects</span>
-                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                </div>
-    
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item filter-title">
-                                                            Order
-                                                        </div>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Ascending</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Descending</span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <div class="dropdown-item filter-title">
-                                                            Display
-                                                        </div>
-                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
-                                                            <span><i class="fa fa-check"></i> Modification</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
-                                                            <span><i class="fa fa-check"></i> Projects</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Type</span>
-                                                        </a>
-                                                        <a href="javascript:void(0);" class="dropdown-item">
-                                                            <span><i class="fa fa-check"></i> Size</span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </th>
-                                        <th class="w-5">
-                                            <!-- Filter dropdown -->
-                                            <div class="dropdown filter-dropdown is-right dropdown-trigger">
-                                                <div class="button">
-                                                    <span class="material-icons">subject</span>
-                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                </div>
-    
-                                                <div class="dropdown-menu" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <div class="dropdown-item filter-title">
-                                                            View type
-                                                        </div>
-                                                        <a href="#" class="dropdown-item is-spaced is-active">
-                                                            <span><i class="fa fa-check"></i> List view</span>
-                                                            <i class="material-icons">view_list</i>
-                                                        </a>
-                                                        <a class="dropdown-item is-spaced">
-                                                            <span><i class="fa fa-check"></i> Grid view</span>
-                                                            <i class="material-icons">view_module</i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <!-- Table body -->
-                                <tbody>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-1" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-1"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                <a href="#">Melany Smith </a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">3 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-2" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-2"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
-                                                <a href="#">Terry Daniels</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">1 project</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-3" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-3"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}">
-                                                <a href="#">Anthony Briggs</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">4 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        
-                                            <a href="#" class="button is-hidden">
-                                                <i class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-4" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-4"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/henry.jpg' %}">
-                                                <a href="#">Henry Slate</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">2 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-5" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-5"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}">
-                                                <a href="#">Jane Guzmann</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">3 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-6" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-6"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/stella.jpg' %}">
-                                                <a href="#">Stella Bergmann</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">08/09/2018</span>, <span
-                                                    class="time">16:37</span></span>
-                                            <span><small>by Josh Daniels</small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">2 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-7" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-7"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/kareem.jpg' %}">
-                                                <a href="#">Kareem Jabbar</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">12/09/2018</span>, <span
-                                                    class="time">02:55</span></span>
-                                            <span><small>by Helen Miller</small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="project-count">3 projects</span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-8" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-8"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/marc.jpg' %}">
-                                                <a href="#">Marc Walters</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">06/08/2018</span>, <span
-                                                    class="time">11:22</span></span>
-                                            <span><small>by Helen Miller</small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="project-count">2 projects</span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-9" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-9"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
-                                                <a href="#">Alan Maynard</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">--</span> <span class="time"></span></span>
-                                            <span><small></small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">1 project</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-contacts-10" class="styled" type="checkbox">
-                                                <label for="checkbox-contacts-10"></label>
-                                            </div>
-                                        </td>
-                                        <td class="contact-preview">
-                                            <span class="inner">
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
-                                                <a href="#">Alice Mitchells</a>
-                                                <i class="material-icons">bookmark_border</i>
-                                            </span>
-                                        </td>
-                                        <td class="modifications">
-                                            <span><span class="date">17/08/2018</span>, <span
-                                                    class="time">13:18</span></span>
-                                            <span><small>by Helen Miller</small></span>
-                                        </td>
-                                        <td class="projects">
-                                            <span class="inner">
-                                                <span class="project-count">2 projects</span>
-                                                <button type="button" class="button">Update</button>
-                                            </span>
-                                        </td>
-                                        <td class="actions">
-                                            <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-                                                <div class="button">
-                                                    <i class="material-icons">more_horiz</i>
-                                                </div>
-                                            
-                                                <div class="dropdown-menu is-text-bigger" role="menu">
-                                                    <div class="dropdown-content">
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-eye"></i>
-                                                            <span>
-                                                                <span>View</span>
-                                                                <span>View contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-pencil"></i>
-                                                            <span>
-                                                                <span>Edit</span>
-                                                                <span>Edit contact details</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a href="#" class="dropdown-item">
-                                                            <i class="sl sl-icon-bell"></i>
-                                                            <span>
-                                                                <span>Notifications</span>
-                                                                <span>Manage contact notifications</span>
-                                                            </span>
-                                                        </a>
-                                                        <div class="dropdown-divider"></div>
-                                                        <a class="dropdown-item">
-                                                            <i class="sl sl-icon-trash"></i>
-                                                            <span>
-                                                                <span>Delete</span>
-                                                                <span>Delete this contact</span>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>                                        <a href="#" class="button is-hidden"><i
-                                                    class="material-icons">remove_red_eye</i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-    
-                        <!--Placeholder-->
-                        <div class="flex-card is-not-supported light-bordered">
-                            <img src="{% static 'assets/images/illustrations/not-mobile.svg' %}" alt="">
-                            <div class="has-text-centered">
-                                <h3>Ouch...</h3>
-                                <p>Sorry, the contacts list is not supported on mobile. Please try a device with a wider
-                                    screen.</p>
-                            </div>
-                        </div>
-    
-                    </div>
-                </div>
+              <a
+                class="
+                  button
+                  btn-dash
+                  secondary-btn
+                  btn-dash
+                  raised
+                  ripple
+                  has-icon
+                  modal-trigger
+                "
+                data-ripple-color=""
+                data-modal="create-project-modal"
+              >
+                <i class="material-icons">add</i>
+                Create
+              </a>
             </div>
-        </div>
-    </div>
-    
-    <!-- Create contact modal -->
-    <!-- Create contact Modal -->
-    <div id="create-contact-modal" class="modal modal-lg create-contact-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <h2 class="dark-text">Create contact</h2>
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/create-contact.svg' %}" alt="">
-                        </div>
-                        <div class="help-text has-text-centered">Create a new contact by entering its basic details. You will then be able to edit it and to add more detailed informations.</div>
-    
-                        <div class="columns is-multiline">
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="First Name">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="Last Name">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-user"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="Email address">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-envelope"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="Company">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-building"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="Position">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-briefcase"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="column is-6">
-                                <div class="field">
-                                    <div class="control has-icons-left">
-                                        <input class="input is-medium" type="text" placeholder="Location">
-                                        <span class="icon is-left">
-                                            <i class="fa fa-map-marker"></i>
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-    
-    
-                        <div class="is-prospect">
-                            <div class="field">
-                                <input id="prospectSwitch" type="checkbox" name="prospectSwitch" class="switch is-secondary">
-                                <label for="prospectSwitch"><span>is this contact a prospect?</span></label>
-                            </div>
-                        </div>
+          </div>
+
+          <div
+            class="
+              flex-card
+              is-contact-list
+              light-bordered
+              card-overflow
+              is-hidden-mobile
+            "
+          >
+            <!-- Contacts table -->
+            <table class="table contacts-table">
+              <!-- Table header -->
+              <thead>
+                <tr>
+                  <th>
+                    <div class="b-checkbox is-secondary">
+                      <input
+                        id="checkbox-docs-all"
+                        class="styled"
+                        type="checkbox"
+                      />
+                      <label for="checkbox-docs-all"></label>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="submit" class="button is-modal">Create Contact</button>
-                </div>
+                  </th>
+                  <th class="w-50">
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Project</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+
+                      <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item filter-title">Order</div>
+                          <a href="#" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Ascending</span>
+                          </a>
+                          <a class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Descending</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Modification</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+
+                      <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item filter-title">Order</div>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Ascending</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Descending</span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <div class="dropdown-item filter-title">Display</div>
+                          <a
+                            href="javascript:void(0);"
+                            class="dropdown-item is-active"
+                          >
+                            <span
+                              ><i class="fa fa-check"></i> Modification</span
+                            >
+                          </a>
+                          <a
+                            href="javascript:void(0);"
+                            class="dropdown-item is-disabled"
+                          >
+                            <span><i class="fa fa-check"></i> Projects</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Type</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Size</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>subprojects</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+
+                      <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item filter-title">Order</div>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Ascending</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Descending</span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <div class="dropdown-item filter-title">Display</div>
+                          <a
+                            href="javascript:void(0);"
+                            class="dropdown-item is-disabled"
+                          >
+                            <span
+                              ><i class="fa fa-check"></i> Modification</span
+                            >
+                          </a>
+                          <a
+                            href="javascript:void(0);"
+                            class="dropdown-item is-active"
+                          >
+                            <span><i class="fa fa-check"></i> Projects</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Type</span>
+                          </a>
+                          <a href="javascript:void(0);" class="dropdown-item">
+                            <span><i class="fa fa-check"></i> Size</span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+                  <th class="w-5">
+                    <!-- Filter dropdown -->
+                    <div
+                      class="dropdown filter-dropdown is-right dropdown-trigger"
+                    >
+                      <div class="button">
+                        <span class="material-icons">subject</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+
+                      <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item filter-title">
+                            View type
+                          </div>
+                          <a href="#" class="dropdown-item is-spaced is-active">
+                            <span><i class="fa fa-check"></i> List view</span>
+                            <i class="material-icons">view_list</i>
+                          </a>
+                          <a class="dropdown-item is-spaced">
+                            <span><i class="fa fa-check"></i> Grid view</span>
+                            <i class="material-icons">view_module</i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <!-- Table body -->
+              <tbody>
+                <!-- Table row -->
+                {% for fund in funds %}
+                <tr>
+                  <td>
+                    <div class="b-checkbox is-secondary">
+                      <input
+                        id="checkbox-contacts-1"
+                        class="styled"
+                        type="checkbox"
+                      />
+                      <label for="checkbox-contacts-1"></label>
+                    </div>
+                  </td>
+                  <td class="contact-preview">
+                    <span class="inner">
+                      <img
+                        src="https://via.placeholder.com/150x150"
+                        alt=""
+                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}"
+                      />
+                      <a href="#">{{fund.project.name}} </a>
+                      <i class="material-icons">bookmark_border</i>
+                    </span>
+                  </td>
+                  <td class="modifications">
+                    <span
+                      ><span class="date">--</span> <span class="time"></span
+                    ></span>
+                    <span><small></small></span>
+                  </td>
+                  <td class="projects">
+                    <span class="inner">
+                      <span class="project-count">3 projects</span>
+                      <button type="button" class="button">Update</button>
+                    </span>
+                  </td>
+                  <td class="actions">
+                    <div
+                      class="
+                        dropdown
+                        is-right
+                        dropdown-trigger
+                        contacts-list-dropdown
+                      "
+                    >
+                      <div class="button">
+                        <i class="material-icons">more_horiz</i>
+                      </div>
+
+                      <div class="dropdown-menu is-text-bigger" role="menu">
+                        <div class="dropdown-content">
+                          <a class="dropdown-item">
+                            <i class="sl sl-icon-eye"></i>
+                            <span>
+                              <span>View</span>
+                              <span>View contact details</span>
+                            </span>
+                          </a>
+                          <a href="#" class="dropdown-item">
+                            <i class="sl sl-icon-pencil"></i>
+                            <span>
+                              <span>Edit</span>
+                              <span>Edit contact details</span>
+                            </span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <a href="#" class="dropdown-item">
+                            <i class="sl sl-icon-bell"></i>
+                            <span>
+                              <span>Notifications</span>
+                              <span>Manage contact notifications</span>
+                            </span>
+                          </a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item">
+                            <i class="sl sl-icon-trash"></i>
+                            <span>
+                              <span>Delete</span>
+                              <span>Delete this contact</span>
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="#" class="button is-hidden"
+                      ><i class="material-icons">remove_red_eye</i></a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+
+          <!--Placeholder-->
+          <div class="flex-card is-not-supported light-bordered">
+            <img
+              src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
+              alt=""
+            />
+            <div class="has-text-centered">
+              <h3>Ouch...</h3>
+              <p>
+                Sorry, the contacts list is not supported on mobile. Please try
+                a device with a wider screen.
+              </p>
             </div>
+          </div>
         </div>
-        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+      </div>
     </div>
-    <!-- /Invite User Modal --> 
+  </div>
+</div>
+
+<!-- Create contact modal -->
+<!-- Create contact Modal -->
+<!-- Create Project Modal -->
+<div id="create-project-modal" class="modal create-project-modal modal-hero">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <h2 class="has-text-centered dark-text">Add Project Fund</h2>
+      <div class="navigation-tabs layout-tabs animated-tabs">
+        <div class="tabs is-toggle is-fullwidth no-margin-bottom">
+          <ul>
+            <li class="tab-link is-active" data-tab="project-details">
+              <a>Details</a>
+            </li>
+            <li class="tab-link" data-tab="project-members"><a>Members</a></li>
+          </ul>
+        </div>
+
+        <div id="project-details" class="navtab-content is-active">
+          <div class="card-body">
+            <div class="content">
+              <!-- New Project Fund form -->
+              <form action="/fund/list/" method="post">
+                {% csrf_token %}
+                <!--  -->
+                {% crispy form form.helper %}
+              </form>
+              <!-- /New Project Fund form -->
+            </div>
+          </div>
+        </div>
+
+        <div id="project-members" class="navtab-content">
+          <div class="project-members">
+            <div class="face">
+              <img
+                src="https://via.placeholder.com/250x250"
+                alt=""
+                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}"
+              />
+            </div>
+            <div class="face">
+              <img
+                src="https://via.placeholder.com/250x250"
+                alt=""
+                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}"
+              />
+            </div>
+            <div class="face">
+              <img
+                src="https://via.placeholder.com/250x250"
+                alt=""
+                data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}"
+              />
+            </div>
+            <div class="face">
+              <img
+                src="https://via.placeholder.com/250x250"
+                alt=""
+                data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}"
+              />
+            </div>
+          </div>
+
+          <div class="modal-filter">
+            <div class="control">
+              <input
+                class="input is-medium is-rounded"
+                type="text"
+                placeholder="Filter Members"
+              />
+              <span class="material-icons">filter_list</span>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <div class="members-select">
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/eric.png' %}"
+                />
+                <span>Eric Daniels</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user1" class="styled" type="checkbox" checked />
+                  <label for="user1"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}"
+                />
+                <span>Anthony Briggs</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user2" class="styled" type="checkbox" checked />
+                  <label for="user2"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/janet.jpg' %}"
+                />
+                <span>Jenna De Camp</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user3" class="styled" type="checkbox" checked />
+                  <label for="user3"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}"
+                />
+                <span>Rolf Van Buren</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user4" class="styled" type="checkbox" />
+                  <label for="user4"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}"
+                />
+                <span>Magda Hilden</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user5" class="styled" type="checkbox" />
+                  <label for="user5"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}"
+                />
+                <span>Alex Sheller</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user6" class="styled" type="checkbox" />
+                  <label for="user6"></label>
+                </div>
+              </div>
+              <div class="member-row">
+                <img
+                  src="https://via.placeholder.com/250x250"
+                  alt=""
+                  data-demo-src="{% static 'assets/images/avatars/jane.jpg' %}"
+                />
+                <span>Katarina Vosniak</span>
+                <div class="b-checkbox is-secondary">
+                  <input id="user7" class="styled" type="checkbox" />
+                  <label for="user7"></label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- /Invite User Modal -->
 
 {% endblock content %}
 

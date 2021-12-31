@@ -42,8 +42,9 @@ INSTALLED_APPS += (
     'easy_thumbnails',
     'filer',
     'import_export',
+    'crispy_forms',
 )
-
+CRISPY_TEMPLATE_PACK = "boostrap4"
 # Defines whether to log model related events,
 # such as when an object is created, updated, or deleted
 DJANGO_EASY_AUDIT_WATCH_MODEL_EVENTS = True

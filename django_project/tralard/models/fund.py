@@ -57,9 +57,9 @@ class Fund(models.Model):
         _("Amount Approved"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount approved for the project.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     approved = models.BooleanField(
         help_text=_('Whether this project fund has been approved for use yet.'),
@@ -76,9 +76,9 @@ class Fund(models.Model):
         max_digits=14,
         decimal_places=2,
         null=True,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Variation if any.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     funding_date = models.DateField(
         _("Funding Date"),
@@ -133,15 +133,15 @@ class FundDisbursed(models.Model):
         _("Amount Disbursed"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount disbursed for the project.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     balance = MoneyField(
         _("Balance"),
         max_digits=14,
         decimal_places=2,
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     disbursement_date = models.DateField(
         _("Disbursement Date"),
@@ -192,9 +192,9 @@ class FundExpenditure(models.Model):
         _("Amount"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount spent on from disbused funds.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     expenditure_date = models.DateField(
         _("Expenditure Date"),
