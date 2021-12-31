@@ -106,6 +106,10 @@ class Fund(models.Model):
         verbose_name = _('Fund')
         verbose_name_plural = _('Funds')
 
+    class Meta:
+        verbose_name = _('Fund')
+        verbose_name_plural = _('Funds')
+
     def __str__(self):
         return f"Amount {self.amount}, Project {self.project}."
 
