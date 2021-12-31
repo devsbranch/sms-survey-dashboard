@@ -151,7 +151,7 @@ class FundDisbursed(models.Model):
     )
     currency = models.CharField(
         help_text=_('Currency for the project Fund.'),
-        choices=Fund.CURRENCY_CHOICES,
+        choices=CURRENCY_CHOICES,
         max_length=10,
         default=ZMK,
     )    
