@@ -29,8 +29,6 @@ class District(AbstractLocation):
     province = models.ForeignKey(
         Province,
         on_delete=models.CASCADE,
-        null=True,
-        blank=True,
     )
     
     class Meta:

@@ -1,4 +1,6 @@
-def compute_total_amount(model_name, object_id: int, action: str):
+from djmoney.money import Money
+
+def compute_total_amount(model_name, object_id: int, action: str) -> Money:
     """
     Compute the total amount of either disburesment or expenditure.
 
@@ -30,7 +32,7 @@ def compute_total_amount(model_name, object_id: int, action: str):
     return total_amount
 
 
-def get_balance(initial_amount: float, total_amount: float):
+def get_balance(initial_amount: float, total_amount: float) -> Money:
     """
     Get the balance of the fund.
 
@@ -47,7 +49,7 @@ def get_balance(initial_amount: float, total_amount: float):
 
 def check_requested_deduction_against_balance(
     balance, requested_amount, requested_semantic, balance_semantic
-):
+) -> Money:
     """
     Check if the requested amount is greater than the balance.
 

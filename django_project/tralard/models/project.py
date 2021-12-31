@@ -91,8 +91,6 @@ class Project(models.Model):
     name = models.CharField(
         help_text=_('Name of this project.'),
         max_length=255,
-        null=False,
-        blank=False,
         unique=True
     )
     description = models.CharField(
@@ -188,8 +186,6 @@ class Project(models.Model):
     program = models.ForeignKey(
         Program, 
         default='',
-        null=True,
-        blank=True,
         on_delete=models.SET_DEFAULT,
     )
     objects = models.Manager()

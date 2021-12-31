@@ -2,6 +2,7 @@
 """
 core.settings.contrib
 """
+from django.contrib.messages import constants as messages
 from .base import *  # noqa
 from .celery_settings import *  # noqa
 import os
@@ -160,3 +161,11 @@ THUMBNAIL_PROCESSORS = (
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

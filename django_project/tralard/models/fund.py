@@ -10,10 +10,24 @@ from django.utils.translation import gettext_lazy as _
 from tralard.utils import check_requested_deduction_against_balance, compute_total_amount, get_balance
 
 from djmoney.models.fields import MoneyField
+from djmoney.money import Money
 
 from tralard.models.project import Project
 
 logger = logging.getLogger(__name__)
+
+ZMK = 'ZMK'
+USD = 'USD'
+GBP = 'GBP'
+EU = 'EU'
+
+CURRENCY_CHOICES = [
+        (ZMK, 'ZMK'), 
+        (USD, 'USD'),
+        (GBP, 'GBP'),
+        (EU, 'EU')
+    ]
+
 
 
 class ApprovedFundManager(models.Manager):
@@ -39,24 +53,13 @@ class Fund(models.Model):
     """
     Project Fund definition.
     """
-    ZMK = 'ZMK'
-    USD = 'USD'
-    GBP = 'GBP'
-    EU = 'EU'
-    CURRENCY_CHOICES = [
-        (ZMK, 'ZMK'), 
-        (USD, 'USD'),
-        (GBP, 'GBP'),
-        (EU, 'EU')
-    ]
-
     amount = MoneyField(
         _("Amount Approved"),
         max_digits=14,
         decimal_places=2,
-        null=True,
         default_currency="ZMW",
         help_text="Amount approved for the project.",
+        default=Money('0.0', "ZMW")
     )
     approved = models.BooleanField(
         help_text=_('Whether this project fund has been approved for use yet.'),
@@ -75,7 +78,7 @@ class Fund(models.Model):
         null=True,
         default_currency="ZMW",
         help_text="Variation if any.",
-        default=0.0
+        default=Money('0.0', "ZMW")
     )
     funding_date = models.DateField(
         _("Funding Date"),
@@ -87,14 +90,11 @@ class Fund(models.Model):
         help_text=_('Currency for the project Fund.'),
         choices=CURRENCY_CHOICES,
         max_length=10,
-        blank=True,
-        null=True
+        default=ZMK,
     )
     project = models.ForeignKey(
         Project,
         on_delete=models.PROTECT,
-        null=True,
-        blank=True,
     )
     created = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -128,19 +128,20 @@ class FundDisbursed(models.Model):
     """
     Project Fund disbursement definition.
     """
+
     amount = MoneyField(
         _("Amount Disbursed"),
         max_digits=14,
         decimal_places=2,
-        null=True,
         default_currency="ZMW",
         help_text="Amount disbursed for the project.",
+        default=Money('0.0', "ZMW")
     )
     balance = MoneyField(
         _("Balance"),
         max_digits=14,
         decimal_places=2,
-        default=0.0
+        default=Money('0.0', "ZMW")
     )
     disbursement_date = models.DateField(
         _("Disbursement Date"),
@@ -152,8 +153,7 @@ class FundDisbursed(models.Model):
         help_text=_('Currency for the project Fund.'),
         choices=Fund.CURRENCY_CHOICES,
         max_length=10,
-        blank=True,
-        null=True
+        default=ZMK,
     )    
     fund = models.ForeignKey(
         Fund,
@@ -188,24 +188,13 @@ class FundExpenditure(models.Model):
     """
     Funds Expenditure definition.
     """
-    ZMK = 'ZMK'
-    USD = 'USD'
-    GBP = 'GBP'
-    EU = 'EU'
-    CURRENCY_CHOICES = [
-        (ZMK, 'ZMK'), 
-        (USD, 'USD'),
-        (GBP, 'GBP'),
-        (EU, 'EU')
-    ]
-
     amount = MoneyField(
         _("Amount"),
         max_digits=14,
         decimal_places=2,
-        null=True,
         default_currency="ZMW",
         help_text="Amount spent on from disbused funds.",
+        default=Money('0.0', "ZMW")
     )
     expenditure_date = models.DateField(
         _("Expenditure Date"),
@@ -217,8 +206,7 @@ class FundExpenditure(models.Model):
         help_text=_('Currency for the Expenditure.'),
         choices=CURRENCY_CHOICES,
         max_length=10,
-        blank=True,
-        null=True
+        default=ZMK,
     )
     disbursment = models.ForeignKey(
         FundDisbursed,

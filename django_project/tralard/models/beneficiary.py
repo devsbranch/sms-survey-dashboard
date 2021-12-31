@@ -26,14 +26,10 @@ class Beneficiary(AbstractOrganizationBeneficiary):
     ward = models.ForeignKey(
         Ward, 
         on_delete=models.CASCADE,
-        null=True,
-        blank=True
     )
     sub_project = models.ForeignKey(
         SubProject,
         on_delete=models.CASCADE,
-        null=True, 
-        blank=True
     )
 
     class Meta:

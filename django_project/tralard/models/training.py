@@ -55,8 +55,6 @@ class Training(models.Model):
     title = models.CharField(
         verbose_name=_('Title'),
         help_text=_('Title of the Training'),
-        blank=False,
-        null=False,
         max_length=200,
     )
     training_type = models.ForeignKey(

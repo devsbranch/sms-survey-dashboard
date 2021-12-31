@@ -54,9 +54,7 @@ class FollowUp(models.Model):
         SubProject,
         help_text=_(
             'Sub Project to follow up.'),
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True  # This is needed to populate existing database.
+        on_delete=models.PROTECT,
     )
     def __str__(self):
         return self.implementation_status[:15]
