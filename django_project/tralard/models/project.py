@@ -15,6 +15,24 @@ from tinymce import HTMLField
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
+class ApprovedProjectManager(models.Manager):
+    """Custom manager that shows aproved projects."""
+    def get_queryset(self):
+        return super(
+            ApprovedProjectManager, self
+        ).get_queryset().filter(
+            approved=True,)
+
+
+class UnapprovedProjectManager(models.Manager):
+    """Custom project manager that shows only unapproved records."""
+
+    def get_queryset(self):
+        """Query set generator."""
+        return super(
+            UnapprovedProjectManager, self).get_queryset().filter(
+                approved=False)
+
 
 class Representative(models.Model):
     """
@@ -73,8 +91,6 @@ class Project(models.Model):
     name = models.CharField(
         help_text=_('Name of this project.'),
         max_length=255,
-        null=False,
-        blank=False,
         unique=True
     )
     description = models.CharField(
@@ -100,6 +116,10 @@ class Project(models.Model):
     )
     approved = models.BooleanField(
         help_text=_('Whether this project has been approved yet.'),
+        default=False,
+    )
+    has_funding = models.BooleanField(
+        help_text=_('Whether this project has an active funding.'),
         default=False,
     )
     focus_area = HTMLField(
@@ -166,10 +186,11 @@ class Project(models.Model):
     program = models.ForeignKey(
         Program, 
         default='',
-        null=True,
-        blank=True,
         on_delete=models.SET_DEFAULT,
     )
+    objects = models.Manager()
+    approved_objects = ApprovedProjectManager()
+    unapproved_objects = UnapprovedProjectManager()
 
     # def get_absolute_url(self):
     #     """Return URL to project detail page
@@ -179,4 +200,3 @@ class Project(models.Model):
         # return reverse('project-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return self.name.title()
-

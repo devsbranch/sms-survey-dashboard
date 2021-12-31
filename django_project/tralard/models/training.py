@@ -13,6 +13,25 @@ from tinymce import HTMLField
 
 logger = logging.getLogger(__name__)
 
+
+class CompletedTrainingManager(models.Manager):
+    """Custom manager that shows completed trainings."""
+    def get_queryset(self):
+        return super(
+            CompletedTrainingManager, self
+        ).get_queryset().filter(
+            completed=True,)
+
+
+class IncompletedTrainingManager(models.Manager):
+    """Custom training manager that shows only incompleted trainings."""
+
+    def get_queryset(self):
+        """Query set generator."""
+        return super(
+            IncompletedTrainingManager, self).get_queryset().filter(
+                completed=False)
+
 class TrainingType(models.Model):
     name = models.CharField(
         max_length=250, 
@@ -35,9 +54,7 @@ class Training(models.Model):
     )
     title = models.CharField(
         verbose_name=_('Title'),
-        help_text=_('Titile of the Training'),
-        blank=False,
-        null=False,
+        help_text=_('Title of the Training'),
         max_length=200,
     )
     training_type = models.ForeignKey(
@@ -61,9 +78,14 @@ class Training(models.Model):
         blank=False,
         null=False,
     )
-    is_comppleted = models.BooleanField(
+    completed = models.BooleanField(
+        help_text=_('Has this Training schedule been conducted andd completed?'),
         default=False
     )
+    objects = models.Manager()
+    completed_objects = CompletedTrainingManager()
+    incompleted_objects = IncompletedTrainingManager()
+
 
     def __str__(self):
         return self.title

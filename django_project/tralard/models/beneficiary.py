@@ -1,36 +1,38 @@
 # coding=utf-8
 """
-Program model definitions for tralard app.
+Beneficiary model definitions for tralard app.
 """
 import logging
 
-from django.db import models
+from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
 from tralard.models.sub_project import SubProject
-from dj_beneficiary.models import OrganizationBeneficiary as BaseOrganizationBeneficiary
+from tralard.models.ward import Ward
 
-from tinymce import HTMLField
+from dj_beneficiary.models import AbstractOrganizationBeneficiary
 
 logger = logging.getLogger(__name__)
 
 
-class Beneficiary(BaseOrganizationBeneficiary):
-    """
-    Beneficiary Subclass object.
-    """
+class Beneficiary(AbstractOrganizationBeneficiary):
+    location = models.PointField(
+        _("Location"),
+        geography=True,
+        blank=True,
+        null=True,
+        srid=4326
+    )
+    ward = models.ForeignKey(
+        Ward, 
+        on_delete=models.CASCADE,
+    )
     sub_project = models.ForeignKey(
         SubProject,
         on_delete=models.CASCADE,
-        null=True, 
-        blank=True
     )
 
     class Meta:
-        # we hide its abstraction and reuse the object data. 
         abstract = False
-        verbose_name = _('PPCR Beneficiary')
-        verbose_name_plural = _('PPCR Beneficiaries')
-
-    def __str__(self):
-        return self.name.title()
+        verbose_name = "Beneficiary Organization"
+        verbose_name_plural = "Beneficiary Organizations"

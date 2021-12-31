@@ -12,6 +12,7 @@ urlpatterns = [
     path('', include('tralard.urls', namespace='tralard')),
     path('accounts/', include("authentication.urls")), # Auth routes - login / register
     path('', include(dj_beneficiary_urls)),
+    path('tinymce/', include('tinymce.urls'))
 ]
 
 admin.site.site_header = "PPCR Administration"                   

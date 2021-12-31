@@ -19,8 +19,6 @@ class Program(models.Model):
     name = models.CharField(
         _("Program Name"),
         max_length=200,
-        null=True,
-        blank=True
     )
     approved = models.BooleanField(
         help_text=_('Whether this program has been approved yet.'),

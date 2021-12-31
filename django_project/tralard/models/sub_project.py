@@ -37,8 +37,6 @@ class SubProject(models.Model):
     name = models.CharField(
         help_text=_('Name of this Sub Project.'),
         max_length=255,
-        null=False,
-        blank=False,
         unique=True
     )
     size = HTMLField(
@@ -100,8 +98,6 @@ class SubProject(models.Model):
     project = models.ForeignKey(
         Project, 
         default='',
-        null=True,
-        blank=True,
         on_delete=models.SET_DEFAULT,
     )
     indicators = models.ManyToManyField(
@@ -119,3 +115,6 @@ class SubProject(models.Model):
     def __str__(self):
         return self.name.title()
         
+    @property 
+    def get_related_project(self):
+        return self.project.name

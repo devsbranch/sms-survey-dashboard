@@ -14,6 +14,8 @@ from tralard.views.beneficiary import (
 )
 from tralard.views.map import MapTemplateView
 
+from tralard.views.fund import FundListView, FundDetailView
+
 app_name = 'tralard'
 urlpatterns = [
     # home
@@ -24,6 +26,7 @@ urlpatterns = [
         MapTemplateView.as_view(), 
         name='map'
     ),
+
     # -------- project --------
     path(
         'project/list/', 
@@ -51,5 +54,16 @@ urlpatterns = [
         'beneficiary/detail/', 
         BeneficiaryOrgDetailView.as_view(), 
         name='beneficiary_detail'
+    ),
+    # -------- fund --------
+    path(
+        'fund/list/', 
+        FundListView.as_view(), 
+        name='fund_list'
+    ),
+    path(
+        'beneficiary/<int:pk>/detail/', 
+        FundDetailView.as_view(), 
+        name='fund_detail'
     ),
 ]
