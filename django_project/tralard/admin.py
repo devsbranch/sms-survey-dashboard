@@ -10,6 +10,7 @@ from tralard.models import (
     Attendance,
     FollowUp,
     Beneficiary,
+    Representative,
     Province,
     District,
     Ward,
@@ -30,5 +31,6 @@ admin.site.register(TrainingType)
 admin.site.register(Attendance)
 admin.site.register(FollowUp)
 admin.site.register(Beneficiary)
+admin.site.register(Representative)
 admin.site.register(FundExpenditure)
 admin.site.register(FundDisbursed)

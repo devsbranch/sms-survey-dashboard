@@ -7,18 +7,26 @@ from tralard.views.project import (
     SubProjectListView,
     SubProjectDetailView
 )
-
+from tralard.views import training
 from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     BeneficiaryOrgDetailView
 )
 from tralard.views.map import MapTemplateView
 
+from tralard.views.training import (
+    TrainingListView,
+    TrainingCreateView,
+    training_delete, 
+    template_testing,
+)
 from tralard.views.fund import FundListAndCreateView, FundDetailView
 
 app_name = 'tralard'
 urlpatterns = [
     # home
+    path('test/', template_testing, name='test'),
+    
     path('', HomeTemplateView.as_view(), name='home'),
     
     path(
@@ -54,6 +62,22 @@ urlpatterns = [
         'beneficiary/detail/', 
         BeneficiaryOrgDetailView.as_view(), 
         name='beneficiary_detail'
+    ),
+    # -------- training ------------
+    path(
+        'training/list/', 
+        TrainingListView.as_view(), 
+        name='training-list'
+    ),
+    path(
+        'training/delete/<int:pk>/', 
+        training_delete, 
+        name='training-delete'
+    ),
+    path(
+        'training/create/', 
+        TrainingCreateView.as_view(), 
+        name='training-create'
     ),
     # -------- fund --------
     path(
