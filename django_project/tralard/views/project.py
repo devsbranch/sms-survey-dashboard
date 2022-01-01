@@ -1,15 +1,29 @@
-from re import template
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-class ProjectListView(LoginRequiredMixin, TemplateView):
+from tralard.models.program import Program
+from tralard.models.project import Project
+from tralard.models.sub_project import SubProject
+from tralard.models.beneficiary import Beneficiary
+
+class ProgramDetailView(LoginRequiredMixin, ListView):
+    model = Project
+    context_object_name = "program"
     template_name = 'project/list.html'
 
     def get_context_data(self):
-        context = super(ProjectListView, self).get_context_data()
+        context = super(ProgramDetailView, self).get_context_data()
         context['title'] = 'Projects'
+        program_id = self.kwargs['pk']
+        program_object = Program.objects.get(id=program_id)
+        context['program'] = program_object
+        context['total_projects'] = Project.objects.filter(program=program_object).count()
+        context['sub_project_list'] = SubProject.objects.all()
+        context['beneficiary_list'] = Beneficiary.objects.all()
+        context['projects'] = Project.objects.all()
+        context['total_sub_projects'] = SubProject.objects.all().count()
+        context['total_beneficiary_count'] = Beneficiary.objects.all().count()
         return context
-
 
 class SubProjectListView(LoginRequiredMixin, TemplateView):
     template_name = 'project/sub_project_list.html'

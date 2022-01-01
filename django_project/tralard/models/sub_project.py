@@ -7,7 +7,7 @@ import logging
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.project import Project, Representative
+from tralard.models.fund import Fund
 
 from tinymce import HTMLField
 
@@ -39,36 +39,15 @@ class SubProject(models.Model):
         max_length=255,
         unique=True
     )
-    size = HTMLField(
+    size = models.CharField(
         help_text=_(
             'Size (number of Hectors, SquareMeters, Products etc,).'),
-        max_length=2000,
-        blank=True,
-        null=True
-    )
-    description = HTMLField(
-        help_text=_(
-            'A detailed summary of the Sub Project. Rich text edditing is supported.'),
-        max_length=2000,
-        blank=True,
-        null=True
-    )
-    approved = models.BooleanField(
-        help_text=_('Whether this project has been approved yet.'),
-        default=False,
-        null=True,
-        blank=True
-    )
-    focus_area = HTMLField(
-        help_text=_(
-            'Please describe the focus areas of the project.'
-            '(if any). Rich text editing is supported'),
-        max_length=10000,
+        max_length=255,
         blank=True,
         null=True
     )
     supervisor = models.ForeignKey(
-        Representative,
+        'tralard.Representative',
         help_text=_(
             'Sub Project Supervisor. '
             'This name will be used on trainings and any other references. '),
@@ -76,17 +55,32 @@ class SubProject(models.Model):
         blank=True,
         null=True  # This is needed to populate existing database.
     )
-    training_moderators = models.ManyToManyField(
-        Representative,
-        related_name='training_moderators',
+    project = models.ForeignKey(
+        'tralard.Project', 
+        default='',
+        on_delete=models.CASCADE,
+    )
+    indicators = models.ManyToManyField(
+        Indicator,
+        related_name='subproject_indicators',
+        blank=True,
+        # null=True, null has no effect on ManyToManyField.
+    )
+    subproject_managers = models.ManyToManyField(
+        'tralard.Representative',
+        related_name='subproject_managers',
         blank=True,
         # null=True, null has no effect on ManyToManyField.
         help_text=_(
-            'Managers of all trainings in this Sub project. '
-            'They will be allowed to create or remove training schedules.')
+            'Managers of all trainings and project activities in this Sub project. '
+            'They will be allowed to create or delete subproject data.')
     )
-    # Organisation where a project belongs, when the organisation is deleted,
-    #  the project will automatically belongs to default organisation.
+    approved = models.BooleanField(
+        help_text=_('Whether this sub project has been approved yet.'),
+        default=False,
+        null=True,
+        blank=True
+    )
     image_file = models.ImageField(
         help_text=_(
             'A banner image for this Sub Project. Most browsers support dragging '
@@ -95,17 +89,22 @@ class SubProject(models.Model):
         upload_to='images/projects',
         blank=True
     )
-    project = models.ForeignKey(
-        Project, 
-        default='',
-        on_delete=models.SET_DEFAULT,
-    )
-    indicators = models.ManyToManyField(
-        Indicator,
-        related_name='subproject_indicators',
+    description = HTMLField(
+        help_text=_(
+            'A detailed summary of the Sub Project. Rich text edditing is supported.'),
+        max_length=2000,
         blank=True,
-        # null=True, null has no effect on ManyToManyField.
+        null=True
     )
+    focus_area = HTMLField(
+        help_text=_(
+            'Please describe the focus areas of the sub project.'
+            '(if any). Rich text editing is supported'),
+        max_length=10000,
+        blank=True,
+        null=True
+    )
+    created = models.DateTimeField(auto_now_add=True)
     # def get_absolute_url(self):
     #     """Return URL to project detail page
     #     :return: URL
@@ -118,3 +117,12 @@ class SubProject(models.Model):
     @property 
     def get_related_project(self):
         return self.project.name
+
+    @property 
+    def fund_utilization_percent(self):
+        project_id = self.project.id
+        fund_obj = Fund.objects.get(project__id=project_id)
+        initial_fund = fund_obj.amount
+        balance = fund_obj.balance
+        fund_utilization_percent = ( balance / initial_fund ) * 100
+        return fund_utilization_percent

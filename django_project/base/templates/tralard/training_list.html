@@ -1,0 +1,522 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Document List {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+{% include 'includes/training-create-modal.html' %}
+{% include 'includes/training-detail-modal.html' %}
+
+<div id="dashboard-wrapper" class="dashboard-outer">
+    <div class="dashboard-inner">
+        <!--Title-->
+        <div class="title-wrap">
+            <h2 class="project-title">Training Schedules</h2>
+            <h4 class="project-tagline">showing all training schedules.</h4>
+        </div>
+
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+
+            <div id="main-dashboard" class="section-wrapper">
+                <!-- Dashboard content -->
+                <div id="basic-layout" class="columns dashboard-columns">
+
+                    <div class="column is-9 is-hidden-mobile">
+
+                        <div class="is-document-list">
+                            <!-- Documents table -->
+                            <table class="table documents-table">
+                                <!-- Header -->
+                                <div class="list-header">
+                                    <div class="list-title">
+                                        <!-- <span>Trainings </span> -->
+                                        <div data-title="Add new training" class="add-button modal-trigger" data-modal="create-project-modal">
+                                            <i class="material-icons">add</i>
+                                        </div>
+                                    </div>
+                                    <div class="list-filter">
+                                        <div class="control">
+                                            <input class="input" type="text" placeholder="Filter Trainings">
+                                            <div class="form-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-filter"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            <div class="b-checkbox is-secondary">
+                                                <input id="checkbox-docs-all" class="styled" type="checkbox">
+                                                <label for="checkbox-docs-all"></label>
+                                            </div>
+                                        </th>
+                                        <th class="w-30">
+                                            <!-- Filter dropdown Name-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>Title</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="#" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Sub Project-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>Sub Project</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Project-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>Training Type</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Members-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>Start date</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Date Registered-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>End date</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Date End date-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>Completed</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <!-- Filter dropdown Date End date-->
+                                            <div class="dropdown filter-dropdown dropdown-trigger">
+                                                <div class="button">
+                                                    <span>No of Moderators</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            Order
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Ascending</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Descending</span>
+                                                        </a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <div class="dropdown-item filter-title">
+                                                            Display
+                                                        </div>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-disabled">
+                                                            <span><i class="fa fa-check"></i> Modification</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item is-active">
+                                                            <span><i class="fa fa-check"></i> Members</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Type</span>
+                                                        </a>
+                                                        <a href="javascript:void(0);" class="dropdown-item">
+                                                            <span><i class="fa fa-check"></i> Size</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                        <th class="w-5">
+                                            <!-- Filter dropdown -->
+                                            <div class="dropdown filter-dropdown is-right dropdown-trigger">
+                                                <div class="button">
+                                                    <span class="material-icons">subject</span>
+                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                </div>
+
+                                                <div class="dropdown-menu" role="menu">
+                                                    <div class="dropdown-content">
+                                                        <div class="dropdown-item filter-title">
+                                                            View type
+                                                        </div>
+                                                        <a href="#" class="dropdown-item is-spaced is-active">
+                                                            <span><i class="fa fa-check"></i> List view</span>
+                                                            <i class="material-icons">view_list</i>
+                                                        </a>
+                                                        <a class="dropdown-item is-spaced">
+                                                            <span><i class="fa fa-check"></i> Grid view</span>
+                                                            <i class="material-icons">view_module</i>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </th>
+
+                                    </tr>
+                                </thead>
+                                <!-- Body -->
+                                <style>
+                                    span {
+                                        color: black;
+                                    }
+                                </style>
+                                <tbody>
+                                    <!-- Table row -->
+                                    {% for training in trainings %}
+                                    <tr>
+                                        <!-- Row Entry for Sub Project-->
+                                        <td>
+                                            <div class="b-checkbox is-secondary">
+                                                <input id="checkbox-docs-10" class="styled" type="checkbox">
+                                                <label for="checkbox-docs-10"></label>
+                                            </div>
+                                        </td>
+                                        
+                                        <td class="members">
+                                            <span class="inner">
+                                                <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                    data-title="Training title"
+                                                    data-trigger="hover">
+                                                    {{ training.title }}
+                                                </span>
+                                            </span>
+                                        </td>
+
+                                            <!-- Row Entry for Project-->
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Training sub project"
+                                                        data-trigger="hover">
+                                                        {{ training.sub_project }}
+                                                    </span>
+                                                </span>
+                                            </td>
+
+                                            <!-- Row Entry for Members-->
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Training type"
+                                                        data-trigger="hover">
+                                                        {{ training.training_type }}
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            
+                                            <!-- Row Entry for Registered-->
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Training start date"
+                                                        data-trigger="hover">
+                                                        {{ training.start_date }}
+                                                    </span>
+                                                </span>
+                                            </td>
+
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Training end date"
+                                                        data-trigger="hover">
+                                                        {{ training.end_date }}
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title=""
+                                                        data-trigger="hover">
+                                                        {% if training.completed  %}
+                                                            <small>yes</small>
+                                                        {% else %}
+                                                        <small>no</small>
+                                                        {% endif %}
+                                                    </span>
+                                                </span>
+                                            </td>
+                                            
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Number of moderators"
+                                                        data-trigger="hover">
+                                                        3
+                                                    </span>
+                                                </span>
+                                            </td>
+
+                                            
+                                            <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" rel="stylesheet">
+
+                                            <td class="actions">
+                                                <div class="dropdown is-right dropdown-trigger document-list-dropdown">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    {% include 'tralard/training-actions.html' %}
+                                                </div> 
+                                                <!-- <a href="#" class="button is-hidden">
+                                                <i class="material-icons">remove_red_eye</i></a> -->
+                                            </td>
+
+                                        </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                            
+                        </div>
+                    </div>
+
+                    <!-- Right side menu -->
+                    <div class="column is-3 is-hidden-mobile">
+                        <div class="right-options">
+                            <!-- Share -->
+                            <button type="button"
+                                class="button button-cta secondary-btn is-fullwidth is-bold raised">
+                                Share Training URL</button>
+
+                            <!-- Actions list -->
+                            <div id="default-controls" class="controls">
+                                <a class="control-block">
+                                    <i class="sl sl-icon-cloud-upload"></i> Upload Training List
+                                </a>
+                                <a class="control-block">
+                                    <i class="sl sl-icon-cloud-download"></i> Download Training List
+                                </a>
+                                <a class="control-block">
+                                    <i class="sl sl-icon-arrow-right-circle"></i> Past Conducted Trainings
+                                </a>
+                                <a class="control-block">
+                                    <i class="sl sl-icon-folder-alt"></i> Pending Trainings
+                                </a>
+                            </div>
+                            <!-- Actions list -->
+                            <div id="single-controls" class="controls is-hidden">
+                                <a class="control-block">
+                                    <i class="sl sl-icon-cloud-download"></i> Download Training Details
+                                </a>
+                                <a class="control-block">
+                                    <i class="sl sl-icon-eye"></i> Delete Selected
+                                </a>
+                            </div>
+                            <!-- Actions list -->
+                            <div id="bulk-controls" class="controls is-hidden">
+                                <a class="control-block">
+                                    <i class="sl sl-icon-cloud-download"></i> Download Multiple
+                                </a>
+                                <a class="control-block">
+                                    <i class="sl sl-icon-eye"></i> Delete Multiple
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 from tralard.models.sub_project import SubProject
+from tralard.models.project import Representative
 
 from tinymce import HTMLField
 
@@ -66,21 +67,29 @@ class Training(models.Model):
     )
     start_date = models.DateField(
         null=True,
-        blank=False,
+        blank=True,
     )
     end_date = models.DateField(
         null=True,
-        blank=False,
+        blank=True,
     )
-    notes = HTMLField(
+    notes = models.TextField(
         verbose_name=_('Training notes. Rich text editing is supported.'),
         help_text=_('Training notes.'),
-        blank=False,
-        null=False,
+        blank=True,
+        null=True,
+    )
+    moderators = models.ManyToManyField(
+        Representative,
+        help_text=_(
+            'Training Moderator. '
+            'This is the person supervising and or conducting the training, the name will be used on trainings and any other references. '),
+        blank=True,
+        null=True  # This is needed to populate existing database.
     )
     completed = models.BooleanField(
         help_text=_('Has this Training schedule been conducted andd completed?'),
-        default=False
+        default=False,
     )
     objects = models.Manager()
     completed_objects = CompletedTrainingManager()

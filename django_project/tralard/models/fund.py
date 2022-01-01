@@ -12,7 +12,6 @@ from tralard.utils import check_requested_deduction_against_balance, compute_tot
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
 
-from tralard.models.project import Project
 
 logger = logging.getLogger(__name__)
 
@@ -57,9 +56,9 @@ class Fund(models.Model):
         _("Amount Approved"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount approved for the project.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     approved = models.BooleanField(
         help_text=_('Whether this project fund has been approved for use yet.'),
@@ -76,9 +75,9 @@ class Fund(models.Model):
         max_digits=14,
         decimal_places=2,
         null=True,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Variation if any.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     funding_date = models.DateField(
         _("Funding Date"),
@@ -93,7 +92,7 @@ class Fund(models.Model):
         default=ZMK,
     )
     project = models.ForeignKey(
-        Project,
+        'tralard.Project',
         on_delete=models.PROTECT,
     )
     created = models.DateTimeField(auto_now_add=True)
@@ -111,7 +110,7 @@ class Fund(models.Model):
         verbose_name_plural = _('Funds')
 
     def __str__(self):
-        return f"Amount {self.amount}, Project {self.project}."
+        return f"Amount: {self.amount}, Project: {self.project}, Program: {self.project.program.name}."
 
 
     def save(self, *args, **kwargs):
@@ -119,12 +118,19 @@ class Fund(models.Model):
         Override save method to calculate the balance.
         """
         if self.amount is not None:
-            total_disburesment = compute_total_amount(FundDisbursed, self.pk, "disbursement")
+            total_disburesment = compute_total_amount(Disbursement, self.pk, "disbursement")
             self.balance = get_balance(self.amount, total_disburesment)
         super().save(*args, **kwargs)
 
+    @property
+    def total_disbursed_funds(self):
+        total_disbursed_funds_queryset = Disbursement.objects.filter(
+            fund__id=self.pk
+            )
+        return total_disbursed_funds_queryset
 
-class FundDisbursed(models.Model):
+
+class Disbursement(models.Model):
     """
     Project Fund disbursement definition.
     """
@@ -133,15 +139,15 @@ class FundDisbursed(models.Model):
         _("Amount Disbursed"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount disbursed for the project.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     balance = MoneyField(
         _("Balance"),
         max_digits=14,
         decimal_places=2,
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     disbursement_date = models.DateField(
         _("Disbursement Date"),
@@ -166,7 +172,7 @@ class FundDisbursed(models.Model):
         verbose_name_plural = _("Disbursed Funds")
 
     def __str__(self):
-        return f"Amount {self.amount}, Fund {self.fund}."
+        return f"Amount: {self.amount}, Fund: {self.fund}. Project: {self.fund.project.name}"
     
     def save(self, *args, **kwargs):
         """
@@ -179,12 +185,18 @@ class FundDisbursed(models.Model):
                 'Disbursement', 
                 'Fund'
                 )
-            total_disbursment = compute_total_amount(FundExpenditure, self.pk, "expenditure")
+            total_disbursment = compute_total_amount(Expenditure, self.pk, "expenditure")
             self.balance = get_balance(self.amount, total_disbursment)
         super().save(*args, **kwargs)
 
+    @property
+    def total_disbursed_expenses(self):
+        total_disbursed_expenses_queryset = Expenditure.objects.filter(
+            disbursment__id=self.pk
+            )
+        return total_disbursed_expenses_queryset
 
-class FundExpenditure(models.Model):
+class Expenditure(models.Model):
     """
     Funds Expenditure definition.
     """
@@ -192,9 +204,9 @@ class FundExpenditure(models.Model):
         _("Amount"),
         max_digits=14,
         decimal_places=2,
-        default_currency="ZMW",
+        default_currency=ZMK,
         help_text="Amount spent on from disbused funds.",
-        default=Money('0.0', "ZMW")
+        default=Money('0.0', ZMK)
     )
     expenditure_date = models.DateField(
         _("Expenditure Date"),
@@ -209,7 +221,7 @@ class FundExpenditure(models.Model):
         default=ZMK,
     )
     disbursment = models.ForeignKey(
-        FundDisbursed,
+        Disbursement,
         on_delete=models.PROTECT,
     )
     created = models.DateTimeField(auto_now_add=True)
@@ -219,7 +231,7 @@ class FundExpenditure(models.Model):
         verbose_name_plural = _("Expenditures")
 
     def __str__(self):
-        return f"Amount {self.amount}, Disbursement {self.disbursment}."
+        return f"Amount {self.amount}, Disbursement {self.disbursment}. Project: {self.disbursement.fund.project.name}"
 
     def save(self, *args, **kwargs):
         self.amount = check_requested_deduction_against_balance(
@@ -229,3 +241,4 @@ class FundExpenditure(models.Model):
             'Disbursed'
             )
         super().save(*args, **kwargs)
+        

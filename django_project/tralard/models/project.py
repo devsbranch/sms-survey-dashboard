@@ -10,6 +10,14 @@ from django.utils.translation import gettext_lazy as _
 
 from tralard.models.program import Program
 
+# (TODO:Alison) take the get_related_sub_project method to utilities or model managers.
+# not very safe (circular import issue candidate) 
+# except that we are referencing to project under subproject via string reference 
+# and not by imoprt - so its safe this way
+from tralard.models.sub_project import SubProject
+from tralard.models.beneficiary import Beneficiary
+
+
 from tinymce import HTMLField
 
 User = get_user_model()
@@ -44,7 +52,7 @@ class Representative(models.Model):
     ("Transgender", _("Transgender")),
     ("Other", _("Other"))
     )
-    user = models.OneToOneField(
+    user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         null=True, 
@@ -53,8 +61,6 @@ class Representative(models.Model):
     first_name = models.CharField(
         _("First Name"),
         max_length=200,
-        null=True,
-        blank=True
     )
     last_name = models.CharField(
         _("Last Name"),
@@ -93,27 +99,6 @@ class Project(models.Model):
         max_length=255,
         unique=True
     )
-    description = models.CharField(
-        help_text=_('A short description for the project'),
-        max_length=500,
-        blank=True,
-        null=True
-    )
-    precis = HTMLField(
-        help_text=_(
-            'A detailed summary of the project. Rich text edditing is supported.'),
-        blank=True,
-        null=True
-    )
-
-    image_file = models.ImageField(
-        help_text=_(
-            'A banner image for this project. Most browsers support dragging '
-            'the image directly on to the "Choose File" button above. The '
-            'ideal size for your image is 512 x 512 pixels.'),
-        upload_to='images/projects',
-        blank=True
-    )
     approved = models.BooleanField(
         help_text=_('Whether this project has been approved yet.'),
         default=False,
@@ -122,16 +107,20 @@ class Project(models.Model):
         help_text=_('Whether this project has an active funding.'),
         default=False,
     )
-    focus_area = HTMLField(
-        help_text=_(
-            'Please describe the focus areas of the project.'
-            '(if any). Rich text editing is supported'),
+    description = models.CharField(
+        help_text=_('A short description for the project'),
+        max_length=500,
         blank=True,
         null=True
     )
+    program = models.ForeignKey(
+        Program, 
+        default='',
+        on_delete=models.CASCADE,
+    )
     project_representative = models.ForeignKey(
         Representative,
-        related_name='project_representative',
+        related_name='project_representatives',
         help_text=_(
             'Project representative. '
             'This name will be used on trainings and any other references. '),
@@ -181,12 +170,27 @@ class Project(models.Model):
             'They will receive email notification about projects and have'
             ' the same permissions as project owner.')
     )
-    # Organisation where a project belongs, when the organisation is deleted,
-    #  the project will automatically belongs to default organisation.
-    program = models.ForeignKey(
-        Program, 
-        default='',
-        on_delete=models.SET_DEFAULT,
+    image_file = models.ImageField(
+        help_text=_(
+            'A banner image for this project. Most browsers support dragging '
+            'the image directly on to the "Choose File" button above. The '
+            'ideal size for your image is 512 x 512 pixels.'),
+        upload_to='images/projects',
+        blank=True
+    )
+    precis = HTMLField(
+        help_text=_(
+            'A detailed summary of the project. Rich text edditing is supported.'),
+        blank=True,
+        null=True
+    )
+
+    focus_area = HTMLField(
+        help_text=_(
+            'Please describe the focus areas of the project.'
+            '(if any). Rich text editing is supported'),
+        blank=True,
+        null=True
     )
     objects = models.Manager()
     approved_objects = ApprovedProjectManager()
@@ -200,3 +204,24 @@ class Project(models.Model):
         # return reverse('project-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return self.name.title()
+
+    @property
+    def get_related_sub_projects(self):
+        sub_projects_queryset = SubProject.objects.filter(
+            project__id=self.pk
+            )
+        return sub_projects_queryset
+
+    @property
+    def count_sub_projects(self):
+        sub_projects_count_queryset = SubProject.objects.filter(
+            project__id=self.pk
+            ).count()
+        return sub_projects_count_queryset
+
+    @property
+    def count_beneficiaries(self):
+        beneficiary_count_queryset = Beneficiary.objects.filter(
+            sub_project__project__id=self.pk
+            ).count()
+        return beneficiary_count_queryset

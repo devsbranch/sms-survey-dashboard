@@ -1,21 +1,45 @@
 from re import template
-from django.views import generic
+from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, CreateView, DetailView, FormView
+from tralard.forms.fund import FundForm
 
-from tralard.models.fund import Fund, FundDisbursed, FundExpenditure
+from tralard.models.fund import (
+    Fund, 
+    Disbursement, 
+    Expenditure
+)
 
 
-class FundListView(LoginRequiredMixin, generic.ListView):
+
+class FundListAndCreateView(LoginRequiredMixin, CreateView):
+    """
+    Create a new MedicalRecord
+    """
     model = Fund
-    context_object_name = 'funds'
-    template_name = 'fund/list.html'
-    
-    def get_context_data(self):
-        context = super(FundListView, self).get_context_data()
-        context['title'] = 'Funds'
+    form_class = FundForm
+    template_name = "fund/list.html"
+
+    def get_success_url(self):
+        return reverse_lazy("tralard:fund-list")
+
+
+    def get_context_data(self, **kwargs):
+        context = super(FundListAndCreateView, self).get_context_data(**kwargs)
+        context["funds"] = Fund.objects.all()
+        context["fund_title"] = "add project fund"
+        context["form"] = self.form_class
+        context["title"] = "funds"
         return context
 
-class FundDetailView(LoginRequiredMixin, generic.DetailView):
+
+    def form_valid(self, form):
+        form.save()
+        return super(FundListAndCreateView, self).form_valid(form)
+
+
+
+class FundDetailView(LoginRequiredMixin, DetailView):
     model = Fund
     context_object_name = 'fund'
     template_name = 'fund/detail.html'

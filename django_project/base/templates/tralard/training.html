@@ -1,24 +1,37 @@
 {% extends "layouts/base.html" %}
 
 {% load static %}
-
-{% block title %} Document List {% endblock %} 
+{% block title %} Training {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 <!-- PAGE content goes HERE -->
 {% block content %}
+                                                    {% include 'tralard/training-detail-modal.html' %}
 
-<div id="dashboard-wrapper" class="dashboard-outer">
-    <div class="dashboard-inner">
+<!-- Main dashboard container -->
 
-        <!-- Dashboard Wrapper -->
-        <div class="dashboard-wrapper">
-
-            <div id="main-dashboard" class="section-wrapper">
-                <!-- Dashboard content -->
-                <div id="basic-layout" class="columns dashboard-columns">
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+            
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+                
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="basic-layout" class="dashboard-columns">
+                        
+                        <div class="projects-wrapper">
+                            <div id="my-tasks" class="navtab-content">       
+                                <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview">
+                                    <div class="row">
+                                        <div class="col-lg-12 d-flex flex-column">
+                                            <div class="row flex-grow">
+                                                <div class="col-12 grid-margin stretch-card">
+                                                    <div class="card card-rounded">
+                                                        <div class="card-body">
+                                                            <div id="basic-layout" class="columns dashboard-columns">
 
                     <div class="column is-9 is-hidden-mobile">
 
@@ -901,12 +914,126 @@
                     </div>
 
                 </div>
+                                                            <div class="m-3">
+                                                                
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div></div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-
+<!-- <div style="padding: 1em;" class="table-responsive  mt-1">
+    <form name="trainers_form" method="post" class="form-create"> {% csrf_token %}
+        <input type="hidden" name="csrfmiddlewaretoken" value="ZoLmFwzasbLt0CzBZxezqHSb63gNpCHtteu2f9KOAy0mTbDtODb1rm8pimHGDoVF">
+        {% if training_array_length == 1 %}
+        <h3 style="margin-top: 1em; float: left; margin-bottom: 20px;">{{ training_array_length }} training available</h3><table class="table select-table" id="table_id">
+            {% else %}
+            <h3 style="margin-top: 1em; float: left; margin-bottom: 20px;">{{ training_array_length }} trainings available</h3><table class="table select-table" id="table_id">
+                {% endif %}
+                <style>
+                    .modal-trigger:hover {
+                        background: blue;
+                        color: white;
+                    }
+                    
+                </style>
+                
+                <div style="float: right; margin-bottom: 20px;" class="add-button modal-trigger" data-modal="create-task-modal">
+                    <i id="material_add_btn" class="material-icons">add</i>
+                </div>
+                <table class="table table-hover" style="padding: 1em; width: 100%; margin-right: 12em; border: black 2px; opacity: 1; box-shadow: 2em;">
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="form-check form-check-flat mt-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input selectall" aria-checked="false">
+                                        <i class="input-helper"></i><i class="input-helper"></i>
+                                        
+                                    </label>
+                                </div>
+                            </th>
+                            <th scope="col">Sub Project</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Training Type</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col">Moderator</th>
+                            <th scope="col">Is completed</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+                    </thead>
+                    <tbody>
+                        <script>
+                            
+                            $('.selectall').click(function() {
+                                if ($(this).is(':checked')) {
+                                    $('input:checkbox').prop('checked', true);
+                                } else {
+                                    $('input:checkbox').prop('checked', false);
+                                }
+                            });
+                        </script>
+                        {% for training in trainings %}
+                        <tr>
+                            <td>
+                                <div class="form-check form-check-flat mt-0">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" class="form-check-input selectall" aria-checked="false">
+                                        <i class="input-helper"></i><i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </td>
+                            <td>{{ training.sub_project }}</td>
+                            <td>{{ training.title }}</td>
+                            <td>{{ training.training_type.name }}</td>
+                            <td>{{ training.start_date }}</td>
+                            <td>{{ training.end_date}} </td>
+                            {% if training.moderators.first_name or training.moderators.last_name %}
+                            <td>{{ training.moderators.first_name|title }} {{ training.moderators.last_name|title }}</td>
+                            {% else %}
+                            <td>None</td>
+                            {% endif %}
+                            
+                            {% if training.completed %}
+                            <td>yes</td>
+                            {% else %}
+                            <td>no</td>
+                            {% endif %}
+                            <td>
+                                {% include 'tralard/training-actions.html' %}
+                            </td>
+                            
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </form>
+        </div> -->
+<!-- Invite User Modal -->
+<style>
+    .searchbox {
+        visibility: hidden;
+    }
+</style>
+<!-- Reminder Modal --><!-- Create Task Modal -->
+{% include 'tralard/training-create-modal.html' %}
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

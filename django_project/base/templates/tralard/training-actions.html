@@ -1,0 +1,71 @@
+<div class="more-drop">
+    <!-- Task dropdown -->
+    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+        <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+            <div class="dropdown-content">
+                <a onclick="document.getElementById('id01').style.display='block'" class="dropdown-item view-btn{{ training.id }}">
+                    <i class="sl sl-icon-eye"></i>
+                    <span>
+                        <span>View</span>
+                        <span>View this training</span>
+                    </span>
+                </a>
+                <script>
+                    var uniqueSelectorButton = document.querySelector(".view-btn{{ training.id }}");
+                    uniqueSelectorButton.addEventListener("click", () => {
+                      if("{{ training.id }}" == "{{ training.id }}"){
+                        document.getElementById("sub-project").innerHTML = "{{ training.sub_project }}";
+                        document.getElementById("project-title").innerHTML = "{{ training.title }}";
+                        document.getElementById("training-type").innerHTML = "{{ training.training_type }}";
+                        document.getElementById("start-date").innerHTML = "{{ training.start_date }}";
+                        document.getElementById("end-date").innerHTML = "{{ training.end_date }}";
+                        document.getElementById("notes").innerHTML = "{{ training.notes|safe }}";
+                        document.getElementById("moderator").innerHTML = "{{ training.moderators.first_name|title }} {{ training.moderators.last_name|title }}";
+                        var boolean = document.getElementById("boolean");
+                        if("{{ training.completed }}" == "True"){
+                            boolean.innerHTML = "yes";
+                        }else{
+                            boolean.innerHTML = "no";
+                        }
+
+                      }
+                    })
+                </script>
+                <a  class="dropdown-item">
+                    <i class="sl sl-icon-pencil"></i>
+                    <span>
+                        <span>Edit</span>
+                        <span>Edit this training</span>
+                    </span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a id="{{ training.id }}" class="dropdown-item">
+                    <i class="sl sl-icon-trash"></i>
+                    <span>
+                        <span>Delete</span>
+                        <span>Delete this training</span>
+                    </span>
+                    <script>
+                        try{
+                          if("{{ training.id }}" === "{{ training.id }}"){
+                            const deleteButton = document.getElementById("{{ training.id }}");
+                            deleteButton.addEventListener("click", () => {
+                              var response;
+                              response = confirm("Are you sure you want to delete this training");
+                              if(response){
+                                const setProperty = deleteButton.href = "{% url 'tralard:training-delete' pk=training.id %}";
+                                setProperty.click()
+                              }else if(!(response)){
+                                console.log("cancelled post delete");
+                              }
+                            });
+                          }
+                        }catch(error){
+                          console.log(error)
+                        }
+                    </script>
+                </a>
+            </div>
+        </div>
+    </div>                                                                
+</div>

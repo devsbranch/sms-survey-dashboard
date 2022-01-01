@@ -3,22 +3,28 @@ from django.urls import path
 
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.project import (
-    ProjectListView,
+    ProgramDetailView,
     SubProjectListView,
     SubProjectDetailView
 )
-
 from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     BeneficiaryOrgDetailView
 )
+from tralard.views.training import (
+    TrainingListView,
+    TrainingCreateView,
+    training_delete, 
+    template_testing,
+)
 from tralard.views.map import MapTemplateView
-
-from tralard.views.fund import FundListView, FundDetailView
+from tralard.views.fund import FundListAndCreateView, FundDetailView
 
 app_name = 'tralard'
 urlpatterns = [
     # home
+    path('test/', template_testing, name='test'),
+    
     path('', HomeTemplateView.as_view(), name='home'),
     
     path(
@@ -29,9 +35,9 @@ urlpatterns = [
 
     # -------- project --------
     path(
-        'project/list/', 
-        ProjectListView.as_view(), 
-        name='project_list'
+        'program/<int:pk>/detail', 
+        ProgramDetailView.as_view(), 
+        name='program-detail'
     ),
     path(
         'project/subproject/list/', 
@@ -55,11 +61,27 @@ urlpatterns = [
         BeneficiaryOrgDetailView.as_view(), 
         name='beneficiary_detail'
     ),
+    # -------- training ------------
+    path(
+        'training/list/', 
+        TrainingListView.as_view(), 
+        name='training-list'
+    ),
+    path(
+        'training/delete/<int:pk>/', 
+        training_delete, 
+        name='training-delete'
+    ),
+    path(
+        'training/create/', 
+        TrainingCreateView.as_view(), 
+        name='training-create'
+    ),
     # -------- fund --------
     path(
         'fund/list/', 
-        FundListView.as_view(), 
-        name='fund_list'
+        FundListAndCreateView.as_view(),
+        name='fund-list'
     ),
     path(
         'beneficiary/<int:pk>/detail/', 
