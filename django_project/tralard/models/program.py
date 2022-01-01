@@ -19,6 +19,7 @@ class Program(models.Model):
     name = models.CharField(
         _("Program Name"),
         max_length=200,
+        unique=True
     )
     approved = models.BooleanField(
         help_text=_('Whether this program has been approved yet.'),
@@ -30,6 +31,14 @@ class Program(models.Model):
         _("Program Start Date"),
         auto_now_add=False,
         null=True,
+        blank=True
+    )
+    logo = models.ImageField(
+        help_text=_(
+            'A banner image for this project. Most browsers support dragging '
+            'the image directly on to the "Choose File" button above. The '
+            'ideal size for your image is 512 x 512 pixels.'),
+        upload_to='images/programs',
         blank=True
     )
     description = HTMLField(

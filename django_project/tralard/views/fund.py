@@ -4,7 +4,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, FormView
 from tralard.forms.fund import FundForm
 
-from tralard.models.fund import Fund, FundDisbursed, FundExpenditure
+from tralard.models.fund import (
+    Fund, 
+    Disbursement, 
+    Expenditure
+)
 
 
 

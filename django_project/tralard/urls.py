@@ -3,23 +3,21 @@ from django.urls import path
 
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.project import (
-    ProjectListView,
+    ProgramDetailView,
     SubProjectListView,
     SubProjectDetailView
 )
-from tralard.views import training
 from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     BeneficiaryOrgDetailView
 )
-from tralard.views.map import MapTemplateView
-
 from tralard.views.training import (
     TrainingListView,
     TrainingCreateView,
     training_delete, 
     template_testing,
 )
+from tralard.views.map import MapTemplateView
 from tralard.views.fund import FundListAndCreateView, FundDetailView
 
 app_name = 'tralard'
@@ -37,9 +35,9 @@ urlpatterns = [
 
     # -------- project --------
     path(
-        'project/list/', 
-        ProjectListView.as_view(), 
-        name='project_list'
+        'program/<int:pk>/detail', 
+        ProgramDetailView.as_view(), 
+        name='program-detail'
     ),
     path(
         'project/subproject/list/', 

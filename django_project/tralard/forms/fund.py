@@ -13,7 +13,7 @@ from crispy_forms.layout import (
 )
 from crispy_forms.bootstrap import FormActions
 
-from tralard.models.fund import Fund, FundDisbursed, FundExpenditure
+from tralard.models.fund import Fund, Disbursement, Expenditure
 
 
 class FundForm(ModelForm):
@@ -25,10 +25,22 @@ class FundForm(ModelForm):
 
     class Meta:
         model = Fund
-        exclude = ["created", "balance", "variation", "created", "amount", "approved"]
+        exclude = [
+            "amount", 
+            "created", 
+            "balance", 
+            "variation", 
+            "approved"
+        ]
         widgets = {
-            'funding_date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
-        }
+            'funding_date': widgets.DateInput(
+                format=('%m/%d/%Y'), 
+                attrs={
+                    'class':'form-control', 
+                    'type':'date'
+                    }
+                ),
+            }   
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

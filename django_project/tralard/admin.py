@@ -14,23 +14,23 @@ from tralard.models import (
     Province,
     District,
     Ward,
-    FundExpenditure,
-    FundDisbursed,
+    Expenditure,
+    Disbursement,
 )
 
 
 admin.site.register(Fund)
 admin.site.register(Ward)
-admin.site.register(District)
-admin.site.register(Province)
 admin.site.register(Program)
 admin.site.register(Project)
-admin.site.register(SubProject)
 admin.site.register(Training)
-admin.site.register(TrainingType)
-admin.site.register(Attendance)
 admin.site.register(FollowUp)
+admin.site.register(District)
+admin.site.register(Province)
+admin.site.register(SubProject)
+admin.site.register(Attendance)
+admin.site.register(Expenditure)
 admin.site.register(Beneficiary)
+admin.site.register(TrainingType)
+admin.site.register(Disbursement)
 admin.site.register(Representative)
-admin.site.register(FundExpenditure)
-admin.site.register(FundDisbursed)

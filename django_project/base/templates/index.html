@@ -209,63 +209,75 @@
     
                         <div class="column is-4">
                             <div class="members-card">
-                                <h3 class="card-heading">Funders</h3>
+                                <h3 class="card-heading">All Programs</h3>
                                 <ul class="user-list">
-                                    <li>
-                                        <div class="user-list-avatar">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}">
-                                        </div>
-                                        <div class="user-list-info">
-                                            <div class="name">Terry Daniels</div>
-                                            <div class="position">CEO</div>
-                                        </div>
-                                        <div class="user-list-status is-online"></div>
-                                    </li>
-                                    <li>
-                                        <div class="user-list-avatar">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/carolin.png' %}">
-                                        </div>
-                                        <div class="user-list-info">
-                                            <div class="name">Marjory Cambell</div>
-                                            <div class="position">CFO</div>
-                                        </div>
-                                        <div class="user-list-status is-busy"></div>
-                                    </li>
-                                    <li>
-                                        <div class="user-list-avatar">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}">
-                                        </div>
-                                        <div class="user-list-info">
-                                            <div class="name">Kevin Smith</div>
-                                            <div class="position">Software Engineer</div>
-                                        </div>
-                                        <div class="user-list-status is-offline"></div>
-                                    </li>
-                                    <li>
-                                        <div class="user-list-avatar">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                        </div>
-                                        <div class="user-list-info">
-                                            <div class="name">Melany Wright</div>
-                                            <div class="position">Sales Manager</div>
-                                        </div>
-                                        <div class="user-list-status is-online"></div>
-                                    </li>
-                                    <li>
-                                        <div class="user-list-avatar">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
-                                        </div>
-                                        <div class="user-list-info">
-                                            <div class="name">Helen Miller</div>
-                                            <div class="position">Sales Manager</div>
-                                        </div>
-                                        <div class="user-list-status is-online"></div>
-                                    </li>
+
+                                    {% for program in program_list %}
+                                        <li>
+                                            
+                                            {% if program.approved %}
+                                                    {% if program.logo %}
+                                                        <div class="user-list-avatar">
+                                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                                data-demo-src="{{ program.logo.url }}">
+                                                        </div>
+                                                    {% else %}
+                                                            {% if program.name|lower == "ppcr" %}
+                                                                <div class="user-list-avatar">
+                                                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                                                        data-demo-src="{% static 'assets/images/ppcr.png'%}">
+                                                                </div>
+                                                            {% elif program.name|lower == "tralard" %}
+                                                                <div class="user-list-avatar">
+                                                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                                                        data-demo-src="{% static 'assets/images/tralard.png'%}">
+                                                                </div>
+                                                            {% endif %}
+
+                                                    {% endif %}
+
+                                                <a href="{% url 'tralard:program-detail' program.id %}">
+                                                    <div class="user-list-info">
+                                                        <div class="name">{{ program.name }}</div>
+                                                        <div class="position">Approved:  Yes</div>
+                                                    </div>
+                                                </a>
+                                                <div class="user-list-status is-online"></div>
+
+                                            {% else %}
+                                                    {% if program.logo %}
+                                                        <div class="user-list-avatar">
+                                                            <img src="https://via.placeholder.com/250x250" alt=""
+                                                                data-demo-src="{{ program.logo.url }}">
+                                                        </div>
+                                                    {% else %}
+                                                            {% if program.name|lower == "ppcr" %}
+                                                                <div class="user-list-avatar">
+                                                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                                                        data-demo-src="{% static 'assets/images/ppcr.png'%}">
+                                                                </div>
+                                                            {% elif program.name|lower == "tralard" %}
+                                                                <div class="user-list-avatar">
+                                                                    <img src="https://via.placeholder.com/250x250" alt=""
+                                                                        data-demo-src="{% static 'assets/images/tralard.png'%}">
+                                                                </div>
+                                                            {% endif %}
+
+                                                    {% endif %}
+                                    
+                                                <a href="{% url 'tralard:program-detail' program.id %}">
+                                                    <div class="user-list-info">
+                                                        <div class="name">{{ program.name }}</div>
+                                                        <div class="position">Approved:  Pending ...</div>
+                                                    </div>
+                                                </a>
+                                                <div class="user-list-status is-offline"></div>
+                                            {% endif %}
+                                        </li>
+
+                                    {% endfor %}
+
+
                                 </ul>
                             </div>
     
