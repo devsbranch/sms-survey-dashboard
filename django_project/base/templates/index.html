@@ -29,7 +29,7 @@
                                 <div class="tile-content">
                                     <h3>Programs</h3>
                                     <p>
-                                        <span>284</span>
+                                        <span>2</span>
                                         <span>Total count</span>
                                     </p>
                                 </div>
@@ -47,7 +47,7 @@
                                 <div class="tile-content">
                                     <h3>Projects</h3>
                                     <p>
-                                        <span>$8647,23</span>
+                                        <span>ZMK 86,00</span>
                                         <span>total funds</span>
 
                                     </p>
@@ -236,7 +236,7 @@
 
                                                     {% endif %}
 
-                                                <a href="{% url 'tralard:program-detail' program.id %}">
+                                                <a href="{% url 'tralard:program-detail' program_slug=program.slug %}">
                                                     <div class="user-list-info">
                                                         <div class="name">{{ program.name }}</div>
                                                         <div class="position">Approved:  Yes</div>
@@ -265,7 +265,7 @@
 
                                                     {% endif %}
                                     
-                                                <a href="{% url 'tralard:program-detail' program.id %}">
+                                                <a href="{% url 'tralard:program-detail' program.slug %}">
                                                     <div class="user-list-info">
                                                         <div class="name">{{ program.name }}</div>
                                                         <div class="position">Approved:  Pending ...</div>

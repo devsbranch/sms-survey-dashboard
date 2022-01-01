@@ -1,11 +1,9 @@
-from djmoney.money import Money
 from django.forms import ModelForm, widgets
 from django import forms
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
     Layout,
-    Fieldset,
     HTML,
     Submit,
     Row,
@@ -48,20 +46,16 @@ class FundForm(ModelForm):
         self.helper.form_tag = False
         self.helper.form_method = "post"
         self.helper.layout = Layout(
-            Fieldset(
-                "",
-                Row(
-                    Column("amount", css_class="form-group col-md-12 mb-0"),
-                    Column("currency", css_class="form-group col-md-12 mb-0"),
-                    Column("funding_date", css_class="form-group col-md-12 mb-0"),
-                    Column("project", css_class="form-group col-md-12 mb-0"),
-                    Column("approved", css_class="form-group col-md-12 mb-0"),
-                    css_class="form-row",
-                ),
+            Row(
+                Column("amount", css_class="form-group col-md-12 mb-0"),
+                Column("currency", css_class="form-group col-md-12 mb-0"),
+                Column("funding_date", css_class="form-group col-md-12 mb-0"),
+                Column("project", css_class="form-group col-md-12 mb-0"),
+                Column("approved", css_class="form-group col-md-12 mb-0"),
+                css_class="form-row",
             ),
             FormActions(
                 Submit("save", "Create Project Fund"),
-                HTML('<a class="btn btn-danger" href="/fund/list/">Cancel</a>'),
             ),
         )
 

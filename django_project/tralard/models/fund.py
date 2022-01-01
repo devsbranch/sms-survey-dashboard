@@ -5,9 +5,16 @@ Fund model definitions for tralard app.
 import logging
 
 from django.db import models
+from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.db.models.aggregates import Sum
 from django.utils.translation import gettext_lazy as _
-from tralard.utils import check_requested_deduction_against_balance, compute_total_amount, get_balance
+from tralard.utils import (
+    get_balance,
+    unique_slugify,
+    compute_total_amount, 
+    check_requested_deduction_against_balance
+)
 
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
@@ -52,6 +59,10 @@ class Fund(models.Model):
     """
     Project Fund definition.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     amount = MoneyField(
         _("Amount Approved"),
         max_digits=14,
@@ -117,11 +128,31 @@ class Fund(models.Model):
         """
         Override save method to calculate the balance.
         """
+        if not self.slug:
+            self.slug = unique_slugify(self, 
+            slugify(f"{self.project.slug} \
+                fund amount \
+                    {self.amount}"
+                    )
+                )
+            
         if self.amount is not None:
             total_disburesment = compute_total_amount(Disbursement, self.pk, "disbursement")
             self.balance = get_balance(self.amount, total_disburesment)
         super().save(*args, **kwargs)
 
+
+    def get_absolute_url(self):
+        """Return URL to project detail page
+        :return: URL
+        :rtype: str
+        """
+        return reverse_lazy('tralard:project-detail', 
+            kwargs={
+                'program_slug': self.project.program.slug, 
+                'project_slug': self.project.slug
+                }
+            )
     @property
     def total_disbursed_funds(self):
         total_disbursed_funds_queryset = Disbursement.objects.filter(
@@ -134,7 +165,10 @@ class Disbursement(models.Model):
     """
     Project Fund disbursement definition.
     """
-
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     amount = MoneyField(
         _("Amount Disbursed"),
         max_digits=14,
@@ -178,6 +212,13 @@ class Disbursement(models.Model):
         """
         Override save method to calculate the balance.
         """
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(
+                f'{self.fund.slug} \
+                    disbursement amount \
+                        {self.amount}'
+                        )
+                    )
         if self.amount is not None:
             self.amount = check_requested_deduction_against_balance(
                 self.fund.balance, 
@@ -200,6 +241,10 @@ class Expenditure(models.Model):
     """
     Funds Expenditure definition.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     amount = MoneyField(
         _("Amount"),
         max_digits=14,
@@ -234,6 +279,13 @@ class Expenditure(models.Model):
         return f"Amount {self.amount}, Disbursement {self.disbursment}. Project: {self.disbursement.fund.project.name}"
 
     def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(
+                self, slugify(
+                    f'{self.fund.slug} \
+                        expenditure amount {self.amount}'
+                    )
+                )
         self.amount = check_requested_deduction_against_balance(
             self.disbursment.balance,
             self.amount,

@@ -5,10 +5,15 @@ Project model definitions for tralard app.
 import logging
 
 from django.db import models
+from django.db.models import Sum
+from django.urls import reverse_lazy
+from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.program import Program
+from tralard.utils import unique_slugify
+
+from tralard.models.fund import Fund
 
 # (TODO:Alison) take the get_related_sub_project method to utilities or model managers.
 # not very safe (circular import issue candidate) 
@@ -52,6 +57,10 @@ class Representative(models.Model):
     ("Transgender", _("Transgender")),
     ("Other", _("Other"))
     )
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -80,20 +89,49 @@ class Representative(models.Model):
         null=True,
         blank=True
     )
+    email = models.EmailField(
+        _("Email"),
+        null=True,
+        blank=True
+    )
+    cell = models.CharField(
+        _("Cell"),
+        max_length=50,
+        null=True,
+        blank=True
+    )
+    ward = models.ForeignKey(
+        'tralard.ward', 
+        default='',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
     address = HTMLField(
         help_text=_(
             'Address details and other information necesarry.'),
         blank=True,
         null=True
     )
+    created = models.DateTimeField(auto_now_add=True)
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
 
 
 class Project(models.Model):
     """
     Project definition.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     name = models.CharField(
         help_text=_('Name of this project.'),
         max_length=255,
@@ -114,7 +152,7 @@ class Project(models.Model):
         null=True
     )
     program = models.ForeignKey(
-        Program, 
+        'tralard.program', 
         default='',
         on_delete=models.CASCADE,
     )
@@ -195,33 +233,117 @@ class Project(models.Model):
     objects = models.Manager()
     approved_objects = ApprovedProjectManager()
     unapproved_objects = UnapprovedProjectManager()
+    created = models.DateTimeField(auto_now_add=True)
 
-    # def get_absolute_url(self):
-    #     """Return URL to project detail page
-    #     :return: URL
-    #     :rtype: str
-        # """
-        # return reverse('project-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return self.name.title()
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        """Return URL to project detail page
+        :return: URL
+        :rtype: str
+        """
+        return reverse_lazy('tralard:project-detail', 
+            kwargs={
+                'program_slug': self.program.slug, 
+                'project_slug': self.slug
+                }
+            )
+ 
     @property
     def get_related_sub_projects(self):
         sub_projects_queryset = SubProject.objects.filter(
-            project__id=self.pk
+            project__slug=self.slug
             )
         return sub_projects_queryset
 
     @property
     def count_sub_projects(self):
         sub_projects_count_queryset = SubProject.objects.filter(
-            project__id=self.pk
+            project__slug=self.slug
             ).count()
         return sub_projects_count_queryset
 
     @property
     def count_beneficiaries(self):
         beneficiary_count_queryset = Beneficiary.objects.filter(
-            sub_project__project__id=self.pk
+            sub_project__project__slug=self.slug
             ).count()
         return beneficiary_count_queryset
+
+    @property
+    def get_total_project_fund(self):
+        """Computes total funds related to this project."""
+        related_funds_sum_qs = Fund.objects.filter(
+            project__slug=self.slug
+        ).aggregate(Sum('amount'))
+
+        amount_value = related_funds_sum_qs['amount__sum']
+        return amount_value
+
+    @property
+    def get_total_fund_balance(self):
+        """Computes total funds balance related to this project."""
+        related_funds_sum_qs = Fund.objects.filter(
+            project__slug=self.slug
+        ).aggregate(Sum('balance'))
+
+        amount_value = related_funds_sum_qs['balance__sum']
+        return amount_value
+
+
+
+class Feedback(models.Model):
+    """
+    Project Feedback.
+    """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
+    title = models.CharField(
+        _("Title"),
+        max_length=200,
+    )
+    date = models.DateField(
+        _("Create Date"),
+        auto_now_add=False,
+        null=True,
+        blank=True
+    )
+    project = models.ForeignKey(
+        Project,
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
+    moderator = models.ForeignKey(
+        Representative,
+        related_name='feedback_moderator',
+        help_text=_(
+            'Feedback Moderator. '
+            'This name will be used on project feedback and any other references. '),
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True  
+    )
+    description = models.TextField(
+        _("Description"),
+        null=True,
+        blank=True
+    )
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} project: {self.project.name}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.title))
+        super().save(*args, **kwargs)
+

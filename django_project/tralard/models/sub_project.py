@@ -5,9 +5,14 @@ Sub Project model definitions for tralard app.
 import logging
 
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from tralard.models.fund import Fund
+from tralard.models.beneficiary import Beneficiary
+
+from tralard.utils import unique_slugify
+
 
 from tinymce import HTMLField
 
@@ -18,7 +23,10 @@ class Indicator(models.Model):
     """
     Sub Project Indicator Representative.
     """
-   
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     name = models.CharField(
         _("Name"),
         max_length=200,
@@ -29,11 +37,19 @@ class Indicator(models.Model):
     def __str__(self):
         return self.name.lower()
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
 
 class SubProject(models.Model):
     """
     Sub Project definition.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     name = models.CharField(
         help_text=_('Name of this Sub Project.'),
         max_length=255,
@@ -47,7 +63,7 @@ class SubProject(models.Model):
         null=True
     )
     supervisor = models.ForeignKey(
-        'tralard.Representative',
+        'tralard.representative',
         help_text=_(
             'Sub Project Supervisor. '
             'This name will be used on trainings and any other references. '),
@@ -76,7 +92,6 @@ class SubProject(models.Model):
             'They will be allowed to create or delete subproject data.')
     )
     approved = models.BooleanField(
-        help_text=_('Whether this sub project has been approved yet.'),
         default=False,
         null=True,
         blank=True
@@ -89,7 +104,7 @@ class SubProject(models.Model):
         upload_to='images/projects',
         blank=True
     )
-    description = HTMLField(
+    description = models.TextField(
         help_text=_(
             'A detailed summary of the Sub Project. Rich text edditing is supported.'),
         max_length=2000,
@@ -113,7 +128,12 @@ class SubProject(models.Model):
         # return reverse('project-detail', kwargs={'pk': self.pk})
     def __str__(self):
         return self.name.title()
-        
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
+
     @property 
     def get_related_project(self):
         return self.project.name
@@ -126,3 +146,17 @@ class SubProject(models.Model):
         balance = fund_obj.balance
         fund_utilization_percent = ( balance / initial_fund ) * 100
         return fund_utilization_percent
+
+    @property
+    def count_beneficiaries(self):
+        beneficiary_count_queryset = Beneficiary.objects.filter(
+            sub_project__slug=self.slug
+            ).count()
+        return beneficiary_count_queryset
+
+    @property
+    def count_indicators(self):
+        subproject_indicators = Indicator.objects.filter(
+            subproject_indicators__slug=self.slug
+        ).count()
+        return subproject_indicators

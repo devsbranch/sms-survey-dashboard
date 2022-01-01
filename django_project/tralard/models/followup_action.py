@@ -5,7 +5,10 @@ Sub Project model definitions for tralard app.
 import logging
 
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+
+from tralard.utils import unique_slugify
 
 from tralard.models.sub_project import SubProject
 
@@ -18,6 +21,10 @@ class FollowUp(models.Model):
     """
     Sub Project Progress Follow Up Action.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     implementation_status = models.CharField(
         help_text=_(
             'Project implementation status in line with project workplan & procurement plan.'),
@@ -58,3 +65,8 @@ class FollowUp(models.Model):
     )
     def __str__(self):
         return self.implementation_status[:15]
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.follow_up_action))
+        super().save(*args, **kwargs)

@@ -4,6 +4,7 @@ from tralard.models import (
     Fund, 
     Program, 
     Project, 
+    Feedback, 
     SubProject, 
     Training,
     TrainingType,
@@ -23,6 +24,7 @@ admin.site.register(Fund)
 admin.site.register(Ward)
 admin.site.register(Program)
 admin.site.register(Project)
+admin.site.register(Feedback)
 admin.site.register(Training)
 admin.site.register(FollowUp)
 admin.site.register(District)

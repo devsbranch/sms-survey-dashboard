@@ -4,11 +4,13 @@ Beneficiary model definitions for tralard app.
 """
 import logging
 
+from django.utils.text import slugify
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.sub_project import SubProject
 from tralard.models.ward import Ward
+
+from tralard.utils import unique_slugify
 
 from dj_beneficiary.models import AbstractOrganizationBeneficiary
 
@@ -16,6 +18,10 @@ logger = logging.getLogger(__name__)
 
 
 class Beneficiary(AbstractOrganizationBeneficiary):
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     location = models.PointField(
         _("Location"),
         geography=True,
@@ -28,7 +34,7 @@ class Beneficiary(AbstractOrganizationBeneficiary):
         on_delete=models.CASCADE,
     )
     sub_project = models.ForeignKey(
-        SubProject,
+        'tralard.subproject',
         on_delete=models.CASCADE,
     )
 
@@ -36,3 +42,8 @@ class Beneficiary(AbstractOrganizationBeneficiary):
         abstract = False
         verbose_name = "Beneficiary Organization"
         verbose_name_plural = "Beneficiary Organizations"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
