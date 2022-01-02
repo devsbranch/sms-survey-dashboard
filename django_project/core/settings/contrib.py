@@ -162,6 +162,13 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters',
 )
 
+# TINYMCE_DEFAULT_CONFIG = {
+#     # 'theme': "simple", # default value
+#     # 'relative_urls': False, # default value
+#     'width': '100',
+#     'height': 100
+# }
+
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
     messages.INFO: 'alert-info',

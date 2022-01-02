@@ -4,12 +4,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, CreateView, DetailView, FormView
 from tralard.forms.fund import FundForm
 
-from tralard.models.fund import (
-    Fund, 
-    Disbursement, 
-    Expenditure
-)
-
+from tralard.models.fund import Fund 
+from tralard.models.project import Project
 
 
 class FundListAndCreateView(LoginRequiredMixin, CreateView):
@@ -20,13 +16,17 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
     form_class = FundForm
     template_name = "fund/list.html"
 
-    def get_success_url(self):
-        return reverse_lazy("tralard:fund-list")
-
-
     def get_context_data(self, **kwargs):
         context = super(FundListAndCreateView, self).get_context_data(**kwargs)
-        context["funds"] = Fund.objects.all()
+        self.program_slug = self.kwargs['program_slug']
+        self.project_slug = self.kwargs['project_slug']
+
+        self.project = Project.objects.get(slug=self.project_slug)
+        self.project_funds_qs = Fund.objects.filter(
+            project__slug=self.project_slug
+        )
+        context["project"] = self.project
+        context["funds"] = self.project_funds_qs
         context["fund_title"] = "add project fund"
         context["form"] = self.form_class
         context["title"] = "funds"

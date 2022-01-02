@@ -1,4 +1,29 @@
+
+import string
+from django.utils.crypto import get_random_string
+
 from djmoney.money import Money
+
+def unique_slugify(instance, slug):
+    """
+    Generate slug and ensure it is unique,
+
+    Parameters
+    ----------
+    instance : (django.db.models.Mode) This is a model instance the slug is generated for.
+    slug : (string) a unique string that serves as a unique id for the object.
+
+    Returns
+    -------
+    slug: (string): a unique string of type slug. 
+    i.e >>> 'project-tralard-unique-entry-1245-live'
+
+    """
+    model = instance.__class__
+    unique_slug = slug
+    while model.objects.filter(slug=unique_slug).exists():
+        unique_slug = slug + get_random_string(length=4)
+    return unique_slug
 
 def compute_total_amount(model_name, object_id: int, action: str) -> Money:
     """

@@ -30,8 +30,8 @@ from django.core.exceptions import ValidationError
 from braces.views import LoginRequiredMixin
 
 from tralard.models.project import Project
-from tralard.models.sub_project import SubProject
 from tralard.forms.sub_project import SubProjectForm
+from tralard.models.sub_project import SubProject, Indicator
 
 logger = logging.getLogger(__name__)
 
@@ -71,7 +71,7 @@ class JSONResponseMixin(object):
         for sub_project in context['sub_projects']:
             if not first_flag:
                 result += ',\n'
-            result += '    "%s" : "%s"' % (sub_project.id, sub_project.name)
+            result += '    "%s" : "%s"' % (sub_project.slug, sub_project.name)
             first_flag = False
         result += '\n}'
         return result
@@ -125,14 +125,15 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
         :rtype: QuerySet
         :raises: Http404
         """
-        project_id = self.kwargs['project_id']
-        project = get_object_or_404(Project, id=project_id)
+        project_slug = self.kwargs['project_slug']
+        project = get_object_or_404(Project, slug=project_slug)
         qs = SubProject.objects.all().filter(project=project)
         return qs
 
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
     """List view for SubProject."""
+    model = SubProject
     context_object_name = 'sub_projects'
     template_name = 'tralard/sub_project/list.html'
 
@@ -147,10 +148,11 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         """
         context = super(SubProjectListView, self).get_context_data(**kwargs)
         context['num_sub_projects'] = context['sub_projects'].count()
-        project_id = self.kwargs.get('project_id', None)
-        context['project_id'] = project_id
-        if project_id:
-            context['the_project'] = Project.objects.get(id=project_id)
+        project_slug = self.kwargs.get('project_slug', None)
+        context['form'] = SubProjectForm
+        context['project_slug'] = project_slug
+        if project_slug:
+            context['the_project'] = Project.objects.get(slug=project_slug)
         return context
 
     def get_queryset(self, queryset=None):
@@ -163,10 +165,10 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         :raises: Http404
         """
         if queryset is None:
-            project_id = self.kwargs.get('project_id', None)
-            if project_id:
+            project_slug = self.kwargs.get('project_slug', None)
+            if project_slug:
                 try:
-                    project = Project.objects.get(id=project_id)
+                    project = Project.objects.get(slug=project_slug)
                 except Project.DoesNotExist:
                     raise Http404(
                         'Sorry! The project you are requesting a subproject for '
@@ -204,16 +206,16 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         """
         if queryset is None:
             queryset = self.get_queryset()
-        project_id = self.kwargs.get('project_id', None)
-        if project_id:
+        project_slug = self.kwargs.get('project_slug', None)
+        if project_slug:
             try:
-                project = Project.objects.get(id=project_id)
+                project = Project.objects.get(slug=project_slug)
             except Project.DoesNotExist:
                 raise Http404(
                     'The project you requested a subcateogrty for does not exist.'
                 )
             try:
-                obj = queryset.get(project=project, id=project_id)
+                obj = queryset.get(project=project, slug=project_slug)
                 return obj
             except SubProject.DoesNotExist:
                 raise Http404(
@@ -229,7 +231,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
     template_name = 'tralard/sub_project_delete.html'
 
     def get(self, request, *args, **kwargs):
-        """Get the project_id from the URL and define the Project
+        """Get the project_slug from the URL and define the Project
 
         :param request: HTTP request object
         :type request: HttpRequest
@@ -243,12 +245,12 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_id = self.kwargs.get('project_id', None)
-        self.project = Project.objects.get(id=self.project_id)
+        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project = Project.objects.get(slug=self.project_slug)
         return super(SubProjectDeleteView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        """Post the project_id from the URL and define the Project
+        """Post the project_slug from the URL and define the Project
 
         :param request: HTTP request object
         :type request: HttpRequest
@@ -262,8 +264,8 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_id = self.kwargs.get('project_id', None)
-        self.project = Project.objects.get(id=self.project_id)
+        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project = Project.objects.get(slug=self.project_slug)
         return super(SubProjectDeleteView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -276,7 +278,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :rtype: HttpResponse
         """
         return reverse_lazy('subproject-list', kwargs={
-            'project_id': self.object.project.id
+            'project_slug': self.object.project.slug
         })
 
     def get_queryset(self):
@@ -312,7 +314,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
        :rtype: HttpResponse
        """
         return reverse_lazy('tralard:subproject-list', kwargs={
-            'project_id': self.object.project.id
+            'project_slug': self.object.project.slug
         })
 
     def get_context_data(self, **kwargs):
@@ -352,8 +354,8 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         :rtype: dict
         """
         kwargs = super(SubProjectCreateView, self).get_form_kwargs()
-        self.project_id = self.kwargs.get('project_id', None)
-        self.project = Project.objects.get(id=self.project_id)
+        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project = Project.objects.get(slug=self.project_slug)
         kwargs.update({
             'project': self.project
         })
@@ -373,8 +375,8 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: dict
         """
         kwargs = super(SubProjectUpdateView, self).get_form_kwargs()
-        self.project_id = self.kwargs.get('project_id', None)
-        self.project = Project.objects.get(id=self.project_id)
+        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project = Project.objects.get(slug=self.project_slug)
         kwargs.update({
             'project': self.project
         })
@@ -401,8 +403,8 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         user created (staff gets all projects)
         :rtype: QuerySet
         """
-        project_id = self.kwargs.get('project_id', None)
-        project = Project.objects.get(id=project_id)
+        project_slug = self.kwargs.get('project_slug', None)
+        project = Project.objects.get(slug=project_slug)
         qs = SubProject.objects.all()
         if self.request.user.is_staff:
             return qs
@@ -423,7 +425,7 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: HttpResponse
         """
         return reverse_lazy('tralard:subproject-list', kwargs={
-            'project_id': self.object.project.id
+            'project_slug': self.object.project.slug
         })
 
     def form_valid(self, form):

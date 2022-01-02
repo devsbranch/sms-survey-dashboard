@@ -1,22 +1,16 @@
 from django.contrib.gis import forms
 
 from django.forms import ModelForm, widgets
-from django.contrib.gis.geos import Point
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import (
     Layout,
-    Fieldset,
     HTML,
     Submit,
     Row,
     Column,
-    Field,
-    Div,
-    MultiField,
 )
 from crispy_forms.bootstrap import FormActions
-from crispy_forms.bootstrap import TabHolder, Tab
 
 from tralard.models.training import Training
 

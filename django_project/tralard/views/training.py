@@ -25,8 +25,8 @@ class TrainingListView(LoginRequiredMixin, CreateView):
 
 
 @login_required(login_url="/login/")
-def training_delete(request, pk):
-    training = Training.objects.get(id=pk)
+def training_delete(request, training_slug):
+    training = Training.objects.get(slug=training_slug)
     training.delete()
     return redirect(reverse_lazy("tralard:training-list"))
 

@@ -5,10 +5,13 @@ Training model definitions for tralard app.
 import logging
 
 from django.db import models
+from django.utils.text import slugify
 from django.utils.translation import ugettext_lazy as _
 
 from tralard.models.sub_project import SubProject
 from tralard.models.project import Representative
+
+from tralard.utils import unique_slugify
 
 from tinymce import HTMLField
 
@@ -48,6 +51,10 @@ class Training(models.Model):
     """
     Training and Training schedule definition.
     """
+    slug = models.SlugField(
+        null=True,
+        blank=True
+    )
     sub_project = models.ForeignKey(
         SubProject,
         on_delete=models.CASCADE,
@@ -79,8 +86,9 @@ class Training(models.Model):
         blank=True,
         null=True,
     )
-    moderators = models.ManyToManyField(
-        Representative,
+    moderator = models.ForeignKey(
+        'tralard.representative',
+        on_delete=models.SET_NULL,
         help_text=_(
             'Training Moderator. '
             'This is the person supervising and or conducting the training, the name will be used on trainings and any other references. '),
@@ -98,6 +106,11 @@ class Training(models.Model):
 
     def __str__(self):
         return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.title))
+        super().save(*args, **kwargs)
 
 
 class Attendance(models.Model):

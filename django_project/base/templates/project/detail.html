@@ -1,0 +1,360 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %} CRM Deal {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+    
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+    
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="crm-deal" class="dashboard-columns">
+    
+                        <!-- Page title -->
+                        <div class="deal-title-wrapper is-mobile">
+                            <img class="deal-image" src="https://via.placeholder.com/150x150" alt=""
+                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                            <div class="inner-wrap">
+                                <h3 class="deal-title">{{ project.name|title }}</h3>
+                                <div class="title-meta">
+                                    <div class="meta">
+                                        <i class="material-icons">person</i>
+                                        <span>{{ project.count_beneficiaries }} Beneficiaries</span>
+                                    </div>
+                                    <div class="meta">
+                                        <i class="material-icons">domain</i>
+                                        <span>{{ project.count_sub_projects }} total sub-projects</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Filter input -->
+                            <div class="actions">
+                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}">
+                                    Project Fund Overview
+                                </a>
+    
+                                <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:program-detail' program_slug=project.program.slug %}">
+                                    Program List
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Stage -->
+                        <div class="stage-wrapper">
+                            <div class="stage-inner">
+                                <progress class="progress is-small" value="35" max="100">35%</progress>
+                            </div>
+                            <div class="stages">
+                                <div class="stage is-done">
+                                    <span><i class="sl sl-icon-check"></i>Approved: {% if project.approved%} Yes {% else %} Pending ... {% endif %}</span>
+                                </div>
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Has Active Funding: {% if project.has_funding %} Yes {% else %} No {% endif %}</span>
+                                </div>
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Updadted on: {{ project.created|date:'l'}}, {{ project.created }}</span>
+                                </div>
+                                {% comment %} <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Negociation</span>
+                                </div> {% endcomment %}
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>End</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Deal meta -->
+                        <div class="deal-meta">
+                            <div class="deal-price">
+                                <span>ZMK {{ project.get_total_project_fund|intcomma }}</span>
+                                <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}</span>
+                            </div>
+                            <!-- Deal owner -->
+                            <div class="deal-owner">
+                                <!-- Menu -->
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                   
+                                    
+                                </div>                        </div>
+                        </div>
+                        <!-- Deal content -->
+                        <div class="columns deal-content">
+                            <!-- Left side -->
+                            <div class="column is-4">
+                                <!-- Deal details -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle">
+                                        <h3>Details</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content">
+                                        <div class="details-placeholder">
+                                            <span>{{ project.description|safe }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Deal contact -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>Contact</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content is-active">
+                                        <!-- Deal contact -->
+                                        <div class="deal-contact">
+                                            <img src="https://via.placeholder.com/150x150" alt=""
+                                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                            <div class="contact-meta">
+                                                <span>{{ project.project_representative.first_name|title }} {{ project.project_representative.last_name|title }}</span>
+                                                <span>gender: {{ project.representative.gender }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Province</span>
+                                                <span>{{ project.ward.district.province.name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>District</span>
+                                                <span>{{ project.ward.district.name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Ward</span>
+                                                <span>{{ project.ward.name}}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-phone"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Phone</span>
+                                                <span><a>{{ project.cell }}</a></span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Email</span>
+                                                <span><a>{{ project.email }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Deal organization -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>Program</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content is-active">
+                                        <!-- Deal contact -->
+                                        <div class="deal-contact">
+                                            {% if project.program.logo %}
+                                                <img src="https://via.placeholder.com/150x150" alt=""
+                                                    data-demo-src="{{ project.program.logo.url }}">
+                                            {% endif %}
+                                            <div class="contact-meta">
+                                                <span>{{ project.program.name }}</span>
+                                                <span>started on: {{ project.program.started }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-phone"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Phone</span>
+                                                <span><a>{{ project.program.program_representative.cell }}</a></span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Email</span>
+                                                <span><a>{{ project.program.program_representative.email }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Right side -->
+                            <div class="column is-8">
+                                <!-- Action card -->
+                                <div class="flex-card action-card card-overflow">
+                                    <!-- Header -->
+                                    <div class="action-card-header">
+                                        <!-- Write note action -->
+                                        <div class="action is-active" data-action="write-note">
+                                            <i class="sl sl-icon-doc"></i>
+                                            <span>All {{ project.name|title }} Related SubProjects</span>
+                                            <div class="arrow-down"></div>
+                                        </div>
+                                        <!-- Schedule event action -->
+                                        <div class="action" data-action="schedule-event">
+                                            <i class="sl sl-icon-clock"></i>
+                                            <span>Create a New SubProject</span>
+                                            <div class="arrow-down"></div>
+                                        </div>
+                                        <!-- Upload files action -->
+                                        <div class="action" data-action="upload-files">
+                                            <i class="sl sl-icon-paper-clip"></i>
+                                            <span>Citizen's Feedback</span>
+                                            <div class="arrow-down"></div>
+                                        </div>
+                                    </div>
+                                    <!-- SubProject Listing -->
+                                    <div class="action-card-body">
+                                        <!-- subproject list note -->
+                                        <div id="write-note" class="action-wrap">
+
+                                            {% for subproject in sub_project_list %}
+
+                                                <!-- Timeline section -->
+                                                <div class="deal-timeline">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="timeline-icon">
+                                                                <i class="material-icons">people</i>
+                                                            </div>
+                                                            <div class="timeline-item">
+                                                                <div class="item-body">
+                                                                    <a href="#">
+                                                                        <h3>{{ subproject.name }}</h3>
+                                                                    <a/>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            <i class="material-icons">person</i>
+                                                                            <span>{{ subproject.count_beneficiaries }} Beneficiaries</span>
+                                                                        </div>
+                                                                        <div class="meta-list-item">
+                                                                            <i class="material-icons">domain</i>
+                                                                            <span>Related indicators {{ subproject.count_indicators }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            <span class="is-thin">
+                                                                                Created on: {{ subproject.created }} 
+                                                                                | supervisor: {{ subproject.supervisor.first_name|title }} {{ subproject.supervisor.last_name|title }} 
+                                                                                | project: {{ subproject.project.name }} 
+                                                                                | is approved: {% if subproject.approved %} Yes {% else %} Pending ... {% endif %}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="item-footer">
+                                                                    <p>{{ subproject.description|truncatechars:97 }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <br/>
+                                            {% endfor %}
+
+                                            {% comment %} <div class="control">
+                                                <textarea class="textarea" rows="1"
+                                                    placeholder="Click here to write a Note ..."></textarea>
+                                            </div> {% endcomment %}
+                                        </div>
+
+                                        <!-- Create SubProject -->
+                                        <div id="schedule-event" class="action-wrap is-hidden">
+                                            <!-- Form -->
+                                            <form class="event-form" action="" method="post">
+                                                <h3 class="action-title">New SubProject</h3>
+                                                <div class="columns is-multiline">
+                                                    {% csrf_token %}
+                                                    {% crispy form form.helper %}
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div id="upload-files" class="action-wrap is-hidden">
+                                            {% for feedback in citizen_feedback_list %}
+                                                <div class="deal-timeline">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="timeline-icon">
+                                                                <i class="sl sl-icon-doc"></i>
+                                                            </div>
+                                                            <div class="timeline-item is-note">
+                                                                <div class="item-body">
+                                                                    <h3>{{ feedback.title|title }}</h3>
+                                                                    <p class="note-text">
+                                                                        {{ feedback.description|truncatechars:100 }}
+                                                                    </p>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            {% if feedback.project.program.logo %}
+                                                                                <img src="https://via.placeholder.com/150x150" alt=""
+                                                                                    data-demo-src="{{ feedback.project.program.logo.url }}">
+                                                                            {% endif %}
+                                                                            <span class="is-thin">{{ feedback.date|date:'l' }}, {{ feedback.date }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            {% endfor %}
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
