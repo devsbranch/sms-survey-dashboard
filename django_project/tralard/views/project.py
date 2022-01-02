@@ -6,7 +6,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
-from tralard.models.sub_project import SubProject
+from tralard.models.sub_project import SubProject, Indicator
 from tralard.models.beneficiary import Beneficiary
 
 from tralard.forms.sub_project import SubProjectForm
@@ -63,8 +63,12 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.all_feedback_qs = Feedback.objects.filter(
             project__slug=self.project_slug
             )
+        self.all_subproject_indicators = Indicator.objects.filter(
+            subproject_indicators__in=self.sub_projects_qs
+            )
         context['citizen_feedback_list'] = self.all_feedback_qs
         context['project'] = self.project
+        context['indicators'] = self.all_subproject_indicators
         context['form'] = SubProjectForm
         context['sub_project_list'] = self.sub_projects_qs
         context['total_sub_projects'] = self.sub_project_count

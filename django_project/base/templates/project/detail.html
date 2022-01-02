@@ -173,7 +173,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Deal organization -->
+                                <!-- program details organization -->
                                 <div class="deal-card">
                                     <div class="deal-card-header is-toggle is-active">
                                         <h3>Program</h3>
@@ -212,6 +212,49 @@
                                             <div class="block-meta">
                                                 <span>Email</span>
                                                 <span><a>{{ project.program.program_representative.email }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- indicators listing details organization -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>All Indicators Under {{ project.name|title }}</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    
+                                    {% comment %} Project indicators list  {% endcomment %}
+                                    <div class="deal-card-content is-active">
+                                        <div class="list-body">
+                                            <div class="columns is-multiline">
+                                                <div class="column">
+    
+                                                    <!-- Checklist -->
+                                                    <div class="checklist-wrapper">
+    
+                                                        {% for indicator in indicators %}
+                                                            <div class="checklist-item">
+                                                                <div class="checklist-handle">
+                                                                    <span class="material-icons">menu</span>
+                                                                </div>
+                                                                <div class="checklist-checkbox">
+                                                                    <div class="b-checkbox is-secondary">
+                                                                        <input id="checklist-1" class="styled" type="checkbox"
+                                                                            checked>
+                                                                        <label for="checklist-1"></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="checklist-text">
+                                                                    {{ indicator.name }}
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <!-- /Checklist -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
