@@ -25,7 +25,7 @@
                         <!-- Page title -->
                         <div class="deal-title-wrapper is-mobile">
                             <img class="deal-image" src="https://via.placeholder.com/150x150" alt=""
-                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                data-demo-src="{% static 'assets/images/logos/mgee.png' %}">
                             <div class="inner-wrap">
                                 <h3 class="deal-title">{{ project.name|title }}</h3>
                                 <div class="title-meta">
@@ -80,12 +80,62 @@
                                 <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}</span>
                             </div>
                             <!-- Deal owner -->
-                            <div class="deal-owner">
+                            {% comment %} <div class="deal-owner">
                                 <!-- Menu -->
                                 <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-                                   
+                                    <div class="column is-4">
+                                        <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                            data-placement="top" title="Gauge chart" data-trigger="hover"
+                                            data-content="Gauge charts are a very visual way to display some data progress. It is percentage based.">
+                                            <div id="billboard-gaugeChart"></div>
+                                        </div>
+                                    </div>
                                     
-                                </div>                        </div>
+                                </div>                        
+                            </div> {% endcomment %}
+
+                                                        <!-- Deal owner -->
+                                                        <div class="deal-owner">
+                                                            <img 
+
+                                                            <img class="light-bordered light-raised" data-toggle="popover"
+                                                            ata-placement="top" title="Gauge chart" data-trigger="hover"
+                                                            data-content="Gauge charts are a very visual way to display some data progress. It is percentage based."
+
+                                                            src="https://via.placeholder.com/150x150" alt=""
+                                                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                                            
+                                                                <div class="owner-meta">
+                                                                <span>Data Actions</span>
+                                                                <span>Reports and more</span>
+                                                            </div>
+                                                            <!-- Menu -->
+                                                            <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                                <div class="button">
+                                                                    <i class="material-icons">keyboard_arrow_down</i>
+                                                                </div>
+                                                                <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                                    <div class="dropdown-content">
+                                                                        <a href="#" class="dropdown-item">
+                                                                            <i class="sl sl-icon-arrow-down-circle"></i>
+                                                                            <span>
+                                                                                <span>Annual</span>
+                                                                                <span>Download SubProject Annual Report</span>
+                                                                            </span>
+                                                                        </a>
+                                                                        <div class="dropdown-divider"></div>
+                                                                        <a class="dropdown-item">
+                                                                            <i class="sl sl-icon-people"></i>
+                                                                            <span>
+                                                                                <span>Beneficiary</span>
+                                                                                <span>Download Statistics Report</span>
+                                                                            </span>
+                                                                        </a>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            </div>                        
+                                                        </div>
                         </div>
                         <!-- Deal content -->
                         <div class="columns deal-content">

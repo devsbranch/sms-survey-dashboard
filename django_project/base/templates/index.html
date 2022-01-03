@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-
+{% load humanize %}
 {% load static %}
 
 {% block title %} Dashboard {% endblock %} 
@@ -26,7 +26,7 @@
                         <!-- Tile -->
 
                         {% comment %} program card top tile {% endcomment %}
-                        <div class="column is-3">
+                        <div class="column is-2">
                             
                             <div class="dashboard-tile">
 
@@ -36,7 +36,7 @@
                                 <div class="tile-content">
                                     <h3>Programs</h3>
                                     <p>
-                                        <span>2</span>
+                                        <span>{{ program_count }}</span>
                                         <span>Total count</span>
                                     </p>
                                 </div>
@@ -48,15 +48,15 @@
 
                         <!-- Tile -->
                         {% comment %} project card top tile {% endcomment %}
-                        <div class="column is-3">
+                        <div class="column is-4">
                             <div class="dashboard-tile">
                                 <div class="icon-header">
                                     <i class="material-icons primary">account_balance</i>
                                 </div>
                                 <div class="tile-content">
-                                    <h3>Projects</h3>
+                                    <h3>Project Funds</h3>
                                     <p>
-                                        <span>ZMK 86,00</span>
+                                        <span>ZMK {{ total_project_funds|intcomma }}</span>
                                         <span>total funds</span>
 
                                     </p>
@@ -78,7 +78,7 @@
                                 <div class="tile-content">
                                     <h3>SubProjects</h3>
                                     <p>
-                                        <span>24</span>
+                                        <span>{{ subproject_count }}</span>
                                         <span>Total count</span>
                                     </p>
                                 </div>
@@ -99,7 +99,7 @@
                                 <div class="tile-content">
                                     <h3>Beneficiaries</h3>
                                     <p>
-                                        <span>53</span>
+                                        <span>{{ beneficiary_count }}</span>
                                         <span>Total Beneficiaries</span>
                                     </p>
                                 </div>
@@ -432,6 +432,15 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <br/>
+                            {% comment %} <div class="column is-4"> {% endcomment %}
+                                <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                    data-placement="top" title="Project Funds Utilization" data-trigger="hover"
+                                    data-content="Sub Project fund utilization aggregated at provincial level.">
+                                    <canvas id="cjs-hbarChart"></canvas>
+                                </div>
+                            {% comment %} </div> {% endcomment %}
+
                         </div>
 
                         {% comment %} program widget{% endcomment %}
@@ -561,6 +570,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                     {% comment %} end dashboard widgets begin  {% endcomment %}
                 </div>
