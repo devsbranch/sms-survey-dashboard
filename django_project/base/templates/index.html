@@ -17,12 +17,19 @@
             <div class="dashboard-wrapper">
     
                 <!-- Main content -->
+
+                {% comment %} start top bar card and dashboard widget wrapper {% endcomment %}
                 <div id="main-dashboard" class="section-wrapper">
                     <!-- Stat tiles -->
+                    {% comment %} top bar cards  {% endcomment %}
                     <div id="basic-layout" class="columns dashboard-columns dashboard-tiles">
                         <!-- Tile -->
+
+                        {% comment %} program card top tile {% endcomment %}
                         <div class="column is-3">
+                            
                             <div class="dashboard-tile">
+
                                 <div class="icon-header">
                                     <i class="material-icons primary">account_balance_wallet</i>
                                 </div>
@@ -38,7 +45,9 @@
                                 </a>
                             </div>
                         </div>
+
                         <!-- Tile -->
+                        {% comment %} project card top tile {% endcomment %}
                         <div class="column is-3">
                             <div class="dashboard-tile">
                                 <div class="icon-header">
@@ -57,7 +66,10 @@
                                 </a>
                             </div>
                         </div>
+
+
                         <!-- Tile -->
+                        {% comment %} subproject card top tile {% endcomment %}
                         <div class="column is-3">
                             <div class="dashboard-tile">
                                 <div class="icon-header">
@@ -75,7 +87,10 @@
                                 </a>
                             </div>
                         </div>
+
+
                         <!-- Tile -->
+                        {% comment %} beneficiaries card top tile {% endcomment %}
                         <div class="column is-3">
                             <div class="dashboard-tile">
                                 <div class="icon-header">
@@ -94,11 +109,16 @@
                             </div>
                         </div>
                     </div>
+                    {% comment %} end top bar cards {% endcomment %}
+
     
                     <!-- Widgets -->
+                    {% comment %} dashboard widgets begin  {% endcomment %}
                     <div class="columns dashboard-columns">
-                        <div class="column is-4">
+                        <div class="column is-3">
                             <!-- Widget -->
+
+                            {% comment %} Project Report widget bottom left {% endcomment %}
                             <div id="linechart-card" class="dashboard-chart-card">
                                 <div class="card-heading has-icon no-margin">
                                     <span>Project Report</span>
@@ -147,6 +167,7 @@
                             </div>
     
                             <!-- Widget -->
+                            {% comment %} Beneficiary Income widget bottom left {% endcomment %}
                             <div class="peity-widget">
                                 <span class="peity-chart widget-bars-secondary">5,3,9,6,5,9,7,3,5,16,5,7,9</span>
                                 <div class="meta">
@@ -154,7 +175,8 @@
                                     <span>ZMK118 595,49</span>
                                 </div>
                             </div>
-    
+
+                            {% comment %} Average Project Status widget bottom left {% endcomment %}
                             <div class="peity-widget">
                                 <span class="peity-chart widget-lines-primary">5,3,9,6,5,9,7,3,5,16,5,7,2</span>
                                 <div class="meta">
@@ -181,8 +203,9 @@
                                 </div>
                             </div>
                         </div>
-    
-                        <div class="column is-4">
+                        
+                        {% comment %} map widget{% endcomment %}
+                        {% comment %} <div class="column is-4">
                             <!-- Widget -->
                             <div id="vmap-container" class="map-card">
                                 <div id="vmap"></div>
@@ -205,9 +228,214 @@
                                 </div>
                             </div>
                             
+                        </div> {% endcomment %}
+
+                        {% comment %} table widget start {% endcomment %}
+                        <div class="column is-6 is-hidden-mobile">
+
+                            <!-- Projects table widget -->
+                            <div class="table-widget">
+                                <h3 class="card-heading is-bordered has-icon">
+                                    <span>Provincial Projects Overview</span>
+                                    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                        <div class="button">
+                                            <i class="material-icons">more_vert</i>
+                                        </div>
+                                        <div class="dropdown-menu is-text-bigger" role="menu">
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-refresh"></i>
+                                                    <span>
+                                                        <span>Reload</span>
+                                                        <span>Reload widget data</span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-pencil"></i>
+                                                    <span>
+                                                        <span>Settings</span>
+                                                        <span>Edit widget settings</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-bell"></i>
+                                                    <span>
+                                                        <span>Notifications</span>
+                                                        <span>Notify me of changes</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-trash"></i>
+                                                    <span>
+                                                        <span>Delete</span>
+                                                        <span>Delete this widget</span>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>                            </h3>
+                                <table class="table project-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Completion Rate</th>
+                                            <th>Least Approval Date</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><a>Lusaka Province</a></td>
+                                            <td><span class="project-pies">82/100</span> <span class="percent">82<span>%</span></span></td>
+                                            <td class="deadline">nov 30 2017</td>
+                                            <td><span class="tag squared is-secondary">In progress</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a>Southern Province</a></td>
+                                            <td><span class="project-pies">61/100</span> <span class="percent">61<span>%</span></span></td>
+                                            <td class="deadline">may 1 2018</td>
+                                            <td><span class="tag squared is-warning">Needs info</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a>Eastern Province</a></td>
+                                            <td><span class="project-pies">27/100</span> <span class="percent">27<span>%</span></span></td>
+                                            <td class="deadline">jun 31 2018</td>
+                                            <td><span class="tag squared is-secondary">In progress</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a>Western Province</a></td>
+                                            <td><span class="project-pies">34/100</span> <span class="percent">34<span>%</span></span></td>
+                                            <td class="deadline">mar 31 2018</td>
+                                            <td><span class="tag squared is-secondary">In progress</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a>Muchinga Province</a></td>
+                                            <td><span class="project-pies">05/100</span> <span class="percent">5<span>%</span></span></td>
+                                            <td class="deadline">Aug 31 2018</td>
+                                            <td><span class="tag squared is-danger">Has issues</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                        <tr>
+                                            <td><a>Northern Province</a></td>
+                                            <td><span class="project-pies">03/100</span> <span class="percent">3<span>%</span></span></td>
+                                            <td class="deadline">Jun 31 2018</td>
+                                            <td><span class="tag squared">Canceled</span></td>
+                                            <td class="has-text-centered">
+                                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                                    <div class="button">
+                                                        <i class="material-icons">more_horiz</i>
+                                                    </div>
+                                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                                        <div class="dropdown-content">
+                                                            <a class="dropdown-item">
+                                                                <i class="sl sl-icon-layers"></i>
+                                                                <span>
+                                                                    <span>View</span>
+                                                                    <span>Open this project</span>
+                                                                </span>
+                                                            </a>
+                                                            <div class="dropdown-divider"></div>
+                                                        </div>
+                                                    </div>
+                                                </div>                                        </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-    
-                        <div class="column is-4">
+
+                        {% comment %} program widget{% endcomment %}
+                        <div class="column is-3">
                             <div class="members-card">
                                 <h3 class="card-heading">All Programs</h3>
                                 <ul class="user-list">
@@ -334,11 +562,16 @@
                             </div>
                         </div>
                     </div>
+                    {% comment %} end dashboard widgets begin  {% endcomment %}
                 </div>
+                {% comment %} end top bar card and dashboard widget wrapper {% endcomment %}
+
+
             </div>
         </div>
     </div>
 
+    {% comment %} everyting icon top right {% endcomment %}
     <!-- Right sidebar quickview -->
     <div id="main-quickview" class="quickview is-right is-main">
         <!-- Quickview header -->
@@ -363,7 +596,7 @@
                         </ul>
                     </div>
     
-                    <!-- User directory tab -->
+                    <!-- User directory tab top right message icon-->
                     <div id="user-directory" class="navtab-content is-active">
                         <div class="panel-title">
                             <h3>Company Users</h3>
@@ -381,7 +614,7 @@
                         </div>
                         <!-- /Seach field -->
                     
-                        <!-- User list -->
+                        <!-- User list  top right icon-->
                         <ol class="user-list">
                             <!-- User -->
                             <li class="quickview-trigger" data-quickview="chat-quickview">
@@ -459,7 +692,7 @@
                         <!-- /User list -->
                     </div>
                     <!-- /User directory tab -->
-                    <!-- Reminders tab -->
+                    <!-- Reminders tab top right corner message icon-->
                     <div id="reminders" class="navtab-content">
                         <div class="panel-title">
                             <h3>REMINDERS</h3>
@@ -519,7 +752,7 @@
                         <!-- /Reminders list -->
                     </div>
                     <!-- /Reminders tab -->
-                    <!-- Settings tab -->
+                    <!-- Settings tab top right corner message icon- -->
                     <div id="quickview-settings" class="navtab-content">
                         <!-- Header -->
                         <div class="panel-title">
@@ -589,7 +822,7 @@
         <footer class="quickview-footer"></footer>
     </div>    
     
-    <!-- Chat quickview -->
+    <!-- Chat quickview top right corner message icon- -->
     <div id="chat-quickview" class="quickview is-right is-chat chat-quickview">
         <header class="quickview-header is-secondary">
             <p class="title">Anthony Briggs</p>
@@ -667,7 +900,7 @@
     </div>
     <!-- /Chat quickview -->    
     
-    <!-- Search Modal -->
+    <!-- Search Modal top right corner message icon- -->
     <div id="search-modal" class="modal modal-lg modal-hero">
         <div class="modal-background"></div>
         <div class="modal-content">
@@ -682,7 +915,7 @@
     </div>
     <!-- Search modal -->    
     
-    <!-- Reminder Modal -->
+    <!-- Reminder Modal top right corner message icon- -->
     <div id="add-reminder-modal" class="modal modal-sm modal-hero">
         <div class="modal-background"></div>
         <div class="modal-content">

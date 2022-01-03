@@ -15,6 +15,7 @@ from tralard.models import (
     Province,
     District,
     Ward,
+    Indicator,
     Expenditure,
     Disbursement,
 )
@@ -30,6 +31,7 @@ admin.site.register(FollowUp)
 admin.site.register(District)
 admin.site.register(Province)
 admin.site.register(SubProject)
+admin.site.register(Indicator)
 admin.site.register(Attendance)
 admin.site.register(Expenditure)
 admin.site.register(Beneficiary)
