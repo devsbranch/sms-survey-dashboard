@@ -17,17 +17,30 @@ from tralard.models.sub_project import SubProject
 
 
 class SubProjectForm(ModelForm):
-    custom_description = forms.CharField(label="Description", widget = forms.Textarea(attrs = {
-      'rows': 1,
-      'cols': 2,
-      'placeholder': 'write subproject description here'
-   }), max_length = 160)
+    custom_description = forms.CharField(
+        label="Description",
+        widget=forms.Textarea(
+            attrs={
+                "rows": 1,
+                "cols": 2,
+                "placeholder": "write subproject description here",
+            }
+        ),
+        max_length=160,
+    )
 
-    custom_focus_area = forms.CharField(label="Focus Area", widget = forms.Textarea(attrs = {
-      'rows': 1,
-      'cols': 2,
-      'placeholder': 'write subproject focus area here'
-   }), max_length = 160)
+    custom_focus_area = forms.CharField(
+        label="Focus Area",
+        widget=forms.Textarea(
+            attrs={
+                "rows": 1,
+                "cols": 2,
+                "placeholder": "write subproject focus area here",
+            }
+        ),
+        max_length=160,
+    )
+
     class Meta:
 
         model = SubProject
@@ -38,6 +51,7 @@ class SubProjectForm(ModelForm):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.form_method = "post"
+        self.helper.disable_csrf = True
         self.helper.layout = Layout(
             Fieldset(
                 "",
@@ -62,8 +76,8 @@ class SubProjectForm(ModelForm):
 
     def save(self, commit=True):
         instance = super(SubProjectForm, self).save(commit=False)
-        custom_description = self.cleaned_data['custom_description']
-        custom_focus_area = self.cleaned_data['custom_focus_area']
+        custom_description = self.cleaned_data["custom_description"]
+        custom_focus_area = self.cleaned_data["custom_focus_area"]
         instance.description = custom_description
         instance.custom_focus_area = custom_focus_area
         instance.save()

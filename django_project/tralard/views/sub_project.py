@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-__author__ = 'Alison Mukoma <mukomalison@gmail.com>'
-__date__ = '31/12/2021'
-__revision__ = '$Format:%H$'
-__copyright__ = 'sonlinux bei DigiProphets 2021'
+__author__ = "Alison Mukoma <mukomalison@gmail.com>"
+__date__ = "31/12/2021"
+__revision__ = "$Format:%H$"
+__copyright__ = "sonlinux bei DigiProphets 2021"
 __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM CET"
 
 """
@@ -36,9 +36,9 @@ from tralard.models.sub_project import SubProject, Indicator
 logger = logging.getLogger(__name__)
 
 
-
 class JSONResponseMixin(object):
     """A mixin that can be used to render a JSON response."""
+
     def render_to_json_response(self, context, **response_kwargs):
         """Returns a JSON response, transforming 'context' to make the payload.
 
@@ -53,8 +53,9 @@ class JSONResponseMixin(object):
         """
         return HttpResponse(
             self.convert_context_to_json(context),
-            content_type='application/json',
-            **response_kwargs)
+            content_type="application/json",
+            **response_kwargs
+        )
 
     @staticmethod
     def convert_context_to_json(context):
@@ -66,26 +67,28 @@ class JSONResponseMixin(object):
         :return: JSON representation of the context
         :rtype: str
         """
-        result = '{\n'
+        result = "{\n"
         first_flag = True
-        for sub_project in context['sub_projects']:
+        for sub_project in context["sub_projects"]:
             if not first_flag:
-                result += ',\n'
+                result += ",\n"
             result += '    "%s" : "%s"' % (sub_project.slug, sub_project.name)
             first_flag = False
-        result += '\n}'
+        result += "\n}"
         return result
 
 
 class SubProjectMixin(object):
     """Mixin class to provide standard settings for a SubProject."""
+
     model = SubProject  # implies -> queryset = SubProject.objects.all()
     form_class = SubProjectForm
 
 
 class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
     """List view for a SubProject as json object - needed by javascript."""
-    context_object_name = 'sub_projects'
+
+    context_object_name = "sub_projects"
 
     def dispatch(self, request, *args, **kwargs):
         """Ensure this view is only used via ajax.
@@ -101,8 +104,7 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
         """
         if not request.is_ajax():
             raise Http404("This is an ajax view, friend.")
-        return super(JSONSubProjectListView, self).dispatch(
-            request, *args, **kwargs)
+        return super(JSONSubProjectListView, self).dispatch(request, *args, **kwargs)
 
     def render_to_response(self, context, **response_kwargs):
         """Render this version as markdown [just in case we need this format serialization].
@@ -125,7 +127,7 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
         :rtype: QuerySet
         :raises: Http404
         """
-        project_slug = self.kwargs['project_slug']
+        project_slug = self.kwargs["project_slug"]
         project = get_object_or_404(Project, slug=project_slug)
         qs = SubProject.objects.all().filter(project=project)
         return qs
@@ -133,9 +135,10 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
     """List view for SubProject."""
+
     model = SubProject
-    context_object_name = 'sub_projects'
-    template_name = 'tralard/sub_project/list.html'
+    context_object_name = "sub_projects"
+    template_name = "tralard/sub_project/list.html"
 
     def get_context_data(self, **kwargs):
         """Get the context data which is passed to a template.
@@ -147,12 +150,12 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         :rtype: dict
         """
         context = super(SubProjectListView, self).get_context_data(**kwargs)
-        context['num_sub_projects'] = context['sub_projects'].count()
-        project_slug = self.kwargs.get('project_slug', None)
-        context['form'] = SubProjectForm
-        context['project_slug'] = project_slug
+        context["num_sub_projects"] = context["sub_projects"].count()
+        project_slug = self.kwargs.get("project_slug", None)
+        context["form"] = SubProjectForm
+        context["project_slug"] = project_slug
         if project_slug:
-            context['the_project'] = Project.objects.get(slug=project_slug)
+            context["the_project"] = Project.objects.get(slug=project_slug)
         return context
 
     def get_queryset(self, queryset=None):
@@ -165,31 +168,34 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         :raises: Http404
         """
         if queryset is None:
-            project_slug = self.kwargs.get('project_slug', None)
+            project_slug = self.kwargs.get("project_slug", None)
             if project_slug:
                 try:
                     project = Project.objects.get(slug=project_slug)
                 except Project.DoesNotExist:
                     raise Http404(
-                        'Sorry! The project you are requesting a subproject for '
-                        'could not be found or you do not have permission to '
-                        'view the subproject. Try logging in as a staff member '
-                        'if you wish to view it.')
-                queryset = SubProject.objects.all().filter(
-                    project=project).order_by('name')
+                        "Sorry! The project you are requesting a subproject for "
+                        "could not be found or you do not have permission to "
+                        "view the subproject. Try logging in as a staff member "
+                        "if you wish to view it."
+                    )
+                queryset = (
+                    SubProject.objects.all().filter(project=project).order_by("name")
+                )
                 return queryset
             else:
                 raise Http404(
-                        'Sorry! We could not find the project for '
-                        'your subproject!')
+                    "Sorry! We could not find the project for " "your subproject!"
+                )
         else:
             return queryset
 
 
 class SubProjectDetailView(SubProjectMixin, DetailView):
     """Detail view for SubProject."""
-    context_object_name = 'sub_project'
-    template_name = 'tralard/sub_project_detail.html'
+
+    context_object_name = "sub_project"
+    template_name = "tralard/sub_project_detail.html"
 
     def get_object(self, queryset=None):
         """Get the object for this view.
@@ -206,29 +212,29 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         """
         if queryset is None:
             queryset = self.get_queryset()
-        project_slug = self.kwargs.get('project_slug', None)
+        project_slug = self.kwargs.get("project_slug", None)
         if project_slug:
             try:
                 project = Project.objects.get(slug=project_slug)
             except Project.DoesNotExist:
                 raise Http404(
-                    'The project you requested a subcateogrty for does not exist.'
+                    "The project you requested a subcateogrty for does not exist."
                 )
             try:
                 obj = queryset.get(project=project, slug=project_slug)
                 return obj
             except SubProject.DoesNotExist:
-                raise Http404(
-                    'The subproject you requested does not exist.')
+                raise Http404("The subproject you requested does not exist.")
         else:
-            raise Http404('Sorry! We could not find your subproject!')
+            raise Http404("Sorry! We could not find your subproject!")
 
 
 # noinspection PyAttributeOutsideInit
 class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
     """Delete view for a SubProject."""
-    context_object_name = 'sub_project'
-    template_name = 'tralard/sub_project_delete.html'
+
+    context_object_name = "sub_project"
+    template_name = "tralard/sub_project_delete.html"
 
     def get(self, request, *args, **kwargs):
         """Get the project_slug from the URL and define the Project
@@ -245,7 +251,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project_slug = self.kwargs.get("project_slug", None)
         self.project = Project.objects.get(slug=self.project_slug)
         return super(SubProjectDeleteView, self).get(request, *args, **kwargs)
 
@@ -264,7 +270,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project_slug = self.kwargs.get("project_slug", None)
         self.project = Project.objects.get(slug=self.project_slug)
         return super(SubProjectDeleteView, self).post(request, *args, **kwargs)
 
@@ -277,9 +283,9 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: URL
         :rtype: HttpResponse
         """
-        return reverse_lazy('subproject-list', kwargs={
-            'project_slug': self.object.project.slug
-        })
+        return reverse_lazy(
+            "subproject-list", kwargs={"project_slug": self.object.project.slug}
+        )
 
     def get_queryset(self):
         """Get the queryset for this view.
@@ -301,21 +307,22 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
 # noinspection PyAttributeOutsideInit
 class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
     """Create view for SubProject."""
-    context_object_name = 'sub_project'
-    template_name = 'tralard/sub-project-create.html'
+
+    context_object_name = "sub_project"
+    template_name = "tralard/sub-project-create.html"
 
     def get_success_url(self):
         """Define the redirect URL
 
-        After successful creation of the object, the User will be redirected
-        to the unapproved SubProject list page for the object's parent Project
+         After successful creation of the object, the User will be redirected
+         to the unapproved SubProject list page for the object's parent Project
 
-       :returns: URL
-       :rtype: HttpResponse
-       """
-        return reverse_lazy('tralard:subproject-list', kwargs={
-            'project_slug': self.object.project.slug
-        })
+        :returns: URL
+        :rtype: HttpResponse
+        """
+        return reverse_lazy(
+            "tralard:subproject-list", kwargs={"project_slug": self.object.project.slug}
+        )
 
     def get_context_data(self, **kwargs):
         """Get the context data which is passed to a template.
@@ -327,8 +334,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         :rtype: dict
         """
         context = super(SubProjectCreateView, self).get_context_data(**kwargs)
-        context['categories'] = self.get_queryset() \
-            .filter(project=self.project)
+        context["categories"] = self.get_queryset().filter(project=self.project)
         return context
 
     def form_valid(self, form):
@@ -344,8 +350,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
             super(SubProjectCreateView, self).form_valid(form)
             return HttpResponseRedirect(self.get_success_url())
         except IntegrityError:
-            return ValidationError(
-                'ERROR: SubProject by this name already exists!')
+            return ValidationError("ERROR: SubProject by this name already exists!")
 
     def get_form_kwargs(self):
         """Get keyword arguments from form.
@@ -354,19 +359,18 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         :rtype: dict
         """
         kwargs = super(SubProjectCreateView, self).get_form_kwargs()
-        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project_slug = self.kwargs.get("project_slug", None)
         self.project = Project.objects.get(slug=self.project_slug)
-        kwargs.update({
-            'project': self.project
-        })
+        kwargs.update({"project": self.project})
         return kwargs
 
 
 # noinspection PyAttributeOutsideInit
 class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
     """Update view for SubProject."""
-    context_object_name = 'sub_project'
-    template_name = 'tralard/sub-project-update.html'
+
+    context_object_name = "sub_project"
+    template_name = "tralard/sub-project-update.html"
 
     def get_form_kwargs(self):
         """Get keyword arguments from form.
@@ -375,11 +379,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: dict
         """
         kwargs = super(SubProjectUpdateView, self).get_form_kwargs()
-        self.project_slug = self.kwargs.get('project_slug', None)
+        self.project_slug = self.kwargs.get("project_slug", None)
         self.project = Project.objects.get(slug=self.project_slug)
-        kwargs.update({
-            'project': self.project
-        })
+        kwargs.update({"project": self.project})
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -392,8 +394,7 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: dict
         """
         context = super(SubProjectUpdateView, self).get_context_data(**kwargs)
-        context['categories'] = self.get_queryset() \
-            .filter(project=self.project)
+        context["categories"] = self.get_queryset().filter(project=self.project)
         return context
 
     def get_queryset(self):
@@ -403,17 +404,20 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         user created (staff gets all projects)
         :rtype: QuerySet
         """
-        project_slug = self.kwargs.get('project_slug', None)
+        project_slug = self.kwargs.get("project_slug", None)
         project = Project.objects.get(slug=project_slug)
         qs = SubProject.objects.all()
         if self.request.user.is_staff:
             return qs
         else:
             return qs.filter(
-                Q(project=project) &
-                (Q(project__project_funders=self.request.user) |
-                 Q(project__project_managers=self.request.user) |
-                 Q(project__project_representatives=self.request.user)))
+                Q(project=project)
+                & (
+                    Q(project__project_funders=self.request.user)
+                    | Q(project__project_managers=self.request.user)
+                    | Q(project__project_representatives=self.request.user)
+                )
+            )
 
     def get_success_url(self):
         """Define the redirect URL
@@ -424,14 +428,13 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :returns: URL
         :rtype: HttpResponse
         """
-        return reverse_lazy('tralard:subproject-list', kwargs={
-            'project_slug': self.object.project.slug
-        })
+        return reverse_lazy(
+            "tralard:subproject-list", kwargs={"project_slug": self.object.project.slug}
+        )
 
     def form_valid(self, form):
         """Check that there is no referential integrity error when saving."""
         try:
             return super(SubProjectUpdateView, self).form_valid(form)
         except IntegrityError:
-            return ValidationError(
-                'ERROR: SubProject by this name already exists!')
+            return ValidationError("ERROR: SubProject by this name already exists!")
