@@ -120,7 +120,7 @@ class Representative(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = unique_slugify(self, slugify(self.name))
+            self.slug = unique_slugify(self, slugify(f"{self.first_name} {self.last_name}"))
         super().save(*args, **kwargs)
 
 
