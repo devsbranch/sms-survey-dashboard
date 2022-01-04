@@ -24,6 +24,7 @@ class Indicator(models.Model):
     Sub Project Indicator Representative.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -47,6 +48,7 @@ class SubProject(models.Model):
     Sub Project definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

@@ -58,6 +58,7 @@ class Representative(models.Model):
     ("Other", _("Other"))
     )
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -129,6 +130,7 @@ class Project(models.Model):
     Project definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -303,6 +305,7 @@ class Feedback(models.Model):
     Project Feedback.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

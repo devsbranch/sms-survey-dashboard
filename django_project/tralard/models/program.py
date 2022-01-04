@@ -21,6 +21,7 @@ class Program(models.Model):
     Program Definition i.e PPCR, TRALARD etc.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

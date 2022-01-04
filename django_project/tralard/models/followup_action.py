@@ -22,6 +22,7 @@ class FollowUp(models.Model):
     Sub Project Progress Follow Up Action.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

@@ -60,6 +60,7 @@ class Fund(models.Model):
     Project Fund definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -166,6 +167,7 @@ class Disbursement(models.Model):
     Project Fund disbursement definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
@@ -242,6 +244,7 @@ class Expenditure(models.Model):
     Funds Expenditure definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

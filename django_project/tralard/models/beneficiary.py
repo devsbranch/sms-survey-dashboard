@@ -19,6 +19,7 @@ logger = logging.getLogger(__name__)
 
 class Beneficiary(AbstractOrganizationBeneficiary):
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

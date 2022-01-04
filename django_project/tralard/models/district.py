@@ -23,6 +23,7 @@ class District(AbstractLocation):
     District Locatoin Model.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )

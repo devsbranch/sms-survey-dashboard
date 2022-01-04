@@ -52,6 +52,7 @@ class Training(models.Model):
     Training and Training schedule definition.
     """
     slug = models.SlugField(
+        max_length=255,
         null=True,
         blank=True
     )
