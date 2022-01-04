@@ -3,6 +3,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.models.program import Program
+from tralard.models.project import Project
 from tralard.models.fund import Fund
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
@@ -18,7 +19,7 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
 
         context['title'] = 'Program: Tralard'
         context['program_list'] = Program.objects.all().order_by('-started')[:5]
-        context['program_count'] = Program.objects.all().count()
+        context['project_count'] = Project.objects.all().count()
         context['total_project_funds'] = self.cleaned_total_project_funds
         context['subproject_count'] = SubProject.objects.all().count()
         context['beneficiary_count'] = Beneficiary.objects.all().count()
