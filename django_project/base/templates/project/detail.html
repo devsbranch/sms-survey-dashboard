@@ -407,15 +407,28 @@
                                             </form>
                                         </div>
                                         <div id="upload-files" class="action-wrap is-hidden">
-                                            {% for feedback in citizen_feedback_list %}
+
+                                             <div class="columns is-multiline m-3" style="display: flex; justify-content: end; align-items: center;" data-modal="create-feedback-modal">
+                                                 <div class="add-button modal-trigger" data-modal="create-feedback-modal">
+                                                    <i class="material-icons">add</i>
+                                                </div>
+                                            </div>
+                                            
                                                 <div class="deal-timeline">
                                                     <ul>
+                                                        {% for feedback in citizen_feedback_list %}
+
                                                         <li>
                                                             <div class="timeline-icon">
                                                                 <i class="sl sl-icon-doc"></i>
                                                             </div>
                                                             <div class="timeline-item is-note">
+                                                                
                                                                 <div class="item-body">
+                                                                    <div style="display: flex; justify-content: end; align-items: center;">
+                                                                        <a id="edit-button" onClick="populateFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}');" href="#" class="tag squared is-secondary m-1 modal-trigger" data-modal="edit-feedback-modal">Edit</a>
+                                                                        <a id="delete-button" onClick="deleteFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}', '{{project.name|title}}');" href="#" class="tag squared is-danger m-1 modal-trigger" data-modal="delete-feedback-modal">Delete</a>
+                                                                    </div>
                                                                     <h3>{{ feedback.title|title }}</h3>
                                                                     <p class="note-text">
                                                                         {{ feedback.description|truncatechars:100 }}
@@ -430,11 +443,14 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                                
                                                             </div>
                                                         </li>
+                                                        {% endfor %}
                                                     </ul>
                                                 </div>
-                                            {% endfor %}
+                                                <br />
+                                            
                                             <br/>
                                         </div>
                                     </div>
@@ -449,8 +465,141 @@
         </div>
     </div>
 
+    <!-- Create Feedback Modal --><!-- Create Feedback Modal -->
+    <div id="create-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Leave Feedback</h2>
 
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                        <div class="m-3">
+                            <span class="m-2">Leave feedback for the {{project.name|title}} project.</span>
+                        </div>
+                    </div>
+                    
+                    <form id="feedback-form" action="{% url 'tralard:feedback' program_slug project_slug %}" method="post">{% csrf_token %}
+        
+                        <div class="m-4 column is-multiline">
+                            
+                            {% crispy feedback_form feedback_form.helper %}
+                        </div>
+
+                        <div class="modal-footer has-text-left">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button type="submit" class="button is-modal">Leave Feedback</button>
+                        </div>
+                                                    
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+    </div>
+
+    <!-- Edit Feedback Modal --><!-- Edit Feedback Modal -->
+    <div id="edit-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Leave Feedback</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                        <div class="m-3">
+                            <span class="m-2">Leave feedback for the {{project.name|title}} project.</span>
+                        </div>
+                    </div>
+                    
+                    <form id="update-feedback-form" action="" method="post">{% csrf_token %}
+        
+                        <div class="m-4 column is-multiline">
+                            
+                            {% crispy feedback_form feedback_form.helper %}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button type="submit" class="button is-modal">Update Feedback</button>
+                        </div>
+                                                    
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+    </div>
+    
+    <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
+    <div id="delete-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Delete Feedback</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                    </div>
+                    
+                    <form id="delete-feedback-form" class="form" action="" method="post">
+                        {% csrf_token %}
+                        <div id="warning-msg">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button class=" is-danger is-modal" type="submit">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+    function populateFeedbackForm(program_slug, project_slug, feedback_slug, project_name) {
+        let origin = location.origin;
+        const url = `${origin}/program/${program_slug}/project/${project_slug}/detail/${feedback_slug}/`
+        $.get(url, function( { data } ) {
+            $("#update-feedback-form input[name='title']").val(data.title);
+            $("#update-feedback-form input[name='date']").val(data.date);
+            $(`#id_moderator option[value="${data.moderator}"]`).prop('selected', true);
+            $("#update-feedback-form textarea[name='custom_description']").val(data.description);
+            $("#update-feedback-form").attr('action', url);
+        });
+    }
+
+    function deleteFeedbackForm(program_slug, project_slug, feedback_slug, project_name) {
+        let origin = location.origin;
+        const url = `${origin}/program/${program_slug}/project/${project_slug}/delete/${feedback_slug}/`
+        $("#delete-feedback-form #warning-msg").html(`<h3>Are you sure you want to delete this feedback for the <i>"${project_name}"</i> project</h3>`)
+        $("#delete-feedback-form").attr('action', url);
+    }
+</script>
+{% endblock javascripts %}
+

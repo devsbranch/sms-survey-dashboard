@@ -1,17 +1,21 @@
 from typing import List
+from django.forms.models import model_to_dict
+from django.http.response import JsonResponse
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView
 from django.http import HttpResponseRedirect, Http404
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render, reverse
 
 from tralard.models.program import Program
-from tralard.models.project import Project, Feedback
+from tralard.models.project import Project, Feedback, Representative
 from tralard.models.sub_project import SubProject, Indicator
-from tralard.models.beneficiary import Beneficiary
 
 from tralard.forms.sub_project import SubProjectForm
+from tralard.forms.project import FeedbackForm
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
@@ -89,6 +93,9 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         context["project"] = self.project
         context["indicators"] = self.all_subproject_indicators
         context["form"] = SubProjectForm
+        context["feedback_form"] = FeedbackForm
+        context["program_slug"] = self.kwargs.get("program_slug", None)
+        context["project_slug"] = self.kwargs.get("project_slug", None)
         context["sub_project_list"] = self.sub_projects_qs
         context["total_sub_projects"] = self.sub_project_count
 
@@ -115,3 +122,71 @@ class SubProjectDetailView(LoginRequiredMixin, TemplateView):
         context = super(SubProjectDetailView, self).get_context_data()
         context["title"] = "Sub Project Detail"
         return context
+
+
+@login_required(login_url="/login/")
+def create_feedback(request, program_slug, project_slug):
+    form = FeedbackForm()
+    if request.method == "POST":
+        form = FeedbackForm(request.POST)
+        project = Project.objects.get(slug=project_slug)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.project = project
+            instance.save()
+            messages.success(request, "Your feedback was added!")
+            return redirect(
+                reverse_lazy(
+                    "tralard:project-detail",
+                    kwargs={"program_slug": program_slug, "project_slug": project_slug},
+                )
+            )
+    return redirect(
+        reverse_lazy(
+            "tralard:project-detail",
+            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+        )
+    )
+
+
+@login_required(login_url="/login/")
+def edit_feedback(request, program_slug, project_slug, feedback_slug):
+    form = FeedbackForm()
+
+    feedback_obj = Feedback.objects.get(slug=feedback_slug)
+    feedback_obj_to_dict = model_to_dict(feedback_obj)
+    try:
+        feedback_obj_to_dict[
+            "moderator_name"
+        ] = f"{feedback_obj.moderator.first_name} {feedback_obj.moderator.last_name}"
+    except AttributeError:
+        pass
+
+    if request.method == "POST":
+        form = FeedbackForm(request.POST, instance=feedback_obj)
+        if form.is_valid():
+            form.save()
+        messages.success(request, "Your feedback was updated!")
+        return redirect(
+            reverse_lazy(
+                "tralard:project-detail",
+                kwargs={"program_slug": program_slug, "project_slug": project_slug},
+            )
+        )
+    return JsonResponse({"data": feedback_obj_to_dict})
+
+
+@login_required(login_url="/login/")
+def delete_feedback(request, program_slug, project_slug, feedback_slug):
+    try:
+        feedback_obj = Feedback.objects.get(slug=feedback_slug)
+        feedback_obj.delete()
+    except Feedback.DoesNotExist:
+        pass
+
+    return redirect(
+        reverse_lazy(
+            "tralard:project-detail",
+            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+        )
+    )
