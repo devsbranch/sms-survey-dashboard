@@ -3,7 +3,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
-<!-- Create Project Modal -->
+<!-- Create Training Modal -->
 <div id="create-project-modal" class="modal create-project-modal modal-hero">
     <div class="modal-background"></div>
     <div class="modal-content">
@@ -13,11 +13,11 @@
                 <div id="project-details" class="navtab-content is-active">
                     <div class="card-body">
                         <div class="content">
-                            <!-- New Project form -->
+                            <!-- New Training form -->
                             <form method="post" enctype="multipart/form-data">{% csrf_token %}
                                 {% crispy form form.helper %}
                             </form>
-                            <!-- /New Project form -->
+                            <!-- /New Training form -->
                         </div>
                     </div>
                 </div>

@@ -73,11 +73,11 @@ class Training(models.Model):
         null=True,
         blank=True
     )
-    start_date = models.DateField(
+    start_date = models.DateTimeField(
         null=True,
         blank=True,
     )
-    end_date = models.DateField(
+    end_date = models.DateTimeField(
         null=True,
         blank=True,
     )

@@ -14,8 +14,8 @@ from tralard.views.beneficiary import (
 )
 from tralard.views.training import (
     TrainingListView,
-    TrainingCreateView,
-    training_delete, 
+    training_fetch,
+    training_delete,
     template_testing,
 )
 from tralard.views.map import MapTemplateView
@@ -53,40 +53,26 @@ urlpatterns = [
     ),
     # -------- project fund --------
     path(
-       'program/<slug:program_slug>/project/<slug:project_slug>/funds/',
+       'program/<slug:program_slug>/project/<slug:project_slug>/fund/',
         FundListAndCreateView.as_view(),
         name='fund-list'
     ),
     # -------- beneficiary --------
-    path(
-        'beneficiary/list/', 
-        BeneficiaryOrgListView.as_view(), 
-        name='beneficiary_list'
-    ),
-    path(
-        'beneficiary/detail/', 
-        BeneficiaryOrgDetailView.as_view(), 
-        name='beneficiary_detail'
-    ),
+    
     # -------- training ------------
     path(
-        'training/list/', 
+        'program/<slug:program_slug>/project/<slug:project_slug>/training/list/',
         TrainingListView.as_view(), 
         name='training-list'
     ),
     path(
-        'training/delete/<slug:training_slug>/', 
-        training_delete, 
+        'program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/delete/', 
+        training_delete,
         name='training-delete'
     ),
     path(
-        'training/create/', 
-        TrainingCreateView.as_view(), 
-        name='training-create'
-    ),
-    path(
-        'beneficiary/<slug:beneficiary_slug>/detail/', 
-        FundDetailView.as_view(), 
-        name='fund_detail'
+        'program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/', 
+        training_fetch,
+        name='training-fetch'
     ),
 ]

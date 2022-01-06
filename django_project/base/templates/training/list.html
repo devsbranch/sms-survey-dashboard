@@ -11,7 +11,12 @@
 {% block content %}
 {% include 'includes/training-create-modal.html' %}
 {% include 'includes/training-detail-modal.html' %}
+<style>
+    .feather-search, .search-field {
+        visibility: hidden;
+    }
 
+</style>
 <div id="dashboard-wrapper" class="dashboard-outer">
     <div class="dashboard-inner">
         <!--Title-->
@@ -285,7 +290,7 @@
                                             <!-- Filter dropdown Date End date-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
-                                                    <span>No of Moderators</span>
+                                                    <span>Moderator</span>
                                                     <i class="material-icons">keyboard_arrow_down</i>
                                                 </div>
 
@@ -438,7 +443,7 @@
                                                     <span class="member-count" data-toggle="tooltip" data-placement="top"
                                                         data-title="Number of moderators"
                                                         data-trigger="hover">
-                                                        3
+                                                        {{training.moderator}}
                                                     </span>
                                                 </span>
                                             </td>
@@ -451,7 +456,7 @@
                                                     <div class="button">
                                                         <i class="material-icons">more_horiz</i>
                                                     </div>
-                                                    {% include 'tralard/training-actions.html' %}
+                                                    {% include 'training/actions.html' %}
                                                 </div> 
                                                 <!-- <a href="#" class="button is-hidden">
                                                 <i class="material-icons">remove_red_eye</i></a> -->

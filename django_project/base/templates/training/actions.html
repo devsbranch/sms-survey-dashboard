@@ -1,0 +1,112 @@
+<div class="more-drop">
+    <!-- Task dropdown -->
+    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+        <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+            <div class="dropdown-content" style="position: fixed;">
+                <a onclick="document.getElementById('detail_modal').style.display='block'" class="dropdown-item view-btn{{ training.id }}">
+                    <i class="sl sl-icon-eye"></i>
+                    <span>
+                        <span>View</span>
+                        <span>View this training entry</span>
+                    </span>
+                </a>
+                <script>
+                  var uniqueSelectorButton = document.querySelector(".view-btn{{ training.id }}");
+                  uniqueSelectorButton.addEventListener("click", () => {
+                    if("{{ training.id }}" == "{{ training.id }}"){
+                      document.getElementById("sub-project-1").innerHTML = "{{ training.sub_project }}";
+                      document.getElementById("sub-project-2").innerHTML = "{{ training.sub_project }}";
+                      
+                      document.getElementById("training-moderator-1").innerHTML = "{{ training.moderator }}";
+                      document.getElementById("training-moderator-2").innerHTML = "{{ training.moderator }}";
+                      
+                      document.getElementById("project-title").innerHTML = "{{ training.title }}";
+                      document.getElementById("training-type").innerHTML = "{{ training.training_type }}";
+                      const startDate = "{{ training.start_date }}";
+                      const endDateArray = startDate.split(" ");
+                      const endDateProcessor = () => {
+                        if(endDateArray[4] != undefined){
+                          return endDateArray[4];
+                        }else{
+                          return ""
+                        }
+                     };
+                      document.getElementById("end-month").innerHTML = endDateArray[0];
+                      document.getElementById("end-day").innerHTML = endDateArray[1];
+                      document.getElementById("end-year").innerHTML = endDateArray[2];
+                      document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
+                      
+                      const endDate = "{{ training.start_date }}";
+                      const startDateArray = endDate.split(" ");
+                      const startDateProcessor = () => {
+                        if(startDateArray[4] != undefined){
+                          return startDateArray[4];
+                        }else{
+                          return ""
+                        }
+                     };
+                      document.getElementById("start-month").innerHTML = startDateArray[0];
+                      document.getElementById("start-day").innerHTML = startDateArray[1];
+                      document.getElementById("start-year").innerHTML = startDateArray[2];
+                      document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
+                      
+                      document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
+                      if("{{ training.sub_project.project.project_representative.cell }}"){
+                        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";
+                      }else{
+                        document.getElementById("cell-number").innerHTML = "None";
+                      }
+                      if("{{ training.sub_project.project.project_representative.email }}"){
+                        document.getElementById("email-address").innerHTML = "{{ training.sub_project.project.project_representative.email }}";
+                      }else{
+                        document.getElementById("email-address").innerHTML = "None";
+                      }
+                      if("{{ training.sub_project.project.image_file }}"){
+                        document.getElementById("project-image").src = "{{ training.sub_project.project.image_file.url }}";
+                      }
+
+                      var boolean = document.getElementById("boolean");
+                      if("{{ training.completed }}" == "True"){
+                        document.getElementById("prospectSwitch").checked = true;
+                      }else{
+                        document.getElementById("prospectSwitch").checked = false;
+                      }
+                    }
+                  })
+                </script>
+                <a  class="dropdown-item">
+                    <i class="sl sl-icon-pencil"></i>
+                    <span>
+                        <span>Edit</span>
+                        <span>Edit this training entry</span>
+                    </span>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a id="{{ training.id }}" class="dropdown-item">
+                    <i class="sl sl-icon-trash"></i>
+                    <span>
+                        <span>Delete</span>
+                        <span>Delete this training entry</span>
+                    </span>
+                    <script>
+                        try{
+                          if("{{ training.id }}" === "{{ training.id }}"){
+                            const deleteButton = document.getElementById("{{ training.id }}");
+                            deleteButton.addEventListener("click", () => {
+                              var response;
+                              response = confirm("Are you sure you want to delete this training entry?");
+                              if(response){
+                                const setProperty = deleteButton.href = "{% url 'tralard:training-delete' program_slug program_slug training.slug %}";
+                                setProperty.click()
+                              }
+                            });
+                          }
+                        }catch(error){
+                          console.log(error)
+                        }
+                    </script>
+                </a>
+            </div>
+        </div>
+    </div>                                                                
+</div>

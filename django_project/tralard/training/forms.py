@@ -40,7 +40,7 @@ class TrainingForm(ModelForm):
                 Column("training_type", css_class="form-group col-md-12 mb-0"),
                 Column("start_date", css_class="form-group col-md-12 mb-0"),
                 Column("end_date", css_class="form-group col-md-12 mb-0"),
-                Column("moderators", css_class="form-group col-md-12 mb-0"),
+                Column("moderator", css_class="form-group col-md-12 mb-0"),
                 Column("completed", css_class="form-group col-md-12 mb-6"),
                 Column("custom_completed", css_class="form-group col-md-12 mb-6"),
                 Column("notes", css_class="form-group col-lg-12"),
@@ -48,7 +48,7 @@ class TrainingForm(ModelForm):
             ),
             FormActions(
                 Submit("save", "Create a Training Schedule"),
-                HTML('<a class="btn btn-danger" href="/training/list/">Cancel</a>'),
+                HTML("<a class='btn btn-danger' href='{% url 'tralard:training-list' program_slug project_slug %}'>Cancel</a>"),
             ),
         )
         
