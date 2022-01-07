@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from django.urls import path
-
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.program import ProgramDetailView
 from tralard.views.project import (
@@ -22,7 +21,7 @@ from tralard.views.training import (
     template_testing,
 )
 from tralard.views.map import MapTemplateView
-from tralard.views.fund import FundListAndCreateView, FundDetailView
+from tralard.views.fund import FundListAndCreateView, FundDetailView, delete_disbursement, fund_delete, fund_detail, update_disbursement, update_fund
 
 app_name = 'tralard'
 urlpatterns = [
@@ -74,6 +73,32 @@ urlpatterns = [
        'program/<slug:program_slug>/project/<slug:project_slug>/fund/',
         FundListAndCreateView.as_view(),
         name='fund-list'
+    ),
+    path(
+       'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>',
+        update_fund,
+        name='fund-update'
+    ),
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/detail/',
+        fund_detail,
+        name='fund-detail'
+    ),
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/',
+        fund_delete,
+        name='fund-delete'
+    ),
+    # -------- disbursement --------
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/delete/',
+        delete_disbursement,
+        name='disbursement-delete'
+    ),
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/',
+        update_disbursement,
+        name='disbursement-update'
     ),
     # -------- beneficiary --------
     

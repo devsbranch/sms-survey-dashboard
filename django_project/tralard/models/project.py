@@ -282,7 +282,7 @@ class Project(models.Model):
     def get_total_project_fund(self):
         """Computes total funds related to this project."""
         related_funds_sum_qs = Fund.objects.filter(
-            project__slug=self.slug
+            sub_project__project__slug=self.slug
         ).aggregate(Sum('amount'))
 
         amount_value = related_funds_sum_qs['amount__sum']
@@ -292,7 +292,7 @@ class Project(models.Model):
     def get_total_fund_balance(self):
         """Computes total funds balance related to this project."""
         related_funds_sum_qs = Fund.objects.filter(
-            project__slug=self.slug
+            sub_project__project__slug=self.slug
         ).aggregate(Sum('balance'))
 
         amount_value = related_funds_sum_qs['balance__sum']

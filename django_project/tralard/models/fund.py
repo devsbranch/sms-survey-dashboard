@@ -103,8 +103,8 @@ class Fund(models.Model):
         max_length=10,
         default=ZMK,
     )
-    project = models.ForeignKey(
-        'tralard.Project',
+    sub_project = models.ForeignKey(
+        'tralard.SubProject',
         on_delete=models.PROTECT,
     )
     created = models.DateTimeField(auto_now_add=True)
@@ -122,7 +122,7 @@ class Fund(models.Model):
         verbose_name_plural = _('Funds')
 
     def __str__(self):
-        return f"Amount: {self.amount}, Project: {self.project}, Program: {self.project.program.name}."
+        return f"Amount: {self.amount}, SubProject: {self.sub_project}, Program: {self.sub_project.project.program.name}."
 
 
     def save(self, *args, **kwargs):
@@ -131,7 +131,7 @@ class Fund(models.Model):
         """
         if not self.slug:
             self.slug = unique_slugify(self, 
-            slugify(f"{self.project.slug} \
+            slugify(f"{self.sub_project.project.slug} \
                 fund amount \
                     {self.amount}"
                     )
@@ -150,8 +150,8 @@ class Fund(models.Model):
         """
         return reverse_lazy('tralard:project-detail', 
             kwargs={
-                'program_slug': self.project.program.slug, 
-                'project_slug': self.project.slug
+                'program_slug': self.sub_project.project.program.slug, 
+                'project_slug': self.sub_project.project.slug
                 }
             )
     @property
@@ -208,7 +208,7 @@ class Disbursement(models.Model):
         verbose_name_plural = _("Disbursed Funds")
 
     def __str__(self):
-        return f"Amount: {self.amount}, Fund: {self.fund}. Project: {self.fund.project.name}"
+        return f"Amount: {self.amount}, Fund: {self.fund}. Project: {self.fund.sub_project.project.name}"
     
     def save(self, *args, **kwargs):
         """
@@ -279,7 +279,7 @@ class Expenditure(models.Model):
         verbose_name_plural = _("Expenditures")
 
     def __str__(self):
-        return f"Amount {self.amount}, Disbursement {self.disbursment}. Project: {self.disbursement.fund.project.name}"
+        return f"Amount {self.amount}, Disbursement {self.disbursment}. Project: {self.disbursment.fund.sub_project.project.name}"
 
     def save(self, *args, **kwargs):
         if not self.slug:

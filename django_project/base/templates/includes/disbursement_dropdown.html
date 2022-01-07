@@ -1,0 +1,54 @@
+<div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
+  <div class="button">
+    <i class="material-icons">more_horiz</i>
+  </div>
+  <div class="dropdown-menu is-text-bigger" role="menu">
+    <div class="dropdown-content">
+      <a
+        class="dropdown-item modal-trigger fund-{{fund.slug}}"
+        data-ripple-color=""
+        id="fund_list_modal"
+        data-modal="w3-modal"
+        onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{project.slug}}', '{{project.program.slug}}')"
+      >
+        <i class="sl sl-icon-eye"></i>
+        <span>
+          <span>View</span>
+          <span>View fund details</span>
+        </span>
+      </a>
+      <a
+        href="#"
+        class="dropdown-item has-icon modal-trigger"
+        data-ripple-color=""
+        href="#"
+      >
+        <i class="sl sl-icon-pencil"></i>
+        <span>
+          <span>Edit</span>
+          <span>Edit disbursement details</span>
+        </span>
+      </a>
+      <div class="dropdown-divider"></div>
+      <a href="#" class="dropdown-item">
+        <i class="sl sl-icon-bell"></i>
+        <span>
+          <span>Notifications</span>
+          <span>Manage contact notifications</span>
+        </span>
+      </a>
+      <div class="dropdown-divider"></div>
+      <a
+        class="dropdown-item"
+        onclick="return confirm('Are you sure you want to delete this project fund disbursement?')"
+        href="#"
+      >
+        <i class="sl sl-icon-trash"></i>
+        <span>
+          <span>Delete</span>
+          <span>Delete this disbursement</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>

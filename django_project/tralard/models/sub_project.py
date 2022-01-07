@@ -143,7 +143,7 @@ class SubProject(models.Model):
     @property 
     def fund_utilization_percent(self):
         project_id = self.project.id
-        fund_obj = Fund.objects.get(project__id=project_id)
+        fund_obj = Fund.objects.get(id=self.id)
         initial_fund = fund_obj.amount
         balance = fund_obj.balance
         fund_utilization_percent = ( balance / initial_fund ) * 100
