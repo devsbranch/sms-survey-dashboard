@@ -1,6 +1,8 @@
 from typing import List
 from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
+from django.urls import reverse_lazy
+from django.views.generic import TemplateView, ListView, DetailView, DeleteView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView
@@ -9,6 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.shortcuts import redirect, render, reverse
+from django.core import serializers
+
+import json
 
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback, Representative
@@ -68,6 +73,7 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.status_form = SubProjectForm(self.request.POST, self.request.FILES or None)
         if self.status_form.is_valid():
             self.status_form.save()
+            messages.success(request, "Your SubProject was added!")
             return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
             ...
         else:
@@ -84,6 +90,9 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.sub_projects_qs = SubProject.objects.filter(
             project__slug=self.project_slug
         )
+
+        self.sub_project_slug = self.kwargs.get("sub_project_slug", None)
+
         self.sub_project_count = self.sub_projects_qs.count()
         self.all_feedback_qs = Feedback.objects.filter(project__slug=self.project_slug)
         self.all_subproject_indicators = Indicator.objects.filter(
@@ -125,6 +134,51 @@ class SubProjectDetailView(LoginRequiredMixin, TemplateView):
 
 
 @login_required(login_url="/login/")
+def update_sub_project(request, program_slug, project_slug, sub_project_slug):
+    sub_project_obj = SubProject.objects.get(slug=sub_project_slug)
+    sub_project_obj_to_dict = model_to_dict(sub_project_obj)
+
+    indicators = [
+        model_to_dict(indicator) for indicator in sub_project_obj_to_dict["indicators"]
+    ]
+    sub_project_obj_to_dict.pop("image_file")
+    sub_project_obj_to_dict["indicators"] = indicators
+    sub_project_obj_to_dict["total_num_of_indicators"] = len(indicators)
+
+    if request.method == "POST":
+        form = SubProjectForm(
+            request.POST, request.FILES or None, instance=sub_project_obj
+        )
+        if form.is_valid():
+            form.save()
+        messages.success(request, "Your SubProject was updated!")
+        return redirect(
+            reverse_lazy(
+                "tralard:project-detail",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug,
+                },
+            )
+        )
+    return JsonResponse({"data": sub_project_obj_to_dict})
+
+
+@login_required(login_url="/login/")
+def delete_sub_project(request, program_slug, project_slug, sub_project_slug):
+    sub_project = SubProject.objects.get(slug=sub_project_slug)
+    sub_project.delete()
+    return redirect(
+        reverse_lazy(
+            "tralard:project-detail",
+            kwargs={
+                "program_slug": program_slug,
+                "project_slug": project_slug,
+            },
+        )
+    )
+
+
 def create_feedback(request, program_slug, project_slug):
     form = FeedbackForm()
     if request.method == "POST":

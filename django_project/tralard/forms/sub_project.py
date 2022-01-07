@@ -69,9 +69,6 @@ class SubProjectForm(ModelForm):
                     css_class="form-row",
                 ),
             ),
-            FormActions(
-                Submit("save", "Submit SubProject Details"),
-            ),
         )
 
     def save(self, commit=True):
