@@ -35,16 +35,7 @@
                 </div>
               </div>
               <a
-                class="
-                  button
-                  btn-dash
-                  secondary-btn
-                  btn-dash
-                  raised
-                  ripple
-                  has-icon
-                  modal-trigger
-                "
+                class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
                 data-ripple-color=""
                 id="fund-{{fund.slug}}-{{fund.project.slug}}"
                 data-modal="create-project-modal"
@@ -55,22 +46,7 @@
               </a>
 
               <a
-                class="
-                  button
-                  btn-dash
-                  secondary-btn
-                  btn-dash
-                  raised
-                  {%
-                  comment
-                  %}
-                  ripple
-                  {%
-                  endcomment
-                  %}
-                  has-icon
-                  modal-trigger
-                "
+                class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
                 data-ripple-color=""
                 href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
               >
@@ -80,13 +56,7 @@
             </div>
           </div>
           <div
-            class="
-              flex-card
-              is-contact-list
-              light-bordered
-              card-overflow
-              is-hidden-mobile
-            "
+            class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
           >
             <!-- Contacts table -->
             <table class="table contacts-table">
@@ -277,12 +247,7 @@
 
                   <td class="actions">
                     <div
-                      class="
-                        dropdown
-                        is-right
-                        dropdown-trigger
-                        contacts-list-dropdown
-                      "
+                      class="dropdown is-right dropdown-trigger contacts-list-dropdown"
                     >
                       <div class="button">
                         <i class="material-icons">more_horiz</i>

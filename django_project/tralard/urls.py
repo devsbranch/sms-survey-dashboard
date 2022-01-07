@@ -115,6 +115,11 @@ urlpatterns = [
         update_disbursement,
         name='disbursement-update'
     ),
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/',
+        fund_delete,
+        name='fund-delete'
+    ),
     # -------- beneficiary --------
     # -------- training ------------
     path(
