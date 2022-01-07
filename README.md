@@ -108,8 +108,6 @@ ppcr-tralard was funded by [Think2044](https://think2044.com) and developed by [
 Thank you to the individual contributors who have helped to build PPCR-TRALARD:
 
 * Alison Mukoma (Lead developer): alison@digiprophets.com
-* Bupe Mulenga: bupe@digiprophets.com
 * Jachin Manda: jachin@digiprophets.com
 * Chriford Siame: chriford@digiprophets.com
 * Cephas Zulu: cephas@digiprophets.com
-* Gift Muyembe: gift@digiprophets.com
