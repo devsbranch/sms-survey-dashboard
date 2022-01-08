@@ -141,7 +141,13 @@ def update_sub_project(request, program_slug, project_slug, sub_project_slug):
     indicators = [
         model_to_dict(indicator) for indicator in sub_project_obj_to_dict["indicators"]
     ]
-    sub_project_obj_to_dict.pop("image_file")
+
+    try:
+        sub_project_obj_to_dict["image_file"] = sub_project_obj.image_file.name
+        sub_project_obj_to_dict["image_url"] = sub_project_obj.image_file.url
+    except ValueError:
+        pass
+
     sub_project_obj_to_dict["indicators"] = indicators
     sub_project_obj_to_dict["total_num_of_indicators"] = len(indicators)
 

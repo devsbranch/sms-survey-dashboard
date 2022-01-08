@@ -21,7 +21,15 @@ from tralard.views.training import (
     template_testing,
 )
 from tralard.views.map import MapTemplateView
-from tralard.views.fund import FundListAndCreateView, FundDetailView, delete_disbursement, fund_delete, fund_detail, update_disbursement, update_fund
+from tralard.views.fund import (
+    FundListAndCreateView,
+    FundDetailView,
+    delete_disbursement,
+    fund_delete,
+    fund_detail,
+    update_disbursement,
+    update_fund,
+)
 
 app_name = "tralard"
 urlpatterns = [
@@ -90,35 +98,35 @@ urlpatterns = [
         name="fund-list",
     ),
     path(
-       'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>',
+        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>",
         update_fund,
-        name='fund-update'
+        name="fund-update",
     ),
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/detail/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/detail/",
         fund_detail,
-        name='fund-detail'
+        name="fund-detail",
     ),
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
         fund_delete,
-        name='fund-delete'
+        name="fund-delete",
     ),
     # -------- disbursement --------
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/delete/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/delete/",
         delete_disbursement,
-        name='disbursement-delete'
+        name="disbursement-delete",
     ),
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/",
         update_disbursement,
-        name='disbursement-update'
+        name="disbursement-update",
     ),
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
         fund_delete,
-        name='fund-delete'
+        name="fund-delete",
     ),
     # -------- beneficiary --------
     # -------- training ------------

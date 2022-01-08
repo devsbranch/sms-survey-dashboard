@@ -524,7 +524,7 @@
                             <span class="m-2">Edit SubProject Here</span>
                         </div>
                     </div>
-                    <form id="update-subproject-form" action="" method="post">
+                    <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="m-4 column is-multiline">
                             {% crispy form form.helper %}
@@ -705,11 +705,10 @@ function populateSubProjectForm(program_slug, project_slug, sub_project_slug, su
             $("#update-subproject-form input[name='subproject_managers']").val(data.subproject_managers);
             $(`#update-subproject-form option[value="${data.approved}"]`).prop('selected', true);
            $("#update-subproject-form textarea[name='custom_focus_area']").val(data.focus_area);
-            $("#update-subproject-form textarea[name='custom_description']").val(data.description);
-
-
-          
+            $("#update-subproject-form textarea[name='custom_description']").val(data.description);            
             $("#update-subproject-form").attr('action', url);
+            
+            
             console.log(data)
 
             
@@ -721,10 +720,15 @@ function populateSubProjectForm(program_slug, project_slug, sub_project_slug, su
                 console.log(`${index} : ${item.id}`);
             });
            
+          
             
         });
     }
 
+    $('input[type="file"]').change(function(e){
+        var fileName = e.target.files[0].name;
+        $('.custom-file-label').html(fileName);
+    });
 
 
 function deleteSubproject(program_slug, project_slug, sub_project_slug, subproject_name) {

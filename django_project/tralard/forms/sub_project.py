@@ -76,7 +76,7 @@ class SubProjectForm(ModelForm):
         custom_description = self.cleaned_data["custom_description"]
         custom_focus_area = self.cleaned_data["custom_focus_area"]
         instance.description = custom_description
-        instance.custom_focus_area = custom_focus_area
+        instance.focus_area = custom_focus_area
         instance.save()
         self.save_m2m()
         return instance
