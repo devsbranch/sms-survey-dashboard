@@ -2,15 +2,18 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from tralard.forms.project import ProjectForm
 from tralard.models.program import Program
 from tralard.models.project import Project
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
+
 class ProgramDetailView(LoginRequiredMixin, ListView):
     model = Project
+    form_class = ProjectForm
     context_object_name = "program"
-    template_name = 'program/list.html'
+    template_name = 'program/detail.html'
 
     def get_success_url(self):
         """Define the redirect URL
@@ -44,12 +47,13 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
             'program_slug': self.program,
             'project_slug': self.project
         })
-        
+
         return kwargs
 
     def get_context_data(self):
         context = super(ProgramDetailView, self).get_context_data()
         context['title'] = 'Program Detail'
+        context['project_form'] = ProjectForm
         self.program_slug = self.kwargs['program_slug']
         self.program_object = Program.objects.get(slug=self.program_slug)
         context['program'] = self.program_object

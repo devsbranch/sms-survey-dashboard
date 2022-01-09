@@ -27,6 +27,15 @@ class ProjectForm(ModelForm):
         ),
         max_length=160,
     )
+    custom_has_funding = forms.BooleanField(
+        label="Funding",
+        widget=forms.CheckboxInput(
+            attrs={
+                "rows": 1,
+                "cols": 4,
+            }
+        ),
+    )
 
     class Meta:
         model = Project
@@ -74,7 +83,7 @@ class ProjectForm(ModelForm):
                 Column("training_managers", css_class="form-group col-md-6 mb-0"),
                 Column("certification_managers", css_class="form-group col-md-6 mb-0"),
                 Column("approved", css_class="form-group col-md-6 mb-0"),
-                Column("has_funding", css_class="form-group col-md-6 mb-0"),
+                Column("custom_has_funding", css_class="form-group col-md-6 mb-0"),
                 Column("custom_precis", css_class="form-group col-md-6 mb-0"),
                 Column("focus_area", css_class="form-group col-md-6 mb-0"),
                 Column("description", css_class="form-group col-md-6 mb-0"),
@@ -88,7 +97,9 @@ class ProjectForm(ModelForm):
     def save(self, commit=True):
         instance = super(ProjectForm, self).save(commit=False)
         custom_precis = self.cleaned_data["custom_precis"]
+        custom_has_funding = self.cleaned_data["custom_has_funding"]
         instance.precis = custom_precis
+        instance.has_funding = custom_has_funding
         instance.save()
         return instance
 
