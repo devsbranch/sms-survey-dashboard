@@ -2,15 +2,15 @@
 
 {% load crispy_forms_tags %}
 
-<!-- Create project Modal --><!-- create-project-modal -->
+<!-- Update project Modal --><!-- update-project-modal -->
 <div class="modal icon-action-modal modal-hero"
-     id="project-form-modal"
-     aria-labelledby="create-project">
-    <div class="modal-background modal-dismiss"></div>
+     id="update-project-modal"
+     aria-labelledby="update-project">
+    <div class="modal-background"></div>
     <div class="modal-content" style="width:720px; !important;">
         <div class="flex-card simple-shadow" style="overflow-y: auto;">
             <div class="help-text has-text-left">
-                <h2 class="dark-text">New Project</h2>
+                <h2 class="dark-text">Project Update</h2>
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
@@ -18,12 +18,12 @@
                         <img src="{% static 'assets/images/icons/project-management.svg' %}">
                     </div>
                     <div class="m-3">
-                        <span class="m-2">Create a new project</span>
+                        <span class="m-2">Edit {{project.name}} project.</span>
                     </div>
                 </div>
-                <form id="project-form"
+                <form id="edit-project-form"
                       method="post"
-                      action="{% url 'tralard:project' program.slug %}"
+                      action=""
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="m-4 column is-multiline">

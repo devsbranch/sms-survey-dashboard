@@ -3,7 +3,7 @@ from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView, DetailView, DeleteView
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView
 from django.http import HttpResponseRedirect, Http404
@@ -50,6 +50,36 @@ def create_project(request, program_slug):
                     "project_slug": project_slug},
             )
         )
+
+
+@login_required(login_url="/login/")
+def update_project(request, program_slug, project_slug):
+    project_object = get_object_or_404(Project, slug=project_slug)
+    project_object_obj_to_dict = model_to_dict(project_object)
+
+    if request.method == "POST":
+        form = ProjectForm(request.POST, instance=project_object)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+        messages.success(request, "Project was updated successfully!")
+        return redirect(
+            reverse_lazy("tralard:project-detail", kwargs={"program_slug": program_slug, "project_slug": project_slug}))
+    return JsonResponse({"payload": project_object_obj_to_dict})
+
+
+@login_required(login_url="/login/")
+def delete_project(request, program_slug, project_slug):
+    try:
+        project_object = Project.objects.get(slug=project_slug)
+        project_object.delete()
+        messages.success(request, "Project was deleted successfully!")
+    except Project.DoesNotExist:
+        pass
+
+    return redirect(
+        reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
+    )
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):

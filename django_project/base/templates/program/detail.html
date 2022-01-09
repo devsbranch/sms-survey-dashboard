@@ -10,6 +10,7 @@
 <!-- PAGE content goes HERE -->
 {% block content %}
 {% include 'includes/project-create-modal.html' %}
+{% include 'includes/project-update-modal.html' %}
 
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer">
@@ -87,7 +88,7 @@
                                                         <a href="{{ project.get_absolute_url }}">
                                                             <h4 class="no-margin-bottom">{{ project.name|title }}</h4>
                                                         </a>
-                                                        <!-- Team card dropdown -->
+                                                        <!-- Project card dropdown -->
                                                         <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
                                                             <div class="button">
                                                                 <i class="material-icons">more_vert</i>
@@ -99,32 +100,28 @@
                                                                        class="dropdown-item">
                                                                         <i class="sl sl-icon-people"></i>
                                                                         <span>
-                                                                                    <span>View</span>
-                                                                                    <span>View Details or Manage</span>
-                                                                                </span>
+                                                                            <span>View sub project</span>
+                                                                            <span>View details of sub project</span>
+                                                                        </span>
                                                                     </a>
-                                                                    <a href="#" class="dropdown-item">
-                                                                        <i class="sl sl-icon-speech"></i>
+                                                                    <a href="{{ project.get_absolute_url }}"
+                                                                       class="dropdown-item">
+                                                                        <i class="sl sl-icon-share-alt"></i>
                                                                         <span>
-                                                                                    <span>Messages</span>
-                                                                                    <span>View team messages</span>
-                                                                                </span>
+                                                                            <span>View project</span>
+                                                                            <span>View details of this project</span>
+                                                                        </span>
                                                                     </a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a href="#" class="dropdown-item">
-                                                                        <i class="sl sl-icon-equalizer"></i>
+                                                                    <a href="#"
+                                                                       class="dropdown-item modal-trigger"
+                                                                       onClick="populateProjectFrom('{{ program.slug }}', '{{ project.slug }}');"
+                                                                       data-modal="update-project-modal"
+                                                                    >
+                                                                        <i class="sl sl-icon-note"></i>
                                                                         <span>
-                                                                                    <span>Settings</span>
-                                                                                    <span>Edit team settings</span>
-                                                                                </span>
-                                                                    </a>
-                                                                    <div class="dropdown-divider"></div>
-                                                                    <a class="dropdown-item">
-                                                                        <i class="sl sl-icon-logout"></i>
-                                                                        <span>
-                                                                                    <span>Leave</span>
-                                                                                    <span>Leave this team</span>
-                                                                                </span>
+                                                                            <span>Edit project</span>
+                                                                            <span>Update project details</span>
+                                                                        </span>
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -877,3 +874,25 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}{% endblock javascripts %}
+<scipt>
+    function populateProjectFrom(program_slug, project_slug){
+        let origin = location.origin;
+        const url = `${origin}/program/${program_slug}/project/${project_slug}/update`
+        $.get(url, function( { payload } ) {
+            $("#edit-project-form input[name='name']").val(payload.name);
+            $("#edit-project-form textarea[name='description']").val(payload.description);
+            $(`#edit-project-form option[value="${payload.approved}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.has_funding}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.program}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.project_representative}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.project_managers}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.project_funders}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.training_managers}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${payload.certification_managers}"]`).prop('selected', true);
+            $("#edit-project-form input[name='image_file']").val(payload.image_file);
+            $("#edit-project-form textarea[name='custom_precis']").val(payload.precis);
+            $("#edit-project-form input[name='focus_area']").val(payload.focus_area);
+            $("#edit-project-form").attr('action', url);
+        });
+    }
+</scipt>
