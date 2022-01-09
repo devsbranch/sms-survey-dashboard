@@ -20,7 +20,36 @@ from tralard.models.project import Project, Feedback, Representative
 from tralard.models.sub_project import SubProject, Indicator
 
 from tralard.forms.sub_project import SubProjectForm
-from tralard.forms.project import FeedbackForm
+from tralard.forms.project import FeedbackForm, ProjectForm
+
+
+@login_required(login_url="/login/")
+def create_project(request, program_slug):
+    project_slug = None
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            form.save()
+            messages.success(request, "The project was created successfully!")
+            project_slug = instance.slug
+            return redirect(
+                reverse_lazy(
+                    "tralard:project-detail",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug}
+                )
+            )
+        return redirect(
+            reverse_lazy(
+                "tralard:project-detail",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug},
+            )
+        )
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
