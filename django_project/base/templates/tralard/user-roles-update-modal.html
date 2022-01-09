@@ -1,0 +1,316 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="projects-list-wrapper">
+<div class="list-body" >
+<div class="w3-container">
+<div>
+    <div class="w3-card-4 w3-animate-zoom" style="width: 80%; margin-top: -4em; height: 95%; background: #f4f6fb;">
+    <span onclick="document.getElementById('user-roles-update-trigger').style.display='none'" 
+    class="w3-button w3-xlarge w3-display-topright">&times;</span>
+    {% load static %}
+        <!-- Main Training container -->
+        <div id="dashboard-wrapper" class="dashboard-outer">
+            <div class="dashboard-inner">
+                <!-- Dashboard Wrapper -->
+                <div class="dashboard-wrapper">
+        
+                    <div id="main-dashboard" class="section-wrapper">
+                        <!-- Dashboard content -->
+                        <div id="basic-layout" class="dashboard-columns">
+        
+                            <div class="contact-profile-wrap">
+        
+                                <!-- Page title -->
+                                <div class="contacts-title-wrapper">
+                                    <h3 class="contacts-title">User Permissions Update</h3>
+                                </div>
+                                <div class="columns contact-profile">
+                                    <!-- Avatar Card -->
+                                    <div class="column is-4">
+                                        <div class="flex-card is-avatar light-bordered card-overflow">
+                                            <div class="inner">
+                                                <div class="contact-block">
+                                                    <!-- Avatar -->
+                                                    <div class="avatar-wrapper">
+                                                        <img id="project-image" src="" alt=""
+                                                            data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}">
+                                                    </div>
+                                                    <!-- Meta -->
+                                                    <div class="contact-name">
+                                                        <span id="sub-project-1"></span>
+                                                    </div>
+                                                    <div class="contact-company">
+                                                        <span id="training-moderator-1"></span>
+                                                    </div>
+                                                    <!-- Stats -->
+                                                    <div class="stats-block">
+                                                        <div class="stat">
+                                                            <span>Total Beneficiaries</span>
+                                                            <span>{{ total_beneficiaries }}</span>
+                                                        </div>
+                                                        <div class="column is-6">
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Email
+                                                                </div>
+                                                                <div class="info-content is-email">
+                                                                    <span id="email-address">?</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Cell
+                                                                </div>
+                                                                <div class="info-content is-email">
+                                                                    <span id="cell-number">?</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="column is-9">
+                                        <!-- Contact informations -->
+                                        <div style="height: 94%;" class="flex-card is-contact-info light-bordered card-overflow">
+                                            <!-- Tabs -->
+                                            <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
+                                                <!-- General informations -->
+                                                <div id="tab-general" class="navtab-content is-active">
+                                                    <div class="columns">
+                                                        <div class="column is-6">
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Sub Project
+                                                                </div>
+                                                                <div class="info-content is-email">
+                                                                    <span id="sub-project-2">?</span>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Title
+                                                                </div>
+                                                                <div class="info-content">
+                                                                    <span id="project-title">?</span>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Types
+                                                                </div>
+                                                                <div class="info-content">
+                                                                    <span id="training-type" >?</span>
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Moderator
+                                                                </div>
+                                                                <div class="info-content">
+                                                                    <span id="training-moderator-2">?</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column is-6">
+                                                            <!-- Contact summary -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Notes
+                                                                </div>
+                                                                <div class="info-content is-notes">
+                                                                    <span id="training-notes" >?</span>
+                                                                </div>
+                                                                <!-- Switch -->
+                                                                <div class="field is-prospect">
+                                                                    <input id="prospectSwitch" type="checkbox"
+                                                                        name="prospectSwitch" class="switch is-secondary"
+                                                                        checked>
+                                                                    <label for="prospectSwitch"></label> Completed
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                    <div class="event-block">
+                                                        <div class="date-block">
+                                                            <span id="start-day">?</span>
+                                                            <span id="start-month">?</span>
+                                                            <small id="start-year">?</small>
+                                                        </div>
+                                                        <!-- Event meta -->
+                                                        <div class="event-meta">
+                                                            <span class="event-name">
+                                                                Start date
+                                                            </span>
+                                                            <span class="meta">
+                                                                <span class="meta-element">
+                                                                    <i class="sl sl-icon-clock"></i>
+                                                                    <span id="start-time">?</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>                                                 
+                                                     </div>
+                                                     <div class="event-block">
+                                                        <div class="date-block">
+                                                            <span id="end-day">?</span>
+                                                            <span id="end-month">?</span>
+                                                            <small id="end-year">?</small>
+                                                        </div>
+                                                        <!-- Event meta -->
+                                                        <div class="event-meta">
+                                                            <span class="event-name">
+                                                                End date
+                                                            </span>
+                                                            <span class="meta">
+                                                                <span class="meta-element">
+                                                                    <i class="sl sl-icon-clock"></i>
+                                                                    <span id="end-time">?</span>
+                                                                </span>
+                                                            </span>
+                                                        </div>                                                  
+                                                    </div>
+                                                    <button style="margin-bottom: 2em; margin-right: 4em;" onclick="document.getElementById('user-roles-update-trigger').style.display='none'" class="w3-button w3-right w3-white w3-border w3-display-bottomright">Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Send message modal -->
+        <!-- Send message to contact Modal -->
+        <div id="message-contact-modal" class="modal modal-md message-contact-modal modal-hero">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="flex-card simple-shadow">
+                    <h2 class="dark-text">Send Message</h2>
+                    <div class="card-body">
+                        <div class="has-text-centered">
+                            <div class="image">
+                                <img src="{% static 'assets/images/icons/send-message.svg' %}" alt="">
+                            </div>
+                            <div class="help-text has-text-centered">Send a message to this contact's email</div>
+        
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input class="input is-medium" type="text" placeholder="Message subject">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-sticky-note-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+        
+                            <div class="field">
+                                <div class="control">
+                                    <textarea class="textarea" rows="6" placeholder="Your message ..."></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="send-copy">
+                                <div class="field">
+                                    <input id="messageSwitch" type="checkbox" name="messageSwitch" class="switch is-secondary">
+                                    <label for="messageSwitch"><span>Send a copy to my inbox?</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Invite User Modal -->   
+    
+        <!-- Log call Modal -->
+        <div id="call-contact-modal" class="modal modal-md call-contact-modal modal-hero">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="flex-card simple-shadow">
+                    <h2 class="dark-text">Log Call</h2>
+                    <div class="card-body">
+                        <div class="has-text-centered">
+                            <div class="image">
+                                <img src="{% static 'assets/images/icons/log-call.svg' %}" alt="">
+                            </div>
+                            <div class="help-text has-text-centered">Log a phone call you had with this contact</div>
+        
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input id="call-picker" class="input is-medium" type="text" placeholder="When was it?">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-calendar-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+        
+                            <div class="field">
+                                <div class="control">
+                                    <select class="chosen-select" data-placeholder="Type of Call">
+                                        <option label="Type of Call"></option>
+                                        <option>Outgoing</option>
+                                        <option>Incoming</option>
+                                    </select>
+                                </div>
+                            </div>
+        
+                            <div class="field">
+                                <div class="control has-icons-left">
+                                    <input class="input is-medium" type="number" placeholder="Call duration (in minutes)">
+                                    <span class="icon is-left">
+                                        <i class="fa fa-clock-o"></i>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <div class="control">
+                                    <textarea class="textarea" rows="6" placeholder="Quick summary of the conversation"></textarea>
+                                </div>
+                            </div>
+        
+                            <div class="send-copy">
+                                <div class="field">
+                                    <input id="subscribedSwitch" type="checkbox" name="subscribedSwitch" class="switch is-secondary">
+                                    <label for="subscribedSwitch"><span>Notify subscribed users?</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="button is-modal">Log Call</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+document.getElementsByClassName("tablink")[0].click();
+
+function openCity(evt, cityName) {
+    var i, x, tablinks;
+    x = document.getElementsByClassName("city");
+    for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < x.length; i++) {
+    tablinks[i].classList.remove("w3-light-grey");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.classList.add("w3-light-grey");
+}
+</script>

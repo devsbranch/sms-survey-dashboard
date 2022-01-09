@@ -4,6 +4,8 @@ from django.utils.crypto import get_random_string
 
 from djmoney.money import Money
 
+from rolepermissions.roles import get_user_roles
+
 def unique_slugify(instance, slug):
     """
     Generate slug and ensure it is unique,
@@ -98,3 +100,13 @@ def check_requested_deduction_against_balance(
             f"Requested {requested_semantic} amount can not be more than the remaining {balance_semantic} balance."
         )
     return requested_amount
+
+
+def current_user_roles(user):
+    uncleaned_user_roles = get_user_roles(user)
+    cleaned_user_roles = []
+    
+    for role in uncleaned_user_roles:
+        cleaned_user_roles.append(role.get_name())
+    user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
+    return user_roles

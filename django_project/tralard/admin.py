@@ -19,7 +19,7 @@ from tralard.models import (
     Expenditure,
     Disbursement,
 )
-
+from tralard.models.profile import Profile
 
 admin.site.register(Fund)
 admin.site.register(Ward)
@@ -38,3 +38,4 @@ admin.site.register(Beneficiary)
 admin.site.register(TrainingType)
 admin.site.register(Disbursement)
 admin.site.register(Representative)
+admin.site.register(Profile)

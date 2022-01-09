@@ -472,7 +472,7 @@
 
                                                     {% endif %}
 
-                                                <a href="{% url 'tralard:program-detail' program_slug=program.slug %}">
+                                                <a class="program-detail-redirector" href="{% url 'tralard:program-detail' program_slug=program.slug %}">
                                                     <div class="user-list-info">
                                                         <div class="name">{{ program.name }}</div>
                                                         <div class="position">Approved:  Yes</div>
@@ -501,7 +501,7 @@
 
                                                     {% endif %}
                                     
-                                                <a href="{% url 'tralard:program-detail' program.slug %}">
+                                                <a class="program-detail-redirector" href="{% url 'tralard:program-detail' program.slug %}">
                                                     <div class="user-list-info">
                                                         <div class="name">{{ program.name }}</div>
                                                         <div class="position">Approved:  Pending ...</div>

@@ -22,6 +22,7 @@ from tralard.views.training import (
 )
 from tralard.views.map import MapTemplateView
 from tralard.views.fund import (
+    FundDetailView,
     FundListAndCreateView,
     FundDetailView,
     delete_disbursement,
@@ -30,6 +31,8 @@ from tralard.views.fund import (
     update_disbursement,
     update_fund,
 )
+
+from tralard.views.profile import ProfileUpdateView
 
 app_name = "tralard"
 urlpatterns = [
@@ -128,13 +131,8 @@ urlpatterns = [
         fund_delete,
         name="fund-delete",
     ),
-    # -------- beneficiary --------
+    
     # -------- training ------------
-    path(
-        "training/list/",
-        TrainingListView.as_view(),
-        name="training-list",
-    ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
         TrainingListView.as_view(),
@@ -149,5 +147,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/",
         training_fetch,
         name="training-fetch",
+    ),
+    # -------- user profile --------
+    path(
+        'user/profile/update/<slug:slug>/', 
+        ProfileUpdateView.as_view(),
+        name='profile-update'
     ),
 ]

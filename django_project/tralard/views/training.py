@@ -15,7 +15,7 @@ import json
 class TrainingListView(LoginRequiredMixin, CreateView):
     model = Training
     form_class = TrainingForm
-    template_name = 'training/list.html'
+    template_name = 'tralard/training_list.html'
 
     def get_success_url(self):
         return reverse_lazy("tralard:training-list", kwargs={
