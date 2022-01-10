@@ -174,6 +174,12 @@ urlpatterns = [
         training_fetch,
         name="training-fetch",
     ),
+    # -------- SubProject --------
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
+        SubProjectDetailView.as_view(),
+        name="subproject-manage",
+    ),
     # -------- user profile --------
     path(
         "user/profile/update/<slug:slug>/",
