@@ -12,8 +12,12 @@ from tralard.views.project import (
     edit_feedback,
     delete_feedback,
 )
-from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
-from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
+from tralard.views.beneficiary import (
+    BeneficiaryOrgListView,
+    beneficiary_detail,
+    beneficiary_update,
+    beneficiary_delete,
+)
 from tralard.views.training import (
     TrainingListView,
     training_fetch,
@@ -126,12 +130,33 @@ urlpatterns = [
         update_disbursement,
         name="disbursement-update",
     ),
+    # -------- beneficiary --------
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/list/",
+        BeneficiaryOrgListView.as_view(),
+        name="beneficiary-list",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/update/",
+        beneficiary_update,
+        name="beneficiary-update",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/delete/",
+        beneficiary_delete,
+        name="beneficiary-delete",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
+        beneficiary_detail,
+        name="beneficiary-detail",
+    ),
+    # -------- training ------------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
         fund_delete,
         name="fund-delete",
     ),
-    
     # -------- training ------------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
@@ -150,8 +175,8 @@ urlpatterns = [
     ),
     # -------- user profile --------
     path(
-        'user/profile/update/<slug:slug>/', 
+        "user/profile/update/<slug:slug>/",
         ProfileUpdateView.as_view(),
-        name='profile-update'
+        name="profile-update",
     ),
 ]

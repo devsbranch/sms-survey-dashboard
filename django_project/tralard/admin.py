@@ -1,4 +1,7 @@
 from django.contrib import admin
+from django.contrib.gis.db import models
+
+from mapwidgets.widgets import GooglePointFieldWidget
 
 from tralard.models import (
     Fund, 
@@ -21,6 +24,19 @@ from tralard.models import (
 )
 from tralard.models.profile import Profile
 
+CUSTOM_MAP_SETTINGS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [-15.7177013, 28.6300491]),
+    ),
+}
+
+class BeneficiaryAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        models.PointField: {"widget": GooglePointFieldWidget(settings=CUSTOM_MAP_SETTINGS)}
+    }
+
+
 admin.site.register(Fund)
 admin.site.register(Ward)
 admin.site.register(Program)
@@ -34,7 +50,7 @@ admin.site.register(SubProject)
 admin.site.register(Indicator)
 admin.site.register(Attendance)
 admin.site.register(Expenditure)
-admin.site.register(Beneficiary)
+admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(TrainingType)
 admin.site.register(Disbursement)
 admin.site.register(Representative)

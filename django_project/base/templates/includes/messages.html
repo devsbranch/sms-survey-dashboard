@@ -1,22 +1,63 @@
 {% if messages %}
 <!--  -->
-{% for message in messages %}
-<div id="message" class="container">
-  <div
-    class="alert alert-{{ message.tags }} alert-dismissible fade show"
-    role="alert"
-  >
-    {{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-    <strong>
-      {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %} Error {% else %}
-      {{message.tags|title}} {% endif %}
-    </strong>
-    {{ message }}
+  {% for message in messages %}
+  <div id="message" class="container">
+    <div class="alert {{message.tags}} alert-dismissible fade show" role="alert" style="width: 40rem;">
+      <p>{{ message }}</p>
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+        onClick="this.parentElement.style.display='none';"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
   </div>
-</div>
-{% endfor %}
+    
+  {% endfor %}
+
+  
 <!--  -->
 {% endif %}
+
+<style>
+    #message {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 5px;
+    }
+    .alert {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .alert-success {
+      padding: 5px;
+      color: #0f5132;
+      background-color: #bef0d9;
+    }
+    .alert-danger {
+      padding: 5px;
+      color: #842029;
+      background-color: #f8d7da;
+    }
+
+    .closebtn {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      float: right;
+      font-size: 22px;
+      line-height: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .closebtn:hover {
+      color: black;
+    }
+  </style>

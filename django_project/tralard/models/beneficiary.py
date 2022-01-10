@@ -18,24 +18,16 @@ logger = logging.getLogger(__name__)
 
 
 class Beneficiary(AbstractOrganizationBeneficiary):
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     location = models.PointField(
-        _("Location"),
-        geography=True,
-        blank=True,
-        null=True,
-        srid=4326
+        _("Location"), geography=True, blank=True, null=True, srid=4326
     )
     ward = models.ForeignKey(
-        Ward, 
+        Ward,
         on_delete=models.CASCADE,
     )
     sub_project = models.ForeignKey(
-        'tralard.subproject',
+        "tralard.subproject",
         on_delete=models.CASCADE,
     )
 

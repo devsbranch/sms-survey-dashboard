@@ -43,6 +43,7 @@ INSTALLED_APPS += (
     'easy_thumbnails',
     'filer',
     'import_export',
+    'mapwidgets',
 )
 # Defines whether to log model related events,
 # such as when an object is created, updated, or deleted

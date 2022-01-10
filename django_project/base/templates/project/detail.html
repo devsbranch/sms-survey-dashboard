@@ -41,6 +41,9 @@
                             </div>
                             <!-- Filter input -->
                             <div class="actions">
+                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
+                                    Beneficiaries
+                                </a>
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:training-list' program_slug=project.program.slug project_slug=project.slug %}">
                                     Training Schedules
                                 </a>
