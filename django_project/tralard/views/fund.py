@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.views.generic import CreateView, DetailView
 from tralard.forms.fund import FundForm, DisbursementForm
 
-from tralard.models.fund import Disbursement, Fund 
+from tralard.models.fund import Disbursement, Expenditure, Fund 
 from tralard.models.project import Project
 
 
@@ -40,11 +40,7 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         form.save()
-        return super(FundListAndCreateView, self).form_valid(form)
-
-    
-
-    
+        return super(FundListAndCreateView, self).form_valid(form)    
 
 
 def fund_detail(request, program_slug, project_slug, fund_slug):
@@ -54,7 +50,19 @@ def fund_detail(request, program_slug, project_slug, fund_slug):
     context = {}
     single_fund = Fund.objects.get(slug=fund_slug)
     single_project = Project.objects.get(slug=project_slug)
-    disbursements = Disbursement.objects.filter(fund__slug=fund_slug).values()
+    disbursements_qs = Disbursement.objects.filter(fund__slug=fund_slug)
+    disbursements = []
+    for disb in disbursements_qs:
+        serialized_disb = {
+            'amount': disb.amount.amount,
+            'balance': disb.balance.amount,
+            'disbursement_date': disb.disbursement_date,
+            'currency': disb.currency,
+            'fund': disb.fund.slug,
+            'total_expenses': disb.get_total_disbursed_expenses,
+            'slug': disb.slug,
+        }
+        disbursements.append(serialized_disb)
     funds = Fund.objects.filter(sub_project__project__slug=single_project.slug).values()
     project = {}
     project["name"] = single_project.name
@@ -74,6 +82,7 @@ def fund_detail(request, program_slug, project_slug, fund_slug):
     context["funds"] = funds
     context["form"] = FundForm
     context["modal_display"] = "block"
+    
     return JsonResponse({
         'disbursements': list(disbursements), 
         'funds': list(funds), 
@@ -195,3 +204,11 @@ def update_disbursement(request, program_slug, project_slug, fund_slug, disburse
             'project_slug': project_slug,
             'fund_slug': fund_slug
         }))
+
+
+@login_required(login_url='/login/')
+def get_disbursement_expenditures(request, program_slug, project_slug, fund_slug, disbursement_slug):
+    expenditures = Expenditure.objects.filter(disbursment__slug=disbursement_slug).values()
+    return JsonResponse({
+        'expenditures': list(expenditures)
+    })

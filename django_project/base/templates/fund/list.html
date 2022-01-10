@@ -73,15 +73,6 @@
                       <label for="checkbox-docs-all"></label>
                     </div>
                   </th>
-                  <th class="w-30">
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Project</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
                   <th>
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
@@ -179,25 +170,6 @@
                       <label for="checkbox-contacts-1"></label>
                     </div>
                   </td>
-                  <td class="contact-preview">
-                    <span class="inner">
-                      {% if fund.project.program.logo %}
-                      <img
-                        src="https://via.placeholder.com/150x150"
-                        alt=""
-                        data-demo-src="{{ fund.project.program.logo.url }}"
-                      />
-                      {% endif %}
-                      <span class="inner">
-                        <span class="project-count">
-                          {{ fund.project.name }}
-                        </span>
-                      </span>
-
-                      <i class="material-icons">bookmark_border</i>
-                    </span>
-                  </td>
-
                   <td class="modifications">
                     <span class="inner">
                       <span class="project-count"> {{ fund.amount }} </span>
@@ -405,6 +377,33 @@
     });
   });
 
+  const thousand_seperator = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  const get_disbursement_expenditures = async (
+    program_slug,
+    project_slug,
+    fund_slug,
+    disbursement_slug
+  ) => {
+    try {
+      let res = await fetch(
+        `${location.origin}/program/${program_slug}/project/${project_slug}/fund/${fund_slug}/disbursement/${disbursement_slug}/expenditure/`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val(),
+          },
+        }
+      );
+      return res.json();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // GET FUND DISBURSEMENTS
   function get_fund_disbursements(fund_slug, project_slug, program_slug) {
     let url = location.origin;
@@ -425,9 +424,27 @@
         document.querySelector("#fund_balance").textContent = data.fund.balance;
         for (disbursement in data.disbursements) {
           document.querySelector("#disbursements_list").innerHTML += `
-            <div class='disbursement-card deal-card'>
+            <div class='disbursement-card deal-card' id="${data.fund.slug}">
               <div class='disbursement-card-header deal-card-header is-toggle'>
-                <h3>${data.disbursements[disbursement].amount}</h3>
+                <p>Disbursement Amount:${
+                  data.disbursements[disbursement].currency
+                } ${thousand_seperator(
+            +data.disbursements[disbursement].amount
+          )}</p>
+              <p>
+                Disbursement Date: ${
+                  data.disbursements[disbursement].disbursement_date
+                }
+              </p>
+              <p>
+                Total Expenditure: ${
+                  data.disbursements[disbursement].currency
+                } ${thousand_seperator(
+            +data.disbursements[disbursement].total_expenses
+              ? +data.disbursements[disbursement].total_expenses
+              : "0"
+          )}
+              </p>
                 <div class="d-flex align-items-center">
                   {% include 'includes/disbursement_dropdown.html' %}
                   <div class="toggle-icon">
@@ -435,28 +452,38 @@
                   </div>
                 </div>
               </div>
-              <div class="disbursement-card-content deal-card-content is-active">
-                <div class="details-placeholder">
-                  <span>{{ project.description|safe }}</span>
-                </div>
-              </div>
-              <div class="disbursement-card-content deal-card-content is-active">
-                <div class="details-placeholder">
-                  <span>{{ project.description|safe }}</span>
-                </div>
-              </div>
-              <div class="disbursement-card-content deal-card-content is-active">
-                <div class="details-placeholder">
-                  <span>{{ project.description|safe }}</span>
-                </div>
-              </div>
-              <div class="disbursement-card-content deal-card-content is-active">
-                <div class="details-placeholder">
-                  <span>{{ project.description|safe }}</span>
-                </div>
-              </div>
             </div>
           `;
+          get_disbursement_expenditures(
+            program_slug,
+            project_slug,
+            fund_slug,
+            data.disbursements[disbursement].slug
+          )
+            .then(({ expenditures }) => {
+              console.log(expenditures);
+              for (expenditure in expenditures) {
+                document.querySelector(
+                  `.disbursement-card.deal-card`
+                ).innerHTML += `
+                <div class="disbursement-card-content deal-card-content">
+                  <div class="details-placeholder d-flex ">
+                    <span>Expenditure: ${
+                      expenditures[expenditure].amount_currency
+                    } ${thousand_seperator(
+                  +expenditures[expenditure].amount
+                )} </span>  
+                   <span>Date: ${
+                     expenditures[expenditure].expenditure_date
+                   }</span> 
+                  </div>
+                </div>
+                `;
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }
       },
       error: function (data) {
@@ -464,6 +491,15 @@
       },
     });
   }
+
+  $("body").delegate(".disbursement-card-content", "click", function () {
+    $(this).toggleClass("is-active");
+    $(this)
+      .closest(".disbursement-card")
+      .find(".disbursement-card-content")
+      .toggleClass("is-active")
+      .slideToggle("fast");
+  });
 
   $("body").delegate(
     ".disbursement-card-header.is-toggle",

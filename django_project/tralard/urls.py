@@ -29,6 +29,7 @@ from tralard.views.fund import (
     delete_disbursement,
     fund_delete,
     fund_detail,
+    get_disbursement_expenditures,
     update_disbursement,
     update_fund,
 )
@@ -129,6 +130,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/",
         update_disbursement,
         name="disbursement-update",
+    ),
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/',
+        get_disbursement_expenditures,
+        name='disbursement-expenditure'
     ),
     # -------- beneficiary --------
     path(

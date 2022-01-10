@@ -4,11 +4,13 @@
     <!-- Side icon menu -->
     <ul>
       <li class="main-logo">
-        <a href="/"
-          >
-          <img src="{% static 'assets/images/logos/logo.png' %}" alt="" 
-            data-demo-src="{% static 'assets/images/logos/logo.png' %}">
-      </a>
+        <a href="/"></a>
+          <img
+            src="{% static 'assets/images/logos/logo.png' %}"
+            alt=""
+            data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+          />
+        </a>
       </li>
       <li class="side-icon" data-child-menu="dashboard-menu">
         <i class="sl sl-icon-speedometer"></i>
@@ -34,12 +36,19 @@
         <!-- Profile avatar -->
         <a class="profile-trigger" href="javascript:void(0);">
           {% if profile.profile_photo %}
-            <img src="{{ profile.profile_photo.url }}" id="user-profile-page-opener-button" class="profile-photo" alt="{{ profile.user.username }}'s profile photo"/>
+          <img
+            src="{{ profile.profile_photo.url }}"
+            id="user-profile-page-opener-button"
+            class="profile-photo"
+            alt="{{ profile.user.username }}'s profile photo"
+          />
           {% else %}
-            <img 
-            src="/assets/images/logos/logo.png" 
-            class="profile-photo" data-demo-src="/assets/images/logos/logo.png" 
-            alt="{{ profile.user.username }}'s profile photo"/>
+          <img
+            src="/assets/images/logos/logo.png"
+            class="profile-photo"
+            data-demo-src="/assets/images/logos/logo.png"
+            alt="{{ profile.user.username }}'s profile photo"
+          />
           {% endif %}
           <span class="dot"></span>
         </a>
@@ -51,26 +60,22 @@
           <div class="profile-container">
             <div class="inner">
               <!-- Profile with cover -->
-              <div
-                id="profile-cover"
-                class="profile-cover"
-              >
-              <style>
-                #profile-cover {
+              <div id="profile-cover" class="profile-cover">
+                <style>
+                  #profile-cover {
                     background-image: url("{% static 'assets/images/banner.jpeg' %}");
-                    
+
                     height: 500px;
                     background-position: center;
                     background-repeat: no-repeat;
                     background-size: cover;
-                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
-                    filter: alpha(opacity=50);  /* IE 5-7 */
-                    -moz-opacity: 0.5;          /* Netscape */
-                    -khtml-opacity: 0.5;        /* Safari 1.x */
-                    
-                }
-            </style>
-              <!-- blablabla barner -->
+                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+                    filter: alpha(opacity=50); /* IE 5-7 */
+                    -moz-opacity: 0.5; /* Netscape */
+                    -khtml-opacity: 0.5; /* Safari 1.x */
+                  }
+                </style>
+                <!-- blablabla barner -->
                 <div class="cover-overlay"></div>
                 <div class="heading-wrapper">
                   <div class="profile-heading">
@@ -80,12 +85,18 @@
                           <i class="fa fa-camera fa-2x"></i>
                         </div>
                         {% if profile.profile_photo %}
-                          <img src="{{ profile.profile_photo.url }}" class="profile-photo" alt="{{ profile.user.username }}'s profile photo"/>
+                        <img
+                          src="{{ profile.profile_photo.url }}"
+                          class="profile-photo"
+                          alt="{{ profile.user.username }}'s profile photo"
+                        />
                         {% else %}
-                          <img 
-                          src="/assets/images/logos/logo.png" 
-                          class="profile-photo" data-demo-src="/assets/images/logos/logo.png" 
-                          alt="{{ profile.user.username }}'s profile photo"/>
+                        <img
+                          src="/assets/images/logos/logo.png"
+                          class="profile-photo"
+                          data-demo-src="/assets/images/logos/logo.png"
+                          alt="{{ profile.user.username }}'s profile photo"
+                        />
                         {% endif %}
                       </div>
                       <div class="name">
@@ -174,12 +185,15 @@
                             <div class="info-block">
                               <div class="meta">
                                 <label>Full name</label>
-                                <p>{{ profile.user.first_name|title }} {{ profile.user.last_name|title }}</p>
+                                <p>
+                                  {{ profile.user.first_name|title }} {{
+                                  profile.user.last_name|title }}
+                                </p>
                               </div>
                             </div>
                             <div class="info-block">
                               <div class="meta">
-                                <label >Gender</label>
+                                <label>Gender</label>
                                 <p>{{ profile.gender }}</p>
                               </div>
                             </div>
@@ -189,7 +203,7 @@
                                 <p>{{ profile.district.province }}</p>
                               </div>
                             </div>
-                            
+
                             <div class="info-block">
                               <div class="meta">
                                 <label>District</label>
@@ -219,45 +233,78 @@
                             <div class="info-block">
                               <div class="meta">
                                 <label>User Roles</label>
-                                <div style="display: flex-container; font-size: 16px;" class="flex-container">
-                                 
-                                  {% for role in  user_roles %}
-                                      <span class="badge badge-info">{{ role }}</span>
+                                <div
+                                  style="
+                                    display: flex-container;
+                                    font-size: 16px;
+                                  "
+                                  class="flex-container"
+                                >
+                                  {% for role in user_roles %}
+                                  <span class="badge badge-info"
+                                    >{{ role }}</span
+                                  >
                                   {% endfor %}
                                   <span class="e"></span>
                                 </div>
                               </div>
                             </div>
                             <hr />
-                            <div class="info-block" style="float: left;">
+                            <div class="info-block" style="float: left">
                               <div class="meta">
-                                  {% if profile.user.is_active %}
-                                    <span>Active</span>
-                                  {% else %}
-                                  <span>Inactive</span>
-                                  {% endif %}
+                                {% if profile.user.is_active %}
+                                <span>Active</span>
+                                {% else %}
+                                <span>Inactive</span>
+                                {% endif %}
                               </div>
                             </div>
-                            <div class="info-block" style="float: right;">
+                            <div class="info-block" style="float: right">
                               <div class="meta">
-                                  {% if profile.user.is_active %}
-                                    <img style="width: 20px; height: 20px;" class="img-xs rounded-circle" src="/static/assets/images/green-check-icon.jpeg" alt="active">
-                                  {% else %}
-                                    <img style="width: 20px; height: 20px" class="img-xs rounded-circle" src="/static/assets/images/red-check-icon.jpg" alt="inactive">
-                                  {% endif %}
+                                {% if profile.user.is_active %}
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/green-check-icon.jpeg"
+                                  alt="active"
+                                />
+                                {% else %}
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/red-check-icon.jpg"
+                                  alt="inactive"
+                                />
+                                {% endif %}
                               </div>
                             </div>
                           </div>
-                          <button style="visibility: hidden; width: 100%; display: block; background-color: #21546d; color: white; font-size: 14px; padding-bottom: 6px;" onclick="document.getElementById('user-roles-update-trigger').style.display='block'" class="w3-button button block_"> <SPAN style="margin-bottom: 8px;">Update User Roles</SPAN></button>
-                          <div style="width: 100%;" class="column is-6">
+                          <button
+                            style="
+                              visibility: hidden;
+                              width: 100%;
+                              display: block;
+                              background-color: #21546d;
+                              color: white;
+                              font-size: 14px;
+                              padding-bottom: 6px;
+                            "
+                            onclick="document.getElementById('user-roles-update-trigger').style.display='block'"
+                            class="w3-button button block_"
+                          >
+                            <span style="margin-bottom: 8px"
+                              >Update User Roles</span
+                            >
+                          </button>
+                          <div style="width: 100%" class="column is-6">
                             <div class="info-card">
                               <div class="info-header">
                                 <h3>Contact Info</h3>
                                 <i class="im im-icon-Post-Mail2"></i>
                               </div>
-                              <div style="float: right;" class="info-block">
+                              <div style="float: right" class="info-block">
                                 <div class="meta">
-                                  <label style="float: right;">Email</label>
+                                  <label style="float: right">Email</label>
                                   <p>{{ profile.user.email }}</p>
                                 </div>
                               </div>
@@ -267,9 +314,11 @@
                                   <p>{{ profile.cell }}</p>
                                 </div>
                               </div>
-                              <div style="float: right;" class="info-block">
+                              <div style="float: right" class="info-block">
                                 <div class="meta">
-                                  <label style="margin-left: 8em;">Address</label>
+                                  <label style="margin-left: 8em"
+                                    >Address</label
+                                  >
                                   <p>{{ profile.address }}</p>
                                 </div>
                               </div>
@@ -283,7 +332,7 @@
                           </div>
                         </div>
                         <!-- Social Media Details -->
-                        <div style="visibility: hidden;" class="column is-6">
+                        <div style="visibility: hidden" class="column is-6">
                           <div class="info-card">
                             <div class="info-header">
                               <h3>Social Media</h3>
@@ -322,15 +371,7 @@
                     <div class="columns">
                       <div class="column is-10 is-offset-1">
                         <div
-                          class="
-                            flex-card
-                            is-top
-                            light-bordered
-                            raised
-                            animated
-                            preFadeInUp
-                            fadeInUp
-                          "
+                          class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp"
                         >
                           <div class="card-body">
                             <div class="columns is-vcentered">
@@ -391,22 +432,12 @@
 
                     <!-- Team List -->
                     <div
-                      class="
-                        columns
-                        is-vcentered is-multiline
-                        animated
-                        preFadeInUp
-                        fadeInUp
-                      "
+                      class="columns is-vcentered is-multiline animated preFadeInUp fadeInUp"
                     >
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -432,15 +463,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -451,11 +474,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
@@ -481,15 +500,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -500,11 +511,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -530,15 +537,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -549,11 +548,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -579,15 +574,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -598,11 +585,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-warning">Busy</span>
@@ -628,15 +611,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -647,11 +622,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
@@ -677,15 +648,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -698,23 +661,18 @@
                   </div>
                   <!-- /Profile team -->
                   <!-- Profile notifications -->
-                  <div style="width: 100%;"
+                  <div
+                    style="width: 100%"
                     id="profile-notifications"
                     class="profile-notifications is-hidden"
                   >
                     <div
-                      class="
-                        profile-notifications-inner
-                        animated
-                        preFadeInUp
-                        fadeInUp
-                      "
+                      class="profile-notifications-inner animated preFadeInUp fadeInUp"
                     >
-                    <div class="profile-notifications-title" style="width: 100%;">
-                      <form name="profile_update_form" method="post" action="/user/profile/update/{{ profile.slug }}/" id="profile-update-ID">
-                        {% load crispy_forms_tags %}
-                        {% crispy profile_form profile_form.helper %}
-                      </form>
+                      <div
+                        class="profile-notifications-title"
+                        style="width: 100%"
+                      >
                       </div>
                     </div>
                   </div>
