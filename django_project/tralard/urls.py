@@ -24,21 +24,21 @@ from tralard.views.training import (
     training_delete,
     template_testing,
 )
-from tralard.views.map import MapTemplateView
 from tralard.views.fund import (
-    FundDetailView,
     FundListAndCreateView,
-    FundDetailView,
     delete_disbursement,
     fund_delete,
     fund_detail,
     update_disbursement,
     update_fund,
 )
-
+from tralard.views.map import MapTemplateView
 from tralard.views.profile import ProfileUpdateView
+from tralard.views.sub_project import SubProjectDetailView
+
 
 app_name = "tralard"
+
 urlpatterns = [
     # home
     path(
@@ -172,6 +172,12 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/",
         training_fetch,
         name="training-fetch",
+    ),
+    # -------- SubProject --------
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
+        SubProjectDetailView.as_view(),
+        name="subproject-manage",
     ),
     # -------- user profile --------
     path(

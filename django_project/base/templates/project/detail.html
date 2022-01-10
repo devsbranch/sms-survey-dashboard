@@ -373,20 +373,29 @@
                                                                               role="menu"
                                                                             >
                                                                               <div class="dropdown-content">
+                                                                                <div class="dropdown-divider"></div>
+                                                                                <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}" class="dropdown-item">
+                                                                                    <i class="sl sl-icon-equalizer"></i>
+                                                                                    <span>
+                                                                                        <span>Manage</span>
+                                                                                        <span>Go to subproject Management</span>
+                                                                                    </span>
+                                                                                </a>
                                                                              
                                                                                 <a
-                                                                                id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{subproject.slug}}');" href="#"  data-modal="edit-subproject-modal"
+                                                                                id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}');" href="#"  data-modal="edit-subproject-modal"
                                                                                   class="dropdown-item modal-trigger"
                                                                                 >
                                                                                   <i class="sl sl-icon-pencil"></i>
                                                                                   <span>
                                                                                     <span>Update</span>
+                                                                                    <span>Edit subproject</span>
                                                                                   </span>
                                                                                 </a>
                                                                                 <div class="dropdown-divider"></div>
                                                                                 <a
                                                                                 id="delete-button"
-                                                                                onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{subproject.slug}}', '{{subproject.name}}');"
+                                                                                onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}', '{{ subproject.name }}');"
                                                                                   href="#"
                                                                                   data-modal="delete-subproject-modal"
                                                                                   class="dropdown-item modal-trigger" 
@@ -394,6 +403,7 @@
                                                                                   <i class="sl sl-icon-trash"></i>
                                                                                   <span>
                                                                                     <span>Delete </span>
+                                                                                    <span>Delete Subproject</span>
                                                                                   </span>
                                                                                 </a>
                                                                               </div>

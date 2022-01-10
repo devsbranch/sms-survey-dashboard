@@ -16,7 +16,7 @@ from django.core import serializers
 import json
 
 from tralard.models.program import Program
-from tralard.models.project import Project, Feedback, Representative
+from tralard.models.project import Project, Feedback
 from tralard.models.sub_project import SubProject, Indicator
 
 from tralard.forms.sub_project import SubProjectForm

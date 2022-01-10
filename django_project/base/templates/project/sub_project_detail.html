@@ -1,8 +1,8 @@
 {% extends "layouts/base.html" %}
-
+{% load humanize %}
 {% load static %}
 
-{% block title %} {{ title|title }} {% endblock %} 
+{% block title %} Contacts Single {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -19,995 +19,355 @@
     
                 <div id="main-dashboard" class="section-wrapper">
                     <!-- Dashboard content -->
-                    <div id="crm-deal" class="dashboard-columns">
+                    <div id="basic-layout" class="dashboard-columns">
     
-                        <!-- Page title -->
-                        <div class="deal-title-wrapper is-mobile">
-                            <img class="deal-image" src="https://via.placeholder.com/150x150" alt=""
-                                data-demo-src="{% static 'assets/images/dashboard/companies/airbnb.svg' %}">
-                            <div class="inner-wrap">
-                                <h3 class="deal-title">Airbnb Deal</h3>
-                                <div class="title-meta">
-                                    <div class="meta">
-                                        <i class="material-icons">person</i>
-                                        <span>Jeff Stockton</span>
-                                    </div>
-                                    <div class="meta">
-                                        <i class="material-icons">domain</i>
-                                        <span>Airbnb</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Filter input -->
-                            <div class="actions">
-                                <a class="button btn-dash primary-btn btn-dash raised ripple" data-ripple-color="">
-                                    Won
-                                </a>
+                        <div class="contact-profile-wrap">
     
-                                <a class="button btn-dash grey-btn btn-dash raised ripple" data-ripple-color="">
-                                    Lost
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Stage -->
-                        <div class="stage-wrapper">
-                            <div class="stage-inner">
-                                <progress class="progress is-small" value="35" max="100">35%</progress>
-                            </div>
-                            <div class="stages">
-                                <div class="stage is-done">
-                                    <span><i class="sl sl-icon-check"></i>Prospect</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Reached</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Qualified</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Negociation</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>End</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Deal meta -->
-                        <div class="deal-meta">
-                            <div class="deal-price">
-                                <span>$8,500.00</span>
-                                <span>16 products</span>
-                            </div>
-                            <!-- Deal owner -->
-                            <div class="deal-owner">
-                                <img src="https://via.placeholder.com/150x150" alt=""
-                                    data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                <div class="owner-meta">
-                                    <span>Melany Smith</span>
-                                    <span>Deal owner</span>
-                                </div>
-                                <!-- Menu -->
-                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-                                    <div class="button">
-                                        <i class="material-icons">keyboard_arrow_down</i>
-                                    </div>
-                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-                                        <div class="dropdown-content">
-                                            <a class="dropdown-item">
-                                                <i class="sl sl-icon-people"></i>
-                                                <span>
-                                                    <span>Reassign</span>
-                                                    <span>Reassign this deal</span>
-                                                </span>
-                                            </a>
-                                            <a href="#" class="dropdown-item">
-                                                <i class="sl sl-icon-arrow-left-circle"></i>
-                                                <span>
-                                                    <span>Cancel</span>
-                                                    <span>Cancel this deal</span>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-divider"></div>
-                                            <a href="#" class="dropdown-item">
-                                                <i class="sl sl-icon-equalizer"></i>
-                                                <span>
-                                                    <span>Settings</span>
-                                                    <span>Edit deal settings</span>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item">
-                                                <i class="sl sl-icon-clock"></i>
-                                                <span>
-                                                    <span>Suspend</span>
-                                                    <span>Suspend this deal</span>
-                                                </span>
-                                            </a>
+                            <!-- Page title -->
+                            <div class="contacts-title-wrapper">
+                                <h3 class="contacts-title">{{ sub_project.name|title }}</h3>
+                                <!-- Filter input -->
+                                <div class="list-filter">
+                                    <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
+                                        <div class="button">
+                                            <i class="material-icons">more_vert</i>
                                         </div>
-                                    </div>
-                                </div>                        </div>
-                        </div>
-                        <!-- Deal content -->
-                        <div class="columns deal-content">
-                            <!-- Left side -->
-                            <div class="column is-4">
-                                <!-- Deal details -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle">
-                                        <h3>Details</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content">
-                                        <div class="details-placeholder">
-                                            <span>What do you know about this deal?</span>
-                                            <a><i class="material-icons">add</i> Add more details</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Deal contact -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle is-active">
-                                        <h3>Contact</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content is-active">
-                                        <!-- Deal contact -->
-                                        <div class="deal-contact">
-                                            <img src="https://via.placeholder.com/150x150" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
-                                            <div class="contact-meta">
-                                                <span>Jeff Stockton</span>
-                                                <span>Airbnb</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-briefcase"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Job title</span>
-                                                <span>CEO</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-phone"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Phone</span>
-                                                <span><a>+1 555-321-28</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-envelope-open"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Email</span>
-                                                <span><a>johnstockton@airbnb.com</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block is-add top-spaced">
-                                            <div class="block-icon">
-                                                <i class="material-icons">add</i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Add</span>
-                                                <span>Add additional details</span>
+                                        <!-- Dropdown menu -->
+                                        <div class="dropdown-menu is-text-bigger" role="menu">
+                                            <div class="dropdown-content">
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-paper-plane"></i>
+                                                    <span>
+                                                        <span>Send</span>
+                                                        <span>Send contact details</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-rocket"></i>
+                                                    <span>
+                                                        <span>New Deal</span>
+                                                        <span>Start new deal involving this contact</span>
+                                                    </span>
+                                                </a>
+                                                <a href="#" class="dropdown-item">
+                                                    <i class="sl sl-icon-bell"></i>
+                                                    <span>
+                                                        <span>Subscribe me</span>
+                                                        <span>Subscribe me to contact updates</span>
+                                                    </span>
+                                                </a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-shield"></i>
+                                                    <span>
+                                                        <span>Disable</span>
+                                                        <span>Disables this contact</span>
+                                                    </span>
+                                                </a>
+                                                <a class="dropdown-item">
+                                                    <i class="sl sl-icon-trash"></i>
+                                                    <span>
+                                                        <span>Delete</span>
+                                                        <span>Delete this event</span>
+                                                    </span>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Deal organization -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle is-active">
-                                        <h3>Organization</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content is-active">
-                                        <!-- Deal contact -->
-                                        <div class="deal-contact">
-                                            <img src="https://via.placeholder.com/150x150" alt=""
-                                                data-demo-src="{% static 'assets/images/dashboard/companies/airbnb.svg' %}">
-                                            <div class="contact-meta">
-                                                <span>Airbnb</span>
-                                                <span>Flat Rental</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-briefcase"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Job title</span>
-                                                <span>CEO</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-phone"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Phone</span>
-                                                <span><a>+1 555-321-28</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-envelope-open"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Email</span>
-                                                <span><a>johnstockton@airbnb.com</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block is-add top-spaced">
-                                            <div class="block-icon">
-                                                <i class="material-icons">add</i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Add</span>
-                                                <span>Add additional details</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- Funding -->
+                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
+                                        data-ripple-color="" href="#">
+                                        <i class="material-icons">short_text</i>
+                                        Funding
+                                    </a>
+                                    <!-- Training Schedules -->
+                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
+                                        data-ripple-color="" href="#">
+                                        <i class="material-icons">short_text</i>
+                                        Training
+                                    </a>
+                                    <!-- Beneficiaries -->
+                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
+                                        data-ripple-color="" href="#">
+                                        <i class="material-icons">short_text</i>
+                                        Beneficiaries
+                                    </a>
+                                    <!-- Back to project button -->
+                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
+                                        data-ripple-color="" href="{% url 'tralard:project-detail' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug %}">
+                                        <i class="material-icons">short_text</i>
+                                        Main Project
+                                    </a>
                                 </div>
                             </div>
-                            <!-- Right side -->
-                            <div class="column is-8">
-                                <!-- Action card -->
-                                <div class="flex-card action-card card-overflow">
-                                    <!-- Header -->
-                                    <div class="action-card-header">
-                                        <!-- Write note action -->
-                                        <div class="action is-active" data-action="write-note">
-                                            <i class="sl sl-icon-doc"></i>
-                                            <span>Write a note</span>
-                                            <div class="arrow-down"></div>
-                                        </div>
-                                        <!-- Schedule event action -->
-                                        <div class="action" data-action="schedule-event">
-                                            <i class="sl sl-icon-clock"></i>
-                                            <span>Schedule event</span>
-                                            <div class="arrow-down"></div>
-                                        </div>
-                                        <!-- Upload files action -->
-                                        <div class="action" data-action="upload-files">
-                                            <i class="sl sl-icon-paper-clip"></i>
-                                            <span>Upload files</span>
-                                            <div class="arrow-down"></div>
-                                        </div>
-                                    </div>
-                                    <!-- Body -->
-                                    <div class="action-card-body">
-                                        <!-- Write note -->
-                                        <div id="write-note" class="action-wrap">
-                                            <div class="control">
-                                                <textarea class="textarea" rows="1"
-                                                    placeholder="Click here to write a Note ..."></textarea>
+    
+                            <div class="columns contact-profile">
+                                <!-- Avatar Card -->
+                                <div class="column is-4">
+                                    <div class="flex-card is-avatar light-bordered card-overflow">
+                                        <div class="inner">
+                                            <div class="contact-block">
+                                                <!-- Avatar -->
+                                                <div class="avatar-wrapper">
+                                                    {% if sub_project.image_file %}
+                                                        <img src="https://via.placeholder.com/150x150" alt=""
+                                                            data-demo-src="{{ sub_project.image_file.url }}">
+                                                    {% else %}
+                                                        <img src="https://via.placeholder.com/150x150" alt=""
+                                                            data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                                    {% endif %}
+                                                </div>
+                                                <!-- Meta -->
+                                                <div class="contact-name">{{ sub_project.supervisor|title }}</div>
+                                                <div class="contact-company">{{ sub_project.project.name }}.</div>
+                                                <!-- Stats -->
+                                                <div class="stats-block">
+                                                    <div class="stat">
+                                                        <span>Beneficiaries</span>
+                                                        <span>{% if sub_project.count_beneficiaries %}{{ sub_project.count_beneficiaries }}{% else %} None {% endif %}</span>
+                                                    </div>
+                                                    <div class="stat">
+                                                        <span>Training Schedules</span>
+                                                        <span>{% if sub_project.count_training_schedules %}{{ sub_project.count_training_schedules }} {% else %} None {% endif %}</span>
+                                                    </div>
+                                                    {% comment %} <div class="stat">
+                                                        <span>Training Schedules</span>
+                                                        <span>7</span>
+                                                    </div> {% endcomment %}
+                                                </div>
                                             </div>
                                         </div>
-                                        <!-- Schedule event -->
-                                        <div id="schedule-event" class="action-wrap is-hidden">
-                                            <!-- Form -->
-                                            <form class="event-form">
-                                                <h3 class="action-title">New Event</h3>
-                                                <div class="columns is-multiline">
+                                    </div>
+                                </div>
+    
+    
+                                <div class="column is-8">
+                                    <!-- Contact informations -->
+                                    <div class="flex-card is-contact-info light-bordered card-overflow">
+                                        <!-- Tabs -->
+                                        <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
+                                            <div class="tabs">
+                                                <ul>
+                                                    <li class="is-active" data-tab="tab-general"><a>Details</a></li>
+                                                </ul>
+                                            </div>
+    
+                                            <!-- General informations -->
+                                            <div id="tab-general" class="navtab-content is-active">
+                                                <div class="columns">
                                                     <div class="column is-6">
-                                                        <!-- event type select -->
-                                                        <div class="control is-combo">
-                                                            <div class="combo-label">Event Type</div>
-                                                            <div class="combo-box">
-                                                                <div class="box-inner">
-                                                                    <div class="combo-item">
-                                                                        <i class="im im-icon-Conference"></i>
-                                                                        <span class="selected-item">Conference Call</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="box-chevron">
-                                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                                </div>
-                                                                <div class="box-dropdown">
-                                                                    <div class="dropdown-inner has-slimscroll">
-                                                                        <ul>
-                                                                            <li>
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Phone-2"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Phone Call</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li class="is-active">
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Conference"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Conference
-                                                                                    Call</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li>
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Cinema"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Business
-                                                                                    Confrence</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li>
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Pipette"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Test Session</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li>
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Note"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Project
-                                                                                    Review</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li>
-                                                                                <span class="item-icon">
-                                                                                    <i class="im im-icon-Professor"></i>
-                                                                                </span>
-                                                                                <span class="item-name">Interview</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
+                                                        <!-- Info block -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                Email
+                                                            </div>
+                                                            <div class="info-content is-email">
+                                                                {{ sub_project.representative.email }}
                                                             </div>
                                                         </div>
-                                                        <!-- Event date -->
-                                                        <div class="field deal-field">
-                                                            <label class="grey-label-compact">When is the event?</label>
-                                                            <div class="control">
-                                                                <input type="text" class="input" placeholder="Pick a date"
-                                                                    data-toggle="datepicker">
-                                                                <div class="form-icon">
-                                                                    <i class="im im-icon-Calendar-4"></i>
-                                                                </div>
+                                                        <!-- Info block -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                Phone (1)
+                                                            </div>
+                                                            <div class="info-content">
+                                                                {{ sub_project.representative.cell }}
                                                             </div>
                                                         </div>
-                                                        <!-- Event Start -->
-                                                        <div class="field deal-field">
-                                                            <label class="grey-label-compact">Starts at</label>
-                                                            <div class="control">
-                                                                <input type="text" class="input timepicker-24"
-                                                                    placeholder="set time">
-                                                                <div class="form-icon">
-                                                                    <i class="im im-icon-Clock-Forward"></i>
-                                                                </div>
+                                                        <!-- Info block -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                District
+                                                            </div>
+                                                            <div class="info-content">
+                                                                {{ sub_project.representative.district }}
+                                                            </div>
+                                                        </div>
+                                                        <!-- Info block -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                Gender
+                                                            </div>
+                                                            <div class="info-content">
+                                                                {{ sub_project.representative.gender }}
+                                                            </div>
+                                                        </div>
+                                                        <!-- Info block -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                Location
+                                                            </div>
+                                                            <div class="info-content">
+                                                                {{ sub_project.representative.district }}, {{ sub_project.representative.province }}
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="column is-6">
-                                                        <!-- Participants select -->
-                                                        <div class="control is-combo">
-                                                            <div class="combo-label">Participants</div>
-                                                            <div class="stacked-combo-box has-rounded-images">
-                                                                <div class="box-inner">
-                                                                    <div class="combo-item">
-                                                                        <img id="img-placeholder"
-                                                                            src="https://via.placeholder.com/150x150"
-                                                                            data-demo-src="{% static 'assets/images/avatars/avatar.png' %}"
-                                                                            alt="">
-                                                                        <span class="selected-item">Who will
-                                                                            participate?</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="box-chevron">
-                                                                    <i class="material-icons">keyboard_arrow_down</i>
-                                                                </div>
-                                                                <div class="box-dropdown">
-                                                                    <div class="dropdown-inner has-slimscroll">
-                                                                        <ul>
-                                                                            <li data-skill="javascript-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Jeff Stockton</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="angular-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Melany Smith</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="reactjs-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Helen Miller</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="vuejs-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/kareem.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Kareem Jabbar</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="nodejs-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/terry.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Terry Daniels</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="android-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Elie Brock</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="swift-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Nick Schwartz</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="wordpress-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Lakisha
-                                                                                    Williams</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                            <li data-skill="laravel-skill">
-                                                                                <span class="item-icon">
-                                                                                    <img src="https://via.placeholder.com/150x150"
-                                                                                        data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}"
-                                                                                        alt="">
-                                                                                </span>
-                                                                                <span class="item-name">Alan Maynard</span>
-                                                                                <span class="checkmark">
-                                                                                    <i class="material-icons">done</i>
-                                                                                </span>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
+                                                        <!-- Contact summary -->
+                                                        <div class="info-block">
+                                                            <div class="info-label">
+                                                                Focus Area
                                                             </div>
-                                                        </div>
-                                                        <!-- Full day -->
-                                                        <div class="field deal-field">
-                                                            <label class="grey-label-compact">Full day event?</label>
-                                                            <div class="control is-flex">
-                                                                <label class="custom-checkbox">
-                                                                    <input type="checkbox" checked>
-                                                                    <span class="toggler">
-                                                                        <span class="active">
-                                                                            <i class="material-icons">done</i>
-                                                                        </span>
-                                                                        <span class="inactive">
-                                                                            <i class="material-icons">close</i>
-                                                                        </span>
-                                                                    </span>
-                                                                </label>
-                                                                <span class="checkbox-label">Is this a full day event
-                                                                    ?</span>
+                                                            <div class="info-content is-notes">
+                                                                {{ sub_project.focus_area }}
                                                             </div>
-                                                        </div>
-                                                        <!-- Event End -->
-                                                        <div class="field deal-field">
-                                                            <label class="grey-label-compact">Ends at</label>
-                                                            <div class="control">
-                                                                <input type="text" class="input timepicker-24"
-                                                                    placeholder="set time">
-                                                                <div class="form-icon">
-                                                                    <i class="im im-icon-Clock-Forward"></i>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="column is-12 is-spaced">
-                                                        <!-- Event Description -->
-                                                        <div class="field deal-field">
-                                                            <label class="grey-label-compact">Description</label>
-                                                            <div class="control">
-                                                                <textarea class="textarea" rows="1"
-                                                                    placeholder="Describe the event..."></textarea>
+                                                            <!-- Switch -->
+                                                            <div class="field is-prospect">
+                                                                <input id="prospectSwitch" type="checkbox"
+                                                                    name="prospectSwitch" class="switch is-secondary"
+                                                                    checked>
+                                                                        <label for="prospectSwitch"><span>This subproject is a
+                                                                                approved</span></label>
+                                                                       
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="button-wrap">
-                                                    <button
-                                                        class="button btn-dash secondary-btn btn-dash raised is-rounded ripple"
-                                                        data-ripple-color="">
-                                                        Create Event
-                                                    </button>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div id="upload-files" class="action-wrap is-hidden">
-                                            <form>
-                                                <div class="control">
-                                                    <input type="file" name="thumbnails">
-                                                    <div class="button-wrap">
-                                                        <div class="control">
-                                                            <textarea class="textarea" rows="1"
-                                                                placeholder="A quick note about these files..."></textarea>
-                                                        </div>
-                                                        <button type="submit"
-                                                            class="button btn-dash secondary-btn btn-dash raised is-rounded ripple"
-                                                            data-ripple-color="">Upload</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
     
-                                <!-- Timeline separator -->
-                                <div class="timeline-separator">
-                                    <span>Scheduled</span>
-                                </div>
-                                <!-- Timeline section -->
-                                <div class="deal-timeline">
-                                    <ul>
-                                        <li>
-                                            <div class="timeline-icon">
-                                                <i class="material-icons">people</i>
-                                            </div>
-                                            <div class="timeline-item">
-                                                <div class="item-body">
-                                                    <h3>Meeting with Jeff</h3>
-                                                    <div class="meta-list">
-                                                        <div class="meta-list-item">
-                                                            <span class="is-thin">Tomorrow at 03:00pm with Melany
-                                                                Smith</span>
-                                                        </div>
+                                                <hr>
+    
+                                                <!-- Lifetime earnings -->
+                                                <div class="lifetime-wrapper">
+                                                    <div class="lifetime-won">
+                                                        <div class="lifetime-label">Total Funding</div>
+                                                        {% if sub_project.get_total_sub_project_fund %}
+                                                            <span> {{ sub_project.get_total_sub_project_fund|intcomma }}</span>
+                                                        {% else %}
+                                                            <span> 0.00</span>
+                                                        {% endif %}
                                                     </div>
-                                                    <div class="meta-list">
-                                                        <div class="meta-list-item">
-                                                            <i class="material-icons">person</i>
-                                                            <span>Jeff Markstrom</span>
-                                                        </div>
-                                                        <div class="meta-list-item">
-                                                            <i class="material-icons">domain</i>
-                                                            <span>Airbnb</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="item-footer">
-                                                    <p>Meeting to discuss the future marketing campaign</p>
+    
+                                                    <!-- Send email action -->
+                                                    <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
+                                                        data-ripple-color="" data-modal="message-contact-modal" href=#>
+                                                        {% comment %} <i class="material-icons">mail</i> {% endcomment %}
+                                                        Download Report
+                                                    </a>
                                                 </div>
                                             </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Timeline separator -->
-                                <div class="timeline-separator is-spaced">
-                                    <span>History</span>
-                                </div>
-                                <!-- Past timeline -->
-                                <div class="navigation-tabs animated-tabs simple-tabs">
-                                    <!-- Tabs -->
-                                    <div class="tabs is-centered">
-                                        <ul>
-                                            <li class="is-active" data-tab="deal-all"><a>All</a></li>
-                                            <li data-tab="deal-activities"><a>Activities</a></li>
-                                            <li data-tab="deal-notes"><a>Notes</a></li>
-                                            <li data-tab="deal-files"><a>Files</a></li>
-                                        </ul>
-                                    </div>
-                                    <!-- All items -->
-                                    <div id="deal-all" class="navtab-content is-active">
-                                        <!-- Timeline section -->
-                                        <div class="deal-timeline">
-                                            <ul>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-clock"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>Stage: Contact reached</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">3 hours ago by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-paper-clip"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/pdf.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>business_contract.pdf</a></span>
-                                                                    <span>Yesterday at 11:05am, by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-doc"></i>
-                                                    </div>
-                                                    <div class="timeline-item is-note">
-                                                        <div class="item-body">
-                                                            <h3>Note</h3>
-                                                            <p class="note-text">
-                                                                We should really consider the new products we saw. Should
-                                                                create a meeting
-                                                                involving Dan and others.
-                                                            </p>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}">
-                                                                    <span class="is-thin">Yesterday, at 09:45am</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-paper-clip"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/powerpoint.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>concept-presentation.pptx</a></span>
-                                                                    <span>Yesterday at 09:11am, by Tony Wyatt</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-paper-clip"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/word.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>project-requirements.docx</a></span>
-                                                                    <span>Yesterday at 08:43am, by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-doc"></i>
-                                                    </div>
-                                                    <div class="timeline-item is-note">
-                                                        <div class="item-body">
-                                                            <h3>Note</h3>
-                                                            <p class="note-text">
-                                                                Call the CEO back to discuss potential opportunities.
-                                                            </p>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">Mon 03, at 12:08pm</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <!-- Timeline Load more -->
-                                        <div class="timeline-load has-text-centered">
-                                            <a class="button btn-dash btn-dash is-rounded ripple" data-ripple-color="">
-                                                Load More
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <!-- Deal activities -->
-                                    <div id="deal-activities" class="navtab-content">
-                                        <!-- Timeline section -->
-                                        <div class="deal-timeline">
-                                            <ul>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-clock"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>New event scheduled</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">1 hour ago by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-user"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>Stage: Contact reached</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">3 hours ago by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-credit-card"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>Amount changed to $8500,00</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">2 days ago by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-pencil"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>Updated deal details</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}">
-                                                                    <span class="is-thin">5 days ago by Tony Wyatt</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-user-follow"></i>
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <h3>Stage: New Prospect</h3>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}">
-                                                                    <span class="is-thin">9 day ago by Tony Wyatt</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- Deal Notes -->
-                                    <div id="deal-notes" class="navtab-content">
-                                        <!-- Timeline section -->
-                                        <div class="deal-timeline">
-                                            <ul>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-doc"></i>
-                                                    </div>
-                                                    <div class="timeline-item is-note">
-                                                        <div class="item-body">
-                                                            <h3>Note</h3>
-                                                            <p class="note-text">
-                                                                We should really consider the new products we saw. Should
-                                                                create a meeting
-                                                                involving Dan and others.
-                                                            </p>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}">
-                                                                    <span class="is-thin">Yesterday, at 09:45am</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <i class="sl sl-icon-doc"></i>
-                                                    </div>
-                                                    <div class="timeline-item is-note">
-                                                        <div class="item-body">
-                                                            <h3>Note</h3>
-                                                            <p class="note-text">
-                                                                Call the CEO back to discuss potential opportunities.
-                                                            </p>
-                                                            <div class="meta-list">
-                                                                <div class="meta-list-item">
-                                                                    <img src="https://via.placeholder.com/150x150" alt=""
-                                                                        data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                                    <span class="is-thin">Mon 03, at 12:08pm</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- Deal files -->
-                                    <div id="deal-files" class="navtab-content">
-                                        <!-- Timeline section -->
-                                        <div class="deal-timeline">
-                                            <ul>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/pdf.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>business_contract.pdf</a></span>
-                                                                    <span>Yesterday at 11:05am, by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{% static 'assets/images/avatars/jhonny.jpg' %}">
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/powerpoint.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>concept-presentation.pptx</a></span>
-                                                                    <span>Yesterday at 09:11am, by Tony Wyatt</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{% static 'assets/images/avatars/melany.jpg' %}">
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/word.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>project-requirements.docx</a></span>
-                                                                    <span>Yesterday at 08:43am, by Melany Smith</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="timeline-icon">
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
-                                                    </div>
-                                                    <div class="timeline-item">
-                                                        <div class="item-body">
-                                                            <div class="document-item">
-                                                                <img src="{% static 'assets/images/icons/ms/excel.svg' %}" alt="">
-                                                                <div class="document-meta">
-                                                                    <span><a>project-budget.xlsx</a></span>
-                                                                    <span>Thu 23 at 04:21pm, by Helen Miller</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ul>
+                                          
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
     
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Send message modal -->
+    <!-- Send message to contact Modal -->
+    <div id="message-contact-modal" class="modal modal-md message-contact-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <h2 class="dark-text">Send Message</h2>
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/send-message.svg' %}" alt="">
+                        </div>
+                        <div class="help-text has-text-centered">Send a message to this contact's email</div>
+    
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input class="input is-medium" type="text" placeholder="Message subject">
+                                <span class="icon is-left">
+                                    <i class="fa fa-sticky-note-o"></i>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea" rows="6" placeholder="Your message ..."></textarea>
+                            </div>
+                        </div>
+                        
+                        <div class="send-copy">
+                            <div class="field">
+                                <input id="messageSwitch" type="checkbox" name="messageSwitch" class="switch is-secondary">
+                                <label for="messageSwitch"><span>Send a copy to my inbox?</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button is-modal">Send Message</button>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+    </div>
+    <!-- /Invite User Modal -->   
+
+    <!-- Log call Modal -->
+    <div id="call-contact-modal" class="modal modal-md call-contact-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <h2 class="dark-text">Log Call</h2>
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/log-call.svg' %}" alt="">
+                        </div>
+                        <div class="help-text has-text-centered">Log a phone call you had with this contact</div>
+    
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input id="call-picker" class="input is-medium" type="text" placeholder="When was it?">
+                                <span class="icon is-left">
+                                    <i class="fa fa-calendar-o"></i>
+                                </span>
+                            </div>
+                        </div>
+    
+                        <div class="field">
+                            <div class="control">
+                                <select class="chosen-select" data-placeholder="Type of Call">
+                                    <option label="Type of Call"></option>
+                                    <option>Outgoing</option>
+                                    <option>Incoming</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <div class="field">
+                            <div class="control has-icons-left">
+                                <input class="input is-medium" type="number" placeholder="Call duration (in minutes)">
+                                <span class="icon is-left">
+                                    <i class="fa fa-clock-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="field">
+                            <div class="control">
+                                <textarea class="textarea" rows="6" placeholder="Quick summary of the conversation"></textarea>
+                            </div>
+                        </div>
+    
+                        <div class="send-copy">
+                            <div class="field">
+                                <input id="subscribedSwitch" type="checkbox" name="subscribedSwitch" class="switch is-secondary">
+                                <label for="subscribedSwitch"><span>Notify subscribed users?</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="button is-modal">Log Call</button>
+                </div>
+            </div>
+        </div>
+        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+    </div>
+    <!-- /Invite User Modal -->
 
 {% endblock content %}
 
