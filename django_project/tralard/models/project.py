@@ -45,6 +45,86 @@ class UnapprovedProjectManager(models.Manager):
         return super(
             UnapprovedProjectManager, self).get_queryset().filter(
                 approved=False)
+
+
+class Representative(models.Model):
+    """
+    Project Representative.
+    """
+    GENDER_CHOICES = (
+    ("Male", _("Male")),
+    ("Female", _("Female")),
+    ("Transgender", _("Transgender")),
+    ("Other", _("Other"))
+    )
+    slug = models.SlugField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
+    first_name = models.CharField(
+        _("First Name"),
+        max_length=200,
+    )
+    last_name = models.CharField(
+        _("Last Name"),
+        max_length=200,
+        null=False
+    )
+    birthdate = models.DateField(
+        _("Birth Date"),
+        auto_now_add=False,
+        null=True,
+        blank=True
+    )
+    gender = models.CharField(
+        _("Gender"),
+        max_length=50,
+        choices=GENDER_CHOICES,
+        null=True,
+        blank=True
+    )
+    email = models.EmailField(
+        _("Email"),
+        null=True,
+        blank=True
+    )
+    cell = models.CharField(
+        _("Cell"),
+        max_length=50,
+        null=True,
+        blank=True
+    )
+    ward = models.ForeignKey(
+        'tralard.ward', 
+        default='',
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    address = HTMLField(
+        help_text=_(
+            'Address details and other information necesarry.'),
+        blank=True,
+        null=True
+    )
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(f"{self.first_name} {self.last_name}"))
+        super().save(*args, **kwargs)
+
+
 class Project(models.Model):
     """
     Project definition.

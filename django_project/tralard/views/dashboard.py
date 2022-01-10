@@ -21,7 +21,10 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
     
     def get_context_data(self):
         context = super(HomeTemplateView, self).get_context_data()
-        self.current_user_profile = get_object_or_404(Profile, user=self.request.user)
+        try:
+            self.current_user_profile = Profile.objects.get(user=self.request.user)
+        except:
+            self.current_user_profile = None
         self.total_project_funds = Fund.objects.all().aggregate(Sum('amount'))
         self.cleaned_total_project_funds = self.total_project_funds['amount__sum']
         context['title'] = 'Program: Tralard'

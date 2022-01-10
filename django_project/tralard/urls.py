@@ -42,11 +42,11 @@ app_name = "tralard"
 
 urlpatterns = [
     # home
-    path(
-        "test/",
-        template_testing,
-        name="test",
-    ),
+    # path(
+    #     "test/",
+    #     template_testing,
+    #     name="test",
+    # ),
     path(
         "",
         HomeTemplateView.as_view(),

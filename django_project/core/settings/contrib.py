@@ -67,7 +67,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_SIGNUP_FORM_CLASS = 'base.forms.SignupForm'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/accounts/login/"
 LOGIN_URL = "/accounts/login/"
 LOGOUT_REDIRECT_URL = "/accounts/login"
 

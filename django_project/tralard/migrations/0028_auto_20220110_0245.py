@@ -13,14 +13,14 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        # migrations.RemoveField(
-        #     model_name='subproject',
-        #     name='subproject_managers',
-        # ),
-        # migrations.RemoveField(
-        #     model_name='subproject',
-        #     name='supervisor',
-        # ),
+        migrations.RemoveField(
+            model_name='subproject',
+            name='subproject_managers',
+        ),
+        migrations.RemoveField(
+            model_name='subproject',
+            name='supervisor',
+        ),
         migrations.AddField(
             model_name='subproject',
             name='managers',
