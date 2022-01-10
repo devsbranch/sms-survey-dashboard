@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from tralard.models import Profile
+from tralard.models.profile import Profile
 
 User = get_user_model()
 
