@@ -110,3 +110,16 @@ def current_user_roles(user):
         cleaned_user_roles.append(role.get_name())
     user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
     return user_roles
+
+def user_profile_update_form_validator(method, user):
+    try:
+        from django.shortcuts import get_object_or_404
+        from tralard.models.profile import Profile
+        from tralard.forms.profile import ProfileForm
+    except:
+        pass
+    user_profile = get_object_or_404(Profile, user=user)
+    user_roles = current_user_roles(user_profile.user)
+    profile_form = ProfileForm(method or None, instance=user_profile)
+    return user_roles, user_profile, profile_form
+    

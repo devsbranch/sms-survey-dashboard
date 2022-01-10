@@ -24,29 +24,28 @@ from tralard.views.training import (
     training_delete,
     template_testing,
 )
+from tralard.views.map import MapTemplateView
 from tralard.views.fund import (
+    FundDetailView,
     FundListAndCreateView,
+    FundDetailView,
     delete_disbursement,
     fund_delete,
     fund_detail,
-    get_disbursement_expenditures,
     update_disbursement,
     update_fund,
 )
-from tralard.views.map import MapTemplateView
-from tralard.views.profile import ProfileUpdateView
-from tralard.views.sub_project import SubProjectDetailView
 
+from tralard.views.profile import ProfileUpdateView
 
 app_name = "tralard"
-
 urlpatterns = [
     # home
-    # path(
-    #     "test/",
-    #     template_testing,
-    #     name="test",
-    # ),
+    path(
+        "test/",
+        template_testing,
+        name="test",
+    ),
     path(
         "",
         HomeTemplateView.as_view(),
@@ -131,11 +130,6 @@ urlpatterns = [
         update_disbursement,
         name="disbursement-update",
     ),
-    path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/',
-        get_disbursement_expenditures,
-        name='disbursement-expenditure'
-    ),
     # -------- beneficiary --------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/list/",
@@ -163,6 +157,7 @@ urlpatterns = [
         fund_delete,
         name="fund-delete",
     ),
+    
     # -------- training ------------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
@@ -178,12 +173,6 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/",
         training_fetch,
         name="training-fetch",
-    ),
-    # -------- SubProject --------
-    path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
-        SubProjectDetailView.as_view(),
-        name="subproject-manage",
     ),
     # -------- user profile --------
     path(

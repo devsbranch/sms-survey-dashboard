@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <nav class="main-menu">
   <div class="main-menu-inner">
     <!-- Side icon menu -->
@@ -669,11 +670,16 @@
                     <div
                       class="profile-notifications-inner animated preFadeInUp fadeInUp"
                     >
-                      <div
-                        class="profile-notifications-title"
-                        style="width: 100%"
-                      >
-                      </div>
+                    <div class="profile-notifications-title" style="width: 100%;">
+                      {% if profile_form %}
+                        <form name="user_profile_form" method="post" action="{% url 'tralard:profile-update' profile.slug %}">
+                          {% crispy profile_form profile_form.helper %}
+                        </form>
+                      {% else %}
+                      {% endif %}
+                      <script>
+                    </script>    
+                    </div>
                     </div>
                   </div>
                 </div>
