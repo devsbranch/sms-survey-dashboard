@@ -1,3 +1,4 @@
+
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -54,8 +55,10 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         context = super(ProgramDetailView, self).get_context_data()
         context['title'] = 'Program Detail'
         context['project_form'] = ProjectForm
+
         self.program_slug = self.kwargs['program_slug']
         self.program_object = Program.objects.get(slug=self.program_slug)
+
         context['program'] = self.program_object
         context['total_projects'] = Project.objects.filter(program=self.program_object).count()
         context['sub_project_list'] = SubProject.objects.all()

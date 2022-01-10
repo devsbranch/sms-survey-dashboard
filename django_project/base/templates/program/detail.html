@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-
+{% load humanize %}
 {% load static %}
 
 {% block title %} {{ title|title }} {% endblock %}
@@ -11,6 +11,7 @@
 {% block content %}
 {% include 'includes/project-create-modal.html' %}
 {% include 'includes/project-update-modal.html' %}
+{% include 'includes/project-delete-modal.html' %}
 
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer">
@@ -104,23 +105,35 @@
                                                                             <span>View details of sub project</span>
                                                                         </span>
                                                                     </a>
+                                                                    <div class="dropdown-divider bg-info"></div>
                                                                     <a href="{{ project.get_absolute_url }}"
                                                                        class="dropdown-item">
-                                                                        <i class="sl sl-icon-share-alt"></i>
+                                                                        <i class="sl sl-icon-share-alt text-primary"></i>
                                                                         <span>
-                                                                            <span>View project</span>
+                                                                            <span class="dark-text">View project</span>
                                                                             <span>View details of this project</span>
                                                                         </span>
                                                                     </a>
                                                                     <a href="#"
                                                                        class="dropdown-item modal-trigger"
-                                                                       onClick="populateProjectFrom('{{ program.slug }}', '{{ project.slug }}');"
+                                                                       onClick="populateProjectForm('{{ program.slug }}', '{{ project.slug }}');"
                                                                        data-modal="update-project-modal"
                                                                     >
-                                                                        <i class="sl sl-icon-note"></i>
+                                                                        <i class="sl sl-icon-note text-success"></i>
                                                                         <span>
-                                                                            <span>Edit project</span>
+                                                                            <span class="dark-text">Edit project</span>
                                                                             <span>Update project details</span>
+                                                                        </span>
+                                                                    </a>
+                                                                    <a href="#"
+                                                                       class="dropdown-item modal-trigger"
+                                                                       onClick="deleteProjectAction('{{ program.slug }}', '{{ project.slug }}');"
+                                                                       data-modal="delete-project-modal"
+                                                                    >
+                                                                        <i class="sl sl-icon-ban text-danger"></i>
+                                                                        <span>
+                                                                            <span class="dark-text">Delete</span>
+                                                                            <span>Remove this project</span>
                                                                         </span>
                                                                     </a>
                                                                 </div>
@@ -873,26 +886,37 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
-<scipt>
-    function populateProjectFrom(program_slug, project_slug){
+{% block javascripts %}
+<script>
+    function populateProjectForm(program_slug, project_slug){
+        console.log('Project pramas: ' + program_slug + ', pS=' + project_slug)
         let origin = location.origin;
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/update`
-        $.get(url, function( { payload } ) {
-            $("#edit-project-form input[name='name']").val(payload.name);
-            $("#edit-project-form textarea[name='description']").val(payload.description);
-            $(`#edit-project-form option[value="${payload.approved}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.has_funding}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.program}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.project_representative}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.project_managers}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.project_funders}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.training_managers}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${payload.certification_managers}"]`).prop('selected', true);
-            $("#edit-project-form input[name='image_file']").val(payload.image_file);
-            $("#edit-project-form textarea[name='custom_precis']").val(payload.precis);
-            $("#edit-project-form input[name='focus_area']").val(payload.focus_area);
+        const url = `${origin}program/${program_slug}/project/${project_slug}/update`
+        $.get(url, function( { data } ) {
+            $("#edit-project-form input[name='name']").val(data.name);
+            $("#edit-project-form textarea[name='description']").val(data.description);
+            $(`#edit-project-form option[value="${data.approved}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${data.has_funding}"]`).prop('selected', true);
+            $("#edit-project-form select[name='program']").val(data.program);
+            $("#edit-project-form select[name='project_representative']").val(data.project_representative);
+            $("#edit-project-form select[name='project_managers']").val(data.project_managers);
+            $("#edit-project-form select[name='training_managers']").val(data.training_managers);
+            $("#edit-project-form select[name='certification_managers']").val(data.certification_managers);
+            $("#edit-project-form select[name='image_file']").val(data.image_file);
+            $("#edit-project-form textarea[name='custom_precis']").val(data.precis);
+            $("#edit-project-form textarea[name='focus_area']").val(data.description);
             $("#edit-project-form").attr('action', url);
+
+             console.log('The data: '+data)
         });
     }
-</scipt>
+
+    function deleteProjectAction(program_slug, project_slug){
+        let origin = location.origin;
+        const url = `${origin}/program/${program_slug}/project/${project_slug}/delete`
+        $("#delete-project-form").attr('action', url);
+    }
+
+
+</script>
+{% endblock javascripts %}

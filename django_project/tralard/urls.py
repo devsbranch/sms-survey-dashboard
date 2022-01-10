@@ -10,7 +10,7 @@ from tralard.views.project import (
     update_sub_project,
     create_feedback,
     edit_feedback,
-    delete_feedback, create_project, update_project,
+    delete_feedback, create_project, update_project, delete_project,
 )
 from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
 from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
@@ -76,6 +76,13 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/update",
         update_project,
         name="update-project"
+    ),
+    # Delete a project
+    # View: Program details
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/delete",
+        delete_project,
+        name="delete-project"
     ),
     path(
         "project/subproject/list/",

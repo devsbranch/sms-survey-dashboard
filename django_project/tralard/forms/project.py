@@ -28,7 +28,7 @@ class ProjectForm(ModelForm):
         max_length=160,
     )
     custom_has_funding = forms.BooleanField(
-        label="Funding",
+        label="Has funding",
         widget=forms.CheckboxInput(
             attrs={
                 "rows": 1,
@@ -47,7 +47,7 @@ class ProjectForm(ModelForm):
                     'placeholder': 'the name given to the project'
                 }
             ),
-            'focus_area': widgets.TextInput(
+            'focus_area': widgets.Textarea(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'project focus area'

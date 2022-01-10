@@ -65,7 +65,7 @@ def update_project(request, program_slug, project_slug):
         messages.success(request, "Project was updated successfully!")
         return redirect(
             reverse_lazy("tralard:project-detail", kwargs={"program_slug": program_slug, "project_slug": project_slug}))
-    return JsonResponse({"payload": project_object_obj_to_dict})
+    return JsonResponse({"data": project_object_obj_to_dict})
 
 
 @login_required(login_url="/login/")
