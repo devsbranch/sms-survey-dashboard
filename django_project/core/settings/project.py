@@ -21,7 +21,7 @@ INSTALLED_APPS += (
     'dj_beneficiary',
     'base',
     'ppcr',
-    'tralard',
+    'tralard.apps.TralardConfig',
 )
 
 try:
