@@ -51,8 +51,8 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         return kwargs
 
-    def get_context_data(self):
-        context = super(ProgramDetailView, self).get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super(ProgramDetailView, self).get_context_data(**kwargs)
         context['title'] = 'Program Detail'
         context['project_form'] = ProjectForm
 

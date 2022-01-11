@@ -1,26 +1,18 @@
-from typing import List
+from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
+from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, resolve_url
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView, ListView
-from django.http import HttpResponseRedirect, Http404
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
-from django.contrib import messages
-from django.shortcuts import redirect, render, reverse
-from django.core import serializers
 
-import json
-
-from tralard.models.program import Program
-from tralard.models.project import Project, Feedback, Representative
-from tralard.models.sub_project import SubProject, Indicator
-
-from tralard.forms.sub_project import SubProjectForm
 from tralard.forms.project import FeedbackForm, ProjectForm
+from tralard.forms.sub_project import SubProjectForm
+from tralard.models.program import Program
+from tralard.models.project import Project, Feedback
+from tralard.models.sub_project import SubProject, Indicator
 
 
 @login_required(login_url="/login/")
@@ -54,18 +46,28 @@ def create_project(request, program_slug):
 
 @login_required(login_url="/login/")
 def update_project(request, program_slug, project_slug):
-    project_object = get_object_or_404(Project, slug=project_slug)
-    project_object_obj_to_dict = model_to_dict(project_object)
+    project_form = ProjectForm()
+    project_object = Project.objects.get(slug=project_slug)
+    project_obj_to_dict = model_to_dict(project_object)
+
+    try:
+        project_obj_to_dict["image_file"] = project_object.image_file.name
+        project_obj_to_dict["image_url"] = project_object.image_file.url
+    except ValueError:
+        pass
 
     if request.method == "POST":
-        form = ProjectForm(request.POST, instance=project_object)
-        if form.is_valid():
-            instance = form.save(commit=False)
+        project_form = ProjectForm(request.POST, request.FILES or None, instance=project_object)
+        if project_form.is_valid():
+            instance = project_form.save(commit=False)
             instance.save()
         messages.success(request, "Project was updated successfully!")
         return redirect(
             reverse_lazy("tralard:project-detail", kwargs={"program_slug": program_slug, "project_slug": project_slug}))
-    return JsonResponse({"data": project_object_obj_to_dict})
+    else:
+        project_form = get_object_or_404(Project, slug=project_slug)
+    data = {"project": project_obj_to_dict}
+    return JsonResponse(data)
 
 
 @login_required(login_url="/login/")

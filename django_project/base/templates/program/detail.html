@@ -1,5 +1,7 @@
 {% extends "layouts/base.html" %}
+
 {% load humanize %}
+
 {% load static %}
 
 {% block title %} {{ title|title }} {% endblock %}
@@ -888,27 +890,39 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-    function populateProjectForm(program_slug, project_slug){
-        console.log('Project pramas: ' + program_slug + ', pS=' + project_slug)
+    function populateProjectForm(program_slug, project_slug) {
+        console.log(`Project form params; |Program=${program_slug}, Project=${project_slug}|`);
         let origin = location.origin;
-        const url = `${origin}program/${program_slug}/project/${project_slug}/update`
-        $.get(url, function( { data } ) {
-            $("#edit-project-form input[name='name']").val(data.name);
-            $("#edit-project-form textarea[name='description']").val(data.description);
-            $(`#edit-project-form option[value="${data.approved}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${data.has_funding}"]`).prop('selected', true);
-            $("#edit-project-form select[name='program']").val(data.program);
-            $("#edit-project-form select[name='project_representative']").val(data.project_representative);
-            $("#edit-project-form select[name='project_managers']").val(data.project_managers);
-            $("#edit-project-form select[name='training_managers']").val(data.training_managers);
-            $("#edit-project-form select[name='certification_managers']").val(data.certification_managers);
-            $("#edit-project-form select[name='image_file']").val(data.image_file);
-            $("#edit-project-form textarea[name='custom_precis']").val(data.precis);
-            $("#edit-project-form textarea[name='focus_area']").val(data.description);
-            $("#edit-project-form").attr('action', url);
+        const updateUrl = `${origin}/program/${program_slug}/project/${project_slug}/update`
 
-             console.log('The data: '+data)
+        fetch(updateUrl, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((response) => {
+            return response.json();
+        }).then((payload) => {
+            let projectData = payload.project;
+            console.log(`populating project details for ${projectData.name}`)
+
+            $("#edit-project-form input[name='name']").val(projectData.name);
+            $("#edit-project-form textarea[name='description']").val(projectData.description);
+            $(`#edit-project-form option[value="${projectData.approved}"]`).prop('selected', true);
+            $(`#edit-project-form option[value="${projectData.has_funding}"]`).prop('selected', true);
+			$("#edit-project-form select[name='program']").val(projectData.program);
+			$("#edit-project-form select[name='project_representative']").val(projectData.project_representative);
+			$("#edit-project-form select[name='project_managers']").val(projectData.project_managers);
+			$("#edit-project-form select[name='training_managers']").val(projectData.training_managers);
+			$("#edit-project-form select[name='certification_managers']").val(projectData.certification_managers);
+			$("#edit-project-form textarea[name='custom_precis']").val(projectData.precis);
+			$("#edit-project-form input[name='focus_area']").val(projectData.focus_area);
+			$("#edit-project-form").attr('action', updateUrl);
+        }).catch(function(err) {
+            console.error(err.message)
+            console.log(`Error populating project form due to: ${err}`)
         });
+
     }
 
     function deleteProjectAction(program_slug, project_slug){
@@ -916,7 +930,6 @@
         const url = `${origin}/program/${program_slug}/project/${project_slug}/delete`
         $("#delete-project-form").attr('action', url);
     }
-
 
 </script>
 {% endblock javascripts %}

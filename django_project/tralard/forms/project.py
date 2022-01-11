@@ -31,8 +31,7 @@ class ProjectForm(ModelForm):
         label="Has funding",
         widget=forms.CheckboxInput(
             attrs={
-                "rows": 1,
-                "cols": 4,
+                'style': 'width:85px;'
             }
         ),
     )
@@ -47,7 +46,7 @@ class ProjectForm(ModelForm):
                     'placeholder': 'the name given to the project'
                 }
             ),
-            'focus_area': widgets.Textarea(
+            'focus_area': widgets.TextInput(
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'project focus area'
@@ -100,44 +99,6 @@ class ProjectForm(ModelForm):
         custom_has_funding = self.cleaned_data["custom_has_funding"]
         instance.precis = custom_precis
         instance.has_funding = custom_has_funding
-        instance.save()
-        return instance
-
-
-class FeedbackForm(ModelForm):
-    custom_description = forms.CharField(label="Description", widget=forms.Textarea(attrs={
-        'rows': 1,
-        'cols': 2,
-        'placeholder': 'write your feedback here.'
-    }), max_length=160)
-
-    class Meta:
-        model = Feedback
-        exclude = ["created", "description", "project", "slug"]
-        widgets = {
-            'date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'type': 'date'}),
-        }
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.helper = FormHelper()
-        self.helper.form_tag = False
-        self.helper.form_method = "post"
-        self.helper.layout = Layout(
-            Row(
-                Column("title", css_class="form-group col-md-12 mb-0"),
-                Column("date", css_class="form-group col-md-12 mb-0"),
-                Column("project", css_class="form-group col-md-12 mb-0"),
-                Column("moderator", css_class="form-group col-md-12 mb-0"),
-                Column("custom_description", css_class="form-group col-md-12 mb-0 "),
-                css_class="form-row has-text-left",
-            ),
-        )
-
-    def save(self, commit=True):
-        instance = super(FeedbackForm, self).save(commit=False)
-        custom_description = self.cleaned_data['custom_description']
-        instance.description = custom_description
         instance.save()
         return instance
 
