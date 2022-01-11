@@ -57,12 +57,13 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
     def get_context_data(self):
         context = super(ProgramDetailView, self).get_context_data()
         context['title'] = 'Program Detail'
+
         self.program_slug = self.kwargs['program_slug']
         self.program_object = Program.objects.get(slug=self.program_slug)
-
-        context['project_form'] = ProjectForm
-        context['title'] = 'Program Detail'
         self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
+
+        context['title'] = 'Program Detail'
+        context['project_form'] = ProjectForm
         context['program'] = self.program_object
         context['user_roles'] = self.user_profile_utils[0]
         context['profile'] = self.user_profile_utils[1]
