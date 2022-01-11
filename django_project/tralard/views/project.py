@@ -4,9 +4,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.shortcuts import redirect, get_object_or_404, resolve_url
+from django.shortcuts import (
+    redirect,
+    get_object_or_404
+)
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView
+from django.views.generic import (
+    TemplateView,
+    ListView
+)
 
 from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.forms.sub_project import SubProjectForm
@@ -16,7 +22,7 @@ from tralard.models.sub_project import SubProject, Indicator
 
 
 @login_required(login_url="/login/")
-def create_project(request, program_slug):
+def project_create(request, program_slug):
     project_slug = None
     if request.method == "POST":
         form = ProjectForm(request.POST)
@@ -36,7 +42,7 @@ def create_project(request, program_slug):
             )
         return redirect(
             reverse_lazy(
-                "tralard:project-detail",
+                "tralard:program-detail",
                 kwargs={
                     "program_slug": program_slug,
                     "project_slug": project_slug},
@@ -45,7 +51,7 @@ def create_project(request, program_slug):
 
 
 @login_required(login_url="/login/")
-def update_project(request, program_slug, project_slug):
+def project_update(request, program_slug, project_slug):
     project_form = ProjectForm()
     project_object = Project.objects.get(slug=project_slug)
     project_obj_to_dict = model_to_dict(project_object)
@@ -71,7 +77,7 @@ def update_project(request, program_slug, project_slug):
 
 
 @login_required(login_url="/login/")
-def delete_project(request, program_slug, project_slug):
+def project_delete(request, program_slug, project_slug):
     try:
         project_object = Project.objects.get(slug=project_slug)
         project_object.delete()

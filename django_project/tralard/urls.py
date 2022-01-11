@@ -11,9 +11,9 @@ from tralard.views.project import (
     create_feedback,
     edit_feedback,
     delete_feedback,
-    create_project,
-    update_project,
-    delete_project,
+    project_create,
+    project_update,
+    project_delete,
 )
 from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
 from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
@@ -66,17 +66,17 @@ urlpatterns = [
     ),
     path(
         "program/<slug:program_slug>/project/",
-        create_project,
+        project_create,
         name="project"
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/update",
-        update_project,
+        project_update,
         name="update-project"
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/delete",
-        delete_project,
+        project_delete,
         name="delete-project"
     ),
     path(
