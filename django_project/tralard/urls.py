@@ -56,29 +56,21 @@ urlpatterns = [
         name="program-detail",
     ),
     # -------- project paths --------
-    # Project detail view
-    # View: Project details
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/detail/",
         ProjectDetailView.as_view(),
         name="project-detail",
     ),
-    # Create a new project
-    # View: Program details
     path(
         "program/<slug:program_slug>/project/",
         create_project,
         name="project"
     ),
-    # Edit a project
-    # View: Program details
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/update",
         update_project,
         name="update-project"
     ),
-    # Delete a project
-    # View: Program details
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/delete",
         delete_project,
