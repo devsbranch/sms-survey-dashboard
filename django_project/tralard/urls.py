@@ -2,10 +2,10 @@
 from django.urls import path
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.program import ProgramDetailView
+from tralard.views.sub_project import SubProjectDetailView
 from tralard.views.project import (
     ProjectDetailView,
     SubProjectListView,
-    SubProjectDetailView,
     delete_sub_project,
     update_sub_project,
     create_feedback,
@@ -15,8 +15,12 @@ from tralard.views.project import (
     project_update,
     project_delete,
 )
-from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
-from tralard.views.beneficiary import BeneficiaryOrgListView, BeneficiaryOrgDetailView
+from tralard.views.beneficiary import (
+    BeneficiaryOrgListView,
+    beneficiary_detail,
+    beneficiary_update,
+    beneficiary_delete,
+)
 from tralard.views.training import (
     TrainingListView,
     training_fetch,
@@ -25,6 +29,7 @@ from tralard.views.training import (
 )
 from tralard.views.map import MapTemplateView
 from tralard.views.fund import (
+    FundDetailView,
     FundListAndCreateView,
     FundDetailView,
     delete_disbursement,
@@ -33,6 +38,8 @@ from tralard.views.fund import (
     update_disbursement,
     update_fund,
 )
+
+from tralard.views.profile import ProfileUpdateView
 
 app_name = "tralard"
 urlpatterns = [
@@ -141,18 +148,35 @@ urlpatterns = [
         update_disbursement,
         name="disbursement-update",
     ),
+    # -------- beneficiary --------
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/list/",
+        BeneficiaryOrgListView.as_view(),
+        name="beneficiary-list",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/update/",
+        beneficiary_update,
+        name="beneficiary-update",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/delete/",
+        beneficiary_delete,
+        name="beneficiary-delete",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
+        beneficiary_detail,
+        name="beneficiary-detail",
+    ),
+    # -------- training ------------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
         fund_delete,
         name="fund-delete",
     ),
-    # -------- beneficiary --------
+    
     # -------- training ------------
-    path(
-        "training/list/",
-        TrainingListView.as_view(),
-        name="training-list",
-    ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
         TrainingListView.as_view(),
@@ -167,5 +191,17 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/",
         training_fetch,
         name="training-fetch",
+    ),
+    # -------- SubProject --------
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
+        SubProjectDetailView.as_view(),
+        name="subproject-manage",
+    ),
+    # -------- user profile --------
+    path(
+        "user/profile/update/<slug:slug>/",
+        ProfileUpdateView.as_view(),
+        name="profile-update",
     ),
 ]

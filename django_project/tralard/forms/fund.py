@@ -19,7 +19,7 @@ class FundForm(ModelForm):
     amount = forms.FloatField(required=False, widget=forms.TextInput(
        attrs={'type': 'number','id':'amount','min': '0','step':'0.01'}))
     
-    approved = forms.BooleanField(label="approved", initial=False,)
+    approved = forms.BooleanField(label="approved", initial=False, required=False)
 
     class Meta:
         model = Fund
@@ -120,8 +120,6 @@ class DisbursementForm(ModelForm):
         instance.amount = custom_amount
         instance.save()
         return instance
-
-
 
 class DisbursementForm(ModelForm):
 

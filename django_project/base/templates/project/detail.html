@@ -41,15 +41,18 @@
                             </div>
                             <!-- Filter input -->
                             <div class="actions">
+                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
+                                    Beneficiaries
+                                </a>
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:training-list' program_slug=project.program.slug project_slug=project.slug %}">
                                     Training Schedules
                                 </a>
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}">
-                                    Project Fund Overview
+                                    Fund Overview
                                 </a>
     
                                 <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:program-detail' program_slug=project.program.slug %}">
-                                    Program List
+                                    Program Details
                                 </a>
                             </div>
                         </div>
@@ -370,20 +373,29 @@
                                                                               role="menu"
                                                                             >
                                                                               <div class="dropdown-content">
+                                                                                <div class="dropdown-divider"></div>
+                                                                                <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}" class="dropdown-item">
+                                                                                    <i class="sl sl-icon-equalizer"></i>
+                                                                                    <span>
+                                                                                        <span>Manage</span>
+                                                                                        <span>Go to subproject Management</span>
+                                                                                    </span>
+                                                                                </a>
                                                                              
                                                                                 <a
-                                                                                id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{subproject.slug}}');" href="#"  data-modal="edit-subproject-modal"
+                                                                                id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}');" href="#"  data-modal="edit-subproject-modal"
                                                                                   class="dropdown-item modal-trigger"
                                                                                 >
                                                                                   <i class="sl sl-icon-pencil"></i>
                                                                                   <span>
                                                                                     <span>Update</span>
+                                                                                    <span>Edit subproject</span>
                                                                                   </span>
                                                                                 </a>
                                                                                 <div class="dropdown-divider"></div>
                                                                                 <a
                                                                                 id="delete-button"
-                                                                                onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{subproject.slug}}', '{{subproject.name}}');"
+                                                                                onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}', '{{ subproject.name }}');"
                                                                                   href="#"
                                                                                   data-modal="delete-subproject-modal"
                                                                                   class="dropdown-item modal-trigger" 
@@ -391,6 +403,7 @@
                                                                                   <i class="sl sl-icon-trash"></i>
                                                                                   <span>
                                                                                     <span>Delete </span>
+                                                                                    <span>Delete Subproject</span>
                                                                                   </span>
                                                                                 </a>
                                                                               </div>
@@ -509,37 +522,37 @@
 
        <!-- Edit SubProject Modal --><!-- Edit SubProject Modal -->
        <div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content" style="width: 50% !important;">
-            <div class="flex-card simple-shadow" style="overflow-y: auto;">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Update SubProject</h2>
-                </div>
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                        <div class="m-3">
-                            <span class="m-2">Edit SubProject Here</span>
-                        </div>
+            <div class="modal-background"></div>
+            <div class="modal-content" style="width: 50% !important;">
+                <div class="flex-card simple-shadow" style="overflow-y: auto;">
+                    <div class="help-text has-text-left">
+                        <h2 class="dark-text">Update SubProject</h2>
                     </div>
-                    <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="m-4 column is-multiline">
-                            {% crispy form form.helper %}
+                    <div class="card-body">
+                        <div class="has-text-centered">
+                            <div class="image">
+                                <img src="{% static 'assets/images/icons/basket.svg' %}">
+                            </div>
+                            <div class="m-3">
+                                <span class="m-2">Edit SubProject Here</span>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button"  class="button modal-dismiss"></a>Cancel</button>
-                            <button type="submit" class="button is-modal">Update SubProject</button>
-                        </div>
+                        <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="m-4 column is-multiline">
+                                {% crispy form form.helper %}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button"  class="button modal-dismiss"></a>Cancel</button>
+                                <button type="submit" class="button is-modal">Update SubProject</button>
+                            </div>
 
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
-    </div>          
+            {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+        </div>          
 
      <!-- Delete SubProject Modal --><!-- Delete SubProject Modal -->
      <div id="delete-subproject-modal" class="modal modal-md icon-action-modal modal-hero">

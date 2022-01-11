@@ -1,11 +1,17 @@
+{% load static %}
+{% load crispy_forms_tags %}
 <nav class="main-menu">
   <div class="main-menu-inner">
     <!-- Side icon menu -->
     <ul>
       <li class="main-logo">
-        <a href="/"
-          ><img src="/static/assets/images/logos/square-violet.svg" alt="THINK2044"
-        /></a>
+        <a href="/">
+          <img
+            src="{% static 'assets/images/logos/logo.png' %}"
+            alt=""
+            data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+          />
+        </a>
       </li>
       <li class="side-icon" data-child-menu="dashboard-menu">
         <i class="sl sl-icon-speedometer"></i>
@@ -30,12 +36,21 @@
       <li>
         <!-- Profile avatar -->
         <a class="profile-trigger" href="javascript:void(0);">
+          {% if profile.profile_photo %}
           <img
-            class="main-menu-avatar"
-            src="https://via.placeholder.com/250x250"
-            alt=""
-            data-demo-src="/static/assets/images/logos/logo.png"
+            src="{{ profile.profile_photo.url }}"
+            id="user-profile-page-opener-button"
+            class="profile-photo"
+            alt="{{ profile.user.username }}'s profile photo"
           />
+          {% else %}
+          <img
+            src="/assets/images/logos/logo.png"
+            class="profile-photo"
+            data-demo-src="/assets/images/logos/logo.png"
+            alt="{{ profile.user.username }}'s profile photo"
+          />
+          {% endif %}
           <span class="dot"></span>
         </a>
         <!-- /Profile avatar -->
@@ -46,11 +61,22 @@
           <div class="profile-container">
             <div class="inner">
               <!-- Profile with cover -->
-              <div
-                id="profile-cover"
-                class="profile-cover has-background-image"
-                data-background="https://source.unsplash.com/ANCoz0JMhiQ/1600x900"
-              >
+              <div id="profile-cover" class="profile-cover">
+                <style>
+                  #profile-cover {
+                    background-image: url("{% static 'assets/images/banner.jpeg' %}");
+
+                    height: 500px;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)"; /* IE 8 */
+                    filter: alpha(opacity=50); /* IE 5-7 */
+                    -moz-opacity: 0.5; /* Netscape */
+                    -khtml-opacity: 0.5; /* Safari 1.x */
+                  }
+                </style>
+                <!-- blablabla barner -->
                 <div class="cover-overlay"></div>
                 <div class="heading-wrapper">
                   <div class="profile-heading">
@@ -59,43 +85,39 @@
                         <div class="avatar-overlay">
                           <i class="fa fa-camera fa-2x"></i>
                         </div>
+                        {% if profile.profile_photo %}
                         <img
-                          src="https://via.placeholder.com/250x250"
-                          alt=""
-                          data-demo-src="/static/assets/images/avatars/helen.jpg"
+                          src="{{ profile.profile_photo.url }}"
+                          class="profile-photo"
+                          alt="{{ profile.user.username }}'s profile photo"
                         />
+                        {% else %}
+                        <img
+                          src="/assets/images/logos/logo.png"
+                          class="profile-photo"
+                          data-demo-src="/assets/images/logos/logo.png"
+                          alt="{{ profile.user.username }}'s profile photo"
+                        />
+                        {% endif %}
                       </div>
                       <div class="name">
                         <h3>{{ request.user.username }}</h3>
                         <p>{{ request.user.email }}</p>
-                        <button
-                          class="
-                            button
-                            dash-btn
-                            ripple
-                            primary-btn
-                            btn-outlined
-                            follow
-                            rounded
-                          "
-                        >
-                          <i class="fa fa-check"></i>Follow
-                        </button>
                       </div>
                     </div>
 
                     <div class="right-side">
                       <div class="stat-wrap has-text-centered is-hidden-mobile">
-                        <p class="stat-val">74</p>
-                        <p class="stat-key">Projects</p>
+                        <p class="stat-val">1</p>
+                        <p class="stat-key">Projects Atached</p>
                       </div>
                       <div class="stat-wrap has-text-centered is-hidden-mobile">
-                        <p class="stat-val">179</p>
-                        <p class="stat-key">Deals</p>
+                        <p class="stat-val">2</p>
+                        <p class="stat-key">Sub Projects Attache</p>
                       </div>
                       <div class="stat-wrap has-text-centered is-hidden-mobile">
-                        <p class="stat-val">963</p>
-                        <p class="stat-key">Leads</p>
+                        <p class="stat-val">3</p>
+                        <p class="stat-key">Benefiaries Attached</p>
                       </div>
                     </div>
                   </div>
@@ -108,9 +130,9 @@
                       class="notifications fab-btn mini ripple"
                       data-toggle="tooltip"
                       data-placement="left"
-                      data-title="Notifications"
+                      data-title="Edit"
                     >
-                      <i class="material-icons">notifications</i>
+                      <i class="material-icons">edit</i>
                     </button>
                     <button
                       id="show-team"
@@ -162,73 +184,156 @@
                               <i class="im im-icon-Professor"></i>
                             </div>
                             <div class="info-block">
-                              <i class="im im-icon-Hipster-Men"></i>
                               <div class="meta">
                                 <label>Full name</label>
-                                <p>Helen Miller</p>
+                                <p>
+                                  {{ profile.user.first_name|title }} {{
+                                  profile.user.last_name|title }}
+                                </p>
                               </div>
                             </div>
                             <div class="info-block">
-                              <i class="im im-icon-Map2"></i>
                               <div class="meta">
-                                <label>Location</label>
-                                <p>California, CA</p>
+                                <label>Gender</label>
+                                <p>{{ profile.gender }}</p>
+                              </div>
+                            </div>
+                            <div class="info-block">
+                              <div class="meta">
+                                <label>Province</label>
+                                <p>{{ profile.district.province }}</p>
+                              </div>
+                            </div>
+
+                            <div class="info-block">
+                              <div class="meta">
+                                <label>District</label>
+                                <p>{{ profile.district.name }}</p>
+                              </div>
+                            </div>
+                            <div class="info-block">
+                              <div class="meta">
+                                <label>Birth Date</label>
+                                <p>{{ profile.birth_date }}</p>
+                              </div>
+                            </div>
+                            <div class="info-block">
+                              <div class="meta">
+                                <label>About Me</label>
+                                <p>{{ profile.about_me }}</p>
                               </div>
                             </div>
                           </div>
                         </div>
+
                         <div class="column is-6">
                           <div class="info-card">
                             <div class="info-header">
-                              <h3>Job Info</h3>
-                              <i class="im im-icon-Tower-2"></i>
+                              <h3>User Info</h3>
                             </div>
                             <div class="info-block">
-                              <i class="im im-icon-Colosseum"></i>
                               <div class="meta">
-                                <label>Company</label>
-                                <p>Acme Inc.</p>
+                                <label>User Roles</label>
+                                <div
+                                  style="
+                                    display: flex-container;
+                                    font-size: 16px;
+                                  "
+                                  class="flex-container"
+                                >
+                                  {% for role in user_roles %}
+                                  <span class="badge badge-info"
+                                    >{{ role }}</span
+                                  >
+                                  {% endfor %}
+                                  <span class="e"></span>
+                                </div>
                               </div>
                             </div>
-                            <div class="info-block">
-                              <i class="im im-icon-Management"></i>
+                            <hr />
+                            <div class="info-block" style="float: left">
                               <div class="meta">
-                                <label>Position</label>
-                                <p>Sales Manager</p>
+                                {% if profile.user.is_active %}
+                                <span>Active</span>
+                                {% else %}
+                                <span>Inactive</span>
+                                {% endif %}
+                              </div>
+                            </div>
+                            <div class="info-block" style="float: right">
+                              <div class="meta">
+                                {% if profile.user.is_active %}
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/green-check-icon.jpeg"
+                                  alt="active"
+                                />
+                                {% else %}
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/red-check-icon.jpg"
+                                  alt="inactive"
+                                />
+                                {% endif %}
+                              </div>
+                            </div>
+                          </div>
+                          <button
+                            style="
+                              visibility: hidden;
+                              width: 100%;
+                              display: block;
+                              background-color: #21546d;
+                              color: white;
+                              font-size: 14px;
+                              padding-bottom: 6px;
+                            "
+                            onclick="document.getElementById('user-roles-update-trigger').style.display='block'"
+                            class="w3-button button block_"
+                          >
+                            <span style="margin-bottom: 8px"
+                              >Update User Roles</span
+                            >
+                          </button>
+                          <div style="width: 100%" class="column is-6">
+                            <div class="info-card">
+                              <div class="info-header">
+                                <h3>Contact Info</h3>
+                                <i class="im im-icon-Post-Mail2"></i>
+                              </div>
+                              <div style="float: right" class="info-block">
+                                <div class="meta">
+                                  <label style="float: right">Email</label>
+                                  <p>{{ profile.user.email }}</p>
+                                </div>
+                              </div>
+                              <div class="info-block">
+                                <div class="meta">
+                                  <label>Mobile</label>
+                                  <p>{{ profile.cell }}</p>
+                                </div>
+                              </div>
+                              <div style="float: right" class="info-block">
+                                <div class="meta">
+                                  <label style="margin-left: 8em"
+                                    >Address</label
+                                  >
+                                  <p>{{ profile.address }}</p>
+                                </div>
+                              </div>
+                              <div class="info-block">
+                                <div class="meta">
+                                  <label>Postal Code</label>
+                                  <p>{{ profile.postal_code }}</p>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                        <div class="column is-6">
-                          <div class="info-card">
-                            <div class="info-header">
-                              <h3>Contact Info</h3>
-                              <i class="im im-icon-Post-Mail2"></i>
-                            </div>
-                            <div class="info-block">
-                              <i class="im im-icon-Envelope"></i>
-                              <div class="meta">
-                                <label>Email</label>
-                                <p>helen@acme.io</p>
-                              </div>
-                            </div>
-                            <div class="info-block">
-                              <i class="im im-icon-Smartphone-4"></i>
-                              <div class="meta">
-                                <label>Mobile</label>
-                                <p>(+1) 555 165-5897</p>
-                              </div>
-                            </div>
-                            <div class="info-block">
-                              <i class="im im-icon-Phone-3"></i>
-                              <div class="meta">
-                                <label>Office</label>
-                                <p>(+1) 555 165-5897</p>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-6">
+                        <!-- Social Media Details -->
+                        <div style="visibility: hidden" class="column is-6">
                           <div class="info-card">
                             <div class="info-header">
                               <h3>Social Media</h3>
@@ -267,15 +372,7 @@
                     <div class="columns">
                       <div class="column is-10 is-offset-1">
                         <div
-                          class="
-                            flex-card
-                            is-top
-                            light-bordered
-                            raised
-                            animated
-                            preFadeInUp
-                            fadeInUp
-                          "
+                          class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp"
                         >
                           <div class="card-body">
                             <div class="columns is-vcentered">
@@ -336,22 +433,12 @@
 
                     <!-- Team List -->
                     <div
-                      class="
-                        columns
-                        is-vcentered is-multiline
-                        animated
-                        preFadeInUp
-                        fadeInUp
-                      "
+                      class="columns is-vcentered is-multiline animated preFadeInUp fadeInUp"
                     >
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -377,15 +464,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -396,11 +475,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
@@ -426,15 +501,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -445,11 +512,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -475,15 +538,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -494,11 +549,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
@@ -524,15 +575,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -543,11 +586,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag is-warning">Busy</span>
@@ -573,15 +612,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -592,11 +623,7 @@
                       <!-- Team member -->
                       <div class="column is-4">
                         <div
-                          class="
-                            flex-card
-                            team-card
-                            light-bordered light-raised
-                          "
+                          class="flex-card team-card light-bordered light-raised"
                         >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
@@ -622,15 +649,7 @@
                             </div>
                             <div class="card-action has-text-centered">
                               <button
-                                class="
-                                  button
-                                  btn-dash
-                                  rounded
-                                  secondary-btn
-                                  is-fullwidth
-                                  ripple
-                                  no-lh
-                                "
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
                               >
                                 Profile
                               </button>
@@ -644,188 +663,23 @@
                   <!-- /Profile team -->
                   <!-- Profile notifications -->
                   <div
+                    style="width: 100%"
                     id="profile-notifications"
                     class="profile-notifications is-hidden"
                   >
                     <div
-                      class="
-                        profile-notifications-inner
-                        animated
-                        preFadeInUp
-                        fadeInUp
-                      "
+                      class="profile-notifications-inner animated preFadeInUp fadeInUp"
                     >
-                      <div class="profile-notifications-title">
-                        <h3>Notifications</h3>
-                        <span class="tag is-medium">5 New</span>
-                      </div>
-
-                      <div class="card-body">
-                        <div class="notifications-center">
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <i class="im im-icon-Heart-2"></i>
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">30 minutes ago</div>
-                                <span
-                                  ><b>5 users</b> liked your
-                                  <b>publication</b> on the company's public
-                                  blog</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/marc.jpg"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">2 hours ago</div>
-                                <span
-                                  ><b>Marc Walters</b> commented on a
-                                  <b>task</b>.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/alex.jpg"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">5 hours ago</div>
-                                <span
-                                  ><b>3 new bugs</b> were reported by
-                                  <b>Alex Walsh</b>, in the
-                                  <b>Analytics App</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <i class="im im-icon-Add"></i>
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">5 hours ago</div>
-                                <span
-                                  ><b>8 new tasks</b> were added in the
-                                  <b>Social marketing</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/carolin.png"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">Yesterday, 09:31am</div>
-                                <span
-                                  ><b>Marjory Cambell</b> joined the
-                                  <b>Analytics App</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <i class="im im-icon-Yes"></i>
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">Yesterday, 08:42am</div>
-                                <span
-                                  ><b>3 tasks</b> were approved in the
-                                  <b>Social marketing</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification is-old">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/anthony.jpg"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">Monday, 07:57pm</div>
-                                <span
-                                  ><b>Anthony Briggs</b> joined the
-                                  <b>Analytics App</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification is-old">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/marc.jpg"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">oct 23, 11:02am</div>
-                                <span
-                                  ><b>Marc Walters</b> commented on a
-                                  <b>task</b> assigned to you in the
-                                  <b>Social marketing</b> project.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                          <!-- Notification item -->
-                          <div class="profile-notification is-old">
-                            <div class="notification-inner">
-                              <div class="icon is-hidden-mobile">
-                                <img
-                                  src="https://via.placeholder.com/250x250"
-                                  alt=""
-                                  data-demo-src="/static/assets/images/avatars/barry.jpg"
-                                />
-                              </div>
-                              <div class="description">
-                                <div class="timestamp">oct 22, 2:12pm</div>
-                                <span
-                                  ><b>Dan Baxter</b> sent you an
-                                  <b>email</b> with <b>3 attachments</b>.</span
-                                >
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="profile-notifications-title" style="width: 100%;">
+                      {% if profile_form %}
+                        <form name="user_profile_form" method="post" action="{% url 'tralard:profile-update' profile.slug %}">
+                          {% crispy profile_form profile_form.helper %}
+                        </form>
+                      {% else %}
+                      {% endif %}
+                      <script>
+                    </script>    
+                    </div>
                     </div>
                   </div>
                 </div>

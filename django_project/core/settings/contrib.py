@@ -43,6 +43,7 @@ INSTALLED_APPS += (
     'easy_thumbnails',
     'filer',
     'import_export',
+    'mapwidgets',
 )
 # Defines whether to log model related events,
 # such as when an object is created, updated, or deleted
@@ -66,7 +67,7 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_EMAIL_REQUIRED = True
 # ACCOUNT_SIGNUP_FORM_CLASS = 'base.forms.SignupForm'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/accounts/login/"
 LOGIN_URL = "/accounts/login/"
 LOGOUT_REDIRECT_URL = "/accounts/login"
 

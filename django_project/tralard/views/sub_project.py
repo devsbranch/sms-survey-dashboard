@@ -195,7 +195,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
     """Detail view for SubProject."""
 
     context_object_name = "sub_project"
-    template_name = "tralard/sub_project_detail.html"
+    template_name = "project/sub_project_detail.html"
 
     def get_object(self, queryset=None):
         """Get the object for this view.
@@ -213,6 +213,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         if queryset is None:
             queryset = self.get_queryset()
         project_slug = self.kwargs.get("project_slug", None)
+        sub_project_slug = self.kwargs.get("subproject_slug", None)
         if project_slug:
             try:
                 project = Project.objects.get(slug=project_slug)
@@ -221,13 +222,18 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
                     "The project you requested a subcateogrty for does not exist."
                 )
             try:
-                obj = queryset.get(project=project, slug=project_slug)
+                obj = queryset.get(project=project, slug=sub_project_slug)
                 return obj
             except SubProject.DoesNotExist:
                 raise Http404("The subproject you requested does not exist.")
         else:
             raise Http404("Sorry! We could not find your subproject!")
 
+
+    def get_context_data(self, **kwargs):
+        context = super(SubProjectDetailView, self).get_context_data(**kwargs)
+        context["title"] = 'sub project'
+        return context
 
 # noinspection PyAttributeOutsideInit
 class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):

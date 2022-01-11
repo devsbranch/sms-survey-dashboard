@@ -89,6 +89,7 @@ def project_delete(request, program_slug, project_slug):
         reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
     )
 
+from tralard.utils import user_profile_update_form_validator
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
     model = SubProject
@@ -165,10 +166,14 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.all_subproject_indicators = Indicator.objects.filter(
             subproject_indicators__in=self.sub_projects_qs
         )
+        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
         context["citizen_feedback_list"] = self.all_feedback_qs
         context["project"] = self.project
         context["indicators"] = self.all_subproject_indicators
         context["form"] = SubProjectForm
+        context['user_roles'] = self.user_profile_utils[0]
+        context['profile'] = self.user_profile_utils[1]
+        context['profile_form'] = self.user_profile_utils[2]
         context["feedback_form"] = FeedbackForm
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
@@ -187,16 +192,11 @@ class SubProjectListView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self):
         context = super(SubProjectListView, self).get_context_data()
+        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
         context["title"] = "Sub Project List"
-        return context
-
-
-class SubProjectDetailView(LoginRequiredMixin, TemplateView):
-    template_name = "project/sub_project_detail.html"
-
-    def get_context_data(self):
-        context = super(SubProjectDetailView, self).get_context_data()
-        context["title"] = "Sub Project Detail"
+        context['user_roles'] = self.user_profile_utils[0]
+        context['profile'] = self.user_profile_utils[1]
+        context['profile_form'] = self.user_profile_utils[2]
         return context
 
 

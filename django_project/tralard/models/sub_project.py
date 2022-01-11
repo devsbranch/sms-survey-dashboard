@@ -6,16 +6,20 @@ import logging
 
 from django.db import models
 from django.utils.text import slugify
+from django.db.models.aggregates import Sum
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from tralard.models.fund import Fund
 from tralard.models.beneficiary import Beneficiary
+from tralard.models.training import Training
 
 from tralard.utils import unique_slugify
 
 
 from tinymce import HTMLField
 
+User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
@@ -50,9 +54,15 @@ class SubProject(models.Model):
     Sub Project definition.
     """
 
-    slug = models.SlugField(max_length=255, null=True, blank=True)
+    slug = models.SlugField(
+        max_length=255, 
+        null=True, 
+        blank=True
+    )
     name = models.CharField(
-        help_text=_("Name of this Sub Project."), max_length=255, unique=True
+        help_text=_("Name of this Sub Project."), 
+        max_length=255, 
+        unique=True
     )
     size = models.CharField(
         help_text=_("Size (number of Hectors, SquareMeters, Products etc,)."),
@@ -60,8 +70,8 @@ class SubProject(models.Model):
         blank=True,
         null=True,
     )
-    supervisor = models.ForeignKey(
-        "tralard.representative",
+    representative = models.ForeignKey(
+        User,
         help_text=_(
             "Sub Project Supervisor. "
             "This name will be used on trainings and any other references. "
@@ -81,8 +91,8 @@ class SubProject(models.Model):
         blank=True,
         # null=True, null has no effect on ManyToManyField.
     )
-    subproject_managers = models.ManyToManyField(
-        "tralard.Representative",
+    managers = models.ManyToManyField(
+        User,
         related_name="subproject_managers",
         blank=True,
         # null=True, null has no effect on ManyToManyField.
@@ -144,7 +154,7 @@ class SubProject(models.Model):
     @property
     def fund_utilization_percent(self):
         project_id = self.project.id
-        fund_obj = Fund.objects.get(id=self.id)
+        fund_obj = Fund.objects.get(sub_project=self)
         initial_fund = fund_obj.amount
         balance = fund_obj.balance
         fund_utilization_percent = (balance / initial_fund) * 100
@@ -158,8 +168,25 @@ class SubProject(models.Model):
         return beneficiary_count_queryset
 
     @property
+    def count_training_schedules(self):
+        training_entries_qs = Training.objects.filter(
+            sub_project__slug=self.slug
+        ).count()
+        return training_entries_qs
+
+    @property
     def count_indicators(self):
         subproject_indicators = Indicator.objects.filter(
             subproject_indicators__slug=self.slug
         ).count()
         return subproject_indicators
+
+    @property
+    def get_total_sub_project_fund(self):
+        """Computes total funds related to this subproject."""
+        related_funds_sum_qs = Fund.objects.filter(
+            sub_project__slug=self.slug
+        ).aggregate(Sum('amount'))
+
+        amount_value = related_funds_sum_qs['amount__sum']
+        return amount_value

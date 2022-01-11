@@ -28,7 +28,7 @@ class ProjectSupervisor(AbstractUserRole):
     }
 
 class BenficiaryRepresentative(AbstractUserRole):
-    role_name = 'benficiary_epresentative'
+    role_name = 'benficiary_representative'
     available_permissions = {
         'permission_1': True,
         'permission_3': True,

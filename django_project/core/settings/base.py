@@ -158,3 +158,13 @@ LOGGING = {
         },
     }
 }
+
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [-15.4164488, 28.2821535]),
+        ("GooglePlaceAutocompleteOptions", {'componentRestrictions': {'country': 'zambia'}}),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDZMi5ucoQwtfIX7023ezUac8mQG2vrMpM"
+}

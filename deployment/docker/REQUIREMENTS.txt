@@ -19,6 +19,9 @@ easy-thumbnails
 django-filer==2.1.1
 requests==2.25.1
 django-import-export==2.7.0
+django-map-widgets==0.3.2
+django-imagekit==4.1.0
+django-infinite-scroll-pagination==1.2.0
 # support special characters
 
 # Django Easy Audit
@@ -32,6 +35,7 @@ pygbif==0.2.0
 
 djangocms-admin-style==2.0.2
 django-money==2.1 # https://django-money.readthedocs.io/en/stable/
+django-map-widgets==0.3.2 # https://django-map-widgets.readthedocs.io/en/latest/installation/index.html
 
 # Django beneficiary
 git+https://github.com/Digital-Prophets/dj-beneficiary.git

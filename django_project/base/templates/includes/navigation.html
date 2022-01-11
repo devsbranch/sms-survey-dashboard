@@ -57,8 +57,14 @@
                                     <li>
                                         <i class="sl sl-icon-heart red"></i>
                                         <div class="notification-content">
-                                            <img src="https://via.placeholder.com/250x250" alt=""
-                                                data-demo-src="{% static 'assets/images/avatars/henry.jpg' %}">
+                                            {% if profile.profile_photo %}
+                                            <img  src="{{ profile.profile_photo.url }}" data-demo-src="{{ profile.profile_photo.url }}"  class="profile-photo img-xs rounded-circle " alt="{{ profile.user.username }}'s profile photo"/>
+                                        {% else %}
+                                            <img 
+                                            src="/assets/images/logos/logo.png" 
+                                            class="profile-photo " data-demo-src="/assets/images/logos/logo.png" 
+                                            alt="{{ profile.user.username }}'s default profile photo"/>
+                                        {% endif %}
                                             <div class="notification-text">
                                                 <div class="text">
                                                     <b>Henry</b> liked your <b>comment</b>.
@@ -170,25 +176,47 @@
                     <i data-feather="message-square"></i>
                     <span class="indicator is-alt"></span>
                 </div>
-    
+                <!-- 
+                        default image
+                    {% static 'assets/images/logos/logo.png' %}
+                        data-demo-src image
+                    {% static 'assets/images/logos/logo.png' %}
+                -->
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">
-                        <img src="{% static 'assets/images/logos/logo.png' %}" alt="" 
-                             data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                        {% if profile.profile_photo %}
+                            <img  src="{{ profile.profile_photo.url }}" data-demo-src="{{ profile.profile_photo.url }}"  class="profile-photo img-xs rounded-circle " alt="{{ profile.user.username }}'s profile photo"/>
+                        {% else %}
+                            <img 
+                            src="/assets/images/logos/logo.png" 
+                            class="profile-photo " data-demo-src="/assets/images/logos/logo.png" 
+                            alt="{{ profile.user.username }}'s profile photo"/>
+                        {% endif %}
                     </div>
                     <div class="drop-wrapper accounts-drop">
                         <div class="drop-inner has-arrow">
                             <div class="head-block">
-                                <img src="{% static 'assets/images/logos/logo.png' %}" alt="" 
-                                     data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                {% if profile.profile_photo %}
+                                    <img  src="{{ profile.profile_photo.url }}" data-demo-src="{{ profile.profile_photo.url }}"  class="profile-photo img-xs rounded-circle " alt="{{ profile.user.username }}'s profile photo"/>
+                                {% else %}
+                                    <img 
+                                    src="/assets/images/logos/logo.png" 
+                                    class="profile-photo " data-demo-src="/assets/images/logos/logo.png" 
+                                    alt="{{ profile.user.username }}'s profile photo"/>
+                                {% endif %}
                                 <h3>
                                     {{ request.user.username }}
                                 </h3>
                                 <p>
                                     {{ request.user.email }}
                                 </p>
-                                <a class="button is-rounded">Manage Account</a>
+                                <a onclick="return userProfilePageOpener(this)" class="button is-rounded">Manage Account</a>
+                                <script>
+                                    const userProfilePageOpener = () => {
+                                        document.getElementById("user-profile-page-opener-button").click()
+                                    };
+                                </script>
                             </div>
                             <div class="logout-block">
                                 <a href={% url 'logout' %} class="button">Logout</a>

@@ -162,8 +162,7 @@ class Project(models.Model):
         on_delete=models.CASCADE,
     )
     project_representative = models.ForeignKey(
-        Representative,
-        related_name='project_representatives',
+        User,
         help_text=_(
             'Project representative. '
             'This name will be used on trainings and any other references. '),
@@ -328,7 +327,7 @@ class Feedback(models.Model):
         blank=True
     )
     moderator = models.ForeignKey(
-        Representative,
+        User,
         related_name='feedback_moderator',
         help_text=_(
             'Feedback Moderator. '

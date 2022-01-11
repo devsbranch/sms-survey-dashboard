@@ -6,15 +6,14 @@ import logging
 
 from django.db import models
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
-
-from tralard.models.sub_project import SubProject
-from tralard.models.project import Representative
 
 from tralard.utils import unique_slugify
 
 from tinymce import HTMLField
 
+User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
@@ -57,7 +56,7 @@ class Training(models.Model):
         blank=True
     )
     sub_project = models.ForeignKey(
-        SubProject,
+        'tralard.SubProject',
         on_delete=models.CASCADE,
         verbose_name=_('Project name')
     )
@@ -88,7 +87,7 @@ class Training(models.Model):
         null=True,
     )
     moderator = models.ForeignKey(
-        'tralard.representative',
+        User,
         on_delete=models.SET_NULL,
         help_text=_(
             'Training Moderator. '

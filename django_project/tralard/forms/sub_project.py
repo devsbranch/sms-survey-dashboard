@@ -53,21 +53,18 @@ class SubProjectForm(ModelForm):
         self.helper.form_method = "post"
         self.helper.disable_csrf = True
         self.helper.layout = Layout(
-            Fieldset(
-                "",
-                Row(
-                    Column("name", css_class="form-group col-md-6 mb-0"),
-                    Column("project", css_class="form-group col-md-6 mb-0"),
-                    Column("supervisor", css_class="form-group col-md-6 mb-0"),
-                    Column("size", css_class="form-group col-md-6 mb-0"),
-                    Column("indicators", css_class="form-group col-md-6 mb-0"),
-                    Column("subproject_managers", css_class="form-group col-md-6 mb-0"),
-                    Column("approved", css_class="form-group col-md-12 mb-0"),
-                    Column("image_file", css_class="form-group col-md-12 mb-0"),
-                    Column("custom_description", css_class="form-group col-md-12 mb-0"),
-                    Column("custom_focus_area", css_class="form-group col-md-12 mb-0"),
-                    css_class="form-row",
-                ),
+            Row(
+                Column("name", css_class="form-group col-md-12 mb-0"),
+                Column("project", css_class="form-group col-md-12 mb-0"),
+                Column("supervisor", css_class="form-group col-md-12 mb-0"),
+                Column("size", css_class="form-group col-md-12 mb-0"),
+                Column("indicators", css_class="form-group col-md-12 mb-0"),
+                Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
+                Column("approved", css_class="form-group col-md-12 mb-0"),
+                Column("image_file", css_class="form-group col-md-12 mb-0"),
+                Column("custom_description", css_class="form-group col-md-12 mb-0"),
+                Column("custom_focus_area", css_class="form-group col-md-12 mb-0"),
+                css_class="form-row",
             ),
         )
 

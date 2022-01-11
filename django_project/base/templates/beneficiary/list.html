@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% load static %}
-
+{% load crispy_forms_tags %} 
 {% block title %} {{ title|title }} {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
@@ -15,14 +15,45 @@
 
         <!-- Dashboard Wrapper -->
         <div class="dashboard-wrapper">
+            <div class="contacts-title-wrapper">
+                <div class="profile-heading">
+                    <div>
+                        <h2 class="project-title">{{header}}</h2>
+                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <i>{{project.name|title}}</i> project.</small>
+                    </div>
+                    
+                </div>
+                <!-- Filter input -->
+                <div class="list-filter">
+                <div class="control is-hidden-phones">
+                    <input
+                    class="input"
+                    type="text"
+                    placeholder="Filter Contacts"
+                    />
+                    <div class="form-icon">
+                    <i data-feather="filter"></i>
+                    </div>
+                </div>
+                <a
+                    class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger modal-trigger" 
+                    data-modal="create-beneficiary-modal" 
+                    data-ripple-color="" 
+                    href="#">
+                    <i class="material-icons">add</i>
+                    Create Beneficiary
+                </a>
 
-            <br/>
-            <div class="profile-heading">
-                <div>
-                    <h2 class="project-title">All Beneficiaries</h2>
-                    <small class="project-tagline no-margin-bottom">Showing all Beneficiaries.</small>
+                <a
+                    class=" button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger " 
+                    data-ripple-color="" 
+                    href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
+                    <span>Go Back To {{ project_name }} Project </span>
+                    <i class="material-icons">send</i>
+                </a>
                 </div>
             </div>
+            {% include "includes/messages.html" %}
 
             <br/>
 
@@ -32,7 +63,7 @@
 
                     <div class="column is-9 is-hidden-mobile">
 
-                        <div class="is-document-list">
+                        <div class="is-document-list" style="overflow: unset;">
                             <!-- Documents table -->
                             <table class="table documents-table">
                                 <!-- Header -->
@@ -276,8 +307,8 @@
                                             <!-- Row Entry for Name-->
                                             <td class="document-preview">
                                                 <span class="inner">
-                                                    <img src="https://via.placeholder.com/150x150" alt="" data-demo-src="{{ beneficiary.logo.url }}">
-                                                    <a href="#">{{beneficiary.name}}</a>
+                                                    <img src="https://via.placeholder.com/150x150" alt="" {% if beneficiary.logo %} data-demo-src="{{ beneficiary.logo.url }} {% endif %}">
+                                                    <a href="#" class="is-modal modal-trigger modal-trigger" data-modal="beneficiary-detail-modal" onClick="fetchDetailModalData('{{project.program.slug}}', '{{ project.slug}}', '{{beneficiary.slug}}')">{{beneficiary.name}}</a>
                                                 </span>
                                             </td>
 
@@ -331,31 +362,16 @@
                                                 
                                                     <div class="dropdown-menu is-text-bigger" role="menu">
                                                         <div class="dropdown-content">
-                                                            <a href="#" class="dropdown-item">
-                                                                Share
+                                                            <a class="dropdown-item modal-trigger modal-trigger" data-modal="create-beneficiary-modal" onClick="handleBeneficiaryForm('POPULATE_FORM','tralard', 'livelihoods', '{{beneficiary.slug}}');">
+                                                                Update
                                                             </a>
-                                                            <a class="dropdown-item">
-                                                                Download
-                                                            </a>
-                                                            <a class="dropdown-item">
-                                                                Bookmark
-                                                            </a>
-                                                            <a class="dropdown-item">
-                                                                Rename
-                                                            </a>
-                                                            <a class="dropdown-item">
-                                                                Move
-                                                            </a>
-                                                            <a class="dropdown-item">
-                                                                Copy
-                                                            </a>
-                                                            <a class="dropdown-item">
+                                                            <a class="dropdown-item modal-trigger" data-modal="delete-beneficiary-modal" onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{project.program.slug}}', '{{project.slug}}', '{{beneficiary.slug}}')">
                                                                 Delete
                                                             </a>
                                                         </div>
                                                     </div>
-                                                </div>                                            <a href="#" class="button is-hidden"><i
-                                                        class="material-icons">remove_red_eye</i></a>
+                                                </div>
+                                                <a href="#" class="button is-hidden"><i class="material-icons">remove_red_eye</i></a>
                                             </td>
 
                                         </tr>
@@ -365,7 +381,6 @@
                             </table>
                         </div>
                     </div>
-
                     <!-- Right side menu -->
                     <div class="column is-3 is-hidden-mobile">
                         <div class="right-options">
@@ -382,9 +397,9 @@
                                 {% endfor %}
                             </div>
                             <!-- Share -->
-                            <button type="button" class="button button-cta secondary-btn is-fullwidth is-bold raised">
+                            {% comment %} <button type="button" class="button button-cta secondary-btn is-fullwidth is-bold raised modal-trigger" data-modal="create-beneficiary-modal">
                                 Create Beneficiary
-                            </button>
+                            </button> {% endcomment %}
                             <!-- Actions list -->
                             <div id="default-controls" class="controls">
                                 <a class="control-block">
@@ -423,15 +438,737 @@
                             </div>
                         </div>
                     </div>
+                    
 
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+
+    <!-- Reminder Modal --><!-- Create Task Modal -->
+    <div id="create-beneficiary-modal" class="modal create-task-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content" style="width: 50% !important;">
+            <div class="flex-card simple-shadow">
+                <div class="modal-hero m-2">
+                    <h2 id="beneficiary-form-title" class="has-text-centered dark-text">Create Beneficiary</h2>
+                </div>
+                <div class="navigation-tabs layout-tabs animated-tabs">
+
+    
+                    <div id="task-details" class="navtab-content is-active">
+                        <div class="card-body" style="">
+                            <div class="content">
+                                <!-- New Project form -->
+                                <form id="beneficiary-form" action="{% url 'tralard:beneficiary-list' project.program.slug project.slug %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    {% crispy form form.helper %}
+                                    <div class="form-footer">
+                                        <button id="form-submit-button" type="submit" class="button is-modal">Create Beneficiary</button>
+                                    </div>
+    
+                                </form>
+                                <!-- /New Project form -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');"></button>
+    </div>
+    
+    <div id="beneficiary-detail-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content" style="width: 75% !important;">
+        
+                <!-- Dashboard Wrapper -->
+                <div class="dashboard-wrapper">
+        
+                    <div id="main-dashboard" class="section-wrapper">
+                        <!-- Dashboard content -->
+                        <div id="basic-layout" class="dashboard-columns">
+        
+                            <div class="contact-profile-wrap" style="margin: 20px;">
+        
+                                <!-- Page title -->
+                                <div class="contacts-title-wrapper">
+                                    <h3 id="org-name" class="contacts-title">Josh Barker</h3>
+                                    <!-- Filter input -->
+                                    <div class="list-filter">
+                                        <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
+                                            <div class="button">
+                                                <i class="material-icons">more_vert</i>
+                                            </div>
+                                            <!-- Dropdown menu -->
+                                            <div class="dropdown-menu is-text-bigger" role="menu">
+                                                <div class="dropdown-content">
+                                                    <a href="#" class="dropdown-item">
+                                                        <i class="sl sl-icon-paper-plane"></i>
+                                                        <span>
+                                                            <span>Send</span>
+                                                            <span>Send contact details</span>
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item">
+                                                        <i class="sl sl-icon-rocket"></i>
+                                                        <span>
+                                                            <span>New Deal</span>
+                                                            <span>Start new deal involving this contact</span>
+                                                        </span>
+                                                    </a>
+                                                    <a href="#" class="dropdown-item">
+                                                        <i class="sl sl-icon-bell"></i>
+                                                        <span>
+                                                            <span>Subscribe me</span>
+                                                            <span>Subscribe me to contact updates</span>
+                                                        </span>
+                                                    </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item">
+                                                        <i class="sl sl-icon-shield"></i>
+                                                        <span>
+                                                            <span>Disable</span>
+                                                            <span>Disables this contact</span>
+                                                        </span>
+                                                    </a>
+                                                    <a class="dropdown-item">
+                                                        <i class="sl sl-icon-trash"></i>
+                                                        <span>
+                                                            <span>Delete</span>
+                                                            <span>Delete this event</span>
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Edit button -->
+                                        <a id="close-detail-modal" class="button btn-dash primary-btn btn-dash raised ripple has-icon"
+                                            data-ripple-color="">
+                                            <i class="material-icons">short_text</i>
+                                            Close
+                                        </a>
+                                    </div>
+                                </div>
+        
+                                <div class="columns contact-profile">
+                                    <!-- Avatar Card -->
+                                    <div class="column is-4">
+                                        <div class="flex-card is-avatar light-bordered card-overflow">
+                                            <div id="detail-modal-inner" class="inner">
+                                                <div class="contact-block">
+                                                    <!-- Avatar -->
+                                                    <div class="avatar-wrapper">
+                                                        <img id="org-logo" src="https://via.placeholder.com/150x150" alt="" data-demo-src="">
+                                                    </div>
+                                                    <!-- Meta -->
+                                                    <div id="org-name-card" class="contact-name"></div>
+                                                    <div id="org-type" class="contact-company"></div>
+                                                    <!-- Stats -->
+                                                    <div class="stats-block">
+                                                        <div class="stat">
+                                                            <span>Total Beneficiaries</span>
+                                                            <span id="total-beneficiaries">24</span>
+                                                        </div>
+                                                        <div class="stat">
+                                                            <span>Females</span>
+                                                            <span id="total-females">17</span>
+                                                        </div>
+                                                        <div class="stat">
+                                                            <span>Males</span>
+                                                            <span id="total-males">7</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+        
+                                    <div class="column is-8">
+                                        <!-- Contact informations -->
+                                        <div class="flex-card is-contact-info light-bordered card-overflow">
+                                            <!-- Tabs -->
+                                            <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
+                                                <div class="tabs">
+                                                    <ul>
+                                                        <li class="is-active" data-tab="tab-general"><a>General</a></li>
+                                                        <li data-tab="tab-events"><a>Other Info</a></li>
+                                                        <li data-tab="tab-calls"><a>Extra Info</a></li>
+                                                    </ul>
+                                                </div>
+        
+                                                <!-- General informations -->
+                                                <div id="tab-general" class="navtab-content is-active">
+                                                    <div class="columns">
+                                                        <div class="column is-6">
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Email
+                                                                </div>
+                                                                <div id="org-email" class="info-content is-email">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Phone (1)
+                                                                </div>
+                                                                <div id="org-phone" class="info-content">
+                                                                    
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Organization Type
+                                                                </div>
+                                                                <div id="org-type-inner" class="info-content">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Registered Date
+                                                                </div>
+                                                                <div id="org-registered-date" class="info-content">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Location
+                                                                </div>
+                                                                <div id="org-location" class="info-content">
+                                                                </div>
+                                                            </div>
+                                                            <!-- Info block -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Ward
+                                                                </div>
+                                                                <div id="org-ward" class="info-content">
+                                                                </div>
+                                                            </div>
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Sub-Project
+                                                                </div>
+                                                                <div id="org-sub-project" class="info-content">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="column is-6">
+                                                            <!-- Contact summary -->
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Organization Description
+                                                                </div>
+                                                                <div id="org-description" class="info-content is-notes">
+                                                                    
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <hr>
+        
+                                                    <!-- Lifetime earnings -->
+                                                    <div class="lifetime-wrapper">
+                                                        <div class="">
+                                                            <div class="lifetime-label">Total Beneficiaries</div>
+                                                            <span id="total-beneficiaries-inner"></span>
+                                                        </div>
+        
+                                                        <!-- Send email action -->
+                                                        <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-dismiss"
+                                                            data-ripple-color="" data-modal="message-contact-modal" style="color: white">
+                                                            Close
+                                                        </a>
+                                                    </div>
+                                                </div>
+        
+                                                <!-- Events -->
+                                                <div id="tab-events" class="navtab-content">
+                                                    <div class="columns">
+                                                        <div class="column">
+                                                            <!-- Event block -->
+                                                            <div class="event-block">
+                                                                <div class="date-block">
+                                                                    <span>18</span>
+                                                                    <span>Oct</span>
+                                                                </div>
+                                                                <!-- Event meta -->
+                                                                <div class="event-meta">
+                                                                    <span class="event-name">
+                                                                        Presentation of our latest release.
+                                                                    </span>
+                                                                    <span class="meta">
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-location"></i>
+                                                                            <span>Customer's Office</span>
+                                                                        </span>
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-clock"></i>
+                                                                            <span>10:30am</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <!-- Dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
+                                                                    <div class="button">
+                                                                        <i class="material-icons">more_vert</i>
+                                                                    </div>
+                                                                
+                                                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-pencil"></i>
+                                                                                <span>
+                                                                                    <span>Edit</span>
+                                                                                    <span>Edit event details</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-share"></i>
+                                                                                <span>
+                                                                                    <span>Share</span>
+                                                                                    <span>Share with teamates</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-bell"></i>
+                                                                                <span>
+                                                                                    <span>Notify me</span>
+                                                                                    <span>Remind me before this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a class="dropdown-item">
+                                                                                <i class="sl sl-icon-trash"></i>
+                                                                                <span>
+                                                                                    <span>Delete</span>
+                                                                                    <span>Delete this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                    </div>
+        
+                                                            <!-- Event block -->
+                                                            <div class="event-block is-disabled">
+                                                                <div class="date-block">
+                                                                    <span>03</span>
+                                                                    <span>Oct</span>
+                                                                </div>
+                                                                <!-- Event meta -->
+                                                                <div class="event-meta">
+                                                                    <span class="event-name">
+                                                                        Conference call with company board.
+                                                                    </span>
+                                                                    <span class="meta">
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-location"></i>
+                                                                            <span>Here</span>
+                                                                        </span>
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-clock"></i>
+                                                                            <span>15:00pm</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <!-- Dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
+                                                                    <div class="button">
+                                                                        <i class="material-icons">more_vert</i>
+                                                                    </div>
+                                                                
+                                                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-pencil"></i>
+                                                                                <span>
+                                                                                    <span>Edit</span>
+                                                                                    <span>Edit event details</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-share"></i>
+                                                                                <span>
+                                                                                    <span>Share</span>
+                                                                                    <span>Share with teamates</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-bell"></i>
+                                                                                <span>
+                                                                                    <span>Notify me</span>
+                                                                                    <span>Remind me before this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a class="dropdown-item">
+                                                                                <i class="sl sl-icon-trash"></i>
+                                                                                <span>
+                                                                                    <span>Delete</span>
+                                                                                    <span>Delete this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                    </div>
+        
+                                                            <!-- Event block -->
+                                                            <div class="event-block is-disabled">
+                                                                <div class="date-block">
+                                                                    <span>19</span>
+                                                                    <span>Sep</span>
+                                                                </div>
+                                                                <!-- Event meta -->
+                                                                <div class="event-meta">
+                                                                    <span class="event-name">
+                                                                        First meeting with prospect.
+                                                                    </span>
+                                                                    <span class="meta">
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-location"></i>
+                                                                            <span>Customer's Office</span>
+                                                                        </span>
+                                                                        <span class="meta-element">
+                                                                            <i class="sl sl-icon-clock"></i>
+                                                                            <span>09:00am</span>
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                                <!-- Dropdown -->
+                                                                <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
+                                                                    <div class="button">
+                                                                        <i class="material-icons">more_vert</i>
+                                                                    </div>
+                                                                
+                                                                    <div class="dropdown-menu is-text-bigger" role="menu">
+                                                                        <div class="dropdown-content">
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-pencil"></i>
+                                                                                <span>
+                                                                                    <span>Edit</span>
+                                                                                    <span>Edit event details</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-share"></i>
+                                                                                <span>
+                                                                                    <span>Share</span>
+                                                                                    <span>Share with teamates</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <a href="#" class="dropdown-item">
+                                                                                <i class="sl sl-icon-bell"></i>
+                                                                                <span>
+                                                                                    <span>Notify me</span>
+                                                                                    <span>Remind me before this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                            <div class="dropdown-divider"></div>
+                                                                            <a class="dropdown-item">
+                                                                                <i class="sl sl-icon-trash"></i>
+                                                                                <span>
+                                                                                    <span>Delete</span>
+                                                                                    <span>Delete this event</span>
+                                                                                </span>
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>                                                    </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- /Events -->
+        
+                                                <!-- Calls -->
+                                                <div id="tab-calls" class="navtab-content">
+                                                    <!-- Logged call -->
+                                                    <div class="single-toggle-wrapper is-phone-block is-inner">
+                                                        <div class="toggle-wrap">
+                                                            <span class="trigger">
+                                                                <a href="#">
+                                                                    <i class="fa fa-phone"></i>
+                                                                    <small>oct 18, 2018</small>
+                                                                    <i class="im im-icon-Add"></i>
+                                                                </a>
+                                                            </span>
+                                                            <!-- Content -->
+                                                            <div class="toggle-container">
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Called at</div>
+                                                                    <div class="call-info">10:23AM</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Type</div>
+                                                                    <div class="call-info">Outgoing call</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Duration</div>
+                                                                    <div class="call-info">7 minutes</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Conversation abstract</div>
+                                                                    <div class="call-info is-conversation">Lorem ipsum dolor sit
+                                                                        amet, cu ius oratio
+                                                                        appareat partiendo. Solet civibus nam te. Eu vel veri
+                                                                        putent. Et suas reprimique
+                                                                        adversarium duo, ex vel ridens graecis. Mel ipsum oratio
+                                                                        voluptatum et.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Logged call -->
+                                                    <div class="single-toggle-wrapper is-phone-block is-outer">
+                                                        <div class="toggle-wrap">
+                                                            <span class="trigger">
+                                                                <a href="#">
+                                                                    <i class="fa fa-phone"></i>
+                                                                    <small>oct 03, 2018</small>
+                                                                    <i class="im im-icon-Add"></i>
+                                                                </a>
+                                                            </span>
+                                                            <!-- Content -->
+                                                            <div class="toggle-container">
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Called at</div>
+                                                                    <div class="call-info">14:02PM</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Type</div>
+                                                                    <div class="call-info">Incoming call</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Duration</div>
+                                                                    <div class="call-info">3 minutes</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Conversation abstract</div>
+                                                                    <div class="call-info is-conversation">Lorem ipsum dolor sit
+                                                                        amet, cu ius oratio
+                                                                        appareat partiendo. Solet civibus nam te. Eu vel veri
+                                                                        putent. Et suas reprimique
+                                                                        adversarium duo, ex vel ridens graecis. Mel ipsum oratio
+                                                                        voluptatum et.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- Logged call -->
+                                                    <div class="single-toggle-wrapper is-phone-block is-inner">
+                                                        <div class="toggle-wrap">
+                                                            <span class="trigger">
+                                                                <a href="#">
+                                                                    <i class="fa fa-phone"></i>
+                                                                    <small>sep 21, 2018</small>
+                                                                    <i class="im im-icon-Add"></i>
+                                                                </a>
+                                                            </span>
+                                                            <!-- Content -->
+                                                            <div class="toggle-container">
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Called at</div>
+                                                                    <div class="call-info">12:11PM</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Type</div>
+                                                                    <div class="call-info">Outgoing call</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Call Duration</div>
+                                                                    <div class="call-info">14 minutes</div>
+                                                                </div>
+                                                                <div class="meta-block">
+                                                                    <div class="call-label">Conversation abstract</div>
+                                                                    <div class="call-info is-conversation">Lorem ipsum dolor sit
+                                                                        amet, cu ius oratio
+                                                                        appareat partiendo. Solet civibus nam te. Eu vel veri
+                                                                        putent. Et suas reprimique
+                                                                        adversarium duo, ex vel ridens graecis. Mel ipsum oratio
+                                                                        voluptatum et.</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
+                                                    <!-- Log call action -->
+                                                    <div class="action-wrapper">
+                                                        <a class="button btn-dash secondary-btn btn-dash raised ripple modal-trigger"
+                                                            data-ripple-color="" data-modal="call-contact-modal">
+                                                            Log Call
+                                                        </a>
+                                                    </div>
+        
+                                                </div>
+                                                <!-- /Calls -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <!-- Delete Beneficiary Modal --><!-- Delete Beneficiary Modal -->
+    <div id="delete-beneficiary-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Delete Beneficiary</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                    </div>
+                    
+                    <form id="delete-beneficiary-form" class="form" action="" method="post">
+                        {% csrf_token %}
+                        <div id="warning-msg">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
+                            <button class=" is-danger is-modal" type="submit">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
 </div>
 
 
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script>
+
+    function fetchData (url) {
+        const formData = $.get(url)
+        return formData
+    }
+
+    async function handleBeneficiaryForm(actionType, program_slug='', project_slug='', beneficiary_slug='') {
+        let data = ''
+        const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+        const createUrl = `${baseUrl}/list/`
+        const updateUrl = `${baseUrl}/${beneficiary_slug}/update/`
+
+        if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+        }
+        let form = 
+
+        $("#beneficiary-form input[name='name']").val(data.name);
+        data.org_type ? $(`#id_org_type option[value="${data.org_type}"]`).prop('selected', true) : $(`#id_org_type option[value=""]`).prop('selected', true).text('---------');
+        $("#beneficiary-form input[name='total_beneficiaries']").val(data.total_beneficiaries || '');
+        $("#beneficiary-form input[name='total_females']").val(data.total_females || '');
+        $("#beneficiary-form input[name='total_males']").val(data.total_males || '');
+        $("#beneficiary-form input[name='total_hhs']").val(data.total_hhs || '');
+        $("#beneficiary-form input[name='female_hhs']").val(data.female_hhs || '');
+        $("#beneficiary-form input[name='below_sixteen']").val(data.below_sixteen || '');
+        $("#beneficiary-form input[name='sixteen_to_thirty']").val(data.sixteen_to_thirty || '');
+        $("#beneficiary-form input[name='thirty_to_fourty_five']").val(data.thirty_to_fourty_five || '');
+        $("#beneficiary-form input[name='above_fourty_five']").val(data.above_fourty_five || '');
+        $("#beneficiary-form textarea[name='description']").val(data.description || '');
+        $("#beneficiary-form input[name='email']").val(data.email || '');
+        $("#beneficiary-form input[name='cell']").val(data.cell || '');
+        $("#beneficiary-form input[name='registered_date']").val(data.registered_date || '');
+        data.sub_project ? $(`#id_sub_project option[value="${data.sub_project}"]`).prop('selected', true) : $(`#id_sub_project option[value=""]`).prop('selected', true).text('---------');
+        data.ward ? $(`#id_ward option[value="${data.ward}"]`).prop('selected', true ) : $(`#id_ward option[value=""]`).prop('selected', true ).text('---------');
+        
+        if (actionType === "POPULATE_FORM") {
+            if (data.logo) {
+                $('.custom-file').append(`<a id="current-logo-image" href="${data.logo_image_url}">Current Image: ${data.logo}</a>`)
+                $('.custom-file').append('<br/>')
+                $('.custom-file').append('<p id="clear-image-checkbox"><input type="checkbox" name="logo-clear" id="logo-clear_id" style="margin-right: 5px;"><label for="logo-clear_id">Clear</label></p>')
+            }
+            $("#beneficiary-form").attr('action', updateUrl);
+            $('#beneficiary-form-title').text("Update Beneficiary")
+            $('#form-submit-button').text("Update")
+        } else {
+            $('#current-logo-image').remove()
+            $('#clear-image-checkbox').remove()
+            $("#beneficiary-form").attr('action', createUrl);
+            $('#beneficiary-form-title').text("Create Beneficiary")
+            $('#form-submit-button').text("Create")
+        }
+
+        $("#location-mw-overlay-latitude").attr('value', data.location[0] || "");
+        $("#location-mw-overlay-longitude").attr('value', data.location[1] || "");
+        $(".mw-coordinates-overlay").click();
+    }
+
+    async function fetchDetailModalData(program_slug, project_slug, beneficiary_slug) {
+        const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+        const fetchUrl = `${baseUrl}/${beneficiary_slug}/detail/`
+
+        const data = await fetchData(fetchUrl)
+
+        $('#org-logo').attr('src', data.logo_url || "")
+        $('#org-name').text(data.name || "")
+        $('#org-name-card').text(data.name || "")
+        $('#org-type').text(data.org_type || "")
+        $('#org-type-inner').text(data.org_type || "")
+        $('#total-beneficiaries').text(data.total_beneficiaries || "")
+        $('#total-beneficiaries-inner').text(data.total_beneficiaries || "")
+        $('#total-females').text(data.total_females || "")
+        $('#total-males').text(data.total_male || "")
+        $('#org-email').text(data.email || "")
+        $('#org-phone').text(data.cell || "")
+        $('#org-registered-date').text(data.registered_date || "")
+        if (data.location) {
+            $('#org-location').text(`${data.location[0]}, ${data.location[1]}`)
+            
+        } else {
+            $('#org-location').text("")
+        }
+        $('#org-description').text(data.description || "")
+        $('#org-ward').text(data.ward || "")
+        $('#org-sub-project').text(data.sub_project || "")
+    }
+
+    function handleDeleteBeneficiary(actionType, program_slug='', project_slug='', beneficiary_slug='') {
+        const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+        const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
+
+        if (actionType === "SET_ACTION_URL") {
+            $('#delete-beneficiary-form').attr('action', formActionUrl)
+        } else if (actionType === "UNSET_ACTION_URL") {
+            $('#delete-beneficiary-form').attr('action', " ")
+        }
+    }
+
+</script>
+{% endblock javascripts %}
