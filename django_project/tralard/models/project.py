@@ -22,19 +22,20 @@ from tralard.models.fund import Fund
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
-
 from tinymce import HTMLField
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
+
 class ApprovedProjectManager(models.Manager):
     """Custom manager that shows aproved projects."""
+
     def get_queryset(self):
         return super(
             ApprovedProjectManager, self
         ).get_queryset().filter(
-            approved=True,)
+            approved=True, )
 
 
 class UnapprovedProjectManager(models.Manager):
@@ -44,7 +45,7 @@ class UnapprovedProjectManager(models.Manager):
         """Query set generator."""
         return super(
             UnapprovedProjectManager, self).get_queryset().filter(
-                approved=False)
+            approved=False)
 
 
 class Representative(models.Model):
@@ -52,10 +53,10 @@ class Representative(models.Model):
     Project Representative.
     """
     GENDER_CHOICES = (
-    ("Male", _("Male")),
-    ("Female", _("Female")),
-    ("Transgender", _("Transgender")),
-    ("Other", _("Other"))
+        ("Male", _("Male")),
+        ("Female", _("Female")),
+        ("Transgender", _("Transgender")),
+        ("Other", _("Other"))
     )
     slug = models.SlugField(
         max_length=255,
@@ -65,7 +66,7 @@ class Representative(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        null=True, 
+        null=True,
         blank=True
     )
     first_name = models.CharField(
@@ -102,7 +103,7 @@ class Representative(models.Model):
         blank=True
     )
     ward = models.ForeignKey(
-        'tralard.ward', 
+        'tralard.ward',
         default='',
         on_delete=models.CASCADE,
         null=True,
@@ -142,10 +143,12 @@ class Project(models.Model):
     approved = models.BooleanField(
         help_text=_('Whether this project has been approved yet.'),
         default=False,
+        null=True
     )
     has_funding = models.BooleanField(
         help_text=_('Whether this project has an active funding.'),
         default=False,
+        null=True
     )
     description = models.CharField(
         help_text=_('A short description for the project'),
@@ -154,7 +157,7 @@ class Project(models.Model):
         null=True
     )
     program = models.ForeignKey(
-        'tralard.program', 
+        'tralard.program',
         default='',
         on_delete=models.CASCADE,
     )
@@ -169,7 +172,7 @@ class Project(models.Model):
         null=True  # This is needed to populate existing database.
     )
     project_managers = models.ManyToManyField(
-        User, # import django default user model for now
+        User,  # import django default user model for now
         related_name='project_managers',
         blank=True,
         # null=True, null has no effect on ManyToManyField.
@@ -179,7 +182,7 @@ class Project(models.Model):
             'fund distribution queue.'),
     )
     project_funders = models.ManyToManyField(
-        User, # same here lets just hook into the default django User model for now
+        User,  # same here lets just hook into the default django User model for now
         related_name='funders',
         verbose_name='Project Funders',
         blank=True,
@@ -188,7 +191,7 @@ class Project(models.Model):
             'Fund Managers of the project . '
             'These could either be funders or fundd managers, \
                 will be allowed to approve sub-project supervisors and sub-project fund managers.'
-            ),
+        ),
 
     )
     training_managers = models.ManyToManyField(
@@ -250,32 +253,32 @@ class Project(models.Model):
         :return: URL
         :rtype: str
         """
-        return reverse_lazy('tralard:project-detail', 
-            kwargs={
-                'program_slug': self.program.slug, 
-                'project_slug': self.slug
-                }
-            )
- 
+        return reverse_lazy('tralard:project-detail',
+                            kwargs={
+                                'program_slug': self.program.slug,
+                                'project_slug': self.slug
+                            }
+                            )
+
     @property
     def get_related_sub_projects(self):
         sub_projects_queryset = SubProject.objects.filter(
             project__slug=self.slug
-            )
+        )
         return sub_projects_queryset
 
     @property
     def count_sub_projects(self):
         sub_projects_count_queryset = SubProject.objects.filter(
             project__slug=self.slug
-            ).count()
+        ).count()
         return sub_projects_count_queryset
 
     @property
     def count_beneficiaries(self):
         beneficiary_count_queryset = Beneficiary.objects.filter(
             sub_project__project__slug=self.slug
-            ).count()
+        ).count()
         return beneficiary_count_queryset
 
     @property
@@ -297,7 +300,6 @@ class Project(models.Model):
 
         amount_value = related_funds_sum_qs['balance__sum']
         return amount_value
-
 
 
 class Feedback(models.Model):
@@ -322,7 +324,7 @@ class Feedback(models.Model):
     project = models.ForeignKey(
         Project,
         on_delete=models.CASCADE,
-        null=True, 
+        null=True,
         blank=True
     )
     moderator = models.ForeignKey(
@@ -333,7 +335,7 @@ class Feedback(models.Model):
             'This name will be used on project feedback and any other references. '),
         on_delete=models.SET_NULL,
         blank=True,
-        null=True  
+        null=True
     )
     description = models.TextField(
         _("Description"),
@@ -349,4 +351,3 @@ class Feedback(models.Model):
         if not self.slug:
             self.slug = unique_slugify(self, slugify(self.title))
         super().save(*args, **kwargs)
-
