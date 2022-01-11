@@ -3,42 +3,46 @@
 
 {% load static %}
 
-    <head>
-        <!-- Required meta tags always come first -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-        <title> 
-            PPCR-TRALARD - {% block title %}{% endblock %} | THINK2044
-        </title>
-            
-        <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" />
+    <title>
+        PPCR-TRALARD - {% block title %}{% endblock %} | THINK2044
+    </title>
 
-        <!--Core CSS -->
-        <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'assets/css/bulma.css' %}">
-        <link rel="stylesheet" href="{% static 'assets/css/app.css' %}">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
-        <link rel="stylesheet" href="{% static 'assets/css/icons.min.css' %}">
+    <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" />
 
-        <!-- Specific CSS goes HERE -->
-        {% block stylesheets %}{% endblock stylesheets %}
+    <!--Core CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" rel="stylesheet">
+    <link href="{% static 'assets/js/jquery-ui.min.js' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/icons.min.css' %}">
 
-    </head>
-    <body>
+    <!-- Specific CSS goes HERE -->
+    {% block stylesheets %}{% endblock stylesheets %}
 
-        <div class="pageloader"></div>
-        <div class="infraloader is-active"></div>        
-        
-        {% block content %}{% endblock content %}
+</head>
 
-        {% include 'includes/scripts.html' %}
+<body>
 
-        <!-- Specific Page JS goes HERE  -->
-        {% block javascripts %}{% endblock javascripts %}
-        
-    </body>
+    <div class="pageloader"></div>
+    <div class="infraloader is-active"></div>
+
+    {% block content %}{% endblock content %}
+
+    {% include 'includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}
+
+</body>
 
 </html>

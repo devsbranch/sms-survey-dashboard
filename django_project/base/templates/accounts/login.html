@@ -4,80 +4,80 @@
 
 {% block title %} Login {% endblock %}
 
-{% block content %}   
+{% block content %}
 
-    <section class="hero is-fullheight is-light-grey is-bold" id="main-login-body">
-    
-        <div class="hero-body">
-            <div class="container">
-    
-                <!-- Classic inputs -->
-                <div id="classic" class="login-form-wrapper">
+<section class="hero is-fullheight is-light-grey is-bold" id="main-login-body">
 
-                    <!-- Classic login form -->
-                    <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+    <div class="hero-body">
+        <div class="container">
 
-                        <form role="form" method="post" action="">
+            <!-- Classic inputs -->
+            <div id="classic" class="login-form-wrapper">
 
-                            {% csrf_token %}
+                <!-- Classic login form -->
+                <div id="login-form" class="animated preFadeInLeft fadeInLeft">
 
-                            <div class="auth-card">
-                                <div class="auth-card-header header-primary">
-                                    <h2 class="has-text-centered">PPCR-TRALARD</h2>
-                                </div>
-                                <div class="field has-text-centered">
-                                    <p>
-                                        {% if msg %}
-                                            {{ msg | safe }}
-                                        {% else %}
-                                            Add your credentials 
-                                        {% endif %}                                        
-                                    </p>    
-                                </div>
+                    <form role="form" method="post" action="">
 
-                                <br />
+                        {% csrf_token %}
 
-                                <div class="field">
-                                    <div class="control">
-                                        {{ form.username }}
-                                        <div class="form-icon">
-                                            <i data-feather="user"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        {{ form.password }}
-                                        <div class="form-icon">
-                                            <i data-feather="lock"></i>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <br />
-                                <p class="has-text-centered">
-                                    Forgot your password? <a class="no-account" href="#" >Reset</a>
+                        <div class="auth-card">
+                            <div class="auth-card-header header-primary">
+                                <h2 class="has-text-centered">PPCR-TRALARD</h2>
+                            </div>
+                            <div class="field has-text-centered">
+                                <p>
+                                    {% if msg %}
+                                    {{ msg|safe }}
+                                    {% else %}
+                                    Add your credentials
+                                    {% endif %}
                                 </p>
-                                <div class="button-wrap">
-                                    <button type="submit" name="login" class="button">Login</button>
+                            </div>
+
+                            <br />
+
+                            <div class="field">
+                                <div class="control">
+                                    {{ form.username }}
+                                    <div class="form-icon">
+                                        <i data-feather="user"></i>
+                                    </div>
                                 </div>
                             </div>
-                        
-                        </form>
 
-                        <p class="has-text-centered">
-                            &copy; <a href="#">THINK</a> - 
-                            <a href="#">2044</a>                       
-                        </p>
-                    </div>
-                    <!-- /Classic login form -->
+                            <div class="field">
+                                <div class="control">
+                                    {{ form.password }}
+                                    <div class="form-icon">
+                                        <i data-feather="lock"></i>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <br />
+                            <p class="has-text-centered">
+                                Forgot your password? <a class="no-account" href="/accounts/reset_password/">Reset</a>
+                            </p>
+                            <div class="button-wrap">
+                                <button type="submit" name="login" class="button">Login</button>
+                            </div>
+                        </div>
+
+                    </form>
+
+                    <p class="has-text-centered">
+                        &copy; <a href="#">THINK</a> -
+                        <a href="#">2044</a>
+                    </p>
                 </div>
-                <!-- /Classic inputs -->
-    
+                <!-- /Classic login form -->
+
             </div>
+            <!-- /Classic inputs -->
+
         </div>
+    </div>
 
 
 
@@ -93,54 +93,63 @@
                 <!-- Team card -->
                 <div class="column is-2">
                     <img src="https://via.placeholder.com/250x250" alt=""
-                        data-demo-src="{% static 'assets/images/partners/zima.png' %}" height="120" width="120" style="margin-left: 3em; margin-top: 1em">
+                        data-demo-src="{% static 'assets/images/partners/zima.png' %}" height="120" width="120"
+                        style="margin-left: 3em; margin-top: 1em">
                 </div>
 
                 <div class="column is-2">
                     <img src="https://via.placeholder.com/250x250" alt=""
-                        data-demo-src="{% static 'assets/images/partners/wbg.png' %}" height="200" width="350" style="margin-top: 4em">
+                        data-demo-src="{% static 'assets/images/partners/wbg.png' %}" height="200" width="350"
+                        style="margin-top: 4em">
                 </div>
 
                 <div class="column is-2">
                     <img src="https://via.placeholder.com/250x250" alt=""
-                        data-demo-src="{% static 'assets/images/partners/adb.png' %}" height="130" width="130" style="margin-left: 2em; margin-top: 1em">
+                        data-demo-src="{% static 'assets/images/partners/adb.png' %}" height="130" width="130"
+                        style="margin-left: 2em; margin-top: 1em">
                 </div>
 
                 <!-- Team card -->
                 <div class="column is-2">
                     <img src="https://via.placeholder.com/250x250" alt=""
-                        data-demo-src="{% static 'assets/images/partners/cif.png' %}" height="200" width="200" style="margin-right: 3em; margin-top: 1em">
+                        data-demo-src="{% static 'assets/images/partners/cif.png' %}" height="200" width="200"
+                        style="margin-right: 3em; margin-top: 1em">
                 </div>
 
                 <div class="column is-2">
                     <img src="https://via.placeholder.com/250x250" alt=""
-                        data-demo-src="{% static 'assets/images/partners/mgee.png' %}" width="250" style="margin-top: 1em">
+                        data-demo-src="{% static 'assets/images/partners/mgee.png' %}" width="250"
+                        style="margin-top: 1em">
                 </div>
 
             </div>
         </div>
     </div>
 
-    </section>
+</section>
 
-    <style>
-        #main-login-body {
-            background-image: url("{% static 'assets/images/banner.jpeg' %}");
-            {% comment %} background-color: #cccccc; /* Used if the image is unavailable */ {% endcomment %}
-            height: 500px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";       /* IE 8 */
-            filter: alpha(opacity=50);  /* IE 5-7 */
-            -moz-opacity: 0.5;          /* Netscape */
-            -khtml-opacity: 0.5;        /* Safari 1.x */
-            {% comment %} opacity: 0.5;  {% endcomment %}
-        }
-    </style>
+<style>
+    #main-login-body {
+        background-image: url("{% static 'assets/images/banner.jpeg' %}");
+        height: 500px;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+        /* IE 8 */
+        filter: alpha(opacity=50);
+        /* IE 5-7 */
+        -moz-opacity: 0.5;
+        /* Netscape */
+        -khtml-opacity: 0.5;
+
+        /* Safari 1.x */
+
+    }
+</style>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-    <script src="{% static 'assets/js/auth.js' %}"></script>
+<script src="{% static 'assets/js/auth.js' %}"></script>
 {% endblock javascripts %}

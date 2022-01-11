@@ -41,3 +41,4 @@ django-map-widgets==0.3.2 # https://django-map-widgets.readthedocs.io/en/latest/
 git+https://github.com/Digital-Prophets/dj-beneficiary.git
 
 folium
+

@@ -10,7 +10,7 @@ from .project import *  # noqa
 # ['*'] for testing but not for production
 
 ALLOWED_HOSTS = [
-    'localhost:9000',
+    "localhost:9000",
 ]
 
 # PIPELINE['YUI_BINARY'] = '/usr/bin/yui-compressor'
@@ -25,4 +25,12 @@ USE_X_FORWARDED_HOST = True
 # Set debug to false for production
 DEBUG = TEMPLATE_DEBUG = False
 
-EMAIL_HOST = 'digiprophets.com'
+# EMAIL_HOST = "digiprophets.com"
+
+# Smtp config for password reset
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.environ["EMAIL_HOST_USER"]
+EMAIL_HOST_PASSWORD = os.environ["EMAIL_HOST_PASSWORD"]
