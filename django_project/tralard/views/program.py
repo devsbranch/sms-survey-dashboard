@@ -53,12 +53,12 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(ProgramDetailView, self).get_context_data(**kwargs)
-        context['title'] = 'Program Detail'
-        context['project_form'] = ProjectForm
 
         self.program_slug = self.kwargs['program_slug']
         self.program_object = Program.objects.get(slug=self.program_slug)
 
+        context['project_form'] = ProjectForm
+        context['title'] = 'Program Detail'
         context['program'] = self.program_object
         context['total_projects'] = Project.objects.filter(program=self.program_object).count()
         context['sub_project_list'] = SubProject.objects.all()
