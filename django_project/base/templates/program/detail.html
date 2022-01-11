@@ -906,10 +906,24 @@
             let projectData = payload.project;
             console.log(`populating project details for ${projectData.name}`)
 
+            if(projectData.approved == true){
+               $(`#id_approved option[value="${projectData.approved}"]`).prop('selected', true)
+            }else if(projectData.approved == false){
+                $(`#id_approved option[value="${projectData.approved}"]`).val(projectData.approved)
+            } else{
+                $(`#id_approved option[value="${projectData.approved}"]`).prop('selected', false)
+            }
+
+            if(projectData.has_funding == true){
+               $(`#id_has_funding option[value="${projectData.has_funding}"]`).prop('selected', true)
+            }else if(projectData.has_funding == false){
+                $(`#id_has_funding option[value="${projectData.has_funding}"]`).val(projectData.has_funding)
+            } else{
+                $(`#id_has_funding option[value="${projectData.has_funding}"]`).prop('selected', false)
+            }
+
             $("#edit-project-form input[name='name']").val(projectData.name);
             $("#edit-project-form textarea[name='description']").val(projectData.description);
-            $(`#edit-project-form option[value="${projectData.approved}"]`).prop('selected', true);
-            $(`#edit-project-form option[value="${projectData.has_funding}"]`).prop('selected', true);
 			$("#edit-project-form select[name='program']").val(projectData.program);
 			$("#edit-project-form select[name='project_representative']").val(projectData.project_representative);
 			$("#edit-project-form select[name='project_managers']").val(projectData.project_managers);
