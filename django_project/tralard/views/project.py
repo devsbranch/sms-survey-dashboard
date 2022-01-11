@@ -133,19 +133,6 @@ class SubProjectListView(LoginRequiredMixin, TemplateView):
         return context
 
 
-class SubProjectDetailView(LoginRequiredMixin, TemplateView):
-    template_name = "project/sub_project_detail.html"
-
-    def get_context_data(self):
-        context = super(SubProjectDetailView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
-        context['user_roles'] = self.user_profile_utils[0]
-        context['profile'] = self.user_profile_utils[1]
-        context['profile_form'] = self.user_profile_utils[2]
-        context["title"] = "Sub Project Detail"
-        return context
-
-
 @login_required(login_url="/login/")
 def update_sub_project(request, program_slug, project_slug, sub_project_slug):
     sub_project_obj = SubProject.objects.get(slug=sub_project_slug)

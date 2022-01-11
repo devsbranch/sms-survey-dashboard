@@ -2,10 +2,10 @@
 from django.urls import path
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.program import ProgramDetailView
+from tralard.views.sub_project import SubProjectDetailView
 from tralard.views.project import (
     ProjectDetailView,
     SubProjectListView,
-    SubProjectDetailView,
     delete_sub_project,
     update_sub_project,
     create_feedback,

@@ -21,6 +21,7 @@ requests==2.25.1
 django-import-export==2.7.0
 django-map-widgets==0.3.2
 django-imagekit==4.1.0
+django-infinite-scroll-pagination==1.2.0
 # support special characters
 
 # Django Easy Audit

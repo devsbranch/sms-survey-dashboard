@@ -33,8 +33,6 @@ from tralard.models.project import Project
 from tralard.forms.sub_project import SubProjectForm
 from tralard.models.sub_project import SubProject, Indicator
 
-from tralard.utils import user_profile_update_form_validator
-
 logger = logging.getLogger(__name__)
 
 
