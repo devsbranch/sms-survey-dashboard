@@ -1,26 +1,93 @@
-from typing import List
-from django.forms.models import model_to_dict
-from django.http.response import JsonResponse
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView, DetailView, DeleteView
-from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView
-from django.http import HttpResponseRedirect, Http404
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import redirect, render, reverse
-from django.core import serializers
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms.models import model_to_dict
+from django.http import HttpResponseRedirect
+from django.http.response import JsonResponse
+from django.shortcuts import (
+    redirect,
+    get_object_or_404
+)
+from django.urls import reverse_lazy
+from django.views.generic import (
+    TemplateView,
+    ListView
+)
 
-import json
-
+from tralard.forms.project import FeedbackForm, ProjectForm
+from tralard.forms.sub_project import SubProjectForm
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
 from tralard.models.sub_project import SubProject, Indicator
 
-from tralard.forms.sub_project import SubProjectForm
-from tralard.forms.project import FeedbackForm
+
+@login_required(login_url="/login/")
+def project_create(request, program_slug):
+    project_slug = None
+    if request.method == "POST":
+        form = ProjectForm(request.POST)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.save()
+            form.save()
+            messages.success(request, "The project was created successfully!")
+            project_slug = instance.slug
+            return redirect(
+                reverse_lazy(
+                    "tralard:project-detail",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug}
+                )
+            )
+        return redirect(
+            reverse_lazy(
+                "tralard:program-detail",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug},
+            )
+        )
+
+
+@login_required(login_url="/login/")
+def project_update(request, program_slug, project_slug):
+    project_form = ProjectForm()
+    project_object = Project.objects.get(slug=project_slug)
+    project_obj_to_dict = model_to_dict(project_object)
+
+    try:
+        project_obj_to_dict["image_file"] = project_object.image_file.name
+        project_obj_to_dict["image_url"] = project_object.image_file.url
+    except ValueError:
+        pass
+
+    if request.method == "POST":
+        project_form = ProjectForm(request.POST, request.FILES or None, instance=project_object)
+        if project_form.is_valid():
+            instance = project_form.save(commit=False)
+            instance.save()
+        messages.success(request, "Project was updated successfully!")
+        return redirect(
+            reverse_lazy("tralard:project-detail", kwargs={"program_slug": program_slug, "project_slug": project_slug}))
+    else:
+        project_form = get_object_or_404(Project, slug=project_slug)
+    data = {"project": project_obj_to_dict}
+    return JsonResponse(data)
+
+
+@login_required(login_url="/login/")
+def project_delete(request, program_slug, project_slug):
+    try:
+        project_object = Project.objects.get(slug=project_slug)
+        project_object.delete()
+        messages.success(request, "Project was deleted successfully!")
+    except Project.DoesNotExist:
+        pass
+
+    return redirect(
+        reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
+    )
 
 from tralard.utils import user_profile_update_form_validator
 

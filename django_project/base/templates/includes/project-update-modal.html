@@ -1,0 +1,41 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<!-- Update project Modal --><!-- update-project-modal -->
+<div class="modal icon-action-modal modal-hero"
+     id="update-project-modal"
+     aria-labelledby="update-project">
+    <div class="modal-background modal-dismiss"></div>
+    <div class="modal-content" style="width:720px; !important;">
+        <div class="flex-card simple-shadow" style="overflow-y: auto;">
+            <div class="help-text has-text-left">
+                <h2 class="dark-text">Project Update</h2>
+            </div>
+            <div class="card-body">
+                <div class="has-text-centered">
+                    <div class="image">
+                        <img src="{% static 'assets/images/icons/project-management.svg' %}">
+                    </div>
+                    <div class="m-3">
+                        <span class="m-2">Edit {{ project.name|title }} project.</span>
+                    </div>
+                </div>
+                <form id="edit-project-form"
+                      method="post"
+                      action=""
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="m-4 column is-multiline">
+                        {% crispy project_form project_form.helper %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="button modal-dismiss">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

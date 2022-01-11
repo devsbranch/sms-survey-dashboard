@@ -1,42 +1,42 @@
 # -*- coding: utf-8 -*-
 from django.urls import path
-from tralard.views.dashboard import HomeTemplateView
-from tralard.views.program import ProgramDetailView
-from tralard.views.sub_project import SubProjectDetailView
-from tralard.views.project import (
-    ProjectDetailView,
-    SubProjectListView,
-    delete_sub_project,
-    update_sub_project,
-    create_feedback,
-    edit_feedback,
-    delete_feedback,
-)
+
 from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     beneficiary_detail,
     beneficiary_update,
     beneficiary_delete,
 )
-from tralard.views.training import (
-    TrainingListView,
-    training_fetch,
-    training_delete,
-    template_testing,
-)
-from tralard.views.map import MapTemplateView
+from tralard.views.dashboard import HomeTemplateView
 from tralard.views.fund import (
-    FundDetailView,
     FundListAndCreateView,
-    FundDetailView,
     delete_disbursement,
     fund_delete,
     fund_detail,
     update_disbursement,
     update_fund,
 )
-
+from tralard.views.map import MapTemplateView
 from tralard.views.profile import ProfileUpdateView
+from tralard.views.program import ProgramDetailView
+from tralard.views.project import (
+    ProjectDetailView,
+    delete_sub_project,
+    update_sub_project,
+    create_feedback,
+    edit_feedback,
+    delete_feedback,
+    project_create,
+    project_update,
+    project_delete,
+)
+from tralard.views.sub_project import SubProjectDetailView
+from tralard.views.training import (
+    TrainingListView,
+    training_fetch,
+    training_delete,
+    template_testing,
+)
 
 app_name = "tralard"
 urlpatterns = [
@@ -62,16 +62,26 @@ urlpatterns = [
         ProgramDetailView.as_view(),
         name="program-detail",
     ),
-    # -------- project --------
-    path(
-        "project/subproject/list/",
-        SubProjectListView.as_view(),
-        name="sub_project_list",
-    ),
+    # -------- project paths --------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/detail/",
         ProjectDetailView.as_view(),
         name="project-detail",
+    ),
+    path(
+        "program/<slug:program_slug>/project/",
+        project_create,
+        name="project"
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/update",
+        project_update,
+        name="project-update"
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/delete",
+        project_delete,
+        name="project-delete"
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/sub_project/<slug:sub_project_slug>/delete/",
