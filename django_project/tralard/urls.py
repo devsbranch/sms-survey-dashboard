@@ -79,12 +79,12 @@ urlpatterns = [
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/update",
         project_update,
-        name="update-project"
+        name="project-update"
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/delete",
         project_delete,
-        name="delete-project"
+        name="project-delete"
     ),
     path(
         "project/subproject/list/",
