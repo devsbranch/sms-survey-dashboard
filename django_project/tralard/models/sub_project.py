@@ -163,7 +163,10 @@ class SubProject(models.Model):
         ).aggregate(Sum('balance'))
         amount_value = funds_amount_qs['amount__sum']
         balance_value = funds_balance_qs['balance__sum']
-        fund_utilization_percent = (balance_value / amount_value) * 100
+        if amount_value is not None and balance_value is not None:
+            fund_utilization_percent = (float(balance_value) / float(amount_value)) * 100
+        else:
+            fund_utilization_percent = 0
         return fund_utilization_percent
 
     @property
