@@ -451,7 +451,7 @@
                                         <!-- Create SubProject -->
                                         <div id="schedule-event" class="action-wrap is-hidden">
                                             <!-- Form -->
-                                            <form class="event-form" action="" method="post" enctype="multipart/form-data">
+                                            <form class="event-form" action="{% url 'tralard:project-detail' program_slug project_slug %}" method="post" enctype="multipart/form-data">
                                                 <h3 class="action-title">New SubProject</h3>
                                                 <div class="columns is-multiline">
                                                     {% csrf_token %}

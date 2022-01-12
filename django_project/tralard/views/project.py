@@ -4,15 +4,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.shortcuts import (
-    redirect,
-    get_object_or_404
-)
+from django.shortcuts import redirect, get_object_or_404, reverse
 from django.urls import reverse_lazy
-from django.views.generic import (
-    TemplateView,
-    ListView
-)
+from django.views.generic import TemplateView, ListView
+from django.views.generic.detail import DetailView
 
 from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.forms.sub_project import SubProjectForm
@@ -35,17 +30,13 @@ def project_create(request, program_slug):
             return redirect(
                 reverse_lazy(
                     "tralard:project-detail",
-                    kwargs={
-                        "program_slug": program_slug,
-                        "project_slug": project_slug}
+                    kwargs={"program_slug": program_slug, "project_slug": project_slug},
                 )
             )
         return redirect(
             reverse_lazy(
                 "tralard:program-detail",
-                kwargs={
-                    "program_slug": program_slug,
-                    "project_slug": project_slug},
+                kwargs={"program_slug": program_slug, "project_slug": project_slug},
             )
         )
 
@@ -63,13 +54,19 @@ def project_update(request, program_slug, project_slug):
         pass
 
     if request.method == "POST":
-        project_form = ProjectForm(request.POST, request.FILES or None, instance=project_object)
+        project_form = ProjectForm(
+            request.POST, request.FILES or None, instance=project_object
+        )
         if project_form.is_valid():
             instance = project_form.save(commit=False)
             instance.save()
         messages.success(request, "Project was updated successfully!")
         return redirect(
-            reverse_lazy("tralard:project-detail", kwargs={"program_slug": program_slug, "project_slug": project_slug}))
+            reverse_lazy(
+                "tralard:project-detail",
+                kwargs={"program_slug": program_slug, "project_slug": project_slug},
+            )
+        )
     else:
         project_form = get_object_or_404(Project, slug=project_slug)
     data = {"project": project_obj_to_dict}
@@ -89,7 +86,9 @@ def project_delete(request, program_slug, project_slug):
         reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
     )
 
+
 from tralard.utils import user_profile_update_form_validator
+
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
     model = SubProject
@@ -138,15 +137,37 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         )
 
     def post(self, request, *args, **kwargs):
-        self.status_form = SubProjectForm(self.request.POST, self.request.FILES or None)
-        if self.status_form.is_valid():
-            self.status_form.save()
-            messages.success(request, "Your SubProject was added!")
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
-            ...
-        else:
-            messages.error(request, "Some thing went wrong")
-            return HttpResponseRedirect(request.META.get("HTTP_REFERER"))
+        form = SubProjectForm(self.request.POST, self.request.FILES or None)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "SubProject was successfully added!")
+
+            return redirect(
+                reverse(
+                    "tralard:subproject-manage",
+                    kwargs={
+                        "program_slug": form.instance.project.program.slug,
+                        "project_slug": form.instance.project.slug,
+                        "subproject_slug": form.instance.slug,
+                    },
+                )
+            )
+        messages.error(
+            request,
+            "An error occurred when creating the Sub Project. Ensure the data in form fields is correct.",
+        )
+        for field in form:
+            for error in field.errors:
+                messages.error(self.request, error)
+        return redirect(
+            reverse(
+                "tralard:project-detail",
+                kwargs={
+                    "program_slug": self.kwargs.get("program_slug", None),
+                    "project_slug": self.kwargs.get("project_slug", None),
+                },
+            )
+        )
 
     def get_context_data(self):
         context = super(ProjectDetailView, self).get_context_data()
@@ -166,14 +187,16 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.all_subproject_indicators = Indicator.objects.filter(
             subproject_indicators__in=self.sub_projects_qs
         )
-        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
+        self.user_profile_utils = user_profile_update_form_validator(
+            self.request.POST, self.request.user
+        )
         context["citizen_feedback_list"] = self.all_feedback_qs
         context["project"] = self.project
         context["indicators"] = self.all_subproject_indicators
         context["form"] = SubProjectForm
-        context['user_roles'] = self.user_profile_utils[0]
-        context['profile'] = self.user_profile_utils[1]
-        context['profile_form'] = self.user_profile_utils[2]
+        context["user_roles"] = self.user_profile_utils[0]
+        context["profile"] = self.user_profile_utils[1]
+        context["profile_form"] = self.user_profile_utils[2]
         context["feedback_form"] = FeedbackForm
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
@@ -192,11 +215,13 @@ class SubProjectListView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self):
         context = super(SubProjectListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
+        self.user_profile_utils = user_profile_update_form_validator(
+            self.request.POST, self.request.user
+        )
         context["title"] = "Sub Project List"
-        context['user_roles'] = self.user_profile_utils[0]
-        context['profile'] = self.user_profile_utils[1]
-        context['profile_form'] = self.user_profile_utils[2]
+        context["user_roles"] = self.user_profile_utils[0]
+        context["profile"] = self.user_profile_utils[1]
+        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 

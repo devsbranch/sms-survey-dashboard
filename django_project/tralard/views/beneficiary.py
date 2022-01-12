@@ -8,7 +8,7 @@ from django.forms.models import model_to_dict
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.paginator import Paginator, EmptyPage
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views.generic import TemplateView, CreateView, UpdateView, ListView
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
@@ -20,6 +20,7 @@ from tralard.models import Beneficiary, Project, Program, Ward, SubProject
 from tralard.forms import BeneficiaryCreateForm
 
 from tralard.utils import user_profile_update_form_validator
+
 
 class PaginatorMixin(Paginator):
     def validate_number(self, number):
@@ -44,7 +45,7 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
     paginator_class = PaginatorMixin
 
     def get_success_url(self, **kwargs):
-        return reverse(
+        return reverse_lazy(
             "tralard:beneficiary-list",
             kwargs={
                 "program_slug": self.kwargs.get("program_slug", None),
@@ -56,8 +57,20 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         response = super().form_invalid(form)
         for field in form:
             for error in field.errors:
-                messages.error(self.request, error)
+                messages.error(self.request, error)        
         return response
+
+    def form_valid(self, form):
+        form.save()
+
+        messages.success(self.request, "The Beneficiary was created successfully.")
+        return redirect(reverse_lazy(
+            "tralard:subproject-beneficiary", kwargs={
+                "program_slug": form.instance.sub_project.project.program.slug,
+                "project_slug": form.instance.sub_project.project.slug,
+                "subproject_slug": form.instance.sub_project.slug
+            }
+        ))
 
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryOrgListView, self).get_context_data(**kwargs)
@@ -66,18 +79,26 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__project__slug=project_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(self.request.POST, self.request.user)
+        self.user_profile_utils = user_profile_update_form_validator(
+            self.request.POST, self.request.user
+        )
         project = Project.objects.get(slug=project_slug)
-
         page = self.request.GET.get("page", 1)
         paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
         organizations = paginator.page(page)
+
+        try:
+            sub_header = f"Showing all Beneficiaries under the <b>{project.name}</b> project."
+        except IndexError:
+            sub_header = "There are currently no Beneficiaries under this Project."
+        
         context["header"] = "Beneficiaries"
         context["project"] = project
         context["beneficiaries"] = organizations
-        context['user_roles'] = self.user_profile_utils[0]
-        context['profile'] = self.user_profile_utils[1]
-        context['profile_form'] = self.user_profile_utils[2]
+        context["sub_header"] = sub_header
+        context["user_roles"] = self.user_profile_utils[0]
+        context["profile"] = self.user_profile_utils[1]
+        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 
@@ -146,8 +167,12 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
             messages.success(request, "Beneficiary was updated successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:beneficiary-list",
-                    kwargs={"program_slug": program_slug, "project_slug": project_slug},
+                    "tralard:subproject-beneficiary",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": beneficiary_obj.sub_project.slug,
+                    },
                 )
             )
 
@@ -167,9 +192,7 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
     return JsonResponse(model_as_dict)
 
 
-login_required(login_url="/login/")
-
-
+@login_required(login_url="/login/")
 def beneficiary_delete(request, program_slug, project_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
 
@@ -178,7 +201,11 @@ def beneficiary_delete(request, program_slug, project_slug, beneficiary_slug):
 
     return redirect(
         reverse_lazy(
-            "tralard:beneficiary-list",
-            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+            "tralard:subproject-beneficiary",
+            kwargs={
+                "program_slug": program_slug,
+                "project_slug": project_slug,
+                "subproject_slug": beneficiary_obj.sub_project.slug,
+            },
         )
     )

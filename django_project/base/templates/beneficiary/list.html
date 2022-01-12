@@ -19,7 +19,7 @@
                 <div class="profile-heading">
                     <div>
                         <h2 class="project-title">{{header}}</h2>
-                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <i>{{project.name|title}}</i> project.</small>
+                        <small class="project-tagline no-margin-bottom">{{sub_header|safe}}</small>
                     </div>
                     
                 </div>
@@ -53,7 +53,6 @@
                 </a>
                 </div>
             </div>
-            {% include "includes/messages.html" %}
 
             <br/>
 
@@ -1143,7 +1142,7 @@
         $('#total-beneficiaries').text(data.total_beneficiaries || "")
         $('#total-beneficiaries-inner').text(data.total_beneficiaries || "")
         $('#total-females').text(data.total_females || "")
-        $('#total-males').text(data.total_male || "")
+        $('#total-males').text(data.total_males || "")
         $('#org-email').text(data.email || "")
         $('#org-phone').text(data.cell || "")
         $('#org-registered-date').text(data.registered_date || "")

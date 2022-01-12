@@ -22,16 +22,28 @@ from django.views.generic import (
     DetailView,
     UpdateView,
 )
+from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.exceptions import ValidationError
-
+from django.core.paginator import Paginator, EmptyPage
+from django.core import serializers
+from django.forms.models import model_to_dict
+from django.http import HttpResponse, JsonResponse
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 from braces.views import LoginRequiredMixin
 
 from tralard.models.project import Project
 from tralard.forms.sub_project import SubProjectForm
 from tralard.models.sub_project import SubProject, Indicator
+
+from tralard.utils import user_profile_update_form_validator
+from tralard.models import Beneficiary, Project, Program, Ward, SubProject
+from tralard.forms import BeneficiaryCreateForm
+from tralard.utils import user_profile_update_form_validator
 
 logger = logging.getLogger(__name__)
 
@@ -229,11 +241,11 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         else:
             raise Http404("Sorry! We could not find your subproject!")
 
-
     def get_context_data(self, **kwargs):
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
-        context["title"] = 'sub project'
+        context["title"] = "sub project"
         return context
+
 
 # noinspection PyAttributeOutsideInit
 class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
@@ -444,3 +456,79 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
             return super(SubProjectUpdateView, self).form_valid(form)
         except IntegrityError:
             return ValidationError("ERROR: SubProject by this name already exists!")
+
+
+class PaginatorMixin(Paginator):
+    def validate_number(self, number):
+        try:
+            return super().validate_number(number)
+        except EmptyPage:
+            if int(number) > 1:
+                # return the last page
+                return self.num_pages
+            elif int(number) < 1:
+                # return the first page
+                return 1
+            else:
+                raise
+
+
+class SubProjectBeneficiaryOrgListView(
+    LoginRequiredMixin, SuccessMessageMixin, CreateView
+):
+    model = Beneficiary
+    template_name = "beneficiary/list.html"
+    form_class = BeneficiaryCreateForm
+    paginate_by = 20
+    paginator_class = PaginatorMixin
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy(
+            "tralard:subproject-manage",
+            kwargs={
+                "program_slug": self.kwargs.get("program_slug", None),
+                "project_slug": self.kwargs.get("project_slug", None),
+                "sub_project": self.kwargs.get("sub_project", None),
+            },
+        )
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        for field in form:
+            for error in field.errors:
+                messages.error(self.request, error)        
+        return response
+
+    def get_context_data(self, **kwargs):
+        context = super(SubProjectBeneficiaryOrgListView, self).get_context_data(
+            **kwargs
+        )
+        
+        subproject_slug = self.kwargs.get("subproject_slug", None)
+        project_slug = self.kwargs.get("project_slug", None)
+        beneficiary_objects = Beneficiary.objects.filter(
+            sub_project__slug=subproject_slug
+        )
+        self.user_profile_utils = user_profile_update_form_validator(
+            self.request.POST, self.request.user
+        )
+        project = Project.objects.get(slug=project_slug)
+
+        # Just get the sub project name from one beneficiary since we are filtering
+        # by a sub project.
+        try:
+            sub_header = f"Showing all Beneficiaries under the <b>{beneficiary_objects[0].sub_project.name}</b> Sub Project."
+        except IndexError:
+            sub_header = "There are currently no Beneficiaries under this Sub-Project."
+        
+        page = self.request.GET.get("page", 1)
+        paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
+        organizations = paginator.page(page)
+        context["header"] = "Beneficiaries"
+        context["project"] = project
+        context["beneficiaries"] = organizations
+        context["sub_header"] = sub_header
+        context["user_roles"] = self.user_profile_utils[0]
+        context["profile"] = self.user_profile_utils[1]
+        context["profile_form"] = self.user_profile_utils[2]
+        return context

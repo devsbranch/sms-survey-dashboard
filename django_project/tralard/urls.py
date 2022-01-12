@@ -19,6 +19,10 @@ from tralard.views.fund import (
 from tralard.views.map import MapTemplateView
 from tralard.views.profile import ProfileUpdateView
 from tralard.views.program import ProgramDetailView
+from tralard.views.sub_project import (
+    SubProjectDetailView,
+    SubProjectBeneficiaryOrgListView,
+)
 from tralard.views.project import (
     ProjectDetailView,
     delete_sub_project,
@@ -68,20 +72,16 @@ urlpatterns = [
         ProjectDetailView.as_view(),
         name="project-detail",
     ),
-    path(
-        "program/<slug:program_slug>/project/",
-        project_create,
-        name="project"
-    ),
+    path("program/<slug:program_slug>/project/", project_create, name="project"),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/update",
         project_update,
-        name="project-update"
+        name="project-update",
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/delete",
         project_delete,
-        name="project-delete"
+        name="project-delete",
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/sub_project/<slug:sub_project_slug>/delete/",
@@ -167,7 +167,6 @@ urlpatterns = [
         fund_delete,
         name="fund-delete",
     ),
-    
     # -------- training ------------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
@@ -189,6 +188,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
         SubProjectDetailView.as_view(),
         name="subproject-manage",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/beneficiary/",
+        SubProjectBeneficiaryOrgListView.as_view(),
+        name="subproject-beneficiary",
     ),
     # -------- user profile --------
     path(

@@ -89,7 +89,8 @@
                                     </a>
                                     <!-- Beneficiaries -->
                                     <a class="button btn-dash primary-btn btn-dash raised has-icon"
-                                        data-ripple-color="" href="#">
+                                        data-ripple-color="" 
+                                        href="{% url 'tralard:subproject-beneficiary' sub_project.project.program.slug sub_project.project.slug sub_project.slug%}">
                                         <i class="material-icons">short_text</i>
                                         Beneficiaries
                                     </a>
