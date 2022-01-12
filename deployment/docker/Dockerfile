@@ -2,7 +2,7 @@
 # Note this base image is based on debian
 FROM python:3.6
 
-LABEL maintainer="Alision Mukoma <mukomalison@gmail.com>"
+LABEL maintainer="Alison Mukoma <mukomalison@gmail.com>"
 
 RUN export DEBIAN_FRONTEND=noninteractive
 ENV DEBIAN_FRONTEND noninteractive
