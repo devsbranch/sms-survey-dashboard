@@ -305,7 +305,7 @@ class Expenditure(models.Model):
         if not self.slug:
             self.slug = unique_slugify(
                 self, slugify(
-                    f'{self.fund.slug} \
+                    f'{self.disbursment.slug} \
                         expenditure amount {self.amount}'
                     )
                 )
