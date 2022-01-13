@@ -30,13 +30,11 @@
 {% block angular_app %}
     {% block report_header %}
     {% endblock %}
-    <style>
 {% endblock %}
 
 </head>
 
 <body>
-
 {% block body %}
     <div class="pageloader"></div>
     <div class="infraloader is-active"></div>    <!-- Main sidebar menu -->
@@ -47,8 +45,14 @@
 
         {% block nav %}
             {{ block.super }}
+            <style>
+                app-header {
+                    "Build Custom Reports Here."
+                }
+            </style>
+            <div [innerHTML]="Build Custom Reports Here."></div>
         {% endblock %}
-    <div style="height: calc(100% - 106px); margin-top: 0.1em;">
+        <div style="height: calc(100% - 106px); margin-top: 0.1em;">
 
         <div id="dashboard-wrapper" class="dashboard-outer">
             <div class="dashboard-wrapper">
@@ -63,5 +67,6 @@
 
     <!-- Specific Page JS goes HERE  -->
     {% block javascripts %}{% endblock javascripts %}
+
 {% endblock %}
 </html>
