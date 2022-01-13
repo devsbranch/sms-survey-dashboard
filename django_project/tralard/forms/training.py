@@ -35,20 +35,20 @@ class TrainingForm(ModelForm):
         self.helper.form_method = "post"
         self.helper.layout = Layout(
             Row(
-                Column("title", css_class="form-group col-md-12 mb-0 form-control"),
-                Column("sub_project", css_class="form-group col-md-12 mb-0 form-control"),
+                Column("title", css_class="form-group col-md-12 mb-0"),
+                Column("sub_project", css_class="form-group col-md-12 mb-0"),
                 Column("training_type", css_class="form-group col-md-12 mb-0"),
                 Column("start_date", css_class="form-group col-md-12 mb-0"),
                 Column("end_date", css_class="form-group col-md-12 mb-0"),
                 Column("moderator", css_class="form-group col-md-12 mb-0"),
-                Column("completed", css_class="form-group col-md-12 mb-6"),
-                Column("custom_completed", css_class="form-group col-md-12 mb-6"),
+                Column("completed", css_class="form-group col-md-12 mb-0"),
+                Column("custom_completed", css_class="form-group col-md-12 mb-0"),
                 Column("notes", css_class="form-group col-lg-12"),
                 css_class="form-row",
             ),
             FormActions(
                 Submit("save", "Create a Training Schedule"),
-                HTML("<a class='btn btn-danger' href='{% url 'tralard:training-list' program_slug project_slug %}'>Cancel</a>"),
+                HTML("<a class='btn btn-danger' href='{% url 'tralard:training-list' project.program.slug project.slug %}'>Cancel</a>"),
             ),
         )
         
