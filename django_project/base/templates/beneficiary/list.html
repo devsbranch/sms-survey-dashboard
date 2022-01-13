@@ -18,13 +18,13 @@
             <div class="contacts-title-wrapper">
                 <div class="profile-heading">
                     <div>
-                        <h2 class="project-title">{{header}}</h2>
-                        <small class="project-tagline no-margin-bottom">{{sub_header|safe}}</small>
+                        <h2 class="project-title">{{ header }}</h2>
+                        <small class="project-tagline no-margin-bottom">{{ sub_header|safe }}</small>
                     </div>
                     
                 </div>
                 <!-- Filter input -->
-                <div class="list-filter">
+                <div class="list-filter" style="padding-right:9em;">
                 <div class="control is-hidden-phones">
                     <input
                     class="input"
@@ -35,14 +35,6 @@
                     <i data-feather="filter"></i>
                     </div>
                 </div>
-                <a
-                    class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger modal-trigger" 
-                    data-modal="create-beneficiary-modal" 
-                    data-ripple-color="" 
-                    href="#">
-                    <i class="material-icons">add</i>
-                    Create Beneficiary
-                </a>
 
                 <a
                     class=" button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger " 
@@ -66,6 +58,9 @@
                             <!-- Documents table -->
                             <table class="table documents-table">
                                 <!-- Header -->
+                                <div data-title="Add new training" class="add-button modal-trigger" data-modal="create-beneficiary-modal">
+                                    <i class="material-icons">add</i>
+                                </div>
                                 <thead>
                                     <tr>
                                         <th>

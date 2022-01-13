@@ -22,7 +22,7 @@
         <!--Title-->
         <div class="title-wrap">
             <h2 class="project-title">Training Schedules</h2>
-            <h4 class="project-tagline">showing all training schedules.</h4>
+            <h4 class="project-tagline">showing all training schedules for <b>{{ project.name|title }}</b> project.</h4>
         </div>
 
         <!-- Dashboard Wrapper -->
@@ -475,9 +475,11 @@
                     <div class="column is-3 is-hidden-mobile">
                         <div class="right-options">
                             <!-- Share -->
+                            <a href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
                             <button type="button"
                                 class="button button-cta secondary-btn is-fullwidth is-bold raised">
-                                Share Training URL</button>
+                                Go back to Project</button>
+                            </a>
 
                             <!-- Actions list -->
                             <div id="default-controls" class="controls">

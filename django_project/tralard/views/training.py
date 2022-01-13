@@ -1,17 +1,14 @@
-from tralard.models.profile import Profile
-from tralard.forms.profile import ProfileForm
 from tralard.utils import user_profile_update_form_validator
-from re import template
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
+from django.views.generic import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import HttpResponse, redirect, render, get_object_or_404
-from django.http import JsonResponse
 from django.urls import reverse_lazy
 from tralard.models.training import Training
 from tralard.models.beneficiary import Beneficiary
+from tralard.models.project import Project
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
-from tralard.training.forms import TrainingForm
+from tralard.forms.training import TrainingForm
 import json
 
 from tralard.utils import user_profile_update_form_validator
@@ -19,7 +16,7 @@ from tralard.utils import user_profile_update_form_validator
 class TrainingListView(LoginRequiredMixin, CreateView):
     model = Training
     form_class = TrainingForm
-    template_name = 'tralard/training_list.html'
+    template_name = 'training/list.html'
 
     def get_success_url(self):
         return reverse_lazy("tralard:training-list", kwargs={
@@ -36,7 +33,7 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         context['profile_form'] = self.user_profile_utils[2]
         context['total_beneficiaries'] = Beneficiary.objects.all().count()
         context['program_slug'] = self.kwargs.get("program_slug", None)
-        context['project_slug'] = self.kwargs.get("project_slug", None)
+        context['project'] = Project.objects.get(slug=self.kwargs.get("project_slug", None))
         context['trainings'] = Training.objects.all()
         return context
 

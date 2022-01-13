@@ -21,9 +21,10 @@
         <div id="basic-layout" class="dashboard-columns">
           <!-- Page title -->
           <div class="contacts-title-wrapper">
-            <h3 class="contacts-title">
-              Showing {{ project.name }} Project Funds
-            </h3>
+            <div class="title-wrap">
+              <h2 class="project-title">Funds</h2>
+              <h4 class="project-tagline">showing all funds for <b>{{ project.name|title }}</b> project.</h4>
+          </div>
             <!-- Filter input -->
             <div class="list-filter">
               <div class="control is-hidden-phones">
@@ -36,23 +37,13 @@
                   <i data-feather="filter"></i>
                 </div>
               </div>
-              <a
-                class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                data-ripple-color=""
-                id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal"
-                href="#"
-              >
-                <i class="material-icons">add</i>
-                Create New {{ project.name|title }} Fund
-              </a>
 
               <a
                 class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
                 data-ripple-color=""
                 href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
               >
-                <span>Go Back To {{ project.name }} Project </span>
+                <span>Go Back To Project </span>
                 <i class="material-icons">send</i>
               </a>
             </div>
@@ -63,6 +54,11 @@
             <!-- Contacts table -->
             <table class="table contacts-table">
               <!-- Table header -->
+              <div data-title="Add new training" class="add-button modal-trigger" 
+              id="fund-{{fund.slug}}-{{fund.project.slug}}"
+                data-modal="create-project-modal">
+                <i class="material-icons">add</i>
+            </div>
               <thead>
                 <tr>
                   <th>
