@@ -13,6 +13,7 @@ from tralard.views.fund import (
     delete_disbursement,
     fund_delete,
     fund_detail,
+    get_disbursement_expenditures,
     update_disbursement,
     update_fund,
 )
@@ -34,7 +35,13 @@ from tralard.views.project import (
     project_update,
     project_delete,
 )
-from tralard.views.sub_project import SubProjectDetailView
+from tralard.views.sub_project import (
+    SubProjectDetailView, 
+    SubProjectFundListAndCreateView, 
+    subproject_fund_delete, 
+    subproject_fund_detail, 
+    update_sub_project_fund
+)
 from tralard.views.training import (
     TrainingListView,
     training_fetch,
@@ -140,7 +147,12 @@ urlpatterns = [
         update_disbursement,
         name="disbursement-update",
     ),
-    # -------- beneficiary --------
+    path(
+        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/',
+        get_disbursement_expenditures,
+        name='disbursement-expenditure'
+    ),
+    # -------- project beneficiary --------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/list/",
         BeneficiaryOrgListView.as_view(),
@@ -161,11 +173,11 @@ urlpatterns = [
         beneficiary_detail,
         name="beneficiary-detail",
     ),
-    # -------- training ------------
+    # -------- sub project beneficiary -------- 
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
-        fund_delete,
-        name="fund-delete",
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/beneficiary/",
+        SubProjectBeneficiaryOrgListView.as_view(),
+        name="subproject-beneficiary",
     ),
     # -------- training ------------
     path(
@@ -190,9 +202,24 @@ urlpatterns = [
         name="subproject-manage",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/beneficiary/",
-        SubProjectBeneficiaryOrgListView.as_view(),
-        name="subproject-beneficiary",
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/",
+        SubProjectFundListAndCreateView.as_view(),
+        name="subproject-fund-list",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/detail/",
+        subproject_fund_detail,
+        name="subproject-fund-detail",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/",
+        update_sub_project_fund,
+        name="subproject-fund-update",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/delete/",
+        subproject_fund_delete,
+        name="subproject-fund-delete",
     ),
     # -------- user profile --------
     path(

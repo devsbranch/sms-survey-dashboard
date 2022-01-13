@@ -161,6 +161,16 @@ class Fund(models.Model):
             )
         return total_disbursed_funds_queryset
 
+    @property
+    def get_total_disbursements(self):
+        """Computes total Expenses related to this Disbursement."""
+        related_funds_sum_qs = Disbursement.objects.filter(
+            fund__id=self.pk
+        ).aggregate(Sum('amount'))
+
+        amount_value = related_funds_sum_qs['amount__sum']
+        return amount_value
+
 
 class Disbursement(models.Model):
     """

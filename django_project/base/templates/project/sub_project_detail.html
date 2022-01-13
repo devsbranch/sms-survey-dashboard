@@ -1,8 +1,10 @@
 {% extends "layouts/base.html" %}
+<!--  -->
 {% load humanize %}
+<!--  -->
 {% load static %}
-
-{% block title %} Contacts Single {% endblock %} 
+<!--  -->
+{% block title %} Contacts Single {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -10,365 +12,453 @@
 <!-- PAGE content goes HERE -->
 {% block content %}
 
-    <!-- Main dashboard container -->
-    <div id="dashboard-wrapper" class="dashboard-outer">
-        <div class="dashboard-inner">
-    
-            <!-- Dashboard Wrapper -->
-            <div class="dashboard-wrapper">
-    
-                <div id="main-dashboard" class="section-wrapper">
-                    <!-- Dashboard content -->
-                    <div id="basic-layout" class="dashboard-columns">
-    
-                        <div class="contact-profile-wrap">
-    
-                            <!-- Page title -->
-                            <div class="contacts-title-wrapper">
-                                <h3 class="contacts-title">{{ sub_project.name|title }}</h3>
-                                <!-- Filter input -->
-                                <div class="list-filter">
-                                    <div class="dropdown is-right dropdown-trigger contact-events-dropdown">
-                                        <div class="button">
-                                            <i class="material-icons">more_vert</i>
-                                        </div>
-                                        <!-- Dropdown menu -->
-                                        <div class="dropdown-menu is-text-bigger" role="menu">
-                                            <div class="dropdown-content">
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="sl sl-icon-paper-plane"></i>
-                                                    <span>
-                                                        <span>Send</span>
-                                                        <span>Send contact details</span>
-                                                    </span>
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="sl sl-icon-rocket"></i>
-                                                    <span>
-                                                        <span>New Deal</span>
-                                                        <span>Start new deal involving this contact</span>
-                                                    </span>
-                                                </a>
-                                                <a href="#" class="dropdown-item">
-                                                    <i class="sl sl-icon-bell"></i>
-                                                    <span>
-                                                        <span>Subscribe me</span>
-                                                        <span>Subscribe me to contact updates</span>
-                                                    </span>
-                                                </a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item">
-                                                    <i class="sl sl-icon-shield"></i>
-                                                    <span>
-                                                        <span>Disable</span>
-                                                        <span>Disables this contact</span>
-                                                    </span>
-                                                </a>
-                                                <a class="dropdown-item">
-                                                    <i class="sl sl-icon-trash"></i>
-                                                    <span>
-                                                        <span>Delete</span>
-                                                        <span>Delete this event</span>
-                                                    </span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Funding -->
-                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
-                                        data-ripple-color="" href="#">
-                                        <i class="material-icons">short_text</i>
-                                        Funding
-                                    </a>
-                                    <!-- Training Schedules -->
-                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
-                                        data-ripple-color="" href="#">
-                                        <i class="material-icons">short_text</i>
-                                        Training
-                                    </a>
-                                    <!-- Beneficiaries -->
-                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
-                                        data-ripple-color="" 
-                                        href="{% url 'tralard:subproject-beneficiary' sub_project.project.program.slug sub_project.project.slug sub_project.slug%}">
-                                        <i class="material-icons">short_text</i>
-                                        Beneficiaries
-                                    </a>
-                                    <!-- Back to project button -->
-                                    <a class="button btn-dash primary-btn btn-dash raised has-icon"
-                                        data-ripple-color="" href="{% url 'tralard:project-detail' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug %}">
-                                        <i class="material-icons">short_text</i>
-                                        Main Project
-                                    </a>
-                                </div>
-                            </div>
-    
-                            <div class="columns contact-profile">
-                                <!-- Avatar Card -->
-                                <div class="column is-4">
-                                    <div class="flex-card is-avatar light-bordered card-overflow">
-                                        <div class="inner">
-                                            <div class="contact-block">
-                                                <!-- Avatar -->
-                                                <div class="avatar-wrapper">
-                                                    {% if sub_project.image_file %}
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{{ sub_project.image_file.url }}">
-                                                    {% else %}
-                                                        <img src="https://via.placeholder.com/150x150" alt=""
-                                                            data-demo-src="{% static 'assets/images/logos/logo.png' %}">
-                                                    {% endif %}
-                                                </div>
-                                                <!-- Meta -->
-                                                <div class="contact-name">{{ sub_project.supervisor|title }}</div>
-                                                <div class="contact-company">{{ sub_project.project.name }}.</div>
-                                                <!-- Stats -->
-                                                <div class="stats-block">
-                                                    <div class="stat">
-                                                        <span>Beneficiaries</span>
-                                                        <span>{% if sub_project.count_beneficiaries %}{{ sub_project.count_beneficiaries }}{% else %} None {% endif %}</span>
-                                                    </div>
-                                                    <div class="stat">
-                                                        <span>Training Schedules</span>
-                                                        <span>{% if sub_project.count_training_schedules %}{{ sub_project.count_training_schedules }} {% else %} None {% endif %}</span>
-                                                    </div>
-                                                    {% comment %} <div class="stat">
-                                                        <span>Training Schedules</span>
-                                                        <span>7</span>
-                                                    </div> {% endcomment %}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-    
-    
-                                <div class="column is-8">
-                                    <!-- Contact informations -->
-                                    <div class="flex-card is-contact-info light-bordered card-overflow">
-                                        <!-- Tabs -->
-                                        <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
-                                            <div class="tabs">
-                                                <ul>
-                                                    <li class="is-active" data-tab="tab-general"><a>Details</a></li>
-                                                </ul>
-                                            </div>
-    
-                                            <!-- General informations -->
-                                            <div id="tab-general" class="navtab-content is-active">
-                                                <div class="columns">
-                                                    <div class="column is-6">
-                                                        <!-- Info block -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                Email
-                                                            </div>
-                                                            <div class="info-content is-email">
-                                                                {{ sub_project.representative.email }}
-                                                            </div>
-                                                        </div>
-                                                        <!-- Info block -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                Phone (1)
-                                                            </div>
-                                                            <div class="info-content">
-                                                                {{ sub_project.representative.cell }}
-                                                            </div>
-                                                        </div>
-                                                        <!-- Info block -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                District
-                                                            </div>
-                                                            <div class="info-content">
-                                                                {{ sub_project.representative.district }}
-                                                            </div>
-                                                        </div>
-                                                        <!-- Info block -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                Gender
-                                                            </div>
-                                                            <div class="info-content">
-                                                                {{ sub_project.representative.gender }}
-                                                            </div>
-                                                        </div>
-                                                        <!-- Info block -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                Location
-                                                            </div>
-                                                            <div class="info-content">
-                                                                {{ sub_project.representative.district }}, {{ sub_project.representative.province }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="column is-6">
-                                                        <!-- Contact summary -->
-                                                        <div class="info-block">
-                                                            <div class="info-label">
-                                                                Focus Area
-                                                            </div>
-                                                            <div class="info-content is-notes">
-                                                                {{ sub_project.focus_area }}
-                                                            </div>
-                                                            <!-- Switch -->
-                                                            <div class="field is-prospect">
-                                                                <input id="prospectSwitch" type="checkbox"
-                                                                    name="prospectSwitch" class="switch is-secondary"
-                                                                    checked>
-                                                                        <label for="prospectSwitch"><span>This subproject is a
-                                                                                approved</span></label>
-                                                                       
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-    
-                                                <hr>
-    
-                                                <!-- Lifetime earnings -->
-                                                <div class="lifetime-wrapper">
-                                                    <div class="lifetime-won">
-                                                        <div class="lifetime-label">Total Funding</div>
-                                                        {% if sub_project.get_total_sub_project_fund %}
-                                                            <span> {{ sub_project.get_total_sub_project_fund|intcomma }}</span>
-                                                        {% else %}
-                                                            <span> 0.00</span>
-                                                        {% endif %}
-                                                    </div>
-    
-                                                    <!-- Send email action -->
-                                                    <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                                                        data-ripple-color="" data-modal="message-contact-modal" href=#>
-                                                        {% comment %} <i class="material-icons">mail</i> {% endcomment %}
-                                                        Download Report
-                                                    </a>
-                                                </div>
-                                            </div>
-                                          
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-    
-                        </div>
+<!-- Main dashboard container -->
+<!-- Main dashboard container -->
+<div id="dashboard-wrapper" class="dashboard-outer">
+  <div class="dashboard-inner">
+    <!-- Dashboard Wrapper -->
+    <div class="dashboard-wrapper">
+      <div id="main-dashboard" class="section-wrapper">
+        <!-- Dashboard content -->
+        <div id="basic-layout" class="dashboard-columns">
+          <div class="contact-profile-wrap">
+            <!-- Page title -->
+            <div class="contacts-title-wrapper">
+              <h3 class="contacts-title">{{ sub_project.name|title }}</h3>
+              <!-- Filter input -->
+              <div class="list-filter">
+                <div
+                  class="dropdown is-right dropdown-trigger contact-events-dropdown"
+                >
+                  <div class="button">
+                    <i class="material-icons">more_vert</i>
+                  </div>
+                  <!-- Dropdown menu -->
+                  <div class="dropdown-menu is-text-bigger" role="menu">
+                    <div class="dropdown-content">
+                      <a href="#" class="dropdown-item">
+                        <i class="sl sl-icon-paper-plane"></i>
+                        <span>
+                          <span>Send</span>
+                          <span>Send contact details</span>
+                        </span>
+                      </a>
+                      <div class="dropdown-divider"></div>
+                      <a href="#" class="dropdown-item">
+                        <i class="sl sl-icon-rocket"></i>
+                        <span>
+                          <span>New Deal</span>
+                          <span>Start new deal involving this contact</span>
+                        </span>
+                      </a>
+                      <a href="#" class="dropdown-item">
+                        <i class="sl sl-icon-bell"></i>
+                        <span>
+                          <span>Subscribe me</span>
+                          <span>Subscribe me to contact updates</span>
+                        </span>
+                      </a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item">
+                        <i class="sl sl-icon-shield"></i>
+                        <span>
+                          <span>Disable</span>
+                          <span>Disables this contact</span>
+                        </span>
+                      </a>
+                      <a class="dropdown-item">
+                        <i class="sl sl-icon-trash"></i>
+                        <span>
+                          <span>Delete</span>
+                          <span>Delete this event</span>
+                        </span>
+                      </a>
                     </div>
+                  </div>
                 </div>
+                <!-- Funding -->
+                <a
+                  class="button btn-dash primary-btn btn-dash raised has-icon"
+                  data-ripple-color=""
+                  href="{% url 'tralard:subproject-fund-list' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
+                >
+                  <i class="material-icons">short_text</i>
+                  Funding
+                </a>
+                <!-- Training Schedules -->
+                <a
+                  class="button btn-dash primary-btn btn-dash raised has-icon"
+                  data-ripple-color=""
+                  href="#"
+                >
+                  <i class="material-icons">short_text</i>
+                  Training
+                </a>
+                <!-- Beneficiaries -->
+                <a
+                  class="button btn-dash primary-btn btn-dash raised has-icon"
+                  data-ripple-color=""
+                  href="{% url 'tralard:subproject-beneficiary' sub_project.project.program.slug sub_project.project.slug sub_project.slug%}"
+                >
+                  <i class="material-icons">short_text</i>
+                  Beneficiaries
+                </a>
+                <!-- Back to project button -->
+                <a
+                  class="button btn-dash primary-btn btn-dash raised has-icon"
+                  data-ripple-color=""
+                  href="{% url 'tralard:project-detail' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug %}"
+                >
+                  <i class="material-icons">short_text</i>
+                  Main Project
+                </a>
+              </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Send message modal -->
-    <!-- Send message to contact Modal -->
-    <div id="message-contact-modal" class="modal modal-md message-contact-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <h2 class="dark-text">Send Message</h2>
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/send-message.svg' %}" alt="">
+            <div class="columns contact-profile">
+              <!-- Avatar Card -->
+              <div class="column is-4">
+                <div class="flex-card is-avatar light-bordered card-overflow">
+                  <div class="inner">
+                    <div class="contact-block">
+                      <!-- Avatar -->
+                      <div class="avatar-wrapper">
+                        {% if sub_project.image_file %}
+                        <img
+                          src="https://via.placeholder.com/150x150"
+                          alt=""
+                          data-demo-src="{{ sub_project.image_file.url }}"
+                        />
+                        {% else %}
+                        <img
+                          src="https://via.placeholder.com/150x150"
+                          alt=""
+                          data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+                        />
+                        {% endif %}
+                      </div>
+                      <!-- Meta -->
+                      <div class="contact-name">
+                        {{ sub_project.supervisor|title }}
+                      </div>
+                      <div class="contact-company">
+                        {{ sub_project.project.name }}.
+                      </div>
+                      <!-- Stats -->
+                      <div class="stats-block">
+                        <div class="stat">
+                          <span>Beneficiaries</span>
+                          <span>
+                            {% if sub_project.count_beneficiaries %}
+                            <!--  -->
+                            {{sub_project.count_beneficiaries }}
+                            <!--  -->
+                            {% else %} None {% endif %}
+                          </span>
                         </div>
-                        <div class="help-text has-text-centered">Send a message to this contact's email</div>
-    
-                        <div class="field">
-                            <div class="control has-icons-left">
-                                <input class="input is-medium" type="text" placeholder="Message subject">
-                                <span class="icon is-left">
-                                    <i class="fa fa-sticky-note-o"></i>
-                                </span>
-                            </div>
+                        <div class="stat">
+                          <span>Training Schedules</span>
+                          <span>
+                            {% if sub_project.count_training_schedules %}
+                            <!--  -->
+                            {{sub_project.count_training_schedules }}
+                            <!--  -->
+                            {% else %} None {% endif %}
+                            <!--  -->
+                          </span>
                         </div>
-    
-                        <div class="field">
-                            <div class="control">
-                                <textarea class="textarea" rows="6" placeholder="Your message ..."></textarea>
-                            </div>
+                        {% comment %}
+                        <div class="stat">
+                          <span>Training Schedules</span>
+                          <span>7</span>
                         </div>
-                        
-                        <div class="send-copy">
-                            <div class="field">
-                                <input id="messageSwitch" type="checkbox" name="messageSwitch" class="switch is-secondary">
-                                <label for="messageSwitch"><span>Send a copy to my inbox?</span></label>
-                            </div>
-                        </div>
+                        {% endcomment %}
+                      </div>
                     </div>
+                  </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="button is-modal">Send Message</button>
-                </div>
-            </div>
-        </div>
-        <button class="modal-close is-large is-hidden" aria-label="close"></button>
-    </div>
-    <!-- /Invite User Modal -->   
+              </div>
 
-    <!-- Log call Modal -->
-    <div id="call-contact-modal" class="modal modal-md call-contact-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <h2 class="dark-text">Log Call</h2>
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/log-call.svg' %}" alt="">
-                        </div>
-                        <div class="help-text has-text-centered">Log a phone call you had with this contact</div>
-    
-                        <div class="field">
-                            <div class="control has-icons-left">
-                                <input id="call-picker" class="input is-medium" type="text" placeholder="When was it?">
-                                <span class="icon is-left">
-                                    <i class="fa fa-calendar-o"></i>
-                                </span>
-                            </div>
-                        </div>
-    
-                        <div class="field">
-                            <div class="control">
-                                <select class="chosen-select" data-placeholder="Type of Call">
-                                    <option label="Type of Call"></option>
-                                    <option>Outgoing</option>
-                                    <option>Incoming</option>
-                                </select>
-                            </div>
-                        </div>
-    
-                        <div class="field">
-                            <div class="control has-icons-left">
-                                <input class="input is-medium" type="number" placeholder="Call duration (in minutes)">
-                                <span class="icon is-left">
-                                    <i class="fa fa-clock-o"></i>
-                                </span>
-                            </div>
-                        </div>
-                        
-                        <div class="field">
-                            <div class="control">
-                                <textarea class="textarea" rows="6" placeholder="Quick summary of the conversation"></textarea>
-                            </div>
-                        </div>
-    
-                        <div class="send-copy">
-                            <div class="field">
-                                <input id="subscribedSwitch" type="checkbox" name="subscribedSwitch" class="switch is-secondary">
-                                <label for="subscribedSwitch"><span>Notify subscribed users?</span></label>
-                            </div>
-                        </div>
+              <div class="column is-8">
+                <!-- Contact informations -->
+                <div
+                  class="flex-card is-contact-info light-bordered card-overflow"
+                >
+                  <!-- Tabs -->
+                  <div
+                    class="navigation-tabs single-contact-tabs animated-tabs simple-tabs"
+                  >
+                    <div class="tabs">
+                      <ul>
+                        <li class="is-active" data-tab="tab-general">
+                          <a>Details</a>
+                        </li>
+                      </ul>
                     </div>
+
+                    <!-- General informations -->
+                    <div id="tab-general" class="navtab-content is-active">
+                      <div class="columns">
+                        <div class="column is-6">
+                          <!-- Info block -->
+                          <div class="info-block">
+                            <div class="info-label">Email</div>
+                            <div class="info-content is-email">
+                              {{ sub_project.representative.email }}
+                            </div>
+                          </div>
+                          <!-- Info block -->
+                          <div class="info-block">
+                            <div class="info-label">Phone (1)</div>
+                            <div class="info-content">
+                              {{ sub_project.representative.cell }}
+                            </div>
+                          </div>
+                          <!-- Info block -->
+                          <div class="info-block">
+                            <div class="info-label">District</div>
+                            <div class="info-content">
+                              {{ sub_project.representative.district }}
+                            </div>
+                          </div>
+                          <!-- Info block -->
+                          <div class="info-block">
+                            <div class="info-label">Gender</div>
+                            <div class="info-content">
+                              {{ sub_project.representative.gender }}
+                            </div>
+                          </div>
+                          <!-- Info block -->
+                          <div class="info-block">
+                            <div class="info-label">Location</div>
+                            <div class="info-content">
+                              {{ sub_project.representative.district }},
+                              {{sub_project.representative.province }}
+                            </div>
+                          </div>
+                        </div>
+                        <div class="column is-6">
+                          <!-- Contact summary -->
+                          <div class="info-block">
+                            <div class="info-label">Focus Area</div>
+                            <div class="info-content is-notes">
+                              {{ sub_project.focus_area }}
+                            </div>
+                            <!-- Switch -->
+                            <div class="field is-prospect">
+                              <input
+                                id="prospectSwitch"
+                                type="checkbox"
+                                name="prospectSwitch"
+                                class="switch is-secondary"
+                                checked
+                              />
+                              <label for="prospectSwitch"
+                                ><span
+                                  >This subproject is a approved</span
+                                ></label
+                              >
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <hr />
+
+                      <!-- Lifetime earnings -->
+                      <div class="lifetime-wrapper">
+                        <div class="lifetime-won">
+                          <div class="lifetime-label">Total Funding</div>
+                          {% if sub_project.get_total_sub_project_fund %}
+                          <span>
+                            {{ sub_project.get_total_sub_project_fund|intcomma}}
+                          </span>
+                          {% else %}
+                          <span> 0.00</span>
+                          {% endif %}
+                        </div>
+
+                        <!-- Send email action -->
+                        <a
+                          class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
+                          data-ripple-color=""
+                          data-modal="message-contact-modal"
+                          href="#"
+                        >
+                          {% comment %}
+                          <i class="material-icons">mail</i> {%endcomment %}
+                          Download Report
+                        </a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="submit" class="button is-modal">Log Call</button>
-                </div>
+              </div>
             </div>
+          </div>
         </div>
-        <button class="modal-close is-large is-hidden" aria-label="close"></button>
+      </div>
     </div>
-    <!-- /Invite User Modal -->
+  </div>
+</div>
+
+<!-- Send message modal -->
+<!-- Send message to contact Modal -->
+<div
+  id="message-contact-modal"
+  class="modal modal-md message-contact-modal modal-hero"
+>
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <h2 class="dark-text">Send Message</h2>
+      <div class="card-body">
+        <div class="has-text-centered">
+          <div class="image">
+            <img
+              src="{% static 'assets/images/icons/send-message.svg' %}"
+              alt=""
+            />
+          </div>
+          <div class="help-text has-text-centered">
+            Send a message to this contact's email
+          </div>
+
+          <div class="field">
+            <div class="control has-icons-left">
+              <input
+                class="input is-medium"
+                type="text"
+                placeholder="Message subject"
+              />
+              <span class="icon is-left">
+                <i class="fa fa-sticky-note-o"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <textarea
+                class="textarea"
+                rows="6"
+                placeholder="Your message ..."
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="send-copy">
+            <div class="field">
+              <input
+                id="messageSwitch"
+                type="checkbox"
+                name="messageSwitch"
+                class="switch is-secondary"
+              />
+              <label for="messageSwitch"
+                ><span>Send a copy to my inbox?</span></label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="button is-modal">Send Message</button>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- /Invite User Modal -->
+
+<!-- Log call Modal -->
+<div
+  id="call-contact-modal"
+  class="modal modal-md call-contact-modal modal-hero"
+>
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <h2 class="dark-text">Log Call</h2>
+      <div class="card-body">
+        <div class="has-text-centered">
+          <div class="image">
+            <img src="{% static 'assets/images/icons/log-call.svg' %}" alt="" />
+          </div>
+          <div class="help-text has-text-centered">
+            Log a phone call you had with this contact
+          </div>
+
+          <div class="field">
+            <div class="control has-icons-left">
+              <input
+                id="call-picker"
+                class="input is-medium"
+                type="text"
+                placeholder="When was it?"
+              />
+              <span class="icon is-left">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <select class="chosen-select" data-placeholder="Type of Call">
+                <option label="Type of Call"></option>
+                <option>Outgoing</option>
+                <option>Incoming</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control has-icons-left">
+              <input
+                class="input is-medium"
+                type="number"
+                placeholder="Call duration (in minutes)"
+              />
+              <span class="icon is-left">
+                <i class="fa fa-clock-o"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="control">
+              <textarea
+                class="textarea"
+                rows="6"
+                placeholder="Quick summary of the conversation"
+              ></textarea>
+            </div>
+          </div>
+
+          <div class="send-copy">
+            <div class="field">
+              <input
+                id="subscribedSwitch"
+                type="checkbox"
+                name="subscribedSwitch"
+                class="switch is-secondary"
+              />
+              <label for="subscribedSwitch"
+                ><span>Notify subscribed users?</span></label
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="button is-modal">Log Call</button>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- /Invite User Modal -->
 
 {% endblock content %}
 

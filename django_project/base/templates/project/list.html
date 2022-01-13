@@ -32,10 +32,19 @@
                 alt=""
                 data-demo-src="{{ program.logo.url }}"
               />
-              {% else %} {% if program.name|lower == 'ppcr' %} data-demo-src="{%
-              static 'assets/images/ppcr.png' %}"> {% elif program.name|lower ==
-              'tralard' %} data-demo-src="{% static 'assets/images/tralard.png'
-              %}"> {% endif %} {% endif %}
+              {% else %}
+              <!--  -->
+              {% if program.name|lower == 'ppcr' %}
+              <!--  -->
+              data-demo-src="{% static 'assets/images/ppcr.png' %}">
+              <!--  -->
+              {% elif program.name|lower == 'tralard' %}
+              <!--  -->
+              data-demo-src="{% static 'assets/images/tralard.png' %}">
+              <!--  -->
+              {% endif %}
+              <!--  -->
+              {% endif %}
               <div>
                 <h2 class="project-title">
                   Program Name: {{ program.name|upper }}

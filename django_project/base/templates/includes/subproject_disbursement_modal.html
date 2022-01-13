@@ -10,11 +10,11 @@
         >
           <header class="w3-container" style="background: #aab7d6">
             <span
-              onclick="document.getElementById('id01').style.display='none'; document.querySelector('#disbursements_list').innerHTML = ''"
+              onclick="document.getElementById('id01').style.display='none'; document.querySelector('#subproject_disbursements_list').innerHTML = ''"
               class="w3-button w3-blue w3-xlarge w3-display-topright"
               >&times;</span
             >
-            <h2 id="project_name"></h2>
+            <h2 id="subproject_project_name"></h2>
           </header>
           <!-- Main Training container -->
           <script></script>
@@ -64,17 +64,21 @@
                                     <!-- Info block -->
                                     <div class="info-block">
                                       <div class="info-label">
-                                        Project Description
+                                        Sub Project Description
                                       </div>
                                       <div class="info-content is-email">
-                                        <div id="project_description">?</div>
+                                        <div id="subproject_description">?</div>
                                       </div>
                                     </div>
                                     <!-- Info block -->
                                     <div class="info-block">
-                                      <div class="info-label">Fund Amount</div>
+                                      <div class="info-label">
+                                        Subproject Fund Amount
+                                      </div>
                                       <div class="info-content">
-                                        <span id="fund_amount">?</span>
+                                        <span id="subproject_fund_amount">
+                                          ?
+                                        </span>
                                       </div>
                                     </div>
                                   </div>
@@ -85,7 +89,7 @@
                                       <div class="info-content">
                                         <div class="field is-prospect">
                                           <input
-                                            id="approved"
+                                            id="subproject_approved"
                                             type="checkbox"
                                             name="prospectSwitch"
                                             class="switch is-secondary"
@@ -99,7 +103,9 @@
                                     <div class="info-block">
                                       <div class="info-label">Balance</div>
                                       <div class="info-content is-notes">
-                                        <span id="fund_balance">?</span>
+                                        <span id="subproject_fund_balance">
+                                          ?
+                                        </span>
                                       </div>
                                     </div>
                                   </div>
@@ -112,7 +118,7 @@
                                   <!-- Close modal action -->
                                   <button
                                     class="w3-button w3-right w3-white w3-border"
-                                    onclick="document.getElementById('id01').style.display='none'; document.querySelector('#disbursements_list').innerHTML = '';"
+                                    onclick="document.getElementById('id01').style.display='none'; document.querySelector('#subproject_disbursements_list').innerHTML = '';"
                                   >
                                     Close
                                   </button>
@@ -123,7 +129,7 @@
                                 <div class="columns deal-content">
                                   <div
                                     class="column"
-                                    id="disbursements_list"
+                                    id="subproject_disbursements_list"
                                   ></div>
                                 </div>
                               </div>

@@ -34,10 +34,19 @@
                 alt=""
                 data-demo-src="{{ program.logo.url }}"
               />
-              {% else %} {% if program.name|lower == 'ppcr' %} data-demo-src="{%
-              static 'assets/images/ppcr.png' %}"> {% elif program.name|lower ==
-              'tralard' %} data-demo-src="{% static 'assets/images/tralard.png'
-              %}"> {% endif %} {% endif %}
+              {% else %}
+              <!--  -->
+              {% if program.name|lower == 'ppcr' %}
+              <!--  -->
+              data-demo-src="{% static 'assets/images/ppcr.png' %}">
+              <!--  -->
+              {% elif program.name|lower == 'tralard' %}
+              <!--  -->
+              data-demo-src="{% static 'assets/images/tralard.png' %}">
+              <!--  -->
+              {% endif %}
+              <!--  -->
+              {% endif %}
               <div>
                 <h2 class="project-title">
                   Program Name: {{ program.name|upper }}
@@ -327,10 +336,9 @@
                             </progress>
                             <div class="task-count">
                               <span class="sl sl-icon-check"></span>
-                              <span
-                                >{{ sub_project.fund_utilization_percent
-                                }}%</span
-                              >
+                              <span>
+                                {{ sub_project.fund_utilization_percent }}%
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -348,9 +356,8 @@
                 <div class="projects-list-wrapper">
                   <div class="list-header">
                     <div class="list-title">
-                      <span
-                        >Showing All Beneficiaries Under {{ program.name|upper
-                        }}
+                      <span>
+                        Showing All Beneficiaries Under {{ program.name|upper }}
                       </span>
                       <div
                         class="add-button modal-trigger"
