@@ -24,7 +24,10 @@ class BeneficiaryCreateForm(ModelForm):
         widgets = {
             "location": GooglePointFieldWidget,
             "registered_date": widgets.DateInput(
-                format=("%m/%d/%Y"), attrs={"class": "form-control", "type": "date"}
+                format=("%m/%d/%Y"), attrs={
+                    "class": "form-control", 
+                    "type": "date"
+                    }
             ),
             "description": forms.Textarea(
                 attrs={
@@ -71,7 +74,7 @@ class BeneficiaryCreateForm(ModelForm):
                     ),
                     Column("above_fourty_five", css_class="form-group col-md-6 mb-0"),
                     Column("sub_project", css_class="form-group col-md-6 mb-0"),
-                    Column("ward", css_class="form-group col-md-6 mb-0"),
+                    Column("ward", css_class="form-group col-md-12 mb-0"),
                     Column("location", css_class="form-group col-md-12 mb-0"),
                     css_class="form-row",
                 ),

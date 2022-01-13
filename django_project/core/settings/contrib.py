@@ -28,7 +28,7 @@ AUTHENTICATION_BACKENDS = (
 
 # Django grappelli need to be added before django.contrib.admin
 INSTALLED_APPS = (
-'djangocms_admin_style',
+    'grappelli',
 ) + INSTALLED_APPS
 
 
@@ -44,6 +44,7 @@ INSTALLED_APPS += (
     'filer',
     'import_export',
     'mapwidgets',
+    'report_builder',
 )
 # Defines whether to log model related events,
 # such as when an object is created, updated, or deleted
@@ -85,7 +86,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 # CKEditor Settings
 CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_IMAGE_BACKEND = "pillow"
-
 
 CKEDITOR_CONFIGS = {
     'default': {
@@ -176,4 +176,43 @@ MESSAGE_TAGS = {
     messages.SUCCESS: 'alert-success',
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
+}
+
+# reports
+REPORT_BUILDER_INCLUDE = [
+    'tralard.beneficiary',
+    'tralard.province',
+    'tralard.district', 
+    'tralard.ward', 
+    'tralard.fund',
+    'tralard.disbursement',
+    'tralard.expenditure',
+    'tralard.program',
+    'tralard.project',
+    'tralard.subproject',
+    'tralard.training',
+    'tralard.trainingtype',
+    'tralard.attendance',
+    'tralard.profile',
+    'tralard.feedback',
+]
+
+# Admin interface
+GRAPPELLI_ADMIN_TITLE = 'Think2044 Admin'
+GRAPPELLI_SWITCH_USER = True
+
+
+# Google map API widget
+# --------------------------------
+MAP_WIDGETS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [-15.4164488, 28.2821535]),
+        (
+            "GooglePlaceAutocompleteOptions",
+            {"componentRestrictions": {"country": "zambia"}},
+        ),
+        ("markerFitZoom", 12),
+    ),
+    "GOOGLE_MAP_API_KEY": "AIzaSyDZMi5ucoQwtfIX7023ezUac8mQG2vrMpM",
 }

@@ -1,5 +1,6 @@
 psycopg2-binary==2.8.6
-Django==3.1.13
+Django==2.2
+# Django==3.1.13
 django-role-permissions==2.2.0
 django-utils-six==2.0
 markdown==2.6.11
@@ -21,6 +22,8 @@ requests==2.25.1
 django-import-export==2.7.0
 django-map-widgets==0.3.2
 django-imagekit==4.1.0
+django-report-builder==6.4.2
+django-grappelli==2.13.4
 django-infinite-scroll-pagination==1.2.0
 # support special characters
 
@@ -28,9 +31,9 @@ django-infinite-scroll-pagination==1.2.0
 # https://github.com/soynatan/django-easy-audit
 git+https://github.com/soynatan/django-easy-audit.git
 
-djangorestframework==3.7.7
-django-filter==1.1.0
-coreapi==2.3.3
+# djangorestframework>=3.8.0
+# django-filter==2.4.0
+# coreapi==2.3.3
 pygbif==0.2.0
 
 djangocms-admin-style==2.0.2
@@ -41,4 +44,3 @@ django-map-widgets==0.3.2 # https://django-map-widgets.readthedocs.io/en/latest/
 git+https://github.com/Digital-Prophets/dj-beneficiary.git
 
 folium
-

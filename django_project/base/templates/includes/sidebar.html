@@ -10,15 +10,15 @@
             data-demo-src="{% static 'assets/images/logos/logo.png' %}" />
         </a>
       </li>
-      <li class="side-icon" data-child-menu="dashboard-menu">
+      {% comment %} <li class="side-icon" data-child-menu="dashboard-menu">
         <i class="sl sl-icon-speedometer"></i>
-      </li>
-      <li class="side-icon" data-child-menu="documents-menu">
+      </li> {% endcomment %}
+      {% comment %} <li class="side-icon" data-child-menu="documents-menu">
         <i class="sl sl-icon-docs"></i>
-      </li>
-      <li class="side-icon" data-child-menu="business-menu">
+      </li> {% endcomment %}
+      {% comment %} <li class="side-icon" data-child-menu="business-menu">
         <i class="sl sl-icon-briefcase"></i>
-      </li>
+      </li> {% endcomment %}
       <li class="side-icon" data-child-menu="misc-menu">
         <i class="sl sl-icon-graph"></i>
       </li>
@@ -33,12 +33,12 @@
       <li>
         <!-- Profile avatar -->
         <a class="profile-trigger" href="javascript:void(0);">
-          {% if profile.profile_photo %}
-          <img src="{{ profile.profile_photo.url }}" id="user-profile-page-opener-button" class="profile-photo"
-            alt="{{ profile.user.username }}'s profile photo" />
+          {% if request.user.profile.profile_photo %}
+          <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" id="user-profile-page-opener-button" class="profile-photo"
+            alt="">
           {% else %}
-          <img src="/assets/images/logos/logo.png" class="profile-photo" data-demo-src="/assets/images/logos/logo.png"
-            alt="{{ profile.user.username }}'s profile photo" />
+          <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="/assets/images/logos/logo.png" class="profile-photo" data-demo-src="/assets/images/logos/logo.png"
+            alt="">
           {% endif %}
           <span class="dot"></span>
         </a>
@@ -156,40 +156,40 @@
                               <div class="meta">
                                 <label>Full name</label>
                                 <p>
-                                  {{ profile.user.first_name|title }} {{
-                                  profile.user.last_name|title }}
+                                  {{ request.user.profile.user.first_name|title }} 
+                                  {{ request.user.profile.user.last_name|title }}
                                 </p>
                               </div>
                             </div>
                             <div class="info-block">
                               <div class="meta">
                                 <label>Gender</label>
-                                <p>{{ profile.gender }}</p>
+                                <p>{{ request.user.profile.gender }}</p>
                               </div>
                             </div>
                             <div class="info-block">
                               <div class="meta">
                                 <label>Province</label>
-                                <p>{{ profile.district.province }}</p>
+                                <p>{{ request.user.profile.district.province }}</p>
                               </div>
                             </div>
 
                             <div class="info-block">
                               <div class="meta">
                                 <label>District</label>
-                                <p>{{ profile.district.name }}</p>
+                                <p>{{ request.user.profile.district.name }}</p>
                               </div>
                             </div>
                             <div class="info-block">
                               <div class="meta">
                                 <label>Birth Date</label>
-                                <p>{{ profile.birth_date }}</p>
+                                <p>{{ request.user.profile.birth_date }}</p>
                               </div>
                             </div>
                             <div class="info-block">
                               <div class="meta">
                                 <label>About Me</label>
-                                <p>{{ profile.about_me }}</p>
+                                <p>{{ request.user.profile.about_me }}</p>
                               </div>
                             </div>
                           </div>
@@ -217,7 +217,7 @@
                             <hr />
                             <div class="info-block" style="float: left">
                               <div class="meta">
-                                {% if profile.user.is_active %}
+                                {% if request.user.profile.user.is_active %}
                                 <span>Active</span>
                                 {% else %}
                                 <span>Inactive</span>
@@ -226,7 +226,7 @@
                             </div>
                             <div class="info-block" style="float: right">
                               <div class="meta">
-                                {% if profile.user.is_active %}
+                                {% if request.user.profile.user.is_active %}
                                 <img style="width: 20px; height: 20px" class="img-xs rounded-circle"
                                   src="/static/assets/images/green-check-icon.jpeg" alt="active" />
                                 {% else %}
@@ -257,25 +257,25 @@
                               <div style="float: right" class="info-block">
                                 <div class="meta">
                                   <label style="float: right">Email</label>
-                                  <p>{{ profile.user.email }}</p>
+                                  <p>{{ request.user.profile.user.email }}</p>
                                 </div>
                               </div>
                               <div class="info-block">
                                 <div class="meta">
                                   <label>Mobile</label>
-                                  <p>{{ profile.cell }}</p>
+                                  <p>{{ request.user.profile.cell }}</p>
                                 </div>
                               </div>
                               <div style="float: right" class="info-block">
                                 <div class="meta">
                                   <label style="margin-left: 8em">Address</label>
-                                  <p>{{ profile.address }}</p>
+                                  <p>{{ request.user.profile.address }}</p>
                                 </div>
                               </div>
                               <div class="info-block">
                                 <div class="meta">
                                   <label>Postal Code</label>
-                                  <p>{{ profile.postal_code }}</p>
+                                  <p>{{ request.user.profile.postal_code }}</p>
                                 </div>
                               </div>
                             </div>
@@ -595,23 +595,14 @@
     <!-- /Child menu header -->
 
     <!-- Sidebar menu 1 -->
-    <ul id="dashboard-menu" class="sidebar-menu is-active animated preFadeInRIght fadeInRight">
+    {% comment %} <ul id="dashboard-menu" class="sidebar-menu is-active animated preFadeInRIght fadeInRight">
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">dashboard</span>Project</a>
-        <ul>
-          <li><a href="#">List</a></li>
-          <li>
-            <a href="#">Add Funds to Project</a>
-          </li>
-        </ul>
+        <a  href="/"><span class="material-icons">dashboard</span>Project</a>
       </li>
-      <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">insert_chart</span>Beneficiary</a>
-      </li>
-    </ul>
+    </ul>  {% endcomment %}
     <!-- /Sidebar menu 1 -->
     <!-- Sidebar menu 2 -->
-    <ul id="documents-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+    {% comment %} <ul id="documents-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
         <a class="parent-link" href="#"><span class="material-icons">insert_drive_file</span>Documents</a>
         <ul>
@@ -655,10 +646,10 @@
           </li>
         </ul>
       </li>
-    </ul>
+    </ul> {% endcomment %}
     <!-- /Sidebar menu 2 -->
     <!-- Sidebar menu 3 -->
-    <ul id="business-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+    {% comment %} <ul id="business-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
         <a class="parent-link" href="#"><span class="material-icons">group</span>Contacts</a>
         <ul>
@@ -693,9 +684,15 @@
           </li>
         </ul>
       </li>
-    </ul>
+    </ul> {% endcomment %}
     <!-- /Sidebar menu 3 -->
     <!-- Sidebar menu 4 -->
+    <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+      <li class="have-children">
+        <a href="/reports_builder/"><span class="material-icons">grid_on</span>Reports</a>
+       
+      </li>
+    </ul>
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
         <a class="parent-link" href="#"><span class="material-icons">grid_on</span>Datatables</a>
@@ -748,17 +745,7 @@
     <!-- Sidebar menu 5 -->
     <ul id="settings-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">settings</span>Admin</a>
-        <ul>
-          <li>
-            <a href="/admin">DB Admin Dashboard
-              <span class="sl sl-icon-lock warning-text ml-10"></span></a>
-          </li>
-          <li>
-            <a href="javascript:void(0);">Change password
-              <span class="sl sl-icon-lock warning-text ml-10"></span></a>
-          </li>
-        </ul>
+        <a href="/admin/" href="#"><span class="material-icons">settings</span>Admin</a>
       </li>
       <li class="have-children">
         <a class="parent-link" href="#"><span class="material-icons">account_circle</span>User settings</a>

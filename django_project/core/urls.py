@@ -6,18 +6,17 @@ from django.conf.urls.static import static
 from dj_beneficiary import urls as dj_beneficiary_urls
 
 urlpatterns = [
+    # must be before admin entry
+    path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include("authentication.urls")), # Auth routes - login / register
     path('', include('base.urls')),
     path('', include('ppcr.urls', namespace='ppcr')),
     path('', include('tralard.urls', namespace='tralard')),
     path('', include(dj_beneficiary_urls)),
+    path('reports_builder/', include('report_builder.urls')),
     path('tinymce/', include('tinymce.urls')),
 ]
-
-admin.site.site_header = "PPCR Administration"                   
-admin.site.site_title = "PPCR Administration" 
-admin.site.index_title = "Project Implementation and Beneficiary Tracking."                 
 
 try:
     from core.urls import urlpatterns as core_urlpatterns

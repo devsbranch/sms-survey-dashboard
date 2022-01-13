@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <!-- Required meta tags always come first -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title> 
+        TRALARD - {% block title %}{% endblock %} | PPCR
+    </title>
+
+    <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" />
+
+    <!--Core CSS -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/bulma.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/app.css' %}">
+    <link href="{% static 'assets/js/jquery-ui.min.js' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/icons.min.css' %}">
+
+    <!-- Specific CSS goes HERE -->
+{% block angular_app %}
+    {% block report_header %}
+    {% endblock %}
+    <style>
+{% endblock %}
+
+</head>
+
+<body>
+
+{% block body %}
+    <div class="pageloader"></div>
+    <div class="infraloader is-active"></div>    <!-- Main sidebar menu -->
+    
+    {% include 'includes/sidebar.html' %}
+
+    {% include 'includes/navigation.html' %}
+
+        {% block nav %}
+            {{ block.super }}
+        {% endblock %}
+    <div style="height: calc(100% - 106px); margin-top: 0.1em;">
+
+        <div id="dashboard-wrapper" class="dashboard-outer">
+            <div class="dashboard-wrapper">
+            {% block content %}
+    
+            {% endblock content %}
+            <!-- Dashboard Wrapper -->
+        </div>
+    </div>
+
+    {% include 'includes/scripts.html' %}
+
+    <!-- Specific Page JS goes HERE  -->
+    {% block javascripts %}{% endblock javascripts %}
+{% endblock %}
+</html>
