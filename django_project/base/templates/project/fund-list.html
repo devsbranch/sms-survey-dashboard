@@ -21,9 +21,10 @@
         <div id="basic-layout" class="dashboard-columns">
           <!-- Page title -->
           <div class="contacts-title-wrapper">
-            <h3 class="contacts-title">
-              Showing {{ sub_project.name }} Sub Project Funds
-            </h3>
+            <div class="title-wrap">
+              <h2 class="project-title">SubProject Funds</h2>
+              <h4 class="project-tagline">showing all funds under the <b>{{ sub_project.name|title }}</b> subproject.</h4>
+          </div>
             <!-- Filter input -->
             <div class="list-filter">
               <div class="control is-hidden-phones">
@@ -37,22 +38,11 @@
                 </div>
               </div>
               <a
-                class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                data-ripple-color=""
-                id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal"
-                href="#"
-              >
-                <i class="material-icons">add</i>
-                Create New {{ sub_project.project.name|title }} Fund
-              </a>
-
-              <a
                 class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
                 data-ripple-color=""
                 href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
               >
-                <span>Go Back To {{ sub_project.name }} Sub Project </span>
+                <span>Go Back To SubProject</span>
                 <i class="material-icons">send</i>
               </a>
             </div>
@@ -63,6 +53,11 @@
             <!-- Contacts table -->
             <table class="table contacts-table">
               <!-- Table header -->
+              <div data-title="Add new training" class="add-button modal-trigger"
+                id="fund-{{fund.slug}}-{{fund.project.slug}}"
+                data-modal="create-project-modal"> 
+                <i class="material-icons">add</i>
+            </div>
               <thead>
                 <tr>
                   <th>
