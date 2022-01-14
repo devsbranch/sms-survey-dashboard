@@ -192,20 +192,23 @@
                             {{project.count_beneficiaries }} Beneficiaries
                           </div>
                           <div class="project-members">
-                            <div class="face">
-                              <img
-                                src="https://via.placeholder.com/250x250"
-                                alt=""
-                                data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}"
-                              />
-                            </div>
-                            <div class="face">
-                              <img
-                                src="https://via.placeholder.com/250x250"
-                                alt=""
-                                data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}"
-                              />
-                            </div>
+                            {% for subproject in project.get_related_sub_projects %}
+                              <div class="face">
+                                {% if subproject.image_file %}
+                                  <img
+                                    src="https://via.placeholder.com/250x250"
+                                    alt=""
+                                    data-demo-src="{{ subproject.image_file.url }}"
+                                  />
+                                {% else %}
+                                  <img
+                                    src="https://via.placeholder.com/250x250"
+                                    alt=""
+                                    data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+                                  />
+                                {% endif %}
+                              </div>
+                            {% endfor %}
                           </div>
                         </div>
                       </div>
@@ -260,9 +263,11 @@
                           class="flex-card light-bordered light-shadow project-card card-overflow"
                         >
                           <div class="header">
-                            <h4 class="no-margin-bottom">
-                              {{ sub_project.name|title }}
-                            </h4>
+                            <a href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug %}">
+                              <h4 class="no-margin-bottom">
+                                {{ sub_project.name|title }}
+                              </h4>
+                            </a>
                             <!-- Project card dropdown -->
                             <div
                               class="dropdown is-right dropdown-trigger styled-dropdown is-round"

@@ -1,3 +1,4 @@
+{% load static %}
 <div class="more-drop">
     <!-- Task dropdown -->
     <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
@@ -35,7 +36,9 @@
                       document.getElementById("end-day").innerHTML = endDateArray[1];
                       document.getElementById("end-year").innerHTML = endDateArray[2];
                       document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
+
                       
+
                       const endDate = "{{ training.start_date }}";
                       const startDateArray = endDate.split(" ");
                       const startDateProcessor = () => {
@@ -61,7 +64,7 @@
                       }else{
                         document.getElementById("email-address").innerHTML = "None";
                       }
-                      if("{{ training.sub_project.project.image_file.url }}"){
+                      if("{{ training.sub_project.project.image_file }}"){
                         document.getElementById("project-image").src = "{{ training.sub_project.project.image_file.url }}";
                       }
 
@@ -74,27 +77,28 @@
                     }
                   })
                 </script>
-                <a class="dropdown-item modal-trigger modal-trigger edit-btn2{{ training.id }}" data-modal="training-update-modal">
-                    <i class="sl sl-icon-pencil"></i>
-                    <span>
-                        <span>Edit</span>
-                        <span>Edit this training entry</span>
-                    </span>
-                </a>
-                <script>
-                  var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ training.id }}");
-                    uniqueEditSelectorButton.addEventListener("click", () => {
-                       if("{{ training.slug }}" == "{{ training.slug }}"){
-                         document.getElementById("training-entry-form").innerHTML = `
-                           <form action="{% url 'tralard:training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.slug %}" name="sub_project_training_form" method="post" enctype="multipart/form-data">
-                             {% csrf_token %}
-                             {% load crispy_forms_tags %} 
-                             {% crispy training.training_edit_form training.training_edit_form.helper %}
-                           </span>
-                          `;
-                       }
-                     });
-               </script>
+                  <a class="dropdown-item modal-trigger modal-trigger edit-btn{{ training.id }}" data-modal="training-update-modal">
+                      <i class="sl sl-icon-eye"></i>
+                      <span>
+                          <span>Edit</span>
+                          <span>Edit this training entry</span>
+                      </span>
+                    </a>
+                    <script>
+                     var uniqueEditSelectorButton = document.querySelector(".edit-btn{{ training.id }}");
+                       uniqueEditSelectorButton.addEventListener("click", () => {
+                          if("{{ training.slug }}" == "{{ training.slug }}"){
+                            document.getElementById("subproject-training-entry-form").innerHTML = `
+                              <form action="{% url 'tralard:subproject-training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.sub_project.slug training.slug %} " name="sub_project_training_form" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {% load crispy_forms_tags %} 
+                                {% crispy training.training_edit_form training.training_edit_form.helper %}
+                              </span>
+                             `;
+                          }
+                        });
+                  </script>
+
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item modal-trigger modal-trigger delete-btn{{ training.id }}" data-modal="training-delete-modal" id="{{ training.id }}" class="dropdown-item">
                     <i class="sl sl-icon-trash"></i>
@@ -102,6 +106,7 @@
                         <span>Delete</span>
                         <span>Delete this training entry</span>
                     </span>
+                   
                     <script>
                       var uniqueEditSelectorButton = document.querySelector(".delete-btn{{ training.id }}");
                       uniqueEditSelectorButton.addEventListener("click", () => {
@@ -109,11 +114,11 @@
                            document.getElementById("training-entry-form-delete").innerHTML += `
                              <div style="align-content: center; margin-left: 12em;">
                                {% csrf_token %}
-                              <div class="modal-footer" style="margin-right: 8em;">
-                                <a href="" class="btn btn-danger modal-dismiss">Cancel</a>
-                                <a style="" href="{% url 'tralard:training-delete' training.sub_project.project.program.slug training.sub_project.project.slug training.slug %}" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
-                              </div>
-                              </div>
+                               <div class="modal-footer" style="margin-right: 8em;">
+                                  <a href="" style="" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="btn btn-danger modal-dismiss">Cancel</a>
+                                  <a style="" href="{% url 'tralard:subproject-training-delete' training.sub_project.project.program.slug training.sub_project.project.slug training.sub_project.slug training.slug %}" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
+                                </div>
+                            </div>
                             `;
                          }
                        });
@@ -123,3 +128,50 @@
         </div>
     </div>                                                                
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+ <!-- Delete Training Entry Modal -->
+ <div id="training-delete-modal" class="modal modal-md icon-action-modal modal-hero">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+      <div class="flex-card simple-shadow">
+          <div class="help-text has-text-left">
+              <h2 class="dark-text">Delete Training</h2>
+
+          </div>
+
+          <div class="card-body">
+              <div class="has-text-centered">
+                  <div class="image">
+                      <img src="{% static 'assets/images/icons/basket.svg' %}">
+                  </div>
+              </div>
+              
+              <form id="training-delete-form" class="form" action="" method="post">
+                  {% csrf_token %}
+                  <div id="warning-msg">
+                  </div>
+
+                  <div class="modal-footer">
+                      <button type="button" onClick="handDeleteTraining('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
+                      <button class=" is-danger is-modal" type="submit" onClick="handDeleteTraining('SET_ACTION_URL', '{{training.sub_project.project.program.slug}}', '{{training.sub_project.project.slug}}', '{{training.sub_project.slug}}', '{{training.slug}}');">Confirm</button>
+                  </div>
+              </form>
+          </div>
+          
+      </div>
+  </div>
+</div>
+<script>
+  function handDeleteTraining(actionType, program_slug='', project_slug='', subproject_slug='', training_entry_slug='') {
+    const origin = location.origin;
+    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/training/${training_entry_slug}/delete/`
+    const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
+
+    if (actionType === "SET_ACTION_URL") {
+        $('#training-delete-form').attr('action', formActionUrl)
+    } else if (actionType === "UNSET_ACTION_URL") {
+        $('#training-delete-form').attr('action', " ")
+    }
+}
+</script>
+<!-- / Delete Training Entry Modal -->

@@ -1,0 +1,26 @@
+{% load static %}
+<div id="training-delete-modal" class="modal modal-md icon-action-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="flex-card simple-shadow">
+            <div class="help-text has-text-left">
+                <h2 class="dark-text">Delete Training Entry</h2>
+            </div>
+            <div class="card-body">
+                <div class="has-text-centered">
+                    <div class="image">
+                        <img src="{% static 'assets/images/icons/basket.svg' %}">
+                    </div>
+                </div>
+                
+                <form id="training-entry-form" class="form" action="" method="post">
+                    {% csrf_token %}
+                    <div id="warning-msg">
+                    </div>
+                    <span id="training-entry-form-delete">
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

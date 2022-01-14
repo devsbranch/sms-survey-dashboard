@@ -1,54 +1,56 @@
 # -*- coding: utf-8 -*-
+
 from django.urls import path
 
+from tralard.views.sub_project import (
+    SubProjectDetailView, 
+    subproject_fund_delete, 
+    subproject_fund_detail, 
+    update_sub_project_fund,
+    SubProjectTrainingListView,
+    sub_project_training_delete,
+    sub_project_training_update,
+    SubProjectFundListAndCreateView, 
+    SubProjectBeneficiaryOrgListView,
+    subproject_fund_disbursement_create,
+)
+from tralard.views.training import (
+    TrainingListView,
+    training_delete,
+    template_testing,
+    training_update,
+)
 from tralard.views.beneficiary import (
     BeneficiaryOrgListView,
     beneficiary_detail,
     beneficiary_update,
     beneficiary_delete,
 )
-from tralard.views.dashboard import HomeTemplateView
 from tralard.views.fund import (
-    FundListAndCreateView,
-    delete_disbursement,
-    fund_delete,
     fund_detail,
-    get_disbursement_expenditures,
-    update_disbursement,
     update_fund,
-)
-from tralard.views.map import MapTemplateView
-from tralard.views.profile import ProfileUpdateView
-from tralard.views.program import ProgramDetailView
-from tralard.views.sub_project import (
-    SubProjectDetailView,
-    SubProjectBeneficiaryOrgListView,
-    subproject_fund_disbursement_create,
+    fund_delete,
+    FundDetailView,
+    delete_disbursement,
+    update_disbursement,
+    FundListAndCreateView,
+    get_disbursement_expenditures,
 )
 from tralard.views.project import (
-    ProjectDetailView,
-    delete_sub_project,
-    update_sub_project,
-    create_feedback,
     edit_feedback,
-    delete_feedback,
     project_create,
     project_update,
     project_delete,
+    delete_feedback,
+    create_feedback,
+    ProjectDetailView,
+    delete_sub_project,
+    update_sub_project,
 )
-from tralard.views.sub_project import (
-    SubProjectDetailView, 
-    SubProjectFundListAndCreateView, 
-    subproject_fund_delete, 
-    subproject_fund_detail, 
-    update_sub_project_fund
-)
-from tralard.views.training import (
-    TrainingListView,
-    training_fetch,
-    training_delete,
-    template_testing,
-)
+from tralard.views.map import MapTemplateView
+from tralard.views.program import ProgramDetailView
+from tralard.views.dashboard import HomeTemplateView
+from tralard.views.profile import user_profile_update
 
 app_name = "tralard"
 urlpatterns = [
@@ -192,15 +194,30 @@ urlpatterns = [
         name="training-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/fetch/",
-        training_fetch,
-        name="training-fetch",
+        "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/update/",
+        training_update,
+        name="training-update",
     ),
     # -------- SubProject --------
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
         SubProjectDetailView.as_view(),
         name="subproject-manage",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/list/",
+        SubProjectTrainingListView.as_view(),
+        name="subproject-training",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/delete/",
+        sub_project_training_delete,
+        name="subproject-training-delete",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/update/",
+        sub_project_training_update,
+        name="subproject-training-update",
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/",
@@ -229,8 +246,8 @@ urlpatterns = [
     ),
     # -------- user profile --------
     path(
-        "user/profile/update/<slug:slug>/",
-        ProfileUpdateView.as_view(),
+        "user/profile/update/",
+        user_profile_update,
         name="profile-update",
     ),
 ]

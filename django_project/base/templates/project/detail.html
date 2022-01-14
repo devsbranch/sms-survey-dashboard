@@ -353,9 +353,10 @@
                                                             <div class="timeline-item">
                                                                 <div class="item-body">
                                                                     <div class="item-body">
-                                                                        <div style="display: flex; justify-content: space-between;">  <a href="#">
-                                                                            <h3>{{ subproject.name }}</h3>
-                                                                            <a /> 
+                                                                        <div style="display: flex; justify-content: space-between;"> 
+                                                                            <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}">
+                                                                                <h3>{{ subproject.name }}</h3>
+                                                                            </a> 
                                                                         <div> <div
                                                                             class="
                                                                               dropdown

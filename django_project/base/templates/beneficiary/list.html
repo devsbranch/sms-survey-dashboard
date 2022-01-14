@@ -18,8 +18,8 @@
             <div class="contacts-title-wrapper">
                 <div class="profile-heading">
                     <div>
-                        <h2 class="project-title">{{ header }}</h2>
-                        <small class="project-tagline no-margin-bottom">{{ sub_header|safe }}</small>
+                        <h2 class="project-title">{{header}}</h2>
+                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <i>{{project.name|title|truncatechars:24}}</i> project.</small>
                     </div>
                     
                 </div>
@@ -40,7 +40,7 @@
                     class=" button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger " 
                     data-ripple-color="" 
                     href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
-                    <span>Go Back To {{ project_name }} Project </span>
+                    <span>Go Back To Sub-Project </span>
                     <i class="material-icons">send</i>
                 </a>
                 </div>

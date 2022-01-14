@@ -1,0 +1,25 @@
+<div id="training-update-modal" class="modal create-task-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="width: 50% !important;">
+        <div class="flex-card simple-shadow">
+            <div class="modal-hero m-2">
+                <h2 id="beneficiary-form-title" class="has-text-centered dark-text">Update Training Entry</h2>
+            </div>
+            <div class="navigation-tabs layout-tabs animated-tabs">
+
+                <div id="task-details" class="navtab-content is-active">
+                    <div class="card-body">
+                        <div class="content">
+                            <!-- New Project form -->
+                            <span id="subproject-training-entry-form">
+                                {% csrf_token %}
+                            <span>
+                            <!-- /New Project form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');">ddd</button>
+</div>

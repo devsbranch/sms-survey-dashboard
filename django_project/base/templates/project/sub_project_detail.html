@@ -89,7 +89,7 @@
                 <a
                   class="button btn-dash primary-btn btn-dash raised has-icon"
                   data-ripple-color=""
-                  href="#"
+                  href="{% url 'tralard:subproject-training' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
                 >
                   <i class="material-icons">short_text</i>
                   Training
@@ -242,7 +242,7 @@
                           <div class="info-block">
                             <div class="info-label">Focus Area</div>
                             <div class="info-content is-notes">
-                              {{ sub_project.focus_area }}
+                              {{ sub_project.focus_area|safe }}
                             </div>
                             <!-- Switch -->
                             <div class="field is-prospect">

@@ -1,6 +1,6 @@
 from django.urls import reverse_lazy
 from django.shortcuts import (
-    redirect, 
+    redirect,
     get_object_or_404,
 )
 from django.views.generic import (
@@ -15,29 +15,24 @@ from tralard.forms.profile import ProfileForm
 from tralard.utils import user_profile_update_form_validator
 
 
-class ProfileUpdateView(LoginRequiredMixin, UpdateView):
-    model = Profile
-    form_class = ProfileForm
-    template_name = 'index.html'
-    
-    def form_valid(self, form):
+# @login_required(login_url="/login/")
+# def user_profile_update(request):
+#     from django.http import JsonResponse
+#     if request.method == 'POST':
+#         obj=MyObj.objects.get(pk=furtherData_id)
+#         obj.data=request.POST['furtherData']
+#         obj.save()
+#         return JsonResponse({'result':'ok'})
+#     else:
+#         return JsonResponse({'result':'nok'}
+
+
+@login_required(login_url="/login/")
+def user_profile_update(request, project_slug, program_slug):
+    form = ProfileForm()
+    training = Profile.objects.get(user=request.user)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=training)
         if form.is_valid():
             form.save()
-            program_slug = self.request.kwargs.get("program_slug", None)
-            project_slug = self.request.kwargs.get("project_slug", None)
-            if program_slug and project_slug:
-                return redirect(reverse_lazy(
-                    "tralard:project-detail", kwargs={
-                        "program_slug": program_slug,
-                        "project_slug": project_slug,
-                    }
-                ))
-            elif program_slug:
-                return redirect(reverse_lazy(
-                    "tralard:program-detail",  kwargs={
-                        "program_slug": program_slug
-                    }
-                ))
-            return redirect(reverse_lazy(
-                "tralard:home"
-            ))
+            return redirect(reverse_lazy("tralard:home"))

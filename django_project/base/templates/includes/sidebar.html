@@ -35,10 +35,9 @@
         <a class="profile-trigger" href="javascript:void(0);">
           {% if request.user.profile.profile_photo %}
           <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" id="user-profile-page-opener-button" class="profile-photo"
-            alt="">
+          alt="">
           {% else %}
-          <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="/assets/images/logos/logo.png" class="profile-photo" data-demo-src="/assets/images/logos/logo.png"
-            alt="">
+            <img src="/static/assets/images/logos/logo.png" alt="Default profile photo">
           {% endif %}
           <span class="dot"></span>
         </a>
@@ -78,13 +77,12 @@
                         <div class="avatar-overlay">
                           <i class="fa fa-camera fa-2x"></i>
                         </div>
-                        {% if profile.profile_photo %}
+                        {% if request.user.profile.profile_photo %}
                         <img src="{{ profile.profile_photo.url }}" class="profile-photo"
-                          alt="{{ profile.user.username }}'s profile photo" />
+                          alt="{{ request.user.username }}'s profile photo" />
                         {% else %}
                         <img src="/assets/images/logos/logo.png" class="profile-photo"
-                          data-demo-src="/assets/images/logos/logo.png"
-                          alt="{{ profile.user.username }}'s profile photo" />
+                          alt="{{ request.user.username }}'s profile photo" />
                         {% endif %}
                       </div>
                       <div class="name">
@@ -156,8 +154,7 @@
                               <div class="meta">
                                 <label>Full name</label>
                                 <p>
-                                  {{ request.user.profile.user.first_name|title }} 
-                                  {{ request.user.profile.user.last_name|title }}
+                                    {{ request.user.profile.user.first_name|title }} {{ profile.user.last_name|title }}
                                 </p>
                               </div>
                             </div>
@@ -548,10 +545,11 @@
                     <div class="profile-notifications-inner animated preFadeInUp fadeInUp">
                       <div class="profile-notifications-title" style="width: 100%;">
                         {% if profile_form %}
-                        <form name="user_profile_form" method="post"
-                          action="{% url 'tralard:profile-update' profile.slug %}">
-                          {% crispy profile_form profile_form.helper %}
-                        </form>
+                            <form name="user_profile_form" method="post"
+                              action="{% url 'tralard:profile-update' %}">
+                              {% crispy profile_form profile_form.helper %}
+                            </form>
+
                         {% else %}
                         {% endif %}
                         <script>

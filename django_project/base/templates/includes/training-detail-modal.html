@@ -1,27 +1,27 @@
+{% load static %}
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <div class="projects-list-wrapper">
 <div class="list-body" >
 <div class="w3-container">
 <div id="detail_modal" class="w3-modal">
-    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width: 80%; margin-top: -4em; height: 95%; background: #f4f6fb;">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style="width: 80%; margin-top: -4em; height: 104%; background: #f4f6fb;">
     <span onclick="document.getElementById('detail_modal').style.display='none'" 
     class="w3-button w3-xlarge w3-display-topright">&times;</span>
-    {% load static %}
         <!-- Main Training container -->
         <div id="dashboard-wrapper" class="dashboard-outer">
             <div class="dashboard-inner">
                 <!-- Dashboard Wrapper -->
                 <div class="dashboard-wrapper">
-        
                     <div id="main-dashboard" class="section-wrapper">
                         <!-- Dashboard content -->
                         <div id="basic-layout" class="dashboard-columns">
-        
                             <div class="contact-profile-wrap">
-        
                                 <!-- Page title -->
                                 <div class="contacts-title-wrapper">
-                                    <h3 class="contacts-title">Livestock Training Details</h3>
+                                    <span id="form-form1"></span>
+                                    <div id="form-form2">
+                                </div>
+                                <h3 class="contacts-title">Training Details</h3>
                                 </div>
                                 <div class="columns contact-profile">
                                     <!-- Avatar Card -->
@@ -49,14 +49,7 @@
                                                         </div>
                                                         <div class="column is-6">
                                                             <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Email
-                                                                </div>
-                                                                <div class="info-content is-email">
-                                                                    <span id="email-address">?</span>
-                                                                </div>
-                                                            </div>
+                                                            
                                                             <div class="info-block">
                                                                 <div class="info-label">
                                                                     Cell
@@ -116,7 +109,16 @@
                                                                     <span id="training-moderator-2">?</span>
                                                                 </div>
                                                             </div>
+                                                            <div class="info-block">
+                                                                <div class="info-label">
+                                                                    Email
+                                                                </div>
+                                                                <div class="info-content is-email">
+                                                                    <span style="color: gray;" id="email-address">?</span>
+                                                                </div>
+                                                            </div>
                                                         </div>
+
                                                         <div class="column is-6">
                                                             <!-- Contact summary -->
                                                             <div class="info-block">
@@ -297,6 +299,7 @@
     </div>
 </div>
 </div>
+
 <script>
 document.getElementsByClassName("tablink")[0].click();
 

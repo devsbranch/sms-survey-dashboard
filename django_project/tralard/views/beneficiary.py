@@ -57,20 +57,23 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         response = super().form_invalid(form)
         for field in form:
             for error in field.errors:
-                messages.error(self.request, error)        
+                messages.error(self.request, error)
         return response
 
     def form_valid(self, form):
         form.save()
 
         messages.success(self.request, "The Beneficiary was created successfully.")
-        return redirect(reverse_lazy(
-            "tralard:subproject-beneficiary", kwargs={
-                "program_slug": form.instance.sub_project.project.program.slug,
-                "project_slug": form.instance.sub_project.project.slug,
-                "subproject_slug": form.instance.sub_project.slug
-            }
-        ))
+        return redirect(
+            reverse_lazy(
+                "tralard:subproject-beneficiary",
+                kwargs={
+                    "program_slug": form.instance.sub_project.project.program.slug,
+                    "project_slug": form.instance.sub_project.project.slug,
+                    "subproject_slug": form.instance.sub_project.slug,
+                },
+            )
+        )
 
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryOrgListView, self).get_context_data(**kwargs)
@@ -88,10 +91,10 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         organizations = paginator.page(page)
 
         try:
-            sub_header = f"Showing all Beneficiaries under the <b>{project.name}</b> project."
+            sub_header = f"Showing all Beneficiaries under the <b>{project.name[:24]}</b> project."
         except IndexError:
             sub_header = "There are currently no Beneficiaries under this Project."
-        
+
         context["header"] = "Beneficiaries"
         context["project"] = project
         context["beneficiaries"] = organizations

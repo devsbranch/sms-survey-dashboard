@@ -16,7 +16,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http.response import JsonResponse
 from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.views.generic import (
     ListView,
@@ -27,6 +27,7 @@ from django.views.generic import (
 )
 from django.contrib import messages
 from django.http import HttpResponseRedirect, Http404
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.db.models import Q
 from django.core.exceptions import ValidationError
@@ -42,15 +43,14 @@ from braces.views import LoginRequiredMixin
 from tralard.models.project import Project
 from tralard.forms.sub_project import SubProjectForm
 from tralard.models.sub_project import SubProject, Indicator
+from tralard.models.training import Training
+from tralard.forms.training import TrainingForm
 from tralard.models.fund import Disbursement, Expenditure, Fund
 from tralard.forms.fund import FundForm, DisbursementForm
 
 from tralard.utils import user_profile_update_form_validator
-
-from tralard.utils import user_profile_update_form_validator
 from tralard.models import Beneficiary, Project, Program, Ward, SubProject
 from tralard.forms import BeneficiaryCreateForm
-from tralard.utils import user_profile_update_form_validator
 
 logger = logging.getLogger(__name__)
 
@@ -150,6 +150,139 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
         project = get_object_or_404(Project, slug=project_slug)
         qs = SubProject.objects.all().filter(project=project)
         return qs
+
+
+class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
+    model = Training
+    form_class = TrainingForm
+    template_name = "project/sub-project-training-list.html"
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "tralard:subproject-training",
+            kwargs={
+                "program_slug": self.kwargs.get("program_slug", None),
+                "project_slug": self.kwargs.get("project_slug", None),
+                "subproject_slug": self.kwargs.get("subproject_slug", None),
+            },
+        )
+
+    def get_context_data(self):
+        context = super(SubProjectTrainingListView, self).get_context_data()
+        self.user_profile_utils = user_profile_update_form_validator(
+            self.request.POST, self.request.user
+        )
+        self.subproject_slug = self.kwargs.get("subproject_slug", None)
+        self.sub_project_training_list = []
+        self.sub_project_trainings = (
+            Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
+        )
+        context["title"] = "Sub Project Trainings"
+        context["user_roles"] = self.user_profile_utils[0]
+        context["profile"] = self.user_profile_utils[1]
+        context["profile_form"] = self.user_profile_utils[2]
+        context["program_slug"] = self.kwargs.get("program_slug", None)
+        context["project_slug"] = self.kwargs.get("project_slug", None)
+        context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
+        context["total_beneficiaries"] = Beneficiary.objects.all().count()
+        for training in self.sub_project_trainings:
+            self.sub_project_training_list.append(
+                {
+                    "id": training.id,
+                    "slug": training.slug,
+                    "sub_project": training.sub_project,
+                    "title": training.title,
+                    "training_type": training.training_type,
+                    "start_date": training.start_date,
+                    "end_date": training.end_date,
+                    "notes": training.notes,
+                    "moderator": training.moderator,
+                    "completed": training.completed,
+                    "training_edit_form": TrainingForm(
+                        self.request.POST or None, instance=training
+                    ),
+                }
+            )
+        self.training_paginator = Paginator(self.sub_project_training_list, 10)
+        self.training_page_number = self.request.GET.get("training_page")
+        self.training_paginator_list = self.training_paginator.get_page(
+            self.training_page_number
+        )
+        context["trainings"] = self.training_paginator_list
+        return context
+
+
+class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
+    model = Training
+    form_class = TrainingForm
+    template_name = "includes/sub-project-training-update-modal.html"
+
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            program_slug = self.request.kwargs.get("program_slug", None)
+            project_slug = self.request.kwargs.get("project_slug", None)
+            subproject_slug = self.request.kwargs.get("subproject_slug", None)
+
+            return redirect(
+                reverse_lazy(
+                    "tralard:subproject-training",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": subproject_slug,
+                    },
+                )
+            )
+
+
+@login_required(login_url="/login/")
+def sub_project_training_update(
+    request, program_slug, project_slug, subproject_slug, training_entry_slug
+):
+    form = TrainingForm()
+    training = Training.objects.get(slug=training_entry_slug)
+    if request.method == "POST":
+        form = TrainingForm(request.POST, instance=training)
+        if form.is_valid():
+            form.save()
+            return redirect(
+                reverse_lazy(
+                    "tralard:subproject-training",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": subproject_slug,
+                    },
+                )
+            )
+        return redirect(
+            reverse_lazy(
+                "tralard:subproject-training",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug,
+                },
+            )
+        )
+
+
+@login_required(login_url="/login/")
+def sub_project_training_delete(
+    request, program_slug, project_slug, subproject_slug, training_entry_slug
+):
+    training = Training.objects.get(slug=training_entry_slug)
+    training.delete()
+    return redirect(
+        reverse_lazy(
+            "tralard:subproject-training",
+            kwargs={
+                "program_slug": program_slug,
+                "project_slug": project_slug,
+                "subproject_slug": subproject_slug,
+            },
+        )
+    )
 
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):

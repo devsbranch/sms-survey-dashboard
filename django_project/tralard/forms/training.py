@@ -14,17 +14,25 @@ from crispy_forms.bootstrap import FormActions
 
 from tralard.models.training import Training
 
+TRAINING_COMPLELTE_CHOICES = [
+    ('Yes', 'Yes'), 
+    ('No', 'No'), 
+    ('Unkown', 'Unkown'),
+]
 class TrainingForm(ModelForm):
     
-    custom_completed = forms.BooleanField(label="completed", initial=False)
-    
+    custom_completed = forms.ChoiceField(
+        label="completed",
+        choices=TRAINING_COMPLELTE_CHOICES,
+    )
+   
     class Meta:
 
         model = Training
-        exclude = ["id", "completed"]
+        exclude = ["id", "slug", "user", "completed"]
         widgets = {
-            'start_date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
-            'end_date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
+            'start_date': widgets.DateTimeInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
+            'end_date': widgets.DateTimeInput(format=('%m/%d/%Y'), attrs={'class':'form-control', 'type':'date'}),
             'notes': forms.TextInput(attrs={'size': 500, 'title': 'Training Scheddule Notes',  'required': False}),
         }
 
@@ -41,20 +49,22 @@ class TrainingForm(ModelForm):
                 Column("start_date", css_class="form-group col-md-12 mb-0"),
                 Column("end_date", css_class="form-group col-md-12 mb-0"),
                 Column("moderator", css_class="form-group col-md-12 mb-0"),
-                Column("completed", css_class="form-group col-md-12 mb-0"),
                 Column("custom_completed", css_class="form-group col-md-12 mb-0"),
                 Column("notes", css_class="form-group col-lg-12"),
                 css_class="form-row",
             ),
             FormActions(
-                Submit("save", "Create a Training Schedule"),
-                HTML("<a class='btn btn-danger' href='{% url 'tralard:training-list' project.program.slug project.slug %}'>Cancel</a>"),
+                Submit("submit", "Submit Details"),
+                HTML("<a class='btn btn-danger' href=''>Cancel</a>"),
             ),
         )
         
     def save(self, commit=True):
         instance = super(TrainingForm, self).save(commit=False)
         custom_completed = self.cleaned_data["custom_completed"]
-        instance.completed = custom_completed
+        
+        if custom_completed.title() == "Yes":
+            instance.completed = True
+
         instance.save()
         return instance
