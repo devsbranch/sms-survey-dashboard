@@ -192,11 +192,13 @@
                     <div class="drop-wrapper accounts-drop">
                         <div class="drop-inner has-arrow">
                             <div class="head-block">
+                                
                                 {% if request.user.profile.profile_photo %}
-                                     <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo" alt="">
-                                  % else %}
-                                      <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt=""/>
-                                   {% endif %}
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ request.user.profile.profile_photo.url }}">
+                                {% else %} 
+                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="/assets/images/logos/logo.png">
+                                {% endif %}
+                                
                                 <h3>
                                     {{ request.user.username }}
                                 </h3>
