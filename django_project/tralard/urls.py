@@ -23,6 +23,7 @@ from tralard.views.program import ProgramDetailView
 from tralard.views.sub_project import (
     SubProjectDetailView,
     SubProjectBeneficiaryOrgListView,
+    subproject_fund_disbursement_create,
 )
 from tralard.views.project import (
     ProjectDetailView,
@@ -220,6 +221,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/delete/",
         subproject_fund_delete,
         name="subproject-fund-delete",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/",
+        subproject_fund_disbursement_create,
+        name="subproject-fund-disbursement-create",
     ),
     # -------- user profile --------
     path(

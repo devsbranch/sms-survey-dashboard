@@ -23,8 +23,10 @@
           <div class="contacts-title-wrapper">
             <div class="title-wrap">
               <h2 class="project-title">SubProject Funds</h2>
-              <h4 class="project-tagline">showing all funds under the <b>{{ sub_project.name|title }}</b> subproject.</h4>
-          </div>
+              <h4 class="project-tagline">
+                showing all <b>{{ sub_project.name|title }}</b> funds.
+              </h4>
+            </div>
             <!-- Filter input -->
             <div class="list-filter">
               <div class="control is-hidden-phones">
@@ -53,11 +55,14 @@
             <!-- Contacts table -->
             <table class="table contacts-table">
               <!-- Table header -->
-              <div data-title="Add new training" class="add-button modal-trigger"
+              <div
+                data-title="Add new training"
+                class="add-button modal-trigger"
                 id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal"> 
+                data-modal="create-project-modal"
+              >
                 <i class="material-icons">add</i>
-            </div>
+              </div>
               <thead>
                 <tr>
                   <th>
@@ -249,11 +254,16 @@
                             </span>
                           </a>
                           <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item">
-                            <i class="sl sl-icon-bell"></i>
+                          <a
+                            href="#"
+                            class="dropdown-item modal-trigger"
+                            data-modal="add-fund-disbursement-modal"
+                            onclick="add_disbursement_form_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
+                          >
+                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
                             <span>
-                              <span>Notifications</span>
-                              <span>Manage contact notifications</span>
+                              <span>Add Disbursement</span>
+                              <span>Add Fund Disbursement</span>
                             </span>
                           </a>
                           <div class="dropdown-divider"></div>
@@ -343,6 +353,37 @@
     class="modal-close is-large is-hidden"
     aria-label="close"
   ></button>
+</div>
+<!-- create fund disbursement modal -->
+<div
+  id="add-fund-disbursement-modal"
+  class="modal add-fund-disbursement-modal modal-hero bs-example-modal-sm"
+>
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <h2 class="has-text-centered dark-text" id="fund_disbursement_form">
+        Create Fund Disbursement
+      </h2>
+      <div class="navigation-tabs layout-tabs animated-tabs">
+        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
+        <div id="project-details" class="navtab-content is-active">
+          <div class="card-body">
+            <div class="content">
+              <!-- New Project Fund form -->
+              <form action="" method="post" id="fund_disbursement_form_inputs">
+                {% csrf_token %}
+                <!--  -->
+                {% crispy disbursement_form disbursement_form.helper %}
+              </form>
+              <!-- /New Project Fund form -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
 
 <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
@@ -470,7 +511,9 @@
           document.querySelector(
             "#subproject_disbursements_list"
           ).innerHTML += `
-            <div class='disbursement-card deal-card' id="${data.fund.slug}">
+            <div class='disbursement-card deal-card ${
+              data.disbursements[disbursement].slug
+            }' id="${data.disbursements[disbursement]?.slug}">
               <div class='disbursement-card-header deal-card-header is-toggle'>
                 <p>Disbursement Amount:${
                   data.disbursements[disbursement].currency
@@ -509,8 +552,9 @@
             .then(({ expenditures }) => {
               console.log(expenditures);
               for (expenditure in expenditures) {
+                console.log(expenditures[expenditure]);
                 document.querySelector(
-                  `.disbursement-card.deal-card`
+                  `#${expenditures[expenditure]?.disbursement_slug}`
                 ).innerHTML += `
                 <div class="disbursement-card-content deal-card-content">
                   <div class="details-placeholder d-flex justify-content-between ">
@@ -606,6 +650,22 @@
         `<h3>Are you sure you want to delete this Sub Project Fund?</h3>`
       );
       $("#delete-subproject-fund-form").attr("action", url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const add_disbursement_form_action = (
+    program_slug,
+    project_slug,
+    subproject_slug,
+    fund_slug
+  ) => {
+    try {
+      let url = `${location.origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/manage/fund/${fund_slug}/disbursement/`;
+      document
+        .querySelector("#fund_disbursement_form_inputs")
+        .setAttribute("action", url);
     } catch (error) {
       console.log(error);
     }
