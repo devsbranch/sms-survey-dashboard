@@ -3,7 +3,7 @@
         "model": "tralard.fund",
         "pk": 1,
         "fields": {
-            "amount": 250000,
+            "amount": 250400.634,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 2,
@@ -15,7 +15,7 @@
         "model": "tralard.fund",
         "pk": 2,
         "fields": {
-            "amount": 100000,
+            "amount": 8500000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 3,
@@ -27,7 +27,7 @@
         "model": "tralard.fund",
         "pk": 3,
         "fields": {
-            "amount": 350000,
+            "amount": 750000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 4,
@@ -39,7 +39,7 @@
         "model": "tralard.fund",
         "pk": 4,
         "fields": {
-            "amount": 150000,
+            "amount": 1508400.4,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 5,
@@ -51,7 +51,7 @@
         "model": "tralard.fund",
         "pk": 5,
         "fields": {
-            "amount": 200000,
+            "amount": 20600000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 6,
@@ -63,7 +63,7 @@
         "model": "tralard.fund",
         "pk": 6,
         "fields": {
-            "amount": 170000,
+            "amount": 1700000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 7,
@@ -75,7 +75,7 @@
         "model": "tralard.fund",
         "pk": 7,
         "fields": {
-            "amount": 500000,
+            "amount": 509000.40,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 11,
@@ -87,7 +87,7 @@
         "model": "tralard.fund",
         "pk": 8,
         "fields": {
-            "amount": 450000,
+            "amount": 45000000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 14,
@@ -99,7 +99,7 @@
         "model": "tralard.fund",
         "pk": 9,
         "fields": {
-            "amount": 150000,
+            "amount": 1005000.5,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 8,
@@ -111,7 +111,7 @@
         "model": "tralard.fund",
         "pk": 10,
         "fields": {
-            "amount": 365000,
+            "amount": 36005000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 9,
@@ -123,7 +123,7 @@
         "model": "tralard.fund",
         "pk": 11,
         "fields": {
-            "amount": 160000,
+            "amount": 700460000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 1,
@@ -135,7 +135,7 @@
         "model": "tralard.fund",
         "pk": 12,
         "fields": {
-            "amount": 260000,
+            "amount": 2060600.51,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 12,
@@ -147,7 +147,7 @@
         "model": "tralard.fund",
         "pk": 13,
         "fields": {
-            "amount": 250000,
+            "amount": 2530090.80,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 13,
@@ -159,7 +159,7 @@
         "model": "tralard.fund",
         "pk": 14,
         "fields": {
-            "amount": 160000,
+            "amount": 160506.20,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 14,
@@ -171,7 +171,7 @@
         "model": "tralard.fund",
         "pk": 15,
         "fields": {
-            "amount": 190000,
+            "amount": 190303.56,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 15,
@@ -183,7 +183,7 @@
         "model": "tralard.fund",
         "pk": 16,
         "fields": {
-            "amount": 235000,
+            "amount": 2305000,
             "amount_currency": "ZMK",
             "approved": true,
             "sub_project": 16,
