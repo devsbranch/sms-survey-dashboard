@@ -84,7 +84,13 @@ update-migrations:
 	@echo "Running update migrations in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
-	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
+	
+dev-data:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Running load fixture data in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py load_initial_data
 
 collectstatic:
 	@echo
@@ -155,6 +161,13 @@ shell:
 	@echo "Shelling in in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) run uwsgi /bin/bash
+
+django-shell:
+	@echo
+	@echo "------------------------------------------------------------------"
+	@echo "Starting Django shell in production mode"
+	@echo "------------------------------------------------------------------"
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py shell
 
 superuser:
 	@echo

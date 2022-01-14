@@ -1,0 +1,26 @@
+[
+    {
+        "model": "tralard.program",
+        "pk": 1,
+        "fields": {
+            "name": "TRALARD",
+            "approved": true,
+            "started": "2022-01-13",
+            "program_representative": 1,
+            "description": "The TRALARD program",
+            "slug": "tralard"
+        }
+    },
+    {
+        "model": "tralard.program",
+        "pk": 2,
+        "fields": {
+            "name": "PPCR",
+            "approved": true,
+            "started": "2022-01-12",
+            "program_representative": 2,
+            "description": "THe PPCR Program",
+            "slug": "ppcr"
+        }
+    }
+]

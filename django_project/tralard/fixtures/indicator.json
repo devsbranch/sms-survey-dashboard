@@ -1,0 +1,34 @@
+[
+    {
+        "model": "tralard.Indicator",
+        "pk": 1,
+        "fields": {
+            "name": "Land area under sustainable landscape management practices. ",
+            "slug": "land-area-under-sustainable-landscape-management-practices"
+        }
+    },
+    {
+        "model": "tralard.Indicator",
+        "pk": 2,
+        "fields": {
+            "name": "Farmers adopting improved agricultural technology ",
+            "slug": "farmers-adopting-improved-agricultural-technology"
+        }
+    },
+    {
+        "model": "tralard.Indicator",
+        "pk": 3,
+        "fields": {
+            "name": "Forest area brought under management plans ",
+            "slug": "forest-area-brought-under-management-plans"
+        }
+    },
+    {
+        "model": "tralard.Indicator",
+        "pk": 4,
+        "fields": {
+            "name": "Farmers reached with agricultural assets or services",
+            "slug": "farmers-reached-with-agricultural-assets-or-services"
+        }
+    }
+]

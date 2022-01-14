@@ -1,0 +1,155 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "first_name": "Veronica",
+            "last_name": "Gallardo",
+            "email": "veronica.gallardo@example.com",
+            "username": "happymeercat776",
+            "password": "pbkdf2_sha256$150000$u0qepNgsrNoY$iNEwZlMlYt55MVabpTUimzLdOLXpKQCkWZlE5u+bdoE=",
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "first_name": "Onal",
+            "last_name": "Kececi",
+            "email": "onal.kececi@example.com",
+            "username": "organicswan587",
+            "password": "pbkdf2_sha256$150000$cGNAhuE4IZoz$0Z4g5v87rtU1+xJKnRY8mYgu5BVPkFu4VwJvldWxqsM=",
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 3,
+        "fields": {
+            "first_name": "Ben",
+            "last_name": "Henry",
+            "email": "ben.henry@example.com",
+            "username": "smallgoose292",
+            "password": "pbkdf2_sha256$150000$jPYB7NqP2EuQ$+sKort0JOHQtypAjqlmH3jMouP+EyjKigwKoQZ9M5CE=",
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 4,
+        "fields": {
+            "first_name": "Katrine",
+            "last_name": "Johansen",
+            "email": "katrine.johansen@example.com",
+            "username": "lazypanda680",
+            "password": "pbkdf2_sha256$150000$wOVsdo26jR1w$TwDj2rXXeaVxh0h/uNdbA2URqgftbfb4gKGP4676sUo=",
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 5,
+        "fields": {
+            "first_name": "Carter",
+            "last_name": "Martinez",
+            "email": "carter.martinez@example.com",
+            "username": "orangezebra617",
+            "password": "pbkdf2_sha256$150000$qTUD8NzsvyU3$1WgMPfXL062wBBZ8TjMtVbgQe5tiLbokPf9waiU6zNA=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 6,
+        "fields": {
+            "first_name": "Sophia",
+            "last_name": "Nesheim",
+            "email": "sophia.nesheim@example.com",
+            "username": "sadmeercat867",
+            "password": "pbkdf2_sha256$150000$jm1ngIl8QlSc$mo1DBZNwrBIRggYr8czlpbBL3pmshhWzYue0L8Olu4c=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 7,
+        "fields": {
+            "first_name": "Rosina",
+            "last_name": "Michel",
+            "email": "rosina.michel@example.com",
+            "username": "ticklishladybug182",
+            "password": "pbkdf2_sha256$150000$W6588Dk9GfLz$06CVOoQY6IQlpR3LetCFbmcjjAHEq8+ZP0OdxDHMobc=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 8,
+        "fields": {
+            "first_name": "Josef",
+            "last_name": "Chapman",
+            "email": "josef.chapman@example.com",
+            "username": "whitebird167",
+            "password": "pbkdf2_sha256$150000$qel5UTrQ3rZZ$GtCGGo+HnpnayrKcbfvmbY8A9F6X+3w5ctc6Rl7u43w=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 9,
+        "fields": {
+            "first_name": "Lola",
+            "last_name": "Petit",
+            "email": "lola.petit@example.com",
+            "username": "yellowduck525",
+            "password": "bkdf2_sha256$150000$hNIR1i3Cuiew$1tcb80upCq2G37GpvFQQPzw2lDnTIdfm4aAtZa97Ohs=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 10,
+        "fields": {
+            "first_name": "Rene",
+            "last_name": "Black",
+            "email": "rene.black@example.com",
+            "username": "happygorilla432",
+            "password": "pbkdf2_sha256$150000$OoZ1YDZDGVkb$q6uPZZP0uZMxWzArsx5SDSxsYEk1e7U2qu2Yz9gwkGY=",
+            "is_staff": false,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "username": "ppcr",
+            "password": "pbkdf2_sha256$150000$NiaHGD0p5WZg$YQF9rgkeK8hcYQ3ufCb2MzbC8srCw6i894CKNDLfhKg=",
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true
+        }
+    },
+    {
+        "model": "auth.user",
+        "pk": 2,
+        "fields": {
+            "username": "digipro",
+            "password": "pbkdf2_sha256$150000$oauu7H8O7AH6$YwyH2Gv+7PHQU6vqg+ISUmNM9kUHbco9e2XmSKUcBgU=",
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true
+        }
+
+    }
+]

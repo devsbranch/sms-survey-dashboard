@@ -61,9 +61,14 @@
                       }else{
                         document.getElementById("email-address").innerHTML = "None";
                       }
-                      if("{{ training.sub_project.project.image_file.url }}"){
-                        document.getElementById("project-image").src = "{{ training.sub_project.project.image_file.url }}";
-                      }
+
+                      {% if training.sub_project.project.image_file %}
+
+                        if("{{ training.sub_project.project.image_file.url }}"){
+                          document.getElementById("project-image").src = "{{ training.sub_project.project.image_file.url }}";
+                        }
+
+                      {% endif %}
 
                       var boolean = document.getElementById("boolean");
                       if("{{ training.completed }}" == "True"){

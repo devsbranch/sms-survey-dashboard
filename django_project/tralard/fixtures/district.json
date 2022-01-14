@@ -1,0 +1,782 @@
+[
+    {
+        "model": "tralard.district",
+        "pk": 1,
+        "fields": {
+            "name": "Chinsali",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "chinsali"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 2,
+        "fields": {
+            "name": "Isoka",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "isoka"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 3,
+        "fields": {
+            "name": "Chirundu",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "chirundu"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 4,
+        "fields": {
+            "name": "Choma",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "choma"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 5,
+        "fields": {
+            "name": "Chisamba",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "chisamba"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 6,
+        "fields": {
+            "name": "Kabompo",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "kabompo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 7,
+        "fields": {
+            "name": "Chinyingi",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "chinyingi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 8,
+        "fields": {
+            "name": "Gwembe",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "gwembe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 9,
+        "fields": {
+            "name": "Chilanga",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "chilanga"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 10,
+        "fields": {
+            "name": "Kafulwe",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "kafulwe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 11,
+        "fields": {
+            "name": "Kalabo",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "kalabo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 12,
+        "fields": {
+            "name": "Kalene Hill",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "kalene-hill"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 13,
+        "fields": {
+            "name": "Kalomo",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "kalomo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 14,
+        "fields": {
+            "name": "Kalulushi",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "kalulushi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 15,
+        "fields": {
+            "name": "Kanyembo",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "kanyembo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 16,
+        "fields": {
+            "name": "Kaoma",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "kaoma"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 17,
+        "fields": {
+            "name": "Kapiri Mposhi",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "kapiri-mposhi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 18,
+        "fields": {
+            "name": "Kasempa",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "kasempa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 19,
+        "fields": {
+            "name": "Kashikishi",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "kashikishi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 20,
+        "fields": {
+            "name": "Kataba",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "kataba"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 21,
+        "fields": {
+            "name": "Katete",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "katete"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 22,
+        "fields": {
+            "name": "Kawambwa",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "kawambwa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 23,
+        "fields": {
+            "name": "Kazembe (Mwansabombwe)",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "kazembe-mwansabombwe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 24,
+        "fields": {
+            "name": "Kazungula",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "kazungula"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 25,
+        "fields": {
+            "name": "Kibombomene",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "kibombomene"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 26,
+        "fields": {
+            "name": "Luangwa",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "luangwa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 27,
+        "fields": {
+            "name": "Lufwanyama",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "lufwanyama"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 28,
+        "fields": {
+            "name": "Lukulu",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "lukulu"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 29,
+        "fields": {
+            "name": "Lundazi",
+            "province": 18,
+            "created": "2021-01-13",
+            "slug": "lundazi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 30,
+        "fields": {
+            "name": "Macha Mission",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "macha-mission"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 31,
+        "fields": {
+            "name": "Makeni",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "makeni"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 32,
+        "fields": {
+            "name": "Maliti",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "maliti"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 33,
+        "fields": {
+            "name": "Chiengi",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "chiengi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 34,
+        "fields": {
+            "name": "Chibombo",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "chibombo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 35,
+        "fields": {
+            "name": "Chembe",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "chembe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 36,
+        "fields": {
+            "name": "Chavuma",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "chavuma"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 37,
+        "fields": {
+            "name": "Chambeshi",
+            "province": 23,
+            "created": "2021-01-13",
+            "slug": "chambeshi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 38,
+        "fields": {
+            "name": "Chama",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "chama"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 39,
+        "fields": {
+            "name": "Chadiza",
+            "province": 18,
+            "created": "2021-01-13",
+            "slug": "chadiza"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 40,
+        "fields": {
+            "name": "Mansa",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "mansa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 41,
+        "fields": {
+            "name": "Mazabuka",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "mazabuka"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 42,
+        "fields": {
+            "name": "Mbala",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "mbala"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 43,
+        "fields": {
+            "name": "Mfuwe",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "mfuwe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 44,
+        "fields": {
+            "name": "Milenge",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "milenge"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 45,
+        "fields": {
+            "name": "Misisi",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "misisi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 46,
+        "fields": {
+            "name": "Mkushi",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "mkushi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 47,
+        "fields": {
+            "name": "Mongu",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "mongu"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 48,
+        "fields": {
+            "name": "Monze",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "monze"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 49,
+        "fields": {
+            "name": "Mpika",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "mpika"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 50,
+        "fields": {
+            "name": "Mporokoso",
+            "province": 16,
+            "created": "2021-01-13",
+            "slug": "mporokoso"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 51,
+        "fields": {
+            "name": "Mpulungu",
+            "province": 16,
+            "created": "2021-01-13",
+            "slug": "mpulungu"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 52,
+        "fields": {
+            "name": "Mumbwa",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "mumbwa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 53,
+        "fields": {
+            "name": "Muyombe",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "muyombe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 54,
+        "fields": {
+            "name": "Mwinilunga",
+            "province": 20,
+            "created": "2021-01-13",
+            "slug": "mwinilunga"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 55,
+        "fields": {
+            "name": "Nchelenge",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "nchelenge"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 56,
+        "fields": {
+            "name": "Ngoma",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "ngoma"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 57,
+        "fields": {
+            "name": "Nkana",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "nkana"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 58,
+        "fields": {
+            "name": "Nseluka",
+            "province": 16,
+            "created": "2021-01-13",
+            "slug": "nseluka"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 59,
+        "fields": {
+            "name": "Pemba",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "pemba"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 60,
+        "fields": {
+            "name": "Petauke",
+            "province": 18,
+            "created": "2021-01-13",
+            "slug": "petauke"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 61,
+        "fields": {
+            "name": "Samfya",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "samfya"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 62,
+        "fields": {
+            "name": "Senanga",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "senanga"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 63,
+        "fields": {
+            "name": "Serenje",
+            "province": 22,
+            "created": "2021-01-13",
+            "slug": "serenje"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 64,
+        "fields": {
+            "name": "Sesheke",
+            "province": 15,
+            "created": "2021-01-13",
+            "slug": "sesheke"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 65,
+        "fields": {
+            "name": "Shiwa Ngandu",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "shiwa-ngandu"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 66,
+        "fields": {
+            "name": "Siavonga",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "siavonga"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 67,
+        "fields": {
+            "name": "Sikalongo",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "sikalongo"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 68,
+        "fields": {
+            "name": "Sinazongwe",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "sinazongwe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 69,
+        "fields": {
+            "name": "Zambezi",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "zambezi"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 70,
+        "fields": {
+            "name": "Lusaka",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "lusaka"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 71,
+        "fields": {
+            "name": "Zimba",
+            "province": 1,
+            "created": "2021-01-13",
+            "slug": "zimba"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 72,
+        "fields": {
+            "name": "Ndola",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "ndola"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 73,
+        "fields": {
+            "name": "Livingstone",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "livingstone"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 71,
+        "fields": {
+            "name": "Kafue",
+            "province": 14,
+            "created": "2021-01-13",
+            "slug": "kafue"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 74,
+        "fields": {
+            "name": "Kitwe",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "kitwe"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 75,
+        "fields": {
+            "name": "Kawambwa",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "kawambwa"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 76,
+        "fields": {
+            "name": "Chifunabuli",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "chifunabuli"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 77,
+        "fields": {
+            "name": "Lunga",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "lunga"
+        }
+    }
+]

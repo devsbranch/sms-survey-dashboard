@@ -80,7 +80,7 @@ class Fund(models.Model):
         _("Balance"),
         max_digits=14,
         decimal_places=2,
-        default=0.0
+        default=Money(0.0, 'ZMK')
     )
     variation = MoneyField(
         _("Variation"),

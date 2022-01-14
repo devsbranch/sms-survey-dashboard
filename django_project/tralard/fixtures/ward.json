@@ -1,0 +1,212 @@
+[
+    {
+        "model": "tralard.Ward",
+        "pk": 1,
+        "fields": {
+            "name": "Mpika Cental",
+            "district": 49,
+            "created": "2021-01-13",
+            "slug": "mpika-cental"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 2,
+        "fields": {
+            "name": "Mukungule",
+            "district": 49,
+            "created": "2021-01-13",
+            "slug": "mukungule"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 3,
+        "fields": {
+            "name": "Muchinga",
+            "district": 49,
+            "created": "2021-01-13",
+            "slug": "muchinga"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 4,
+        "fields": {
+            "name": "Lavushimanda",
+            "district": 49,
+            "created": "2021-01-13",
+            "slug": "lavushimanda"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 5,
+        "fields": {
+            "name": "Isamba",
+            "district": 61,
+            "created": "2021-01-13",
+            "slug": "isamba"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 6,
+        "fields": {
+            "name": "Ntumbachushi",
+            "district": 76,
+            "created": "2021-01-13",
+            "slug": "ntumbachushi"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 7,
+        "fields": {
+            "name": "Ntenke",
+            "district": 76,
+            "created": "2021-01-13",
+            "slug": "ntenke"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 8,
+        "fields": {
+            "name": "Senga",
+            "district": 76,
+            "created": "2021-01-13",
+            "slug": "senga"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 9,
+        "fields": {
+            "name": "Kafumbo",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "kafumbo"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 10,
+        "fields": {
+            "name": "Chinkutila",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "chinkutila"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 11,
+        "fields": {
+            "name": "Kasongole",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "kasongole"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 12,
+        "fields": {
+            "name": "Mubansenshi",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "mubansenshi"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 13,
+        "fields": {
+            "name": "Masonde",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "masonde"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 14,
+        "fields": {
+            "name": "Kapamba",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "kapamba"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 15,
+        "fields": {
+            "name": "Mofwe",
+            "district": 55,
+            "created": "2021-01-13",
+            "slug": "mofwe"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 16,
+        "fields": {
+            "name": "Kasamba",
+            "district": 55,
+            "created": "2021-01-13",
+            "slug": "kasamba"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 17,
+        "fields": {
+            "name": "Mwatishi",
+            "district": 55,
+            "created": "2021-01-13",
+            "slug": "mwatishi"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 18,
+        "fields": {
+            "name": "Kabuta",
+            "district": 55,
+            "created": "2021-01-13",
+            "slug": "kabuta"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 19,
+        "fields": {
+            "name": "Nkutila Ward ",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "nkutila-ward"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 20,
+        "fields": {
+            "name": "Nsalushi Ward",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "nsalushi-ward"
+        }
+    },
+    {
+        "model": "tralard.Ward",
+        "pk": 21,
+        "fields": {
+            "name": "Lunga Ward",
+            "district": 77,
+            "created": "2021-01-13",
+            "slug": "lunga-ward"
+        }
+    }
+]
