@@ -54,14 +54,11 @@
                                     <li>
                                         <i class="sl sl-icon-heart red"></i>
                                         <div class="notification-content">
-                                            {% if request.user.profile.profile_photo %}
-                                            <img  src="{{ request.user.profile.profile_photo.url }}" data-demo-src="{{ request.user.profile.profile_photo.url }}"  class="profile-photo img-xs rounded-circle " alt=""/>
-                                        {% else %}
-                                            <img 
-                                            src="/assets/images/logos/logo.png" 
-                                            class="profile-photo " data-demo-src="/assets/images/logos/logo.png" 
-                                            alt="{{ request.user.profile.user.username }}'s default profile photo"/>
-                                        {% endif %}
+                                          {% if request.user.profile.profile_photo %}
+                                            <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo img-xs rounded-circle" alt="">
+                                          {% else %}
+                                            <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt="{{ request.user.profile.user.username }}'s default profile photo"/>
+                                           {% endif %}
                                             <div class="notification-text">
                                                 <div class="text">
                                                     <b>Henry</b> liked your <b>comment</b>.
@@ -195,13 +192,11 @@
                     <div class="drop-wrapper accounts-drop">
                         <div class="drop-inner has-arrow">
                             <div class="head-block">
-                                {% if self.request.user.profile.profile_photo %}
-                                    <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                                        data-demo-src="{{ request.user.profile.profile_photo.url }}">
-                                {% else %} 
-                                    <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                                    data-demo-src="/assets/images/logos/logo.png">
-                                {% endif %}
+                                {% if request.user.profile.profile_photo %}
+                                     <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo" alt="">
+                                  % else %}
+                                      <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt=""/>
+                                   {% endif %}
                                 <h3>
                                     {{ request.user.username }}
                                 </h3>
