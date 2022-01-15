@@ -34,18 +34,21 @@
                 alt=""
                 data-demo-src="{{ program.logo.url }}"
               />
+              {% elif not program.logo and program.name|lower == 'ppcr' %}
+                  <img
+                    src="https://via.placeholder.com/250x250"
+                    alt=""
+                    data-demo-src="{% static '/assets/images/ppcr.png' %}">
+              {% elif not program.logo and program.name|lower == 'tralard' %}
+                  <img
+                    src="https://via.placeholder.com/250x250"
+                    alt=""
+                    data-demo-src="{% static '/assets/images/tralard.png' %}">
               {% else %}
-              <!--  -->
-              {% if program.name|lower == 'ppcr' %}
-              <!--  -->
-              data-demo-src="{% static 'assets/images/ppcr.png' %}">
-              <!--  -->
-              {% elif program.name|lower == 'tralard' %}
-              <!--  -->
-              data-demo-src="{% static 'assets/images/tralard.png' %}">
-              <!--  -->
-              {% endif %}
-              <!--  -->
+                  <img
+                    src="https://via.placeholder.com/250x250"
+                    alt=""
+                    data-demo-src="{% static '/assets/images/logos/logo.png' %}">
               {% endif %}
               <div>
                 <h2 class="project-title">
@@ -204,7 +207,7 @@
                                   <img
                                     src="https://via.placeholder.com/250x250"
                                     alt=""
-                                    data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+                                    data-demo-src="{% static '/assets/images/logos/logo.png' %}"
                                   />
                                 {% endif %}
                               </div>
@@ -541,7 +544,7 @@
       <div class="card-body">
         <div class="has-text-centered">
           <div class="image">
-            <img src="{% static 'assets/images/icons/invitation.svg' %}" />
+            <img src="{% static '/assets/images/icons/invitation.svg' %}" />
           </div>
           <div class="help-text has-text-left">
             Send an invite link via email to add members to this team
@@ -671,7 +674,7 @@
               <img
                 src="https://via.placeholder.com/250x250"
                 alt=""
-                data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}"
+                data-demo-src="{% static '/assets/images/avatars/ray.jpg' %}"
               />
             </div>
             <div class="face">
