@@ -22,11 +22,12 @@
 </style>
 <div id="dashboard-wrapper" class="dashboard-outer">
     <div class="dashboard-inner">
+        
         <!-- Dashboard Wrapper -->
         <div class="dashboard-wrapper">
-            
-            <div style="scroll-behavior: smooth;" id="main-dashboard" class="section-wrapper">
                 <!-- Dashboard content -->
+            <div id="main-dashboard" class="section-wrapper">
+                
                 <div id="basic-layout" class="columns dashboard-columns">
                     
                     <div class="column is-9 is-hidden-mobile">
@@ -63,6 +64,7 @@
                                     </div>
                                     
                                 </div>
+                                
                                 <thead>
                                     <tr>
                                         <th>
@@ -71,7 +73,7 @@
                                                 <label for="checkbox-docs-all"></label>
                                             </div>
                                         </th>
-                                        <th class="w-30">
+                                        <th class="w-50">
                                             <!-- Filter dropdown Name-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
@@ -371,107 +373,104 @@
                                 </style>
                                 <tbody>
                                     <!-- Table row -->
-                                    {% for training in trainings %}
-                                    <tr>
-                                        <!-- Row Entry for Sub Project-->
-                                        <td>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-docs-10" class="styled" type="checkbox">
-                                                <label for="checkbox-docs-10"></label>
-                                            </div>
-                                        </td>
-                                        
-                                        <td class="members">
-                                            <span class="inner">
-                                                <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                    data-title="Training title"
-                                                    data-trigger="hover">
-                                                    {{ training.title }}
-                                                </span>
-                                            </span>
-                                        </td>
-
-                                            <!-- Row Entry for Project-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title="Training sub project"
-                                                        data-trigger="hover">
-                                                        {{ training.sub_project }}
-                                                    </span>
-                                                </span>
-                                            </td>
-
-                                            <!-- Row Entry for Members-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title="Training type"
-                                                        data-trigger="hover">
-                                                        {{ training.training_type }}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            
-                                            <!-- Row Entry for Registered-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title="Training start date"
-                                                        data-trigger="hover">
-                                                        {{ training.start_date }}
-                                                    </span>
-                                                </span>
-                                            </td>
-
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title="Training end date"
-                                                        data-trigger="hover">
-                                                        {{ training.end_date }}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title=""
-                                                        data-trigger="hover">
-                                                        {% if training.completed  %}
-                                                            <small>yes</small>
-                                                        {% else %}
-                                                        <small>no</small>
-                                                        {% endif %}
-                                                    </span>
-                                                </span>
-                                            </td>
-                                            
-                                            <td class="members">
-                                                <span class="inner">
-                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
-                                                        data-title="Number of moderators"
-                                                        data-trigger="hover">
-                                                        {{training.moderator}}
-                                                    </span>
-                                                </span>
-                                            </td>
-
-                                            
-
-                                            <td class="actions">
-                                                <div class="dropdown is-right dropdown-trigger document-list-dropdown">
-                                                    <div class="button">
-                                                        <i class="material-icons">more_horiz</i>
-                                                    </div>
-                                                    {% include 'includes/training_actions.html' %}
+                                {% for training in trainings %}
+                                        <tr>
+                                            <!-- Row Entry for Sub Project-->
+                                            <td>
+                                                <div class="b-checkbox is-secondary">
+                                                    <input id="checkbox-docs-1" class="styled" type="checkbox">
+                                                    <label for="checkbox-docs-1"></label>
                                                 </div>
-                                                <!-- <a href="#" class="button is-hidden">
-                                                <i class="material-icons">remove_red_eye</i></a> -->
+                                            </td>
+                                            
+                                            <td class="members">
+                                                <span class="inner">
+                                                    <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                        data-title="Training title"
+                                                        data-trigger="hover">
+                                                        {{ training.title }}
+                                                    </span>
+                                                </span>
                                             </td>
 
-                                        </tr>
-                                    {% endfor %}
+                                                <!-- Row Entry for Project-->
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title="Training sub project"
+                                                            data-trigger="hover">
+                                                            {{ training.sub_project }}
+                                                        </span>
+                                                    </span>
+                                                </td>
+
+                                                <!-- Row Entry for Members-->
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title="Training type"
+                                                            data-trigger="hover">
+                                                            {{ training.training_type }}
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                
+                                                <!-- Row Entry for Registered-->
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title="Training start date"
+                                                            data-trigger="hover">
+                                                            {{ training.start_date }}
+                                                        </span>
+                                                    </span>
+                                                </td>
+
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title="Training end date"
+                                                            data-trigger="hover">
+                                                            {{ training.end_date }}
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title=""
+                                                            data-trigger="hover">
+                                                            {% if training.completed  %}
+                                                                <small>yes</small>
+                                                            {% else %}
+                                                            <small>no</small>
+                                                            {% endif %}
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                
+                                                <td class="members">
+                                                    <span class="inner">
+                                                        <span class="member-count" data-toggle="tooltip" data-placement="top"
+                                                            data-title="Number of moderators"
+                                                            data-trigger="hover">
+                                                            {{training.moderator}}
+                                                        </span>
+                                                    </span>
+                                                </td>
+                                                <td class="actions">
+                                                    <div class="dropdown is-right dropdown-trigger document-list-dropdown">
+                                                        <div class="button">
+                                                            <i class="material-icons">more_horiz</i>
+                                                        </div>
+                                                        {% include 'includes/training_actions.html' %}
+                                                    </div>
+                                                    <!-- <a href="#" class="button is-hidden">
+                                                    <i class="material-icons">remove_red_eye</i></a> -->
+                                                </td>
+
+                                            </tr>
+                                {% endfor %}
 
                                 </tbody>
                             </table>
