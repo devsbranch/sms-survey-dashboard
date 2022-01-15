@@ -316,18 +316,17 @@
                           </div>
                           <div class="project-members">
                             {% if sub_project.image_file %}
-                            <div class="face">
-                              <img
-                                src="https://via.placeholder.com/250x250"
-                                alt=""
-                                data-demo-src="{{ sub_project.image_file.url }}"
-                              />
-                            </div>
+                              <div class="face">
+                                <img
+                                  src="https://via.placeholder.com/250x250"
+                                  alt=""
+                                  data-demo-src="{{ sub_project.image_file.url }}"
+                                />
+                              </div>
                             {% endif %}
-
+                            
                             <div class="face is-fake">+5</div>
                           </div>
-
                           <div class="team-info">
                             total sub project fund disbursment
                           </div>
@@ -348,7 +347,6 @@
                           </div>
                         </div>
                       </div>
-
                       {% endfor %}
                     </div>
                   </div>

@@ -2,10 +2,12 @@
 """
 Project model definitions for tralard app.
 """
+import os
 import logging
 
 from django.db import models
 from django.db.models import Sum
+from django.conf import settings
 from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
@@ -299,7 +301,12 @@ class Project(models.Model):
 
         amount_value = related_funds_sum_qs['balance__sum']
         return amount_value
-
+    
+    @property
+    def logo_url(self):
+        if self.image_file:
+            return self.image_file.url
+        return os.path.join(settings.STATIC_ROOT, "assets/images/logos/logo.png")
 
 class Feedback(models.Model):
     """

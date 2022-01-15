@@ -1,7 +1,4 @@
-from django import forms
-
-from django.forms import ModelForm, widgets
-
+from mapwidgets.widgets import GooglePointFieldWidget
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import (
@@ -11,7 +8,9 @@ from crispy_forms.layout import (
     Row,
     Column,
 )
-from mapwidgets.widgets import GooglePointFieldWidget
+
+from django import forms
+from django.forms import ModelForm, widgets
 
 from tralard.models.beneficiary import Beneficiary
 
@@ -20,7 +19,7 @@ class BeneficiaryCreateForm(ModelForm):
     class Meta:
 
         model = Beneficiary
-        exclude = ["created"]
+        exclude = ["created",  "slug"]
         widgets = {
             "location": GooglePointFieldWidget,
             "registered_date": widgets.DateInput(

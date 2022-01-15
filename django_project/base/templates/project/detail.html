@@ -29,10 +29,12 @@
                             <div class="inner-wrap">
                                 <h3 class="deal-title">{{ project.name|title }}</h3>
                                 <div class="title-meta">
-                                    <div class="meta">
-                                        <i class="material-icons">person</i>
-                                        <span>{{ project.count_beneficiaries }} Beneficiaries</span>
-                                    </div>
+                                    <a href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
+                                        <div class="meta">
+                                            <i class="material-icons">person</i>
+                                            <span>{{ project.count_beneficiaries }} Beneficiaries</span>
+                                        </div>
+                                    </a>
                                     <div class="meta">
                                         <i class="material-icons">domain</i>
                                         <span>{{ project.count_sub_projects }} total sub-projects</span>
