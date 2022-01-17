@@ -32,13 +32,27 @@
                           return ""
                         }
                      };
+                     if(endDateArray[0] !== undefined){
                       document.getElementById("end-month").innerHTML = endDateArray[0];
+                    }else{
+                      document.getElementById("end-month").innerHTML = "blank";
+                    }
+                    if(endDateArray[1] !== undefined){
                       document.getElementById("end-day").innerHTML = endDateArray[1];
+                    }else{
+                      document.getElementById("end-day").innerHTML = "blank";
+                    }
+                    if(endDateArray[2] !== undefined){
                       document.getElementById("end-year").innerHTML = endDateArray[2];
+                    }else{
+                      document.getElementById("end-year").innerHTML = "blank";
+                    }
+                    if(endDateArray[3] !== undefined){
                       document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
-
+                    }else{
+                      document.getElementById("end-time").innerHTML = "blank";
+                    }
                       
-
                       const endDate = "{{ training.start_date }}";
                       const startDateArray = endDate.split(" ");
                       const startDateProcessor = () => {
@@ -48,11 +62,26 @@
                           return ""
                         }
                      };
-                      document.getElementById("start-month").innerHTML = startDateArray[0];
-                      document.getElementById("start-day").innerHTML = startDateArray[1];
-                      document.getElementById("start-year").innerHTML = startDateArray[2];
-                      document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
-                      
+                      if(startDateArray[0] !== undefined){
+                        document.getElementById("start-month").innerHTML = startDateArray[0];
+                      }else{
+                        document.getElementById("start-month").innerHTML = "blank";
+                      }
+                      if(startDateArray[1] !== undefined){
+                        document.getElementById("start-day").innerHTML = startDateArray[1];
+                      }else{
+                        document.getElementById("start-day").innerHTML = "blank";
+                      }
+                      if(startDateArray[2] !== undefined){
+                        document.getElementById("start-year").innerHTML = startDateArray[2];
+                      }else{
+                        document.getElementById("start-year").innerHTML = "blank";
+                      }
+                      if(startDateArray[3] !== undefined){
+                        document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
+                      }else{
+                        document.getElementById("start-time").innerHTML = "blank";
+                      }
                       document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
                       if("{{ training.sub_project.project.project_representative.cell }}"){
                         document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";

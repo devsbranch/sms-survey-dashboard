@@ -30,7 +30,7 @@
                 
                 <div id="basic-layout" class="columns dashboard-columns">
                     
-                    <div class="column is-9 is-hidden-mobile">
+                    <div class="column is-9 is-hidden-mobile" style="width: 90%" >
                         <div class="contacts-title-wrapper">
                             <div class="title-wrap">
                                 <h2 class="project-title">Training Schedules</h2>
@@ -73,7 +73,7 @@
                                                 <label for="checkbox-docs-all"></label>
                                             </div>
                                         </th>
-                                        <th class="w-50">
+                                        <th style="spadding-left: 1em;">
                                             <!-- Filter dropdown Name-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
@@ -177,7 +177,7 @@
                                             </div>
                                         </th>
 
-                                        <th>
+                                        <th style="padding-right: 1em; padding-left: 1em;">
                                             <!-- Filter dropdown Members-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
@@ -217,7 +217,7 @@
                                             </div>
                                         </th>
 
-                                        <th>
+                                        <th style="padding-right: 1em; padding-left: 1em;">
                                             <!-- Filter dropdown Date Registered-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
@@ -383,12 +383,12 @@
                                                 </div>
                                             </td>
                                             
-                                            <td class="members">
+                                            <td class="members" style="width: 10em;">
                                                 <span class="inner">
                                                     <span class="member-count" data-toggle="tooltip" data-placement="top"
                                                         data-title="Training title"
                                                         data-trigger="hover">
-                                                        {{ training.title }}
+                                                        {{ training.title|truncatechars:24 }}
                                                     </span>
                                                 </span>
                                             </td>
@@ -399,7 +399,7 @@
                                                         <span class="member-count" data-toggle="tooltip" data-placement="top"
                                                             data-title="Training sub project"
                                                             data-trigger="hover">
-                                                            {{ training.sub_project }}
+                                                            {{ training.sub_project|truncatechars:24 }}
                                                         </span>
                                                     </span>
                                                 </td>
@@ -410,7 +410,7 @@
                                                         <span class="member-count" data-toggle="tooltip" data-placement="top"
                                                             data-title="Training type"
                                                             data-trigger="hover">
-                                                            {{ training.training_type }}
+                                                            {{ training.training_type|truncatechars:24 }}
                                                         </span>
                                                     </span>
                                                 </td>
@@ -454,7 +454,7 @@
                                                         <span class="member-count" data-toggle="tooltip" data-placement="top"
                                                             data-title="Number of moderators"
                                                             data-trigger="hover">
-                                                            {{training.moderator}}
+                                                            {{training.moderator|truncatechars:24}}
                                                         </span>
                                                     </span>
                                                 </td>
@@ -479,7 +479,7 @@
                     </div>
 
                     <!-- Right side menu -->
-                    <div class="column is-3 is-hidden-mobile">
+                    <div class="column is-3 is-hidden-mobile" style="margin-right: -9em;">
                         <div style="margin-top: 6em;" class="right-options">
                             <!-- Share -->
                             <a href="#">

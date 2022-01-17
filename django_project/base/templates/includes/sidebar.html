@@ -78,7 +78,7 @@
                           <i class="fa fa-camera fa-2x"></i>
                         </div>
                         {% if request.user.profile.profile_photo %}
-                        <img src="{{ profile.profile_photo.url }}" class="profile-photo"
+                        <img src="{{ request.user.profile.profile_photo.url }}" class="profile-photo"
                           alt="{{ request.user.username }}'s profile photo" />
                         {% else %}
                         <img src="/assets/images/logos/logo.png" class="profile-photo"

@@ -306,7 +306,7 @@ class Project(models.Model):
     def logo_url(self):
         if self.image_file:
             return self.image_file.url
-        return os.path.join(settings.STATIC_ROOT, "assets/images/logos/logo.png")
+        return os.path.join(settings.STATIC_URL, "assets/images/logos/logo.png")
 
 class Feedback(models.Model):
     """
