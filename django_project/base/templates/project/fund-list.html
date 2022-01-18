@@ -354,37 +354,6 @@
     aria-label="close"
   ></button>
 </div>
-<!-- create fund disbursement modal -->
-<div
-  id="add-fund-disbursement-modal"
-  class="modal add-fund-disbursement-modal modal-hero bs-example-modal-sm"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="has-text-centered dark-text" id="fund_disbursement_form">
-        Create Fund Disbursement
-      </h2>
-      <div class="navigation-tabs layout-tabs animated-tabs">
-        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
-        <div id="project-details" class="navtab-content is-active">
-          <div class="card-body">
-            <div class="content">
-              <!-- New Project Fund form -->
-              <form action="" method="post" id="fund_disbursement_form_inputs">
-                {% csrf_token %}
-                <!--  -->
-                {% crispy disbursement_form disbursement_form.helper %}
-              </form>
-              <!-- /New Project Fund form -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button class="modal-close is-large is-hidden" aria-label="close"></button>
-</div>
 
 <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
 <div
@@ -424,14 +393,16 @@
   </div>
 </div>
 <!-- /Invite User Modal -->
+{% include 'includes/disbursement_expenditure_modal.html' %}
+<!--  -->
 {% include 'includes/subproject_disbursement_modal.html' %}
 <!--  -->
 {% endblock content %}
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
+  //Toggle active disbursement cards on load
   $(document).ready(() => {
-    //Toggle active disbursement cards on load
     $(".disbursement-card-content.is-active").slideToggle("fast");
 
     //Init togglable disbursement cards
@@ -445,10 +416,12 @@
     });
   });
 
+  // THOUSAND SEPERATOR UTILITY FUNCTION
   const thousand_seperator = (x) => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
 
+  // GET DISBURSEMENT EXPENDITURE RECORDS
   const get_disbursement_expenditures = async (
     program_slug,
     project_slug,
@@ -535,7 +508,25 @@
           )}
               </p>
                 <div class="d-flex align-items-center">
-                  {% include 'includes/disbursement_dropdown.html' %}
+                  <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
+                    <div
+                      class="button"
+                    >
+                      <a
+                        href="#"
+                        class="dropdown-item modal-trigger test-modal"
+                        data-modal="add-disbursement-expenditure-modal"
+                        onclick="add_disbursement_expenditure_form_action('${program_slug}', '${project_slug}', '${subproject_slug}', '${fund_slug}', '${
+            data.disbursements[disbursement].slug
+          }')"
+                      >
+                      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                      </a>
+                    </div>
+                    <div class="dropdown-menu is-text-bigger" role="menu">
+                      
+                    </div>
+                  </div>
                   <div class="toggle-icon">
                       <i class="material-icons">keyboard_arrow_right</i>
                   </div>
@@ -550,9 +541,7 @@
             data.disbursements[disbursement].slug
           )
             .then(({ expenditures }) => {
-              console.log(expenditures);
               for (expenditure in expenditures) {
-                console.log(expenditures[expenditure]);
                 document.querySelector(
                   `#${expenditures[expenditure]?.disbursement_slug}`
                 ).innerHTML += `
@@ -581,6 +570,30 @@
       },
     });
   }
+
+  // STOP DEFAULT ACTION ON DISBURSEMENT ADD ICON CLICK
+  $("body").delegate(
+    ".is-right.dropdown-trigger.contacts-list-dropdown",
+    "click",
+    (e) => {
+      e.stopPropagation();
+    }
+  );
+
+  // OPEN ADD DISBURSEMENT EXPENDITURE MODAL
+  $("body").delegate(
+    ".dropdown-item.modal-trigger.test-modal",
+    "click",
+    function (event) {
+      document.querySelector("#id01").style.display = "none";
+      document.querySelector(
+        "#add-disbursement-expenditure-modal"
+      ).style.display = "block";
+      document.querySelector("#subproject_disbursements_list").innerHTML = "";
+    }
+  );
+
+  // TOGGLE DISBURSEMENT EXPENDITURE LIST
 
   $("body").delegate(".disbursement-card-content", "click", function () {
     $(this).toggleClass("is-active");
@@ -638,6 +651,7 @@
       .setAttribute("action", url);
   }
 
+  // DELETE SUB PROJECT FUND
   const delete_subproject_fund = async (
     program_slug,
     project_slug,
@@ -655,6 +669,7 @@
     }
   };
 
+  // ADD DISBURSEMENT FORM ACTION
   const add_disbursement_form_action = (
     program_slug,
     project_slug,
@@ -669,6 +684,29 @@
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // ADD DISBURSEMENT EXPENDITURE FORM ACTION
+  const add_disbursement_expenditure_form_action = (
+    program_slug,
+    project_slug,
+    subproject_slug,
+    fund_slug,
+    disbursement_slug
+  ) => {
+    try {
+      let url = `${location.origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/manage/fund/${fund_slug}/disbursement/${disbursement_slug}/`;
+      document
+        .querySelector("#fund_disbursement_expenditure_form_inputs")
+        .setAttribute("action", url);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const actionButtons = (e) => {
+    e.stopPropagation();
+    console.log(e);
   };
 </script>
 {% endblock javascripts %}

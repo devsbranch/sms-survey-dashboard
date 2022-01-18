@@ -133,6 +133,7 @@ class ExpenditureForm(ModelForm):
             exclude = [
                 "amount", 
                 "created",
+                'disbursment'
             ]
             widgets = {
                 'expenditure_date': widgets.DateInput(
@@ -154,7 +155,7 @@ class ExpenditureForm(ModelForm):
                     Column("amount", css_class="form-group col-md-12 mb-0"),
                     Column("currency", css_class="form-group col-md-12 mb-0"),
                     Column("expenditure_date", css_class="form-group col-md-12 mb-0"),
-                    Column("disbursement", css_class="form-group col-md-12 mb-0"),
+                    Column("disbursment", css_class="form-group col-md-12 mb-0"),
                     css_class="form-row",
                 ),
                 FormActions(

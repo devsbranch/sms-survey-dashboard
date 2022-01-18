@@ -3,7 +3,8 @@
 from django.urls import path
 
 from tralard.views.sub_project import (
-    SubProjectDetailView, 
+    SubProjectDetailView,
+    subproject_disbursement_expenditure_create, 
     subproject_fund_delete, 
     subproject_fund_detail, 
     update_sub_project_fund,
@@ -243,6 +244,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/",
         subproject_fund_disbursement_create,
         name="subproject-fund-disbursement-create",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/",
+        subproject_disbursement_expenditure_create,
+        name="subproject-fund-disbursement-expenditure-create",
     ),
     # -------- user profile --------
     path(

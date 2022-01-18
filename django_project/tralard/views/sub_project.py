@@ -45,8 +45,16 @@ from tralard.forms.sub_project import SubProjectForm
 from tralard.models.sub_project import SubProject, Indicator
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
-from tralard.models.fund import Disbursement, Expenditure, Fund
-from tralard.forms.fund import FundForm, DisbursementForm
+from tralard.models.fund import (
+    Disbursement, 
+    Expenditure,
+    Fund
+)
+from tralard.forms.fund import (
+    ExpenditureForm, 
+    FundForm, 
+    DisbursementForm
+)
 
 from tralard.utils import user_profile_update_form_validator
 from tralard.models import Beneficiary, Project, Program, Ward, SubProject
@@ -682,6 +690,7 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
     model = Fund
     form_class = FundForm
     disbursement_form_class = DisbursementForm
+    expenditure_form_class = ExpenditureForm
     template_name = "project/fund-list.html"
 
     def get_success_url(self):
@@ -721,6 +730,7 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         context["modal_display"] = "none"
         context["form"] = self.form_class
         context["disbursement_form"] = self.disbursement_form_class
+        context["expenditure_form"] = self.expenditure_form_class
         context["disbursement_title"] = "create fund disbursement"
         context["title"] = "funds"
         return context
@@ -786,6 +796,9 @@ def subproject_fund_detail(
 def update_sub_project_fund(
     request, program_slug, project_slug, subproject_slug, fund_slug
 ):
+    """
+    Update a single subproject fund.
+    """
     form = FundForm()
 
     fund_obj = Fund.objects.get(slug=fund_slug)
@@ -834,6 +847,9 @@ def update_sub_project_fund(
 def subproject_fund_delete(
     request, program_slug, project_slug, subproject_slug, fund_slug
 ):
+    """
+    Delete a single subproject fund.
+    """
     try:
         fund = Fund.objects.get(slug=fund_slug)
         fund.delete()
@@ -866,6 +882,9 @@ def subproject_fund_delete(
 def subproject_fund_disbursement_create(
     request, program_slug, project_slug, subproject_slug, fund_slug
 ):
+    """
+    Create a single subproject fund disbursement.
+    """
     form = DisbursementForm()
 
     fund_obj = Fund.objects.get(slug=fund_slug)
@@ -899,6 +918,71 @@ def subproject_fund_disbursement_create(
                 },
             )
         )
+    return redirect(
+        reverse_lazy(
+            "tralard:subproject-fund-list",
+            kwargs={
+                "program_slug": program_slug,
+                "project_slug": project_slug,
+                "subproject_slug": subproject_slug,
+            },
+        )
+    )
+
+
+@login_required(login_url="/login/")
+def subproject_disbursement_expenditure_create(
+    request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
+):
+    """
+    Create a single subproject fund disbursement expenditure.
+    """
+    form = ExpenditureForm()
+
+    disbursement_obj = Disbursement.objects.get(slug=disbursement_slug)
+
+    if disbursement_obj is None:
+        messages.error(request, "Disbursement not found")
+        return redirect(
+            reverse_lazy(
+                "tralard:subproject-fund-list",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug,
+                    "subproject_slug": subproject_slug,
+                },
+            )
+        )
+    else:
+        if request.method == "POST":
+            form = ExpenditureForm(request.POST)
+            if form.is_valid():
+                form.instance.disbursment = disbursement_obj
+                form.save()
+                messages.success(request, "Expenditure created successfully")
+                return redirect(
+                    reverse_lazy(
+                        "tralard:subproject-fund-list",
+                        kwargs={
+                            "program_slug": program_slug,
+                            "project_slug": project_slug,
+                            "subproject_slug": subproject_slug,
+                        },
+                    )
+                )
+            else:
+                messages.error(request, form.errors)
+                return redirect(
+                    reverse_lazy(
+                        "tralard:subproject-fund-list",
+                        kwargs={
+                            "program_slug": program_slug,
+                            "project_slug": project_slug,
+                            "subproject_slug": subproject_slug,
+                        },
+                    )
+                )
+    messages.error(request, "Reached Redirect Block")
     return redirect(
         reverse_lazy(
             "tralard:subproject-fund-list",

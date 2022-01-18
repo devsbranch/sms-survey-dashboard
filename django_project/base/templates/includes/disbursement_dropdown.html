@@ -1,5 +1,12 @@
 <div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
-  <div class="button">
+  <div
+    class="button"
+    id=""
+    onclick="(e) => {
+      console.log(e)
+    e.stopPropagation()
+  }"
+  >
     <i class="material-icons">more_horiz</i>
   </div>
   <div class="dropdown-menu is-text-bigger" role="menu">

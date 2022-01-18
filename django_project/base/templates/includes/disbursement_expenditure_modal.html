@@ -1,0 +1,46 @@
+<!--  -->
+{% load crispy_forms_tags %}
+<!--  -->
+{% load static %}
+<!--  -->
+{% load humanize %}
+<div
+  id="add-disbursement-expenditure-modal"
+  class="w3-modal add-fund-disbursement-modal modal-hero bs-example-modal-sm"
+  style="z-index: 99991"
+>
+  <div class="modal-background" style="background-color: #536dfe"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <h2 class="has-text-centered dark-text" id="fund_disbursement_form">
+        Create Disbursement Expenditure
+      </h2>
+      <div class="navigation-tabs layout-tabs animated-tabs">
+        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
+        <div id="project-details" class="navtab-content is-active">
+          <div class="card-body">
+            <div class="content">
+              <!-- New Project Fund form -->
+              <form
+                action=""
+                method="post"
+                id="fund_disbursement_expenditure_form_inputs"
+              >
+                {% csrf_token %}
+                <!--  -->
+                {% crispy expenditure_form expenditure_form.helper %}
+              </form>
+              <!-- /New Project Fund form -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button
+    onclick="document.querySelector('#add-disbursement-expenditure-modal').style.display = 'none'"
+    class="modal-close is-large"
+    aria-label="close"
+  ></button>
+</div>
