@@ -1,0 +1,118 @@
+{% load static %}
+
+<div class="columns is-multiline">
+	<div class="column">
+
+		<!-- Beneficiary List -->
+		<div class="tasks-wrapper">
+			<div class="header">
+				<h4 class="no-margin-bottom">
+					Total Count <small>({{ total_beneficiary_count }})</small>
+				</h4>
+				<!-- Beneficiary List Dropdown-->
+				<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+					<div class="button">
+						<i class="material-icons">more_vert</i>
+					</div>
+					<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+						<div class="dropdown-content">
+							<a class="dropdown-item">
+								<i class="sl sl-icon-pencil"></i>
+								<span>
+                                     <span>Rename</span>
+                                     <span>Rename this task group</span>
+                                </span>
+							</a>
+							<a href="#" class="dropdown-item">
+								<i class="sl sl-icon-grid"></i>
+								<span>
+									<span>Archive</span>
+                                    <span>Archive this task group</span>
+                                </span>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a href="#" class="dropdown-item">
+								<i class="sl sl-icon-equalizer"></i>
+								<span>
+                                    <span>Settings</span>
+									<span>Group settings</span>
+                                </span>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item">
+								<i class="sl sl-icon-plus"></i>
+								<span>
+                                    <span>Add</span>
+                                    <span>Add new task</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Beneficiary List Cards-->
+			{% for beneficiary in beneficiary_list %}
+			<div class="task-card">
+				<div class="card-progress" data-progress="83"></div>
+				<div class="card-inner">
+					<div class="task-meta">
+						<span class="task-title">{{ beneficiary.name|title }}</span>
+						<span class="task-due-date">
+							type: {{ beneficiary.org_type|lower }} | ward: {{ beneficiary.ward.name|lower }} | members: {{ beneficiary.total_beneficiaries }} | email: {{ beneficiary.email }} | registration date: {{ beneficiary.registered_date }}
+                        </span>
+					</div>
+					<div class="task-info">
+						<div class="task-members">
+							{% if beneficiary.logo %}
+							<div class="face">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{{ beneficiary.logo.url }}"/>
+							</div>
+							{% endif %}
+						</div>
+						<div class="subtasks-count">
+							<i class="sl sl-icon-check"></i>
+							<span>active</span>
+						</div>
+						<div class="more-drop">
+							<!-- Beneficiary dropdown -->
+							<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+								<div class="button">
+									<i class="material-icons">more_vert</i>
+								</div>
+								<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+									<div class="dropdown-content">
+										<a href="#" class="dropdown-item">
+											<i class="sl sl-icon-eye"></i>
+											<span>
+                                                <span>View</span>
+                                                <span>View task details</span>
+											</span>
+										</a>
+										<a class="dropdown-item">
+											<i class="sl sl-icon-pencil"></i>
+											<span>
+                                                <span>Edit</span>
+												<span>Edit this task</span>
+                                            </span>
+										</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item">
+											<i class="sl sl-icon-trash"></i>
+											<span>
+                                                <span>Delete</span>
+                                                <span>Delete this task</span>
+											</span>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+	</div>
+</div>

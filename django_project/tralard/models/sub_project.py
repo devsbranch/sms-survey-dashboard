@@ -4,20 +4,19 @@ Sub Project model definitions for tralard app.
 """
 import logging
 
-from django.db import models
-from django.utils.text import slugify
-from django.db.models.aggregates import Sum
 from django.contrib.auth import get_user_model
+from django.db import models
+from django.db.models.aggregates import Sum
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.fund import Fund
 from tralard.models.beneficiary import Beneficiary
+from tralard.models.fund import Fund
 from tralard.models.training import Training
-
-from tralard.utils import unique_slugify
-
-
-from tinymce import HTMLField
+from tralard.utils import (
+    unique_slugify,
+    serialize_model_object
+)
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -55,13 +54,13 @@ class SubProject(models.Model):
     """
 
     slug = models.SlugField(
-        max_length=255, 
-        null=True, 
+        max_length=255,
+        null=True,
         blank=True
     )
     name = models.CharField(
-        help_text=_("Name of this Sub Project."), 
-        max_length=255, 
+        help_text=_("Name of this Sub Project."),
+        max_length=255,
         unique=True
     )
     size = models.CharField(
@@ -133,12 +132,10 @@ class SubProject(models.Model):
         null=True,
     )
     created = models.DateTimeField(auto_now_add=True)
-    # def get_absolute_url(self):
-    #     """Return URL to project detail page
-    #     :return: URL
-    #     :rtype: str
-    # """
-    # return reverse('project-detail', kwargs={'pk': self.pk})
+
+    def to_dict(self):
+        return serialize_model_object(self)
+
     def __str__(self):
         return self.name.title()
 

@@ -4,11 +4,17 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.http import HttpResponseRedirect
 from django.http.response import JsonResponse
-from django.shortcuts import redirect, get_object_or_404, reverse
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, ListView
-from django.views.generic.detail import DetailView
+from django.shortcuts import (
+    redirect,
+    get_object_or_404
+)
+from django.views.generic import (
+    TemplateView,
+    ListView
+)
 
+from tralard.utils import user_profile_update_form_validator
 from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.forms.sub_project import SubProjectForm
 from tralard.models.program import Program
@@ -86,8 +92,6 @@ def project_delete(request, program_slug, project_slug):
         reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
     )
 
-
-from tralard.utils import user_profile_update_form_validator
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):

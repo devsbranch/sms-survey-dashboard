@@ -1,16 +1,15 @@
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404
-from django.views.generic import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from tralard.models.profile import Profile
-from tralard.forms.profile import ProfileForm
+from django.forms import model_to_dict
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.views.generic import ListView
 
 from tralard.forms.project import ProjectForm
+from tralard.models.beneficiary import Beneficiary
 from tralard.models.program import Program
 from tralard.models.project import Project
 from tralard.models.sub_project import SubProject
-from tralard.models.beneficiary import Beneficiary
-
 from tralard.utils import user_profile_update_form_validator
 
 
@@ -18,7 +17,14 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
     model = Project
     form_class = ProjectForm
     context_object_name = "program"
-    template_name = "program/detail.html"
+    template_name = 'program/detail.html'
+    paginate_by = 12
+
+    # Used to modify queryset and in context
+    search_query = None
+    projects = None
+    subprojects = None
+    beneficiaries = None
 
     def get_success_url(self):
         """Define the redirect URL
@@ -69,21 +75,61 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         self.user_profile_utils = user_profile_update_form_validator(
             self.request.POST, self.request.user
         )
+        self.search_query = self.request.GET.get("q")
+        self.subproject_search_query = self.request.GET.get("subproject_query")
+        self.beneficiary_search_query = self.request.GET.get("beneficiaries_query")
 
-        context["title"] = "Program Detail"
-        context["project_form"] = ProjectForm
-        context["program"] = self.program_object
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
-        context["profile_form"] = self.user_profile_utils[2]
-        context["total_projects"] = Project.objects.filter(
-            program=self.program_object
-        ).count()
-        context["sub_project_list"] = SubProject.objects.all()
-        context["beneficiary_list"] = Beneficiary.objects.all()
-        context["projects"] = Project.objects.filter(
-            program__slug=self.program_object.slug
-        )
-        context["total_sub_projects"] = SubProject.objects.all().count()
-        context["total_beneficiary_count"] = Beneficiary.objects.all().count()
+        if self.search_query:
+            self.projects = Project.objects.filter(program__slug=self.program_object.slug,
+                                                   name__icontains=self.search_query)
+        else:
+            self.projects = Project.objects.filter(program__slug=self.program_object.slug)
+
+        if self.subproject_search_query:
+            self.subprojects = SubProject.objects.filter(name__icontains=self.subproject_search_query)
+        else:
+            self.subprojects = SubProject.objects.all()
+
+        if self.beneficiary_search_query:
+            self.beneficiaries = Beneficiary.objects.filter(name__icontains=self.beneficiary_search_query)
+        else:
+            self.beneficiaries = Beneficiary.objects.all()
+
+        context['title'] = 'Program Detail'
+        context['project_form'] = ProjectForm
+        context['projects'] = self.projects
+        context['program'] = self.program_object
+        context['sub_project_list'] = self.subprojects
+        context['beneficiary_list'] = self.beneficiaries
+        context['user_roles'] = self.user_profile_utils[0]
+        context['profile'] = self.user_profile_utils[1]
+        context['profile_form'] = self.user_profile_utils[2]
+        context['total_projects'] = Project.objects.filter(program=self.program_object).count()
+        context['total_sub_projects'] = SubProject.objects.all().count()
+        context['total_beneficiary_count'] = Beneficiary.objects.all().count()
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.is_ajax():
+            project_list_html = render_to_string(
+                template_name="includes/project/project-list.html",
+                context={"projects": self.projects}
+            )
+            subprojects_html = render_to_string(
+                template_name="includes/sub-project-list.html",
+                context={"sub_project_list": self.subprojects}
+            )
+            beneficiaries_html = render_to_string(
+                template_name="includes/beneficiary-list.html",
+                context={"beneficiary_list": self.beneficiaries}
+            )
+
+            data_dict = {
+                "search_result_view": project_list_html,
+                "subproj_search_result": subprojects_html,
+                "beneficiaries_search_result": beneficiaries_html
+            }
+            return JsonResponse(data=data_dict, safe=False)
+        else:
+            return response

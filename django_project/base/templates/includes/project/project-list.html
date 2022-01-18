@@ -1,0 +1,74 @@
+{% load static %}
+
+<div class="columns is-multiline">
+	<!-- All Project Display -->
+	{% for project in projects %}
+	<!-- Project card -->
+	<div class="column is-4">
+		<div class="flex-card light-bordered light-shadow team-card card-overflow">
+			<div class="header">
+				<a href="{{ project.get_absolute_url }}">
+					<h4 class="no-margin-bottom">{{ project.name|title }}</h4>
+				</a>
+				<!-- Project card dropdown -->
+				<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+					<div class="button">
+						<i class="material-icons">more_vert</i>
+					</div>
+					<div class="dropdown-menu is-text-bigger has-text-left"
+					     role="menu">
+						<div class="dropdown-content">
+							<div class="dropdown-divider bg-info"></div>
+							<a href="{{ project.get_absolute_url }}"
+							   class="dropdown-item">
+								<i class="sl sl-icon-share-alt text-primary"></i>
+								<span>
+									<span class="dark-text">View project</span>
+                                    <span>View details of this project</span>
+								</span>
+							</a>
+							<a href="#"
+							   class="dropdown-item modal-trigger"
+							   onClick="populateProjectForm('{{ program.slug }}', '{{ project.slug }}');"
+							   data-modal="update-project-modal"
+							>
+								<i class="sl sl-icon-note text-success"></i>
+								<span>
+                                    <span class="dark-text">Edit project</span>
+									<span>Update project details</span>
+								</span>
+							</a>
+							<a href="#"
+							   class="dropdown-item modal-trigger"
+							   onClick="deleteProjectAction('{{ program.slug }}', '{{ project.slug }}');"
+							   data-modal="delete-project-modal"
+							>
+								<i class="sl sl-icon-ban text-danger"></i>
+								<span>
+                                    <span class="dark-text">Delete</span>
+									<span>Remove this project</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="team-info">
+				{{ project.count_sub_projects }} Sub-projects,
+				{{ project.count_beneficiaries }} Beneficiaries
+			</div>
+			<div class="project-members">
+				{% if project.image_file %}
+					<div class="face">
+						<img src="{{ project.image_file.url }}" alt="" data-demo-src="{{ project.image_file.url }}">
+					</div>
+				{% else %}
+					<div class="face">
+						<img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ project.image_file.url }}">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>

@@ -1,3 +1,4 @@
+import crispy_forms
 from django import forms
 
 from django.forms import ModelForm, widgets
@@ -129,3 +130,12 @@ class FeedbackForm(ModelForm):
         instance.description = custom_description
         instance.save()
         return instance
+
+
+class ProjectFilterForm(crispy_forms.helper.FormHelper):
+    form_method = 'GET'
+    layout = Layout(
+        "name",
+        "program",
+        Submit("submit", "Apply Filter", css_class="btn-primary"),
+    )

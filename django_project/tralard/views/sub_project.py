@@ -11,13 +11,26 @@ View classes for a SubProject
 
 # noinspection PyUnresolvedReferences
 import logging
-import json
+
+from braces.views import LoginRequiredMixin
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http.response import JsonResponse
-from django.urls import reverse_lazy
-from django.shortcuts import get_object_or_404, redirect, render
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage
+from django.db import IntegrityError
+from django.db.models import Q
 from django.http import HttpResponse
+from django.http import (
+    JsonResponse,
+    HttpResponseRedirect,
+    Http404
+)
+from django.shortcuts import (
+    get_object_or_404,
+    redirect
+)
+from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     CreateView,
@@ -25,40 +38,26 @@ from django.views.generic import (
     DetailView,
     UpdateView,
 )
-from django.contrib import messages
-from django.http import HttpResponseRedirect, Http404
-from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
-from django.db.models import Q
-from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage
-from django.core import serializers
-from django.forms.models import model_to_dict
-from django.http import HttpResponse, JsonResponse
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import redirect
-from braces.views import LoginRequiredMixin
 
-from tralard.models.project import Project
-from tralard.forms.sub_project import SubProjectForm
-from tralard.models.sub_project import SubProject, Indicator
-from tralard.models.training import Training
-from tralard.forms.training import TrainingForm
-from tralard.models.fund import (
-    Disbursement, 
-    Expenditure,
-    Fund
-)
+from tralard.forms import BeneficiaryCreateForm
 from tralard.forms.fund import (
-    ExpenditureForm, 
-    FundForm, 
+    ExpenditureForm,
+    FundForm,
     DisbursementForm
 )
-
+from tralard.forms.sub_project import SubProjectForm
+from tralard.forms.training import TrainingForm
+from tralard.models import (
+    Beneficiary,
+    Project,
+    SubProject
+)
+from tralard.models.fund import (
+    Disbursement,
+    Fund
+)
+from tralard.models.training import Training
 from tralard.utils import user_profile_update_form_validator
-from tralard.models import Beneficiary, Project, Program, Ward, SubProject
-from tralard.forms import BeneficiaryCreateForm
 
 logger = logging.getLogger(__name__)
 
@@ -246,7 +245,7 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
 
 @login_required(login_url="/login/")
 def sub_project_training_update(
-    request, program_slug, project_slug, subproject_slug, training_entry_slug
+        request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
@@ -277,7 +276,7 @@ def sub_project_training_update(
 
 @login_required(login_url="/login/")
 def sub_project_training_delete(
-    request, program_slug, project_slug, subproject_slug, training_entry_slug
+        request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
@@ -294,7 +293,7 @@ def sub_project_training_delete(
 
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
-    """List view for SubProject."""
+    """Listed view for SubProject."""
 
     model = SubProject
     context_object_name = "sub_projects"
@@ -345,7 +344,7 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
                 return queryset
             else:
                 raise Http404(
-                    "Sorry! We could not find the project for " "your subproject!"
+                    "Sorry! We could not find the project for your subproject!"
                 )
         else:
             return queryset
@@ -579,9 +578,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
             return qs.filter(
                 Q(project=project)
                 & (
-                    Q(project__project_funders=self.request.user)
-                    | Q(project__project_managers=self.request.user)
-                    | Q(project__project_representatives=self.request.user)
+                        Q(project__project_funders=self.request.user)
+                        | Q(project__project_managers=self.request.user)
+                        | Q(project__project_representatives=self.request.user)
                 )
             )
 
@@ -741,7 +740,7 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
 
 
 def subproject_fund_detail(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Display a single fund
@@ -794,7 +793,7 @@ def subproject_fund_detail(
 
 @login_required
 def update_sub_project_fund(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Update a single subproject fund.
@@ -808,7 +807,7 @@ def update_sub_project_fund(
             form = FundForm(request.POST, instance=fund_obj)
             if form.is_valid():
                 form.save()
-                messages.success(request, "Fund updated successfully")
+                messages.success(request, "Fund updated successfully.")
                 return redirect(
                     reverse_lazy(
                         "tralard:subproject-fund-list",
@@ -845,7 +844,7 @@ def update_sub_project_fund(
 
 @login_required(login_url="/login/")
 def subproject_fund_delete(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Delete a single subproject fund.
@@ -880,7 +879,7 @@ def subproject_fund_delete(
 
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Create a single subproject fund disbursement.
@@ -932,7 +931,7 @@ def subproject_fund_disbursement_create(
 
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(
-    request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
 ):
     """
     Create a single subproject fund disbursement expenditure.

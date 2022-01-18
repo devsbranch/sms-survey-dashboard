@@ -8,11 +8,13 @@ from django.utils.text import slugify
 from django.contrib.gis.db import models
 from django.utils.translation import gettext_lazy as _
 
+from dj_beneficiary.models import AbstractOrganizationBeneficiary
 from tralard.models.ward import Ward
 
-from tralard.utils import unique_slugify
-
-from dj_beneficiary.models import AbstractOrganizationBeneficiary
+from tralard.utils import (
+    unique_slugify,
+    serialize_model_object
+)
 
 logger = logging.getLogger(__name__)
 
@@ -35,6 +37,9 @@ class Beneficiary(AbstractOrganizationBeneficiary):
         abstract = False
         verbose_name = "Beneficiary Organization"
         verbose_name_plural = "Beneficiary Organizations"
+
+    def to_dict(self):
+        return serialize_model_object(self)
 
     def save(self, *args, **kwargs):
         if not self.slug:

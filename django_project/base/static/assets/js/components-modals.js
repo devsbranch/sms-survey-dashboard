@@ -1,4 +1,4 @@
-/*! components-modals.js | Bulkit | CSS Ninja */
+0/*! components-modals.js | Bulkit | CSS Ninja */
 
 /* ==========================================================================
 Bulma modals implementation
