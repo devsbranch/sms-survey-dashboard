@@ -6,9 +6,6 @@ from django.utils.translation import gettext_lazy as _
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
-from django.utils.text import slugify
-from tralard.utils import unique_slugify
-
 GENDER_CHOICES = (
     ("Male", _("Male")),
     ("Female", _("Female")),
@@ -20,12 +17,6 @@ class Profile(models.Model):
     """
     A model for storing addtional imformation about User.
     """
-
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
     user = models.OneToOneField(
         User, 
         on_delete=models.CASCADE
@@ -84,11 +75,6 @@ class Profile(models.Model):
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slugify(self, slugify(f"{self.user.username}"))
-        super().save(*args, **kwargs)
 
     def __str__(self):
         if self.user.first_name and self.user.last_name:
