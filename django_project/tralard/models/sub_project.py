@@ -13,10 +13,7 @@ from django.utils.translation import gettext_lazy as _
 from tralard.models.beneficiary import Beneficiary
 from tralard.models.fund import Fund
 from tralard.models.training import Training
-from tralard.utils import (
-    unique_slugify,
-    serialize_model_object
-)
+from tralard.utils import unique_slugify
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -132,9 +129,6 @@ class SubProject(models.Model):
         null=True,
     )
     created = models.DateTimeField(auto_now_add=True)
-
-    def to_dict(self):
-        return serialize_model_object(self)
 
     def __str__(self):
         return self.name.title()
