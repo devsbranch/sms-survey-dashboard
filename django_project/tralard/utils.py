@@ -1,7 +1,11 @@
 from django.shortcuts import get_object_or_404
 from django.utils.crypto import get_random_string
+
 from djmoney.money import Money
 from rolepermissions.roles import get_user_roles
+
+from tralard.models.profile import Profile
+from tralard.forms.profile import ProfileForm
 
 
 def unique_slugify(instance, slug):
@@ -114,12 +118,6 @@ def current_user_roles(user):
 def user_profile_update_form_validator(method, user):
     user_profile = None
     profile_form = None
-    try:
-        from tralard.models.profile import Profile
-        from tralard.forms.profile import ProfileForm
-    except:
-        pass
-
     user_profile = get_object_or_404(Profile, user=user)
     user_roles = current_user_roles(user_profile.user)
     profile_form = ProfileForm(method or None, instance=user_profile)
