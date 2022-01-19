@@ -99,8 +99,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         return context
 

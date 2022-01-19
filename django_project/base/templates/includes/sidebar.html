@@ -204,8 +204,8 @@
                                     display: flex-container;
                                     font-size: 16px;
                                   " class="flex-container">
-                                  {% for role in user_roles %}
-                                  <span class="badge badge-info">{{ role }}</span>
+                                  {% for role in request.user.profile.current_user_roles %}
+                                  <span class="badge badge-info">{{ role }} |</span>
                                   {% endfor %}
                                   <span class="e"></span>
                                 </div>

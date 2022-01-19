@@ -198,8 +198,6 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         context["project"] = self.project
         context["indicators"] = self.all_subproject_indicators
         context["form"] = SubProjectForm
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["feedback_form"] = FeedbackForm
         context["program_slug"] = self.kwargs.get("program_slug", None)
@@ -223,8 +221,6 @@ class SubProjectListView(LoginRequiredMixin, TemplateView):
             self.request.POST, self.request.user
         )
         context["title"] = "Sub Project List"
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         return context
 

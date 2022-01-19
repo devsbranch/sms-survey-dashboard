@@ -37,8 +37,6 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
         self.user_profile_utils = user_profile_update_form_validator(
             self.request.POST, self.request.user
         )
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["project"] = self.project
         context["funds"] = self.project_funds_qs
