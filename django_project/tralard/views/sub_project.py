@@ -389,8 +389,19 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
             raise Http404("Sorry! We could not find your subproject!")
 
     def get_context_data(self, **kwargs):
+        sub_project = self.get_object()
+        sub_proj_indicators = sub_project.indicators.all()
+        indicators = []
+
+        for indicator_object in sub_proj_indicators:
+            indicator_data = {}
+            indicator_data["name"] = indicator_object.name
+            indicator_data["indicator_targets"] = indicator_object.indicatortarget_set.all().order_by("start_date")
+            indicators.append(indicator_data)
+
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
-        context["title"] = "sub project"
+        context["title"] = "Sub Project"
+        context["indicators"] = indicators
         return context
 
 

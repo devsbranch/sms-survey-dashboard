@@ -45,6 +45,45 @@ class Indicator(models.Model):
         super().save(*args, **kwargs)
 
 
+class IndicatorTarget(models.Model):
+    """
+    Stores a single Indicator target entry, related to model 'Indicator'.
+    """
+
+    unit_of_measure = models.CharField(
+        _("Unit of mearsure"),
+        max_length=200,
+        null=True,
+        blank=True,
+        help_text=_(
+            "Unit of mearsure of this indicator target e.g Hectres, Kilometers, Number of Farmers."
+        ),
+    )
+    description = models.TextField(
+        _("Description"),
+        null=True,
+        blank=True,
+        help_text="A brief description of this indicator target.",
+    )
+    baseline_value = models.CharField(
+        _("Baseline Value"),
+        max_length=200,
+        null=True,
+        blank=True,
+        help_text="A baseline is data or measurement that is collected prior to the implementation of the project.",
+    )
+    target_value = models.CharField(
+        _("Indicator Target"), max_length=200, null=True, blank=True
+    )
+    actual_value = models.CharField(_("Actual"), max_length=200, null=True, blank=True)
+    start_date = models.DateField(_("Target start date"))
+    end_date = models.DateField(_("Target end date"))
+    indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Indicator: {self.indicator.name.lower()}| {self.start_date} to {self.end_date} Target"
+
+
 class SubProject(models.Model):
     """
     Sub Project definition.
@@ -145,17 +184,19 @@ class SubProject(models.Model):
     @property
     def fund_utilization_percent(self):
         project_id = self.project.id
-        funds_amount_qs = Fund.objects.filter(
-            sub_project__slug=self.slug
-        ).aggregate(Sum('amount'))
+        funds_amount_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
+            Sum("amount")
+        )
 
-        funds_balance_qs = Fund.objects.filter(
-            sub_project__slug=self.slug
-        ).aggregate(Sum('balance'))
-        amount_value = funds_amount_qs['amount__sum']
-        balance_value = funds_balance_qs['balance__sum']
+        funds_balance_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
+            Sum("balance")
+        )
+        amount_value = funds_amount_qs["amount__sum"]
+        balance_value = funds_balance_qs["balance__sum"]
         if amount_value is not None and balance_value is not None:
-            fund_utilization_percent = (float(balance_value) / float(amount_value)) * 100
+            fund_utilization_percent = (
+                float(balance_value) / float(amount_value)
+            ) * 100
         else:
             fund_utilization_percent = 0
         return fund_utilization_percent
@@ -186,7 +227,7 @@ class SubProject(models.Model):
         """Computes total funds related to this subproject."""
         related_funds_sum_qs = Fund.objects.filter(
             sub_project__slug=self.slug
-        ).aggregate(Sum('amount'))
+        ).aggregate(Sum("amount"))
 
-        amount_value = related_funds_sum_qs['amount__sum']
+        amount_value = related_funds_sum_qs["amount__sum"]
         return amount_value

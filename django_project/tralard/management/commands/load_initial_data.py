@@ -18,6 +18,7 @@ class Command(BaseCommand):
         call_command("loaddata", "tralard/fixtures/project_feedback.json", verbosity=0)
         call_command("loaddata", "tralard/fixtures/sub_project.json", verbosity=0)
         call_command("loaddata", "tralard/fixtures/indicator.json", verbosity=0)
+        call_command("loaddata", "tralard/fixtures/indicator_target.json", verbosity=0)
         call_command("loaddata", "tralard/fixtures/beneficiary.json", verbosity=0)
         call_command("loaddata", "tralard/fixtures/training_type.json", verbosity=0)
         call_command("loaddata", "tralard/fixtures/training.json", verbosity=0)

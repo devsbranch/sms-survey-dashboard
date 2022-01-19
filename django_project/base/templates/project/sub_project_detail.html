@@ -177,6 +177,130 @@
                     </div>
                   </div>
                 </div>
+
+                <div class="tabs m-3">
+                    <ul>
+                        {% comment %} <li class="is-active" data-tab="tab-general"><a>General</a></li>
+                        <li data-tab="tab-events"><a>Other Info</a></li> {% endcomment %}
+                        <li class="is-active" data-tab="tab-calls" style="font-size: 25px;">Indicators</li>
+                    </ul>
+                </div>
+
+                <!-- Calls -->
+                <div id="tab-calls" class="navtab-content">
+                    <!-- Logged call -->
+                    <div class="single-toggle-wrapper">
+                        <div class="toggle-wrap">
+                            <span class="trigger">
+                                    
+                                    <a><p style="font-size: 14px;">{{sub_project.name}} Indicators <i class="material-icons">keyboard_arrow_down</i></p></a>
+                            </span>
+                            <!-- Content -->
+                            <div class="toggle-container">
+                                <div class="meta-block">
+                                    {% comment %} <div class="call-label">Conversation abstract</div> {% endcomment %}
+                                    <div class="tasks-wrapper p-1">
+
+
+                                        <!-- Task Card -->
+                                        {% for indicator in indicators%}
+
+                                          <div class="task-card p-1" >
+                                              <div class="card-progress" data-progress="100"></div>
+                                              <div class="card-inner">
+                                                  <div class="task-meta">
+                                                      <span style="font-size: 16px; font-weight: 400;">
+                                                          {{indicator.name}}
+                                                      </span>
+                                                      {% if indicator.indicator_targets %}
+                                                        {% for target in indicator.indicator_targets %}
+                                                          <hr class="m-1" width=”80%”>
+                                                          Target for {{target.start_date}}  &#10148;  {{target.end_date}}
+                                                          <hr class="m-1" width=”80%”>
+                                                          <ul class="m-2">
+                                                            <li class="task-due-date m-1">
+                                                              Description: &#10148; {{target.description}} 
+                                                            </li>
+
+                                                            <li class="task-due-date m-1">
+                                                                Unit of Measure&#10148; {{target.unit_of_measure}}
+                                                            </li>
+
+                                                            <li class="task-due-date m-1">
+                                                                Baseline Value: &#10148; {{target.baseline_value}}
+                                                            </li>
+
+                                                            <li class="task-due-date m-1">
+                                                                Target Value: &#10148; {{target.target_value}}
+                                                            </li>
+
+                                                            <li class="task-due-date m-1">
+                                                                Actual Value: &#10148; {% if target.actual_value %} {{target.actual_value}} {% else %} 0 {% endif %}
+                                                            </li>
+                                                          </ul>
+
+                                                          {% endfor %}
+                                                        {% else %}
+
+                                                          <ul>
+                                                            <li class="task-due-date m-1">No Targets set for this Indicator</li>
+                                                          </ul>
+
+                                                        {% endif %}
+                                                  </div>
+                                                  {% comment %} <div class="task-info">
+                                                      
+                                                      <div class="more-drop">
+                                                          <!-- Task dropdown -->
+                                                          <div class="dropdown is-right dropdown-trigger">
+                                                              <div class="button" aria-haspopup="true"
+                                                                  aria-controls="dropdown-menu">
+                                                                  <span
+                                                                      class="material-icons">more_vert</span>
+                                                              </div>
+
+                                                              <div class="dropdown-menu" id="dropdown-menu"
+                                                                  role="menu">
+                                                                  <div class="dropdown-content">
+                                                                      <a href="#" class="dropdown-item">
+                                                                          Edit
+                                                                      </a>
+                                                                      <a class="dropdown-item">
+                                                                          Settings
+                                                                      </a>
+                                                                      <hr class="dropdown-divider">
+                                                                      <a href="#"
+                                                                          class="dropdown-item is-flex">
+                                                                          <span
+                                                                              class="material-icons">person_add</span>
+                                                                          Invite
+                                                                      </a>
+                                                                  </div>
+                                                              </div>
+                                                          </div>
+                                                      </div>
+                                                  </div> {% endcomment %}
+                                              </div>
+                                          </div>
+
+                                        {% endfor %}
+
+
+
+
+
+
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- /Calls -->
+
+
               </div>
 
               <div class="column is-8">
