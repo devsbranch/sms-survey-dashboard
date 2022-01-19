@@ -1,10 +1,9 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms.models import model_to_dict
-from django.http import HttpResponseRedirect
-from django.http.response import JsonResponse
 from django.urls import reverse_lazy
+from django.forms.models import model_to_dict
+from django.http.response import JsonResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import (
     redirect,
     get_object_or_404
@@ -14,12 +13,12 @@ from django.views.generic import (
     ListView
 )
 
-from tralard.utils import user_profile_update_form_validator
-from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.forms.sub_project import SubProjectForm
+from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
 from tralard.models.sub_project import SubProject, Indicator
+from tralard.utils import user_profile_update_form_validator
 
 
 @login_required(login_url="/login/")

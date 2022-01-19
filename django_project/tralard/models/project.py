@@ -296,12 +296,27 @@ class Project(models.Model):
     @property
     def get_total_fund_balance(self):
         """Computes total funds balance related to this project."""
-        related_funds_sum_qs = Fund.objects.filter(
+        related_funds_balance_sum_qs = Fund.objects.filter(
             sub_project__project__slug=self.slug
         ).aggregate(Sum('balance'))
 
-        amount_value = related_funds_sum_qs['balance__sum']
+        amount_value = related_funds_balance_sum_qs['balance__sum']
         return amount_value
+    
+    @property
+    def get_total_used_funds(self):
+        """Computes total funds used related to this project."""
+        total_project_funds = self.get_total_project_fund
+        total_project_funds_balance = self.get_total_fund_balance
+        total_project_funds_used = total_project_funds - total_project_funds_balance
+        return total_project_funds_used
+
+    @property
+    def get_total_used_funds_percent(self):
+        """Computes total funds utilized as a percent related to this project."""
+        total_project_funds = self.get_total_project_fund
+        total_project_funds_utilized_percent = (self.get_total_used_funds / total_project_funds) * 100
+        return round(total_project_funds_utilized_percent)
     
     @property
     def logo_url(self):

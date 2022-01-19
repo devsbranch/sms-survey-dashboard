@@ -4,7 +4,7 @@
         "pk": 1,
         "fields": {
             "slug": "fichilisya-vegetable-oil-production-expenditure",
-            "amount": 15625.0,
+            "amount": 1525.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 1,
@@ -16,7 +16,7 @@
         "pk": 2,
         "fields": {
             "slug": "tutulane-goat-rearing-expenditure",
-            "amount": 18750.0,
+            "amount": 1850.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 2,
@@ -28,7 +28,7 @@
         "pk": 3,
         "fields": {
             "slug": "chilanga-fish-harvest-winter-crop-expenditure",
-            "amount": 43750.0,
+            "amount": 4350.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 3,
@@ -40,7 +40,7 @@
         "pk": 4,
         "fields": {
             "slug": "wuyakwelelo-goat-rearing-and-vegetable-expenditure",
-            "amount": 7500.0,
+            "amount": 750.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 4,
@@ -52,7 +52,7 @@
         "pk": 5,
         "fields": {
             "slug": "salamo-bulking-center-expenditure",
-            "amount": 12500.0,
+            "amount": 1200.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 5,
@@ -64,7 +64,7 @@
         "pk": 6,
         "fields": {
             "slug": "chiundaponde-bulking-center-expenditure",
-            "amount": 8500.0,
+            "amount": 850.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 6,
@@ -76,7 +76,7 @@
         "pk": 7,
         "fields": {
             "slug": "dytech-honey-processing-project-expenditure",
-            "amount": 62500.0,
+            "amount": 6250.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 7,
@@ -88,7 +88,7 @@
         "pk": 8,
         "fields": {
             "slug": "kalwalwa-project-expenditure",
-            "amount": 84375.0,
+            "amount": 8375.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 8,
@@ -100,7 +100,7 @@
         "pk": 9,
         "fields": {
             "slug": "katangalika-bulking-center-expenditure",
-            "amount": 18750.0,
+            "amount": 8750.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 9,
@@ -112,7 +112,7 @@
         "pk": 10,
         "fields": {
             "slug": "chibale-bulking-center-expenditure",
-            "amount": 45625.0,
+            "amount": 4625.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 10,
@@ -124,7 +124,7 @@
         "pk": 11,
         "fields": {
             "slug": "twasechela-goat-rearing-expenditure",
-            "amount": 30000.0,
+            "amount": 3000.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 11,
@@ -136,7 +136,7 @@
         "pk": 12,
         "fields": {
             "slug": "lumika-project-expenditure",
-            "amount": 32500.0,
+            "amount": 3500.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 12,
@@ -148,7 +148,7 @@
         "pk": 13,
         "fields": {
             "slug": "sambolye-project-expenditure",
-            "amount": 12500.0,
+            "amount": 1500.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 13,
@@ -160,7 +160,7 @@
         "pk": 14,
         "fields": {
             "slug": "kalwalwa-project-expenditure",
-            "amount": 20000.0,
+            "amount": 2000.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 14,
@@ -172,7 +172,7 @@
         "pk": 15,
         "fields": {
             "slug": "kabembe-project-expenditure",
-            "amount": 11875.0,
+            "amount": 1875.0,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 15,
@@ -184,7 +184,7 @@
         "pk": 16,
         "fields": {
             "slug": "kanyembo-project-expenditure",
-            "amount": 44062.5,
+            "amount": 4062.5,
             "amount_currency": "ZMK",
             "expenditure_date": "2022-01-14",
             "disbursment": 16,
