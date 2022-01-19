@@ -1,12 +1,10 @@
-from django.shortcuts import get_object_or_404
+
+import string
 from django.utils.crypto import get_random_string
 
 from djmoney.money import Money
+
 from rolepermissions.roles import get_user_roles
-
-from tralard.models.profile import Profile
-from tralard.forms.profile import ProfileForm
-
 
 def unique_slugify(instance, slug):
     """
@@ -28,7 +26,6 @@ def unique_slugify(instance, slug):
     while model.objects.filter(slug=unique_slug).exists():
         unique_slug = slug + get_random_string(length=4)
     return unique_slug
-
 
 def compute_total_amount(model_name, object_id: int, action: str) -> Money:
     """
@@ -78,7 +75,7 @@ def get_balance(initial_amount: float, total_amount: float) -> Money:
 
 
 def check_requested_deduction_against_balance(
-        balance, requested_amount, requested_semantic, balance_semantic
+    balance, requested_amount, requested_semantic, balance_semantic
 ) -> Money:
     """
     Check if the requested amount is greater than the balance.
@@ -104,21 +101,24 @@ def check_requested_deduction_against_balance(
         )
     return requested_amount
 
-
 def current_user_roles(user):
     uncleaned_user_roles = get_user_roles(user)
     cleaned_user_roles = []
-
+    
     for role in uncleaned_user_roles:
         cleaned_user_roles.append(role.get_name())
     user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
     return user_roles
 
-
 def user_profile_update_form_validator(method, user):
-    user_profile = None
-    profile_form = None
+    try:
+        from django.shortcuts import get_object_or_404
+        from tralard.models.profile import Profile
+        from tralard.forms.profile import ProfileForm
+    except:
+        pass
     user_profile = get_object_or_404(Profile, user=user)
     user_roles = current_user_roles(user_profile.user)
     profile_form = ProfileForm(method or None, instance=user_profile)
     return user_roles, user_profile, profile_form
+    

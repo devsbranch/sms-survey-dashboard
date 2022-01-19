@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.map_utils import build_map_context
 
-
 class MapTemplateView(LoginRequiredMixin, TemplateView):
     template_name = "tralard/map.html"
 

@@ -30,6 +30,7 @@ class District(AbstractLocation):
     location = models.PointField(
         _("Location"),
         geography=True,
+        spatial_index=True,
         blank=True,
         null=True,
         srid=4326
