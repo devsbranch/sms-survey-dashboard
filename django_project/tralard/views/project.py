@@ -143,11 +143,15 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         form = SubProjectForm(self.request.POST, self.request.FILES or None)
         if form.is_valid():
+            project_slug = self.kwargs.get("project_slug", None)
+            project = Project.objects.get(slug=project_slug)
+            form.instance.project = project
+
             form.save()
             messages.success(request, "SubProject was successfully added!")
 
             return redirect(
-                reverse(
+                reverse_lazy(
                     "tralard:subproject-manage",
                     kwargs={
                         "program_slug": form.instance.project.program.slug,
@@ -164,7 +168,7 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
             for error in field.errors:
                 messages.error(self.request, error)
         return redirect(
-            reverse(
+            reverse_lazy(
                 "tralard:project-detail",
                 kwargs={
                     "program_slug": self.kwargs.get("program_slug", None),
