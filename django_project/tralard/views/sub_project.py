@@ -185,8 +185,6 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
             Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
         )
         context["title"] = "Sub Project Trainings"
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
@@ -389,8 +387,19 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
             raise Http404("Sorry! We could not find your subproject!")
 
     def get_context_data(self, **kwargs):
+        sub_project = self.get_object()
+        sub_proj_indicators = sub_project.indicators.all()
+        indicators = []
+
+        for indicator_object in sub_proj_indicators:
+            indicator_data = {}
+            indicator_data["name"] = indicator_object.name
+            indicator_data["indicator_targets"] = indicator_object.indicatortarget_set.all().order_by("start_date")
+            indicators.append(indicator_data)
+
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
-        context["title"] = "sub project"
+        context["title"] = "Sub Project"
+        context["indicators"] = indicators
         return context
 
 
@@ -675,8 +684,6 @@ class SubProjectBeneficiaryOrgListView(
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         return context
 
@@ -720,8 +727,6 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         self.user_profile_utils = user_profile_update_form_validator(
             self.request.POST, self.request.user
         )
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["sub_project"] = self.sub_project
         context["funds"] = self.subproject_funds_qs

@@ -13,7 +13,7 @@ from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from tralard.utils import unique_slugify, serialize_model_object
+from tralard.utils import unique_slugify
 
 from tralard.models.fund import Fund
 
@@ -241,9 +241,6 @@ class Project(models.Model):
     approved_objects = ApprovedProjectManager()
     unapproved_objects = UnapprovedProjectManager()
     created = models.DateTimeField(auto_now_add=True)
-
-    def to_dict(self):
-        return serialize_model_object(self)
 
     def __str__(self):
         return self.name.title()

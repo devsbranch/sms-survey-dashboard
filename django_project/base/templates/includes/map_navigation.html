@@ -165,47 +165,32 @@
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">
-                        <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                             data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                        {% if request.user.profile.profile_photo %}
+                            <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo img-xs rounded-circle" alt="">
+                        {% else %}
+                            <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt="{{ request.user.profile.user.username }}'s default profile photo"/>
+                        {% endif %}
                     </div>
                     <div class="drop-wrapper accounts-drop">
                         <div class="drop-inner has-arrow">
                             <div class="head-block">
-                                <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                                     data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}">
+                                {% if request.user.profile.profile_photo %}
+                                    <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo img-xs rounded-circle" alt="">
+                                {% else %}
+                                    <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt="{{ request.user.profile.user.username }}'s default profile photo"/>
+                                {% endif %}
                                 <h3>
                                     {{ request.user.username }}
                                 </h3>
                                 <p>
                                     {{ request.user.email }}
                                 </p>
-                                <a class="button is-rounded">Manage Account</a>
-                            </div>
-                            <div class="accounts-block">
-                                <a class="account">
-                                    <img src="{% static 'assets/images/avatars/elie.jpg' %}" alt="" 
-                                         data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}">
-                                    <div class="meta">
-                                        <span>Elie Daniels</span>
-                                        <span>elie@cssninja.io</span>
-                                    </div>
-                                </a>
-                                <a class="account">
-                                    <img src="{% static 'assets/images/avatars/hanzo.svg' %}" alt="" 
-                                         data-demo-src="{% static 'assets/images/avatars/hanzo.svg' %}">
-                                    <div class="meta">
-                                        <span>Css Ninja</span>
-                                        <span>hanzo@cssninja.io</span>
-                                    </div>
-                                </a>
-                                <a class="account">
-                                    <img src="{% static 'assets/images/avatars/lakisha.jpg' %}" alt="" 
-                                         data-demo-src="{% static 'assets/images/avatars/lakisha.jpg' %}">
-                                    <div class="meta">
-                                        <span>Lakisha Williams</span>
-                                        <span>lakisha@cssninja.io</span>
-                                    </div>
-                                </a>
+                                <a class="button is-rounded" id="manage-user-account">Manage Account</a>
+                                <script>
+                                    document.getElementById("manage-user-account").addEventListener("click", ()=> {
+                                        document.getElementById("user-profile-page-opener-button").click()
+                                    })
+                                </script> 
                             </div>
                             <div class="logout-block">
                                 <a href={% url 'logout' %} class="button">Logout</a>

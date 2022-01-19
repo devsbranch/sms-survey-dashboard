@@ -32,8 +32,6 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context["title"] = "Program: Tralard"
         context["program_list"] = Program.objects.all().order_by("-started")[:5]
         context["project_count"] = Project.objects.all().count()
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["total_project_funds"] = self.cleaned_total_project_funds
         context["subproject_count"] = SubProject.objects.all().count()

@@ -18,8 +18,6 @@
                 {% include 'includes/messages.html' %}
             </div>
 
-
-    
             <!-- /Right sidebar trigger -->
             <a id="mobile-dashboard-trigger" class="navbar-item hamburger-btn is-hidden-desktop" href="javascript:void(0);">
                 <span class="menu-toggle">
@@ -179,14 +177,10 @@
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">
-                        {% if self.request.user.profile.profile_photo %}
-
-                        <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                             data-demo-src="{{ request.user.profile.profile_photo.url }}">
-                        {% else %}
-                            <img src="{% static 'assets/images/avatars/helen.jpg' %}" alt="" 
-                                data-demo-src="{% static '/assets/images/logos/logo.png' %}">
-  
+                        {% if request.user.profile.profile_photo %}
+                            <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ request.user.profile.profile_photo.url }}">
+                        {% else %} 
+                            <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="/assets/images/logos/logo.png">
                         {% endif %}
                     </div>
                     <div class="drop-wrapper accounts-drop">

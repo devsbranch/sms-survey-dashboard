@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 
 from django.utils.translation import gettext_lazy as _
 
+from rolepermissions.roles import get_user_roles
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 
@@ -81,3 +82,13 @@ class Profile(models.Model):
             return f"{self.user.first_name} {self.user.last_name}'s Profile"
         else:
             return f"{self.user.username}'s Profile"
+    
+    @property
+    def current_user_roles(self):
+        uncleaned_user_roles = get_user_roles(self.user)
+        cleaned_user_roles = []
+        
+        for role in uncleaned_user_roles:
+            cleaned_user_roles.append(role.get_name())
+        user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
+        return user_roles

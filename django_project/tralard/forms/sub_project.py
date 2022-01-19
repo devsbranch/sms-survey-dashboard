@@ -44,7 +44,7 @@ class SubProjectForm(ModelForm):
     class Meta:
 
         model = SubProject
-        exclude = ["created", "description", "focus_area"]
+        exclude = ["created", "description", "focus_area", "project"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -55,7 +55,6 @@ class SubProjectForm(ModelForm):
         self.helper.layout = Layout(
             Row(
                 Column("name", css_class="form-group col-md-12 mb-0"),
-                Column("project", css_class="form-group col-md-12 mb-0"),
                 Column("supervisor", css_class="form-group col-md-12 mb-0"),
                 Column("size", css_class="form-group col-md-12 mb-0"),
                 Column("indicators", css_class="form-group col-md-12 mb-0"),

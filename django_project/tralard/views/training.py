@@ -50,8 +50,6 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         self.training_list = []
         self.trainings = Training.objects.all()
         context["title"] = "Training"
-        context["user_roles"] = self.user_profile_utils[0]
-        context["profile"] = self.user_profile_utils[1]
         context["profile_form"] = self.user_profile_utils[2]
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)

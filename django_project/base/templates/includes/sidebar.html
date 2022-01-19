@@ -204,8 +204,8 @@
                                     display: flex-container;
                                     font-size: 16px;
                                   " class="flex-container">
-                                  {% for role in user_roles %}
-                                  <span class="badge badge-info">{{ role }}</span>
+                                  {% for role in request.user.profile.current_user_roles %}
+                                  <span class="badge badge-info">{{ role }} |</span>
                                   {% endfor %}
                                   <span class="e"></span>
                                 </div>
@@ -688,6 +688,9 @@
       <li class="have-children">
         <a href="/reports_builder/"><span class="material-icons">grid_on</span>Reports</a>
        
+      </li>
+      <li class="have-children">
+        <a href="{% url 'tralard:map' %}"><span class="material-icons">map</span>Map</a>
       </li>
     </ul>
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">

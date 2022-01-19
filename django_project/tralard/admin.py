@@ -18,6 +18,7 @@ from tralard.models import (
     District,
     Ward,
     Indicator,
+    IndicatorTarget,
     Expenditure,
     Disbursement,
 )
@@ -47,6 +48,7 @@ admin.site.register(District)
 admin.site.register(Province)
 admin.site.register(SubProject)
 admin.site.register(Indicator)
+admin.site.register(IndicatorTarget)
 admin.site.register(Attendance)
 admin.site.register(Expenditure)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
