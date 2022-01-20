@@ -94,13 +94,24 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         self.subproject_paginator_list = self.subproject_paginator.get_page(
             self.subproject_page_number
         )
+        self.beneficiary_paginator = Paginator(self.beneficiaries, 8)
+        self.beneficiary_page_number = self.request.GET.get("beneficiary_page")
+        self.beneficiary_paginator_list = self.beneficiary_paginator.get_page(
+            self.beneficiary_page_number
+        )
+        
+        self.project_paginator = Paginator(self.projects, 9)
+        self.project_page_number = self.request.GET.get("project_page")
+        self.project_paginator_list = self.project_paginator.get_page(
+            self.project_page_number
+        )
         context['title'] = 'Program Detail'
         context['project_form'] = ProjectForm
-        context['projects'] = self.projects
+        context['projects'] = self.project_paginator_list
         context['program'] = self.program_object
         context['sub_project_list'] = self.subproject_paginator_list
         context['sub_project_page_number'] = self.subproject_page_number
-        context['beneficiary_list'] = self.beneficiaries
+        context['beneficiary_list'] = self.beneficiary_paginator_list
         context['total_projects'] = Project.objects.filter(program=self.program_object).count()
         context['total_sub_projects'] = SubProject.objects.all().count()
         context['total_beneficiary_count'] = Beneficiary.objects.all().count()

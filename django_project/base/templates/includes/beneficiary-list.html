@@ -113,6 +113,23 @@
 				</div>
 			</div>
 			{% endfor %}
+			<div class="pagination align-center" style="align-content: center;">
+				<hr />
+				<span style="font-size: x-large;" class="step-links">
+					{% if beneficiary_list.has_previous %}
+					<a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?beneficiary_page=1">&laquo;&laquo; first</a>
+					<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?beneficiary_page={{ beneficiary_list.previous_page_number }}" data-title="previous page">&laquo;</a>
+					{% endif %}
+					
+					<span class="current" style="color: #21546d;">
+						{{ beneficiary_list.number }} of {{ beneficiary_list.paginator.num_pages }}.
+					</span>
+					{% if beneficiary_list.has_next %}
+					<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?beneficiary_page={{ beneficiary_list.next_page_number }}" data-title="next page">&raquo;</a>
+					<a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?beneficiary_page={{ beneficiary_list.paginator.num_pages }}">last &raquo;&raquo;</a>
+					{% endif %}
+				</span>
+			</div>
 		</div>
 	</div>
 </div>
