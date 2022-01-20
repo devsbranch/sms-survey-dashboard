@@ -12,15 +12,16 @@ View classes for a SubProject
 # noinspection PyUnresolvedReferences
 import logging
 
-from braces.views import LoginRequiredMixin
+from django.db.models import Q
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.messages.views import SuccessMessageMixin
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from braces.views import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
-from django.db import IntegrityError
-from django.db.models import Q
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import (
     JsonResponse,
     HttpResponseRedirect,
@@ -30,7 +31,6 @@ from django.shortcuts import (
     get_object_or_404,
     redirect
 )
-from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     CreateView,
@@ -39,24 +39,21 @@ from django.views.generic import (
     UpdateView,
 )
 
-from tralard.forms import BeneficiaryCreateForm
-from tralard.forms.fund import (
-    ExpenditureForm,
-    FundForm,
-    DisbursementForm
-)
-from tralard.forms.sub_project import SubProjectForm
+from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
+from tralard.forms import BeneficiaryCreateForm
+from tralard.models.fund import Disbursement, Fund
+from tralard.forms.sub_project import SubProjectForm
 from tralard.models import (
     Beneficiary,
     Project,
     SubProject
 )
-from tralard.models.fund import (
-    Disbursement,
-    Fund
+from tralard.forms.fund import (
+    ExpenditureForm,
+    FundForm,
+    DisbursementForm
 )
-from tralard.models.training import Training
 
 logger = logging.getLogger(__name__)
 

@@ -1,30 +1,14 @@
-from re import template
-import json
-
-from django.views.generic import (
-    TemplateView,
-    CreateView,
-    UpdateView,
-    ListView,
-)
-from django.shortcuts import (
-    HttpResponse,
-    redirect,
-    render,
-    get_object_or_404,
-)
+# -*- coding: utf-8 -*-
+from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+from django.views.generic import CreateView
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.urls import reverse_lazy
-from django.http import JsonResponse
-from django.core import serializers
 
-from tralard.models.beneficiary import Beneficiary
-from tralard.forms.training import TrainingForm
-from tralard.forms.profile import ProfileForm
 from tralard.models.training import Training
-from tralard.models.profile import Profile
+from tralard.forms.training import TrainingForm
+from tralard.models.beneficiary import Beneficiary
 
 
 class TrainingListView(LoginRequiredMixin, CreateView):

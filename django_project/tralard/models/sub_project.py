@@ -2,16 +2,14 @@
 """
 Sub Project model definitions for tralard app.
 """
-import logging
 import json
+import logging
 
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.aggregates import Sum
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-
-from tinymce import HTMLField
 
 from tralard.models.fund import Fund
 from tralard.models.ward import Ward
@@ -20,7 +18,6 @@ from tralard.models.training import Training
 from tralard.models.province import Province
 from tralard.models.district import District
 from tralard.models.beneficiary import Beneficiary
-
 from tralard.constants import PROJECT_STATUS_CHOICES
 
 User = get_user_model()

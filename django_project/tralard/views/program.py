@@ -1,16 +1,17 @@
-from django.http import JsonResponse
+# -*- coding: utf-8 -*-
 from django.urls import reverse_lazy
-from django.forms import model_to_dict
+from django.http import JsonResponse
 from django.views.generic import ListView
-from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.models.program import Program
 from tralard.models.project import Project
 from tralard.forms.project import ProjectForm
+from tralard.models.beneficiary import Beneficiary
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
+
 
 class ProgramDetailView(LoginRequiredMixin, ListView):
     model = Project

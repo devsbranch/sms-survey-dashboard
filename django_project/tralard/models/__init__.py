@@ -1,5 +1,4 @@
-# from tralard.models.beneficiary import * #noqa this is to come from dj_beneficiary app
-
+# -*- coding: utf-8 -*-
 from tralard.models.ward import * # noqa
 from tralard.models.fund import *  # noqa
 from tralard.models.profile import * # noqa

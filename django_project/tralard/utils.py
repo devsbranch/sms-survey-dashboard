@@ -67,6 +67,7 @@ def get_balance(initial_amount: float, total_amount: float) -> Money:
     ----------
     initial_amount : float
         The initial amount of the fund.
+        
     total_amount : float
         The total amount of the disbursement.
     """
@@ -84,10 +85,13 @@ def check_requested_deduction_against_balance(
     ----------
     balance : float
         The balance of the fund or disbursment.
+
     requested_amount : float
         The requested amount.
+
     requested_semantic : str
         The requested semantic.
+
     balance_semantic : str
         The balance semantic.
 

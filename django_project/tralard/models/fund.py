@@ -20,20 +20,10 @@ from tralard.utils import (
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
 
+from tralard.constants import ZMK, CURRENCY_CHOICES
 
 logger = logging.getLogger(__name__)
 
-ZMK = 'ZMK'
-USD = 'USD'
-GBP = 'GBP'
-EU = 'EU'
-
-CURRENCY_CHOICES = [
-        (ZMK, 'ZMK'), 
-        (USD, 'USD'),
-        (GBP, 'GBP'),
-        (EU, 'EU')
-    ]
 
 class ApprovedFundManager(models.Manager):
     """Custom manager that shows pproved project funds."""

@@ -1,15 +1,12 @@
-from django.db.models import F
-from tralard.models.profile import Profile
-from tralard.forms.profile import ProfileForm
+# -*- coding: utf-8 -*-
 from django.db.models import Sum
 from django.views.generic import TemplateView
-from django.views.generic.edit import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import Permission
-from django.shortcuts import get_object_or_404
-from tralard.models.program import Program
-from tralard.models.project import Project
+
 from tralard.models.fund import Fund
+from tralard.models.profile import Profile
+from tralard.models.project import Project
+from tralard.models.program import Program
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
@@ -79,6 +76,7 @@ class ProjectListView(LoginRequiredMixin, TemplateView):
         context = super(ProjectListView, self).get_context_data()
         context["title"] = "Projects"
         return context
+
 
 class DashboardExtrasView(LoginRequiredMixin, TemplateView):
     template_name = "tralard/dashboard-chartjs.html"

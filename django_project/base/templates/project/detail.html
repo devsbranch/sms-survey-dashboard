@@ -85,7 +85,7 @@
                         <div class="deal-meta">
                             <div class="deal-price">
                                 <span>ZMK {{ project.get_total_project_fund|intcomma }}</span>
-                                <span>used: ZMK {{ project.get_total_used_funds|intcomma }}, balance: ZMK {{ project.get_total_fund_balance|intcomma }}</span>
+                                <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}, used: ZMK {{ project.get_total_used_funds|intcomma }}</span>
                             {% comment %} <span 
                                 class="project-pies">{{ project.get_total_used_funds_percent }}/100
                             </span>  {% endcomment %}

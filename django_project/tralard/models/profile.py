@@ -2,7 +2,6 @@ import os
 
 from django.db import models
 from django.conf import settings
-from django.utils.text import slugify
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -12,25 +11,14 @@ from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
 from rolepermissions.roles import get_user_roles
 
-from tralard.utils import unique_slugify, user_profile_update_form
+from tralard.utils import user_profile_update_form
+from tralard.constants import GENDER_CHOICES
 
-GENDER_CHOICES = (
-    ("Male", _("Male")),
-    ("Female", _("Female")),
-    ("Transgender", _("Transgender")),
-    ("Other", _("Other"))
-)
 
 class Profile(models.Model):
     """
     A model for storing addtional imformation about User.
     """
-
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
     user = models.OneToOneField(
         User, 
         on_delete=models.CASCADE
@@ -53,7 +41,6 @@ class Profile(models.Model):
     null=True, 
     blank=True
     )
-   
     profile_photo = ProcessedImageField(
         upload_to="profile_photo",
         processors=[ResizeToFill(512, 512)],
@@ -85,15 +72,9 @@ class Profile(models.Model):
         null=True, 
         blank=True
     )
-
     class Meta:
         verbose_name = "User Profile"
         verbose_name_plural = "User Profiles"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slugify(self, slugify(f"{self.user.username}"))
-        super().save(*args, **kwargs)
 
     def __str__(self):
         if self.user.first_name and self.user.last_name:
@@ -116,7 +97,6 @@ class Profile(models.Model):
         update_form = user_profile_update_form(self)
         return update_form
 
-    
     @property
     def profile_photo_url(self):
         if self.profile_photo:

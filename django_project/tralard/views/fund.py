@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.shortcuts import redirect
@@ -6,13 +7,13 @@ from django.views.generic import CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from tralard.models.project import Project
+from tralard.forms.fund import FundForm, DisbursementForm
 from tralard.models.fund import (
     Disbursement,
     Expenditure,
     Fund,
 )
-from tralard.models.project import Project
-from tralard.forms.fund import FundForm, DisbursementForm
 
 
 class FundListAndCreateView(LoginRequiredMixin, CreateView):

@@ -4,7 +4,6 @@ Project model definitions for tralard app.
 """
 import os
 import logging
-import json
 
 from django.db import models
 from django.db.models import Sum
@@ -15,9 +14,9 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 
-from tralard.utils import unique_slugify
 
 from tralard.models.fund import Fund
+from tralard.utils import unique_slugify
 # (TODO:Alison) take the get_related_sub_project method to utilities or model managers.
 # not very safe (circular import issue candidate) 
 # except that we are referencing to project under subproject via string reference 

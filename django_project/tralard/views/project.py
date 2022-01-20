@@ -1,23 +1,19 @@
+# -*- coding: utf-8 -*-
 from django.contrib import messages
 from django.urls import reverse_lazy
-from django.forms.models import model_to_dict
 from django.http.response import JsonResponse
+from django.forms.models import model_to_dict
+from django.views.generic import TemplateView, ListView
+from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import (
-    redirect,
-    get_object_or_404
-)
-from django.views.generic import (
-    TemplateView,
-    ListView
-)
 
-from tralard.forms.sub_project import SubProjectForm
-from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
+from tralard.forms.sub_project import SubProjectForm
+from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.models.sub_project import SubProject, Indicator
+
 
 @login_required(login_url="/login/")
 def project_create(request, program_slug):
@@ -88,7 +84,6 @@ def project_delete(request, program_slug, project_slug):
     return redirect(
         reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
     )
-
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):

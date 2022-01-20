@@ -1,23 +1,19 @@
-import json
-from django.contrib.auth.decorators import login_required
+# -*- coding: utf-8 -*-
 
-from django.db.models import fields
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.forms.models import model_to_dict
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage
+from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
-from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.views.generic import CreateView
+from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 
-
-from tralard.models import Beneficiary, Project, Program, Ward, SubProject
 
 from tralard.forms import BeneficiaryCreateForm
+from tralard.models import Beneficiary, Project, Ward, SubProject
 
 class PaginatorMixin(Paginator):
     def validate_number(self, number):
