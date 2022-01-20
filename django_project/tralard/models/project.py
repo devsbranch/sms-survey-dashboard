@@ -4,6 +4,7 @@ Project model definitions for tralard app.
 """
 import os
 import logging
+import json
 
 from django.db import models
 from django.db.models import Sum
@@ -13,16 +14,17 @@ from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
+
 from tralard.utils import unique_slugify
 
 from tralard.models.fund import Fund
-
 # (TODO:Alison) take the get_related_sub_project method to utilities or model managers.
 # not very safe (circular import issue candidate) 
 # except that we are referencing to project under subproject via string reference 
 # and not by imoprt - so its safe this way
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
+from tralard.constants import PROJECT_STATUS_CHOICES
 
 from tinymce import HTMLField
 
@@ -47,8 +49,15 @@ class UnapprovedProjectManager(models.Manager):
         """Query set generator."""
         return super(
             UnapprovedProjectManager, self).get_queryset().filter(
-            approved=False)
+            approved=False)    
 
+
+class SubProjectQueryManager(models.Manager):
+    """Custom project manager that shows related subprojects."""
+    def get_related_sub_project(self):
+        return super(SubProjectQueryManager, self).get_queryset().filter(
+            project__slug=self.slug
+        )
 
 class Representative(models.Model):
     """
@@ -131,7 +140,7 @@ class Representative(models.Model):
 class Project(models.Model):
     """
     Project definition.
-    """
+    """     
     slug = models.SlugField(
         max_length=255,
         null=True,
@@ -151,6 +160,13 @@ class Project(models.Model):
         help_text=_('Whether this project has an active funding.'),
         default=False,
         null=True
+    )
+    status = models.CharField(
+        _("Project Status"),
+        max_length=50,
+        choices=PROJECT_STATUS_CHOICES,
+        null=True,
+        blank=True,
     )
     description = models.CharField(
         help_text=_('A short description for the project'),
@@ -240,6 +256,7 @@ class Project(models.Model):
     objects = models.Manager()
     approved_objects = ApprovedProjectManager()
     unapproved_objects = UnapprovedProjectManager()
+    get_related_sub_projects = SubProjectQueryManager()
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -261,13 +278,6 @@ class Project(models.Model):
                                 'project_slug': self.slug
                             }
                             )
-
-    @property
-    def get_related_sub_projects(self):
-        sub_projects_queryset = SubProject.objects.filter(
-            project__slug=self.slug
-        )
-        return sub_projects_queryset
 
     @property
     def count_sub_projects(self):
@@ -302,6 +312,15 @@ class Project(models.Model):
 
         amount_value = related_funds_balance_sum_qs['balance__sum']
         return amount_value
+
+    @property
+    def count_approved_sub_projects(self):
+        """Returns approved sub-projects of this project."""
+        sub_projects_queryset = SubProject.objects.filter(
+            project__slug=self.slug,
+            approved=True
+        ).count()
+        return sub_projects_queryset
     
     @property
     def get_total_used_funds(self):

@@ -2,6 +2,7 @@
 """
 Fund model definitions for tralard app.
 """
+from datetime import datetime
 import logging
 
 from django.db import models
@@ -34,8 +35,6 @@ CURRENCY_CHOICES = [
         (EU, 'EU')
     ]
 
-
-
 class ApprovedFundManager(models.Manager):
     """Custom manager that shows pproved project funds."""
     def get_queryset(self):
@@ -54,6 +53,27 @@ class UnapprovedFundManager(models.Manager):
             UnapprovedFundManager, self).get_queryset().filter(
                 approved=False)
 
+class FundCountManager(models.Manager):
+    """ Computes total funds spent in current year """
+    def get_total_funds_in_year(self):   
+        current_year = datetime.now().year
+        year_labels = list(set(list()))
+        year_data = list(set(list()))
+
+        for i in range(5):
+            year_labels.append(current_year - i)
+            year_data.append(
+                int(self.get_queryset().filter(funding_date__year__gte=current_year - i, funding_date__year__lte=current_year - i
+                ).aggregate(
+                    total_funds=Sum('amount')
+                )['total_funds'] or 0)
+            )     
+   
+        
+        return {
+            'year_labels': year_labels,
+            'total_funds': year_data            
+        }
 
 class Fund(models.Model):
     """
@@ -111,6 +131,7 @@ class Fund(models.Model):
     objects = models.Manager()
     approved_objects = ApprovedFundManager()
     unapproved_objects = UnapprovedFundManager()
+    count_objects = FundCountManager()
 
     # noinspecti
     class Meta:
@@ -170,8 +191,7 @@ class Fund(models.Model):
 
         amount_value = related_funds_sum_qs['amount__sum']
         return amount_value
-
-
+          
 class Disbursement(models.Model):
     """
     Project Fund disbursement definition.
