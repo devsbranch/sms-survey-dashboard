@@ -43,37 +43,18 @@ class TrainingListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self):
         context = super(TrainingListView, self).get_context_data()
-        self.training_list = []
         self.trainings = Training.objects.all()
         context["title"] = "Training"
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
-
-        for training in self.trainings:
-            self.training_list.append(
-                {
-                    "id": training.id,
-                    "slug": training.slug,
-                    "sub_project": training.sub_project,
-                    "title": training.title,
-                    "training_type": training.training_type,
-                    "start_date": training.start_date,
-                    "end_date": training.end_date,
-                    "notes": training.notes,
-                    "moderator": training.moderator,
-                    "completed": training.completed,
-                    "training_edit_form": TrainingForm(
-                        self.request.POST or None, instance=training
-                    ),
-                }
-            )
-        self.training_paginator = Paginator(self.training_list, 10)
+            
+        self.training_paginator = Paginator(self.trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
         self.training_paginator_list = self.training_paginator.get_page(
             self.training_page_number
         )
-        context["trainings"] = self.training_paginator_list
+        context["trainings"] = self.training_paginator.get_page(self.training_page_number)
         return context
 
 

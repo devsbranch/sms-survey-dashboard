@@ -118,8 +118,8 @@
                          document.getElementById("training-entry-form").innerHTML = `
                            <form action="{% url 'tralard:training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.slug %}" name="sub_project_training_form" method="post" enctype="multipart/form-data">
                              {% csrf_token %}
-                             {% load crispy_forms_tags %} 
-                             {% crispy training.training_edit_form training.training_edit_form.helper %}
+                             {% load crispy_forms_tags %}
+                             {% crispy training.training_form training.training_form.helper %}
                            </span>
                           `;
                        }

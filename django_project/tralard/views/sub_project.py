@@ -176,7 +176,6 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
     def get_context_data(self):
         context = super(SubProjectTrainingListView, self).get_context_data()
         self.subproject_slug = self.kwargs.get("subproject_slug", None)
-        self.sub_project_training_list = []
         self.sub_project_trainings = (
             Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
         )
@@ -185,29 +184,10 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
-        for training in self.sub_project_trainings:
-            self.sub_project_training_list.append(
-                {
-                    "id": training.id,
-                    "slug": training.slug,
-                    "sub_project": training.sub_project,
-                    "title": training.title,
-                    "training_type": training.training_type,
-                    "start_date": training.start_date,
-                    "end_date": training.end_date,
-                    "notes": training.notes,
-                    "moderator": training.moderator,
-                    "completed": training.completed,
-                    "training_edit_form": TrainingForm(
-                        self.request.POST or None, instance=training
-                    ),
-                }
-            )
-        self.training_paginator = Paginator(self.sub_project_training_list, 10)
+        
+        self.training_paginator = Paginator(self.sub_project_trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
-        self.training_paginator_list = self.training_paginator.get_page(
-            self.training_page_number
-        )
+        self.training_paginator_list = self.training_paginator.get_page(self.training_page_number)
         context["trainings"] = self.training_paginator_list
         return context
 

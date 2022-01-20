@@ -426,6 +426,22 @@
                                     </script>
                                 </tbody>
                             </table>
+                            <div class="pagination float-right">
+                                <span class="step-links">
+                                    {% if trainings.has_previous %}
+                                        <a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?training_page=1">&laquo;&laquo; first</a>
+                                        <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?training_page={{ trainings.previous_page_number }}" data-title="previous page" data-trigger="hover" data-original-title>&laquo;</a>
+                                    {% endif %}
+                            
+                                    <span class="current">
+                                        {{ trainings.number }} of {{ trainings.paginator.num_pages }}.
+                                    </span>
+                                    {% if trainings.has_next %}
+                                        <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?training_page={{ trainings.next_page_number }}" data-title="next page" data-trigger="hover" data-original-title>&raquo;</a>
+                                        <a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?training_page={{ trainings.paginator.num_pages }}">last &raquo;&raquo;</a>
+                                    {% endif %}
+                                </span>
+                            </div>
                             
                         </div>
                     </div>

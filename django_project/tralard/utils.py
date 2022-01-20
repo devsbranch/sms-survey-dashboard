@@ -118,3 +118,11 @@ def user_profile_update_form(user):
         pass
     user_update_form = ProfileForm(instance=user)
     return user_update_form
+
+def training_update_form(training):
+    try:
+        from tralard.forms.training import TrainingForm # don't move this import on top
+    except:
+        pass
+    training_update_form = TrainingForm(instance=training)
+    return training_update_form
