@@ -242,7 +242,7 @@ class SubProject(models.Model):
             ) * 100
         else:
             fund_utilization_percent = 0
-        return fund_utilization_percent
+        return round(fund_utilization_percent)
 
     @property
     def count_beneficiaries(self):

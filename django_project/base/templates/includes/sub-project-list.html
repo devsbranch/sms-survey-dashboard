@@ -58,11 +58,12 @@
 					<img src="https://via.placeholder.com/250x250" alt=""
 					     data-demo-src="{{ sub_project.image_file.url }}"/>
 				</div>
+				{% else %}
+					<div class="face is-fake"></div>
 				{% endif %}
-				<div class="face is-fake">+5</div>
 			</div>
 
-			<div class="team-info">total sub project fund disbursment</div>
+			<div class="team-info">total subproject fund utilization</div>
 			<div class="progress-block">
 				<progress class="progress is-xs is-green"
 				          value="{{ sub_project.fund_utilization_percent }}"
@@ -76,4 +77,21 @@
 		</div>
 	</div>
 	{% endfor %}
+</div>
+<div class="pagination align-center" style="align-content: center;">
+	<hr />
+	<span style="font-size: x-large;" class="step-links">
+		{% if sub_project_list.has_previous %}
+		<a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?subproject_page=1">&laquo;&laquo; first</a>
+		<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?subproject_page={{ sub_project_list.previous_page_number }}" data-title="previous page">&laquo;</a>
+		{% endif %}
+		
+		<span class="current" style="color: #21546d;">
+			{{ sub_project_list.number }} of {{ sub_project_list.paginator.num_pages }}.
+		</span>
+		{% if sub_project_list.has_next %}
+		<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?subproject_page={{ sub_project_list.next_page_number }}" data-title="next page">&raquo;</a>
+		<a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #21546d; border-color: #21546d; font:200;" href="?subproject_page={{ sub_project_list.paginator.num_pages }}">last &raquo;&raquo;</a>
+		{% endif %}
+	</span>
 </div>
