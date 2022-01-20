@@ -1,22 +1,22 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import model_to_dict
 from django.http import JsonResponse
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
+from django.forms import model_to_dict
 from django.views.generic import ListView
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from tralard.forms.project import ProjectForm
-from tralard.models.beneficiary import Beneficiary
 from tralard.models.program import Program
 from tralard.models.project import Project
+from tralard.forms.project import ProjectForm
 from tralard.models.sub_project import SubProject
+from tralard.models.beneficiary import Beneficiary
 
 class ProgramDetailView(LoginRequiredMixin, ListView):
     model = Project
     form_class = ProjectForm
     context_object_name = "program"
     template_name = 'program/detail.html'
-    paginate_by = 12
 
     # Used to modify queryset and in context
     search_query = None
@@ -89,12 +89,17 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
             self.beneficiaries = Beneficiary.objects.filter(name__icontains=self.beneficiary_search_query)
         else:
             self.beneficiaries = Beneficiary.objects.all()
-
+        self.subproject_paginator = Paginator(self.subprojects, 9)
+        self.subproject_page_number = self.request.GET.get("subproject_page")
+        self.subproject_paginator_list = self.subproject_paginator.get_page(
+            self.subproject_page_number
+        )
         context['title'] = 'Program Detail'
         context['project_form'] = ProjectForm
         context['projects'] = self.projects
         context['program'] = self.program_object
-        context['sub_project_list'] = self.subprojects
+        context['sub_project_list'] = self.subproject_paginator_list
+        context['sub_project_page_number'] = self.subproject_page_number
         context['beneficiary_list'] = self.beneficiaries
         context['total_projects'] = Project.objects.filter(program=self.program_object).count()
         context['total_sub_projects'] = SubProject.objects.all().count()
