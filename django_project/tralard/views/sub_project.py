@@ -12,15 +12,16 @@ View classes for a SubProject
 # noinspection PyUnresolvedReferences
 import logging
 
-from braces.views import LoginRequiredMixin
+from django.db.models import Q
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.messages.views import SuccessMessageMixin
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from braces.views import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
-from django.db import IntegrityError
-from django.db.models import Q
-from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import (
     JsonResponse,
     HttpResponseRedirect,
@@ -30,7 +31,6 @@ from django.shortcuts import (
     get_object_or_404,
     redirect
 )
-from django.urls import reverse_lazy
 from django.views.generic import (
     ListView,
     CreateView,
@@ -39,25 +39,21 @@ from django.views.generic import (
     UpdateView,
 )
 
-from tralard.forms import BeneficiaryCreateForm
-from tralard.forms.fund import (
-    ExpenditureForm,
-    FundForm,
-    DisbursementForm
-)
-from tralard.forms.sub_project import SubProjectForm
+from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
+from tralard.forms import BeneficiaryCreateForm
+from tralard.models.fund import Disbursement, Fund
+from tralard.forms.sub_project import SubProjectForm
 from tralard.models import (
     Beneficiary,
     Project,
     SubProject
 )
-from tralard.models.fund import (
-    Disbursement,
-    Fund
+from tralard.forms.fund import (
+    ExpenditureForm,
+    FundForm,
+    DisbursementForm
 )
-from tralard.models.training import Training
-from tralard.utils import user_profile_update_form_validator
 
 logger = logging.getLogger(__name__)
 
@@ -176,43 +172,19 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self):
         context = super(SubProjectTrainingListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         self.subproject_slug = self.kwargs.get("subproject_slug", None)
-        self.sub_project_training_list = []
         self.sub_project_trainings = (
             Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
         )
         context["title"] = "Sub Project Trainings"
-        context["profile_form"] = self.user_profile_utils[2]
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
-        for training in self.sub_project_trainings:
-            self.sub_project_training_list.append(
-                {
-                    "id": training.id,
-                    "slug": training.slug,
-                    "sub_project": training.sub_project,
-                    "title": training.title,
-                    "training_type": training.training_type,
-                    "start_date": training.start_date,
-                    "end_date": training.end_date,
-                    "notes": training.notes,
-                    "moderator": training.moderator,
-                    "completed": training.completed,
-                    "training_edit_form": TrainingForm(
-                        self.request.POST or None, instance=training
-                    ),
-                }
-            )
-        self.training_paginator = Paginator(self.sub_project_training_list, 10)
+        
+        self.training_paginator = Paginator(self.sub_project_trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
-        self.training_paginator_list = self.training_paginator.get_page(
-            self.training_page_number
-        )
+        self.training_paginator_list = self.training_paginator.get_page(self.training_page_number)
         context["trainings"] = self.training_paginator_list
         return context
 
@@ -665,9 +637,6 @@ class SubProjectBeneficiaryOrgListView(
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__slug=subproject_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         project = Project.objects.get(slug=project_slug)
 
         # Just get the sub project name from one beneficiary since we are filtering
@@ -684,7 +653,6 @@ class SubProjectBeneficiaryOrgListView(
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 
@@ -724,10 +692,6 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         self.subproject_funds_qs = Fund.objects.filter(
             sub_project__slug=self.subproject_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
-        context["profile_form"] = self.user_profile_utils[2]
         context["sub_project"] = self.sub_project
         context["funds"] = self.subproject_funds_qs
         context["fund_title"] = "add sub project fund"

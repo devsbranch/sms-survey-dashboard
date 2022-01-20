@@ -1,5 +1,4 @@
 from django.contrib.gis import forms
-
 from django.forms import ModelForm, widgets
 
 from crispy_forms.helper import FormHelper
@@ -12,12 +11,10 @@ from crispy_forms.layout import (
     Column,
 )
 from crispy_forms.bootstrap import FormActions
-
 from tralard.models.profile import Profile
 
 class ProfileForm(ModelForm):
     class Meta:
-
         model = Profile
         exclude = ["id", "slug", "user"]
         widgets = {

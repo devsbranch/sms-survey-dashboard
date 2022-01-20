@@ -17,7 +17,6 @@
             <div class="control searchbox">
                 {% include 'includes/messages.html' %}
             </div>
-
             <!-- /Right sidebar trigger -->
             <a id="mobile-dashboard-trigger" class="navbar-item hamburger-btn is-hidden-desktop" href="javascript:void(0);">
                 <span class="menu-toggle">
@@ -177,22 +176,12 @@
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">
-                        {% if request.user.profile.profile_photo %}
-                            <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ request.user.profile.profile_photo.url }}">
-                        {% else %} 
-                            <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="/assets/images/logos/logo.png">
-                        {% endif %}
+                        <img src="{% static 'assets/images/logos/logo.png' %}" alt="" data-demo-src="{{ request.user.profile.profile_photo_url }}">
                     </div>
                     <div class="drop-wrapper accounts-drop">
                         <div class="drop-inner has-arrow">
                             <div class="head-block">
-                                
-                                {% if request.user.profile.profile_photo %}
-                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ request.user.profile.profile_photo.url }}">
-                                {% else %} 
-                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="/assets/images/logos/logo.png">
-                                {% endif %}
-                                
+                                <img src="{% static 'assets/images/logos/logo.png' %}" alt="" data-demo-src="{{ request.user.profile.profile_photo_url }}">
                                 <h3>
                                     {{ request.user.username }}
                                 </h3>

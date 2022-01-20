@@ -2,28 +2,54 @@
 """
 Sub Project model definitions for tralard app.
 """
+import json
 import logging
 
-from django.contrib.auth import get_user_model
 from django.db import models
-from django.db.models.aggregates import Sum
 from django.utils.text import slugify
+from django.db.models.aggregates import Sum
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.beneficiary import Beneficiary
 from tralard.models.fund import Fund
-from tralard.models.training import Training
+from tralard.models.ward import Ward
 from tralard.utils import unique_slugify
+from tralard.models.training import Training
+from tralard.models.province import Province
+from tralard.models.district import District
+from tralard.models.beneficiary import Beneficiary
+from tralard.constants import PROJECT_STATUS_CHOICES
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
+class SubProjectManager(models.Manager):
+    """ Custom manager that aggregates sub project overview. """
+    def get_sub_projects_district_json(self):
+        province_labels = []
+        sub_projects_count = []
+
+        for province in Province.objects.all():
+            province_labels.append(province.name)
+
+            for district in District.objects.filter(province=province):
+                district_sub_project_count = self.filter(ward__district__province__name=district.province.name).count()
+               
+                sub_projects_count.append(district_sub_project_count)
+
+        province_json = json.dumps(province_labels)
+        sub_projects_json = json.dumps(sub_projects_count)
+        return{
+            'labels': province_json,
+            'data': sub_projects_json
+        }
+ 
 class Indicator(models.Model):
     """
     Sub Project Indicator Representative.
     """
-
+       
     slug = models.SlugField(
         max_length=255,
         null=True,
@@ -87,8 +113,8 @@ class IndicatorTarget(models.Model):
 class SubProject(models.Model):
     """
     Sub Project definition.
-    """
-
+    """    
+    
     slug = models.SlugField(
         max_length=255,
         null=True,
@@ -104,6 +130,13 @@ class SubProject(models.Model):
         max_length=255,
         blank=True,
         null=True,
+    ) 
+    ward = models.ForeignKey(
+        Ward,
+        help_text=_('The ward in which this subproject has been implemented.'),
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
     representative = models.ForeignKey(
         User,
@@ -141,6 +174,13 @@ class SubProject(models.Model):
         null=True,
         blank=True,
     )
+    status = models.CharField(
+        _("Project Status"),
+        max_length=50,
+        choices=PROJECT_STATUS_CHOICES,
+        null=True,
+        blank=True,
+    )
     image_file = models.ImageField(
         help_text=_(
             "A banner image for this Sub Project. Most browsers support dragging "
@@ -168,6 +208,9 @@ class SubProject(models.Model):
         null=True,
     )
     created = models.DateTimeField(auto_now_add=True)
+    
+    objects = models.Manager()
+    custom_objects = SubProjectManager()
 
     def __str__(self):
         return self.name.title()

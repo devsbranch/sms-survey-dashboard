@@ -85,8 +85,19 @@
                         <div class="deal-meta">
                             <div class="deal-price">
                                 <span>ZMK {{ project.get_total_project_fund|intcomma }}</span>
-                                <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}</span>
+                                <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}, used: ZMK {{ project.get_total_used_funds|intcomma }}</span>
+                            {% comment %} <span 
+                                class="project-pies">{{ project.get_total_used_funds_percent }}/100
+                            </span>  {% endcomment %}
+                            {% comment %} <span class="percent">
+                                {{ project.get_total_used_funds_percent }}
+                            <span>%
+                            </span><span>used</span></span> {% endcomment %}
+
+                                {% comment %} <span>{{ project.get_total_used_funds_percent }} {% endcomment %}
                             </div>
+                            
+
                             <!-- Deal owner -->
                             {% comment %} <div class="deal-owner">
                                 <!-- Menu -->

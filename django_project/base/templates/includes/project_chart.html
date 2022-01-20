@@ -1,0 +1,88 @@
+{%block scripts%}
+<script>
+  // jquery function
+  $(document).ready(function () {
+    var prov_labels = "{{prov_labels}}";
+    var subs_in_prov = "{{subs_in_prov}}";
+
+    var prov = prov_labels.replace(/&quot;/g, '"');
+    var parsed_list = JSON.parse(prov);
+    var parsed_data = JSON.parse(subs_in_prov);
+    
+    if ($("#cjs").length) {
+      new Chart(document.getElementById("cjs"), {
+        type: "bar",
+        data: {
+          labels: parsed_list,
+          datasets: [
+            {
+              label: "Total SubProjects",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+              ],
+              data: parsed_data,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          legend: {
+            display: true,
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  userCallback(label, index, labels) {
+                    // only show if whole number
+                    if (Math.floor(label) === label) {
+                      return label;
+                    }
+                  },
+                },
+              },
+            ],
+          },
+        },
+      });
+    }
+  });
+</script>
+
+{%endblock scripts%} 
+{%block content%} 
+{% comment %}
+<div class="column is-4">
+  {% endcomment %}
+  <div class="flex-card">
+    <div class="card-heading is-bordered has-icon">
+      <h3>Provincial Projects Overview</h3>
+    </div>
+    <div class="card-body">
+      <div class="row mb-20">
+        <div class="col-auto m-b-10">
+          <h3 class="mb-1">{{ total_approved_subprojects|safe }}</h3>
+
+          <span>Approved</span>
+        </div>
+        <div class="col-auto m-b-10">
+          <h3 class="mb-1">{{ total_funded_subprojects|safe }}</h3>
+          <span>Funded</span>
+        </div>
+      </div>
+      <canvas id="cjs" width="800" height="450"></canvas>
+    </div>
+  </div>
+  {% comment %}
+</div>
+{% endcomment %} 
+{%endblock content%}

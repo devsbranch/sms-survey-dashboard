@@ -1,0 +1,49 @@
+<script type="text/javascript">
+  // jquery function
+  $(document).ready(function () {
+    var year_labels = "{{ funds_in_year_label|safe }}";
+    var funds_data = "{{ total_funds_in_year|safe }}";
+
+    var parsed_list = JSON.parse(year_labels);
+    var parsed_data = JSON.parse(funds_data);
+
+    //Chart js page Pie chart
+    if ($("#cjs-pie").length) {
+      new Chart(document.getElementById("cjs-pie"), {
+        type: "pie",
+        data: {
+          labels: parsed_list,
+          datasets: [
+            {
+              label: "Funds In Year",
+              backgroundColor: [
+                "#3e95cd",
+                "#8e5ea2",
+                "#3cba9f",
+                "#e8c3b9",
+                "#c45850",
+              ],
+              data: [...parsed_data],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          legend: {
+            display: true,
+          },
+        },
+      });
+    }
+  });
+</script>
+{%block content%}
+<div class="flex-card light-bordered light-raised mt-20">
+  <div class="card-heading has-icon no-margin">
+    <span>Funds Yearly Overview</span>
+  </div>
+  <div>
+    <canvas id="cjs-pie" width="150" height="150"></canvas>
+  </div>
+</div>
+{%endblock content%}

@@ -1,26 +1,19 @@
-import json
-from django.contrib.auth.decorators import login_required
+# -*- coding: utf-8 -*-
 
-from django.db.models import fields
 from django.contrib import messages
-from django.contrib.messages.views import SuccessMessageMixin
-from django.forms.models import model_to_dict
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator, EmptyPage
+from django.http import JsonResponse
 from django.urls import reverse_lazy
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
-from django.core import serializers
-from django.http import HttpResponse, JsonResponse
+from django.views.generic import CreateView
+from django.forms.models import model_to_dict
+from django.core.paginator import Paginator, EmptyPage
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 
-
-from tralard.models import Beneficiary, Project, Program, Ward, SubProject
 
 from tralard.forms import BeneficiaryCreateForm
-
-from tralard.utils import user_profile_update_form_validator
-
+from tralard.models import Beneficiary, Project, Ward, SubProject
 
 class PaginatorMixin(Paginator):
     def validate_number(self, number):
@@ -82,9 +75,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__project__slug=project_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         project = Project.objects.get(slug=project_slug)
         page = self.request.GET.get("page", 1)
         paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
@@ -99,7 +89,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 

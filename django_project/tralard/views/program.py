@@ -1,16 +1,15 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms import model_to_dict
-from django.http import JsonResponse
-from django.template.loader import render_to_string
+# -*- coding: utf-8 -*-
 from django.urls import reverse_lazy
+from django.http import JsonResponse
 from django.views.generic import ListView
+from django.template.loader import render_to_string
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from tralard.forms.project import ProjectForm
-from tralard.models.beneficiary import Beneficiary
 from tralard.models.program import Program
 from tralard.models.project import Project
+from tralard.forms.project import ProjectForm
+from tralard.models.beneficiary import Beneficiary
 from tralard.models.sub_project import SubProject
-from tralard.utils import user_profile_update_form_validator
 
 
 class ProgramDetailView(LoginRequiredMixin, ListView):
@@ -72,9 +71,6 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         self.program_slug = self.kwargs["program_slug"]
         self.program_object = Program.objects.get(slug=self.program_slug)
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         self.search_query = self.request.GET.get("q")
         self.subproject_search_query = self.request.GET.get("subproject_query")
         self.beneficiary_search_query = self.request.GET.get("beneficiaries_query")
@@ -101,9 +97,6 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         context['program'] = self.program_object
         context['sub_project_list'] = self.subprojects
         context['beneficiary_list'] = self.beneficiaries
-        context['user_roles'] = self.user_profile_utils[0]
-        context['profile'] = self.user_profile_utils[1]
-        context['profile_form'] = self.user_profile_utils[2]
         context['total_projects'] = Project.objects.filter(program=self.program_object).count()
         context['total_sub_projects'] = SubProject.objects.all().count()
         context['total_beneficiary_count'] = Beneficiary.objects.all().count()

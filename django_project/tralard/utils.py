@@ -67,6 +67,7 @@ def get_balance(initial_amount: float, total_amount: float) -> Money:
     ----------
     initial_amount : float
         The initial amount of the fund.
+        
     total_amount : float
         The total amount of the disbursement.
     """
@@ -84,10 +85,13 @@ def check_requested_deduction_against_balance(
     ----------
     balance : float
         The balance of the fund or disbursment.
+
     requested_amount : float
         The requested amount.
+
     requested_semantic : str
         The requested semantic.
+
     balance_semantic : str
         The balance semantic.
 
@@ -110,15 +114,19 @@ def current_user_roles(user):
     user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
     return user_roles
 
-def user_profile_update_form_validator(method, user):
+
+def user_profile_update_form(user):
     try:
-        from django.shortcuts import get_object_or_404
-        from tralard.models.profile import Profile
-        from tralard.forms.profile import ProfileForm
+        from tralard.forms.profile import ProfileForm # don't move this import on top
     except:
         pass
-    user_profile = get_object_or_404(Profile, user=user)
-    user_roles = current_user_roles(user_profile.user)
-    profile_form = ProfileForm(method or None, instance=user_profile)
-    return user_roles, user_profile, profile_form
-    
+    user_update_form = ProfileForm(instance=user)
+    return user_update_form
+
+def training_update_form(training):
+    try:
+        from tralard.forms.training import TrainingForm # don't move this import on top
+    except:
+        pass
+    training_update_form = TrainingForm(instance=training)
+    return training_update_form

@@ -205,7 +205,7 @@
                                     font-size: 16px;
                                   " class="flex-container">
                                   {% for role in request.user.profile.current_user_roles %}
-                                  <span class="badge badge-info">{{ role }} |</span>
+                                  <span class="badge badge-info">{{ role }} </span>
                                   {% endfor %}
                                   <span class="e"></span>
                                 </div>
@@ -544,10 +544,10 @@
                   <div style="width: 100%" id="profile-notifications" class="profile-notifications is-hidden">
                     <div class="profile-notifications-inner animated preFadeInUp fadeInUp">
                       <div class="profile-notifications-title" style="width: 100%;">
-                        {% if profile_form %}
+                        {% if request.user.profile.profile_form %}
                             <form name="user_profile_form" method="post"
                               action="{% url 'tralard:profile-update' %}">
-                              {% crispy profile_form profile_form.helper %}
+                              {% crispy request.user.profile.profile_form request.user.profile.profile_form.helper %}
                             </form>
                         {% else %}
                         {% endif %}

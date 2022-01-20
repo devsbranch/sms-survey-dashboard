@@ -1,24 +1,17 @@
+# -*- coding: utf-8 -*-
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.forms.models import model_to_dict
-from django.http import HttpResponseRedirect
-from django.http.response import JsonResponse
 from django.urls import reverse_lazy
-from django.shortcuts import (
-    redirect,
-    get_object_or_404
-)
-from django.views.generic import (
-    TemplateView,
-    ListView
-)
+from django.http.response import JsonResponse
+from django.forms.models import model_to_dict
+from django.views.generic import TemplateView, ListView
+from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
-from tralard.utils import user_profile_update_form_validator
-from tralard.forms.project import FeedbackForm, ProjectForm
-from tralard.forms.sub_project import SubProjectForm
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
+from tralard.forms.sub_project import SubProjectForm
+from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.models.sub_project import SubProject, Indicator
 
 
@@ -91,7 +84,6 @@ def project_delete(request, program_slug, project_slug):
     return redirect(
         reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
     )
-
 
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
@@ -195,14 +187,10 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         self.all_subproject_indicators = Indicator.objects.filter(
             subproject_indicators__in=self.sub_projects_qs
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         context["citizen_feedback_list"] = self.all_feedback_qs
         context["project"] = self.project
         context["indicators"] = self.all_subproject_indicators
         context["form"] = SubProjectForm
-        context["profile_form"] = self.user_profile_utils[2]
         context["feedback_form"] = FeedbackForm
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
@@ -221,11 +209,7 @@ class SubProjectListView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self):
         context = super(SubProjectListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         context["title"] = "Sub Project List"
-        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 

@@ -2,7 +2,11 @@ import json
 from django.core.management.base import BaseCommand
 from django.core.management import call_command
 
-
+from tralard.models.fund import (
+    Fund, 
+    Expenditure,
+    Disbursement 
+)
 class Command(BaseCommand):
     args = "<filename>"
     help = "Loads the initial data in to database"
@@ -27,3 +31,14 @@ class Command(BaseCommand):
         call_command("loaddata", "tralard/fixtures/expenditure.json", verbosity=0)
         
         print("--------- DATA WAS LOADED SUCCESSFULLY ---------")
+
+        for fund in Fund.objects.all():
+            fund.save()
+
+        for disbursement in Disbursement.objects.all():
+            disbursement.save()
+
+        for expenditure in Expenditure.objects.all():
+            expenditure.save()
+
+        print("---------FUND DISBURSEMENT AND EXPENSE BALANCE SIGNALS UPDATED ---------")

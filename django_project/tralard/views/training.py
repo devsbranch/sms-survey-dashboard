@@ -1,31 +1,14 @@
-from re import template
-import json
-
-from django.views.generic import (
-    TemplateView,
-    CreateView,
-    UpdateView,
-    ListView,
-)
-from django.shortcuts import (
-    HttpResponse,
-    redirect,
-    render,
-    get_object_or_404,
-)
+# -*- coding: utf-8 -*-
+from django.urls import reverse_lazy
+from django.core.paginator import Paginator
+from django.views.generic import CreateView
+from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
-from django.urls import reverse_lazy
-from django.http import JsonResponse
-from django.core import serializers
 
-from tralard.utils import user_profile_update_form_validator
-from tralard.models.beneficiary import Beneficiary
-from tralard.forms.training import TrainingForm
-from tralard.forms.profile import ProfileForm
 from tralard.models.training import Training
-from tralard.models.profile import Profile
+from tralard.forms.training import TrainingForm
+from tralard.models.beneficiary import Beneficiary
 
 
 class TrainingListView(LoginRequiredMixin, CreateView):
@@ -44,41 +27,18 @@ class TrainingListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self):
         context = super(TrainingListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
-        self.training_list = []
         self.trainings = Training.objects.all()
         context["title"] = "Training"
-        context["profile_form"] = self.user_profile_utils[2]
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
-
-        for training in self.trainings:
-            self.training_list.append(
-                {
-                    "id": training.id,
-                    "slug": training.slug,
-                    "sub_project": training.sub_project,
-                    "title": training.title,
-                    "training_type": training.training_type,
-                    "start_date": training.start_date,
-                    "end_date": training.end_date,
-                    "notes": training.notes,
-                    "moderator": training.moderator,
-                    "completed": training.completed,
-                    "training_edit_form": TrainingForm(
-                        self.request.POST or None, instance=training
-                    ),
-                }
-            )
-        self.training_paginator = Paginator(self.training_list, 10)
+            
+        self.training_paginator = Paginator(self.trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
         self.training_paginator_list = self.training_paginator.get_page(
             self.training_page_number
         )
-        context["trainings"] = self.training_paginator_list
+        context["trainings"] = self.training_paginator.get_page(self.training_page_number)
         return context
 
 

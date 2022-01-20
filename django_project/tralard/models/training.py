@@ -9,7 +9,7 @@ from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 
-from tralard.utils import unique_slugify
+from tralard.utils import unique_slugify, training_update_form
 
 from tinymce import HTMLField
 
@@ -112,6 +112,11 @@ class Training(models.Model):
             self.slug = unique_slugify(self, slugify(self.title))
         super().save(*args, **kwargs)
 
+    @property
+    def training_form(self):
+        form = training_update_form(self)
+        return form
+    
 
 class Attendance(models.Model):
     male_count = models.IntegerField(

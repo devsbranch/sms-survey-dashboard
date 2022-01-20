@@ -1,0 +1,87 @@
+<script type="text/javascript">
+  $(document).ready(function () {
+    var ctx3 = $("#myChart");
+    var male = "{{beneficiary_count_male|safe}}";
+    var female = "{{beneficiary_count_female|safe}}";
+    var hhs = "{{hhs_count|safe}}";
+    var female_hhs = "{{hhs_count_female|safe}}";
+    if ($("#myChart").length) {
+      var doughnutDashChart = new Chart(ctx3, {
+        type: "doughnut",
+
+        data: {
+          datasets: [
+            {
+              data: [male, female, hhs, female_hhs],
+              backgroundColor: [
+                "rgba(127, 0, 255,1)",
+                "rgba(0, 209, 178,0.6)",
+                "rgba(127, 0, 255,0.3)",
+                "rgba(127, 0, 255,0.5)",
+              ],
+            },
+          ],
+          labels: ["Male", "Female", "HHS", "Female HHS"],
+        },
+        options: {
+          legend: {
+            display: true,
+          },
+          cutoutPercentage: 60,
+        },
+      });
+    }
+  });
+</script>
+
+{%block content%}
+<!-- Widget -->
+<div id="doughnut-card" class="dash-card">
+  <div class="card-heading has-icon no-margin">
+    <span>Beneficiary Overview</span>
+
+    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+      <div class="button">
+        <i class="material-icons">more_vert</i>
+      </div>
+      <div class="dropdown-menu is-text-bigger" role="menu">
+        <div class="dropdown-content">
+          <a class="dropdown-item">
+            <i class="sl sl-icon-refresh"></i>
+            <span>
+              <span>Reload</span>
+              <span>Reload widget data</span>
+            </span>
+          </a>
+          <a href="#" class="dropdown-item">
+            <i class="sl sl-icon-pencil"></i>
+            <span>
+              <span>Settings</span>
+              <span>Edit widget settings</span>
+            </span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="sl sl-icon-bell"></i>
+            <span>
+              <span>Notifications</span>
+              <span>Notify me of changes</span>
+            </span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item">
+            <i class="sl sl-icon-trash"></i>
+            <span>
+              <span>Delete</span>
+              <span>Delete this widget</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-container">
+    <canvas id="myChart" width="150" height="150"></canvas>
+  </div>
+</div>
+{%endblock content%}
