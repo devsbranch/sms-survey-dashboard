@@ -13,7 +13,6 @@ from tralard.models.fund import (
 )
 from tralard.models.project import Project
 from tralard.forms.fund import FundForm, DisbursementForm
-from tralard.utils import user_profile_update_form_validator
 
 
 class FundListAndCreateView(LoginRequiredMixin, CreateView):
@@ -34,10 +33,6 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
         self.project_funds_qs = Fund.objects.filter(
             sub_project__project__slug=self.project_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
-        context["profile_form"] = self.user_profile_utils[2]
         context["project"] = self.project
         context["funds"] = self.project_funds_qs
         context["fund_title"] = "add project fund"

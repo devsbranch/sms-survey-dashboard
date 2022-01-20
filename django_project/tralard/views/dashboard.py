@@ -1,6 +1,5 @@
 from tralard.models.profile import Profile
 from tralard.forms.profile import ProfileForm
-from tralard.utils import user_profile_update_form_validator
 from django.db.models import Sum
 from django.views.generic import TemplateView
 from django.views.generic.edit import UpdateView
@@ -26,13 +25,9 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
             self.current_user_profile = None
         self.total_project_funds = Fund.objects.all().aggregate(Sum("amount"))
         self.cleaned_total_project_funds = self.total_project_funds["amount__sum"]
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         context["title"] = "Program: Tralard"
         context["program_list"] = Program.objects.all().order_by("-started")[:5]
         context["project_count"] = Project.objects.all().count()
-        context["profile_form"] = self.user_profile_utils[2]
         context["total_project_funds"] = self.cleaned_total_project_funds
         context["subproject_count"] = SubProject.objects.all().count()
         context["beneficiary_count"] = Beneficiary.objects.all().count()

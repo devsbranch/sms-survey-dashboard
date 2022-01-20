@@ -1,14 +1,18 @@
-from django.db import models
-from django.contrib.auth.models import User
+import os
 
+from django.db import models
+from django.conf import settings
+from django.utils.text import slugify
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from rolepermissions.roles import get_user_roles
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from imagekit.models import ProcessedImageField
+from rolepermissions.roles import get_user_roles
 
-from django.utils.text import slugify
-from tralard.utils import unique_slugify
+from tralard.utils import unique_slugify, user_profile_update_form
 
 GENDER_CHOICES = (
     ("Male", _("Male")),
@@ -106,3 +110,15 @@ class Profile(models.Model):
             cleaned_user_roles.append(role.get_name())
         user_roles = [role_name.replace("_", " ").title() for role_name in cleaned_user_roles]
         return user_roles
+
+    @property
+    def profile_form(self):
+        update_form = user_profile_update_form(self)
+        return update_form
+
+    
+    @property
+    def profile_photo_url(self):
+        if self.profile_photo:
+            return self.profile_photo.url
+        return os.path.join(settings.STATIC_URL, "assets/images/logos/logo.png")

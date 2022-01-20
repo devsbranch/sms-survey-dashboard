@@ -308,7 +308,10 @@ class Project(models.Model):
         """Computes total funds used related to this project."""
         total_project_funds = self.get_total_project_fund
         total_project_funds_balance = self.get_total_fund_balance
-        total_project_funds_used = total_project_funds - total_project_funds_balance
+        try:
+            total_project_funds_used = total_project_funds - total_project_funds_balance
+        except:
+            total_project_funds_used = 0
         return total_project_funds_used
 
     @property

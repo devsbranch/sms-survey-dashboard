@@ -20,7 +20,6 @@ from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.core import serializers
 
-from tralard.utils import user_profile_update_form_validator
 from tralard.models.beneficiary import Beneficiary
 from tralard.forms.training import TrainingForm
 from tralard.forms.profile import ProfileForm
@@ -44,13 +43,9 @@ class TrainingListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self):
         context = super(TrainingListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         self.training_list = []
         self.trainings = Training.objects.all()
         context["title"] = "Training"
-        context["profile_form"] = self.user_profile_utils[2]
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)

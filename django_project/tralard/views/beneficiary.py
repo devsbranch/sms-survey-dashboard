@@ -19,9 +19,6 @@ from tralard.models import Beneficiary, Project, Program, Ward, SubProject
 
 from tralard.forms import BeneficiaryCreateForm
 
-from tralard.utils import user_profile_update_form_validator
-
-
 class PaginatorMixin(Paginator):
     def validate_number(self, number):
         try:
@@ -82,9 +79,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__project__slug=project_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         project = Project.objects.get(slug=project_slug)
         page = self.request.GET.get("page", 1)
         paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
@@ -99,7 +93,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 

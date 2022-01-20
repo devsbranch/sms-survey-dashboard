@@ -57,7 +57,6 @@ from tralard.models.fund import (
     Fund
 )
 from tralard.models.training import Training
-from tralard.utils import user_profile_update_form_validator
 
 logger = logging.getLogger(__name__)
 
@@ -176,16 +175,12 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self):
         context = super(SubProjectTrainingListView, self).get_context_data()
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         self.subproject_slug = self.kwargs.get("subproject_slug", None)
         self.sub_project_training_list = []
         self.sub_project_trainings = (
             Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
         )
         context["title"] = "Sub Project Trainings"
-        context["profile_form"] = self.user_profile_utils[2]
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
@@ -665,9 +660,6 @@ class SubProjectBeneficiaryOrgListView(
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__slug=subproject_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
         project = Project.objects.get(slug=project_slug)
 
         # Just get the sub project name from one beneficiary since we are filtering
@@ -684,7 +676,6 @@ class SubProjectBeneficiaryOrgListView(
         context["project"] = project
         context["beneficiaries"] = organizations
         context["sub_header"] = sub_header
-        context["profile_form"] = self.user_profile_utils[2]
         return context
 
 
@@ -724,10 +715,6 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         self.subproject_funds_qs = Fund.objects.filter(
             sub_project__slug=self.subproject_slug
         )
-        self.user_profile_utils = user_profile_update_form_validator(
-            self.request.POST, self.request.user
-        )
-        context["profile_form"] = self.user_profile_utils[2]
         context["sub_project"] = self.sub_project
         context["funds"] = self.subproject_funds_qs
         context["fund_title"] = "add sub project fund"
