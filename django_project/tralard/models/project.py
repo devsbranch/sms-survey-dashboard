@@ -51,14 +51,6 @@ class UnapprovedProjectManager(models.Manager):
             UnapprovedProjectManager, self).get_queryset().filter(
             approved=False)    
 
-
-class SubProjectQueryManager(models.Manager):
-    """Custom project manager that shows related subprojects."""
-    def get_related_sub_project(self):
-        return super(SubProjectQueryManager, self).get_queryset().filter(
-            project__slug=self.slug
-        )
-
 class Representative(models.Model):
     """
     Project Representative.
@@ -256,7 +248,6 @@ class Project(models.Model):
     objects = models.Manager()
     approved_objects = ApprovedProjectManager()
     unapproved_objects = UnapprovedProjectManager()
-    get_related_sub_projects = SubProjectQueryManager()
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -279,6 +270,13 @@ class Project(models.Model):
                             }
                             )
 
+    @property
+    def get_related_sub_projects(self):
+        sub_projects_queryset = SubProject.objects.filter(
+            project__slug=self.slug
+        )
+        return sub_projects_queryset
+        
     @property
     def count_sub_projects(self):
         sub_projects_count_queryset = SubProject.objects.filter(

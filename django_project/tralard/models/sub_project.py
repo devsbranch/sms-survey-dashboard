@@ -39,7 +39,7 @@ class SubProjectManager(models.Manager):
             for district in District.objects.filter(province=province):
                 district_sub_project_count = self.filter(ward__district__province__name=district.province.name).count()
                
-            sub_projects_count.append(district_sub_project_count)
+                sub_projects_count.append(district_sub_project_count)
 
         province_json = json.dumps(province_labels)
         sub_projects_json = json.dumps(sub_projects_count)
