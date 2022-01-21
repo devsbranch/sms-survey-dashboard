@@ -1,4 +1,3 @@
-import random
 import folium
 import pandas as pd
 import altair as alt
@@ -6,35 +5,37 @@ from folium import plugins
 
 from tralard.models.ward import Ward
 from tralard.models.district import District
-from tralard.models.beneficiary import Beneficiary
 from tralard.constants import MAP_LAYER_CHOICES
+from tralard.models.beneficiary import Beneficiary
+
 
 def prepare_marker_data():
     districts = District.objects.all()
     data = {}
     for district_data in districts:
-        data[district_data] = [
-            district_data.location.x,
-            district_data.location.y
-        ]
+        data[district_data] = [district_data.location.x, district_data.location.y]
 
     return data
 
+
 def circle_marker(district_name, lat, lng, source):
-    chart = alt.Chart(source).mark_bar().encode(x='Wards', y='Beneficiary Count')
+    chart = alt.Chart(source).mark_bar().encode(x="Wards", y="Beneficiary Count")
     visual_graph = chart.to_json()
     marker = folium.CircleMarker(
         location=[lat, lng],
         radius=10,
-        color='darkgreen',
+        color="darkgreen",
         fill=True,
-        fill_color='lightblue',
+        fill_color="lightblue",
         fillOpacity=1.0,
         opacity=0.5,
         tooltip=district_name,
-        popup=folium.Popup(max_width=500).add_child(folium.VegaLite(visual_graph, height=300)),
+        popup=folium.Popup(max_width=500).add_child(
+            folium.VegaLite(visual_graph, height=300)
+        ),
     )
     return marker
+
 
 def build_map_context():
 
@@ -46,8 +47,8 @@ def build_map_context():
         control_scale=True,
         max_zoom=8,
         zoom_start=6.4,
-        width='100%',
-        height='80%',
+        width="100%",
+        height="80%",
     )
 
     map_layers = MAP_LAYER_CHOICES
@@ -88,18 +89,17 @@ def build_map_context():
         for ward in Ward.objects.filter(district__name=district.name):
             beneficiary_counter = Beneficiary.objects.filter(
                 ward__name=ward.name
-                ).count()
+            ).count()
             beneficiary_count.append(beneficiary_counter)
             ward_names.append(ward.name.capitalize())
 
         source = pd.DataFrame(
-                {
-                "Wards": ward_names,
-                "Beneficiary Count": beneficiary_count
-            }
+            {"Wards": ward_names, "Beneficiary Count": beneficiary_count}
         )
 
-        district_name_verbose = f"{district.name.capitalize()} District - {district.province.name}"
+        district_name_verbose = (
+            f"{district.name.capitalize()} District - {district.province.name}"
+        )
         marker = circle_marker(district_name_verbose, lat_lng[0], lat_lng[1], source)
         marker.add_to(marker_cluster)
 
