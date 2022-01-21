@@ -10,20 +10,12 @@ from tralard.models.beneficiary import Beneficiary
 from tralard.constants import MAP_LAYER_CHOICES
 
 def prepare_marker_data():
-    district_details = District.objects.all()
-
-    # Prepare this data from a queryset either for
-    # District or wards or both + Provincial coordinates - from model_name
-    # https://latitude.to/articles-by-country/zm/zambia/page/5
-    # i.e: record = District.objects.all() - when model_name=District ...
-
+    districts = District.objects.all()
     data = {}
-    # work in progress
-    for district_data in district_details:
+    for district_data in districts:
         data[district_data] = [
             district_data.location.x,
             district_data.location.y
-            # random.choice(["business-firm", "cooperative"]),
         ]
 
     return data
@@ -40,7 +32,7 @@ def circle_marker(district_name, lat, lng, source):
         fillOpacity=1.0,
         opacity=0.5,
         tooltip=district_name,
-        popup=folium.Popup(max_width=500).add_child(folium.VegaLite(visual_graph, width=500, height=300)),
+        popup=folium.Popup(max_width=500).add_child(folium.VegaLite(visual_graph, height=300)),
     )
     return marker
 
@@ -85,28 +77,29 @@ def build_map_context():
     map.add_child(mini_map)
     plugins.Fullscreen(position="topright").add_to(map)
 
-    data = prepare_marker_data()
-
-    ward_names = []
-    beneficiary_count = []
-    for ward in Ward.objects.all():
-        beneficiary_counter = Beneficiary.objects.filter(
-            ward__name=ward.name
-            ).count()
-        beneficiary_count.append(beneficiary_counter)
-        ward_names.append(ward.name.capitalize())
-
-    source = pd.DataFrame(
-            {
-            "Wards": ward_names,
-            "Beneficiary Count": beneficiary_count
-        }
-    )
+    districts = prepare_marker_data()
 
     start_coords = []
-    for district_data, lat_lng in data.items():
+    ward_names = []
+    beneficiary_count = []
+    for district, lat_lng in districts.items():
         start_coords.append((lat_lng[0], lat_lng[1]))
-        district_name_verbose = f"{district_data.name.capitalize()} District - {district_data.province.name}"
+
+        for ward in Ward.objects.filter(district__name=district.name):
+            beneficiary_counter = Beneficiary.objects.filter(
+                ward__name=ward.name
+                ).count()
+            beneficiary_count.append(beneficiary_counter)
+            ward_names.append(ward.name.capitalize())
+
+        source = pd.DataFrame(
+                {
+                "Wards": ward_names,
+                "Beneficiary Count": beneficiary_count
+            }
+        )
+
+        district_name_verbose = f"{district.name.capitalize()} District - {district.province.name}"
         marker = circle_marker(district_name_verbose, lat_lng[0], lat_lng[1], source)
         marker.add_to(marker_cluster)
 
