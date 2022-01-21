@@ -2,6 +2,7 @@
 from django.urls import reverse_lazy
 from django.http import JsonResponse
 from django.views.generic import ListView
+from django.core.paginator import Paginator
 from django.template.loader import render_to_string
 from django.contrib.auth.mixins import LoginRequiredMixin
 
