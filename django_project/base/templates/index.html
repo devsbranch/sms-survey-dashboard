@@ -284,18 +284,18 @@
                                         {% for project in projects %}
                                         <tr>
                                             
-                                            <td>{{ project.name }}</td>
-                                            <td><span class="tag rounded is-light">{{ project.count_sub_projects }} </span></td>
-                                            <td> <span class="tag rounded is-info">{{ project.count_beneficiaries }}</span></td>
-                                            <td> <span class="tag rounded is-success">{{ project.count_approved_sub_projects }}</span></td>
-                                            <td> <span class="tag squared is-secondary">{{ project.get_total_project_fund|intcomma }}</span></td>
+                                            <td><a href="{% url 'tralard:project-detail' project.program.slug project.slug %}">{{ project.name }}</a></td>
+                                            <td><span class="tag rounded is-light" style="padding-top: 5px;">{{ project.count_sub_projects }} </span></td>
+                                            <td> <span class="tag rounded is-info" style="padding-top: 5px;">{{ project.count_beneficiaries }}</span></td>
+                                            <td> <span class="tag rounded is-success" style="padding-top: 5px;">{{ project.count_approved_sub_projects }}</span></td>
+                                            <td> <span class="tag squared is-secondary" style="padding-top: 5px;">{{ project.get_total_project_fund|intcomma }}</span></td>
                                             
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
-                            <br/>
+                            <br/>   
                             {% include 'includes/project_chart.html' %}
                         </div>
 
