@@ -20,11 +20,7 @@ from tralard.utils import (
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
 
-<<<<<<< HEAD
-from tralard.constants import CURRENCY_CHOICES
-=======
 from tralard.constants import ZMK, CURRENCY_CHOICES
->>>>>>> d1fc2a27c89ed7eaec692f34198627787b571095
 
 logger = logging.getLogger(__name__)
 
