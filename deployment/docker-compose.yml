@@ -64,7 +64,6 @@ services:
       - RABBITMQ_HOST=rabbitmq
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      # - HAYSTACK_HOST=elasticsearch
       - CONTACT_US_EMAIL=alison@digiprophets.com
     volumes:
       - ../django_project:/home/web/django_project

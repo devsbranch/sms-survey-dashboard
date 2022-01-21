@@ -1,13 +1,10 @@
-import json
 import random
 
 import folium
 from folium import plugins
 
-from tralard.models.ward import Ward
 from tralard.models.district import District
-from tralard.models.beneficiary import Beneficiary
-
+from tralard.constants import MAP_LAYER_CHOICES
 
 def prepare_marker_data():
     district_details = District.objects.all()
@@ -29,22 +26,6 @@ def prepare_marker_data():
     return data
 
 
-def prepare_map_layers():
-    # intitiate default layers or custom shapefiles to load as onto the map
-    # Note: these are default to folium and we just initiate them,
-    # it would need more processing to prepare custom shapefiles from QGIS
-    map_layers = [
-        "CartoDB Positron",
-        "Open Street Map",
-        "Stamen Terrain",
-        "Stamen Toner",
-        "Stamen Watercolor",
-        "CartoDB Dark_Matter",
-    ]
-
-    return map_layers
-
-
 def build_map_context():
 
     # add base map
@@ -56,7 +37,7 @@ def build_map_context():
         # max_bounds=True
     )
 
-    map_layers = prepare_map_layers()
+    map_layers = MAP_LAYER_CHOICES
     for map_layer in map_layers:
         folium.raster_layers.TileLayer(map_layer).add_to(map)
 

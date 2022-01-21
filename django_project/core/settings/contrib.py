@@ -35,7 +35,9 @@ INSTALLED_APPS = (
 INSTALLED_APPS += (
     'easyaudit',
     'rolepermissions',
-    # 'rest_framework',
+    'rest_framework',
+    'rest_registration',
+    'drf_yasg2',
     'celery',
     'crispy_forms',
     'tinymce',
@@ -215,4 +217,14 @@ MAP_WIDGETS = {
         ("markerFitZoom", 12),
     ),
     "GOOGLE_MAP_API_KEY": "AIzaSyDZMi5ucoQwtfIX7023ezUac8mQG2vrMpM",
+}
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema'
+}
+# https://github.com/apragacz/django-rest-registration
+REST_REGISTRATION = {
+    'REGISTER_VERIFICATION_ENABLED': False,
+    'RESET_PASSWORD_VERIFICATION_ENABLED': False,
+    'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 }
