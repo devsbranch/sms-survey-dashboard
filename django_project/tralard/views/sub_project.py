@@ -197,9 +197,9 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
-            program_slug = self.request.kwargs.get("program_slug", None)
-            project_slug = self.request.kwargs.get("project_slug", None)
-            subproject_slug = self.request.kwargs.get("subproject_slug", None)
+            program_slug = self.kwargs.get("program_slug", None)
+            project_slug = self.kwargs.get("project_slug", None)
+            subproject_slug = self.kwargs.get("subproject_slug", None)
 
             return redirect(
                 reverse_lazy(
@@ -212,7 +212,30 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
                 )
             )
 
+class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
+    model = Training
+    form_class = TrainingForm
+    template_name = "includes/sub-project-training-update-modal.html"
 
+    def form_valid(self, form):
+        if form.is_valid():
+            form.save()
+            program_slug = self.kwargs.get("program_slug", None)
+            project_slug = self.kwargs.get("project_slug", None)
+            subproject_slug = self.kwargs.get("subproject_slug", None)
+
+            return redirect(
+                reverse_lazy(
+                    "tralard:subproject-training",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": subproject_slug,
+                    },
+                )
+            )
+            
+            
 @login_required(login_url="/login/")
 def sub_project_training_update(
         request, program_slug, project_slug, subproject_slug, training_entry_slug
@@ -245,6 +268,35 @@ def sub_project_training_update(
 
 
 @login_required(login_url="/login/")
+def sub_project_update(
+        request, program_slug, subproject_slug
+):
+    subproject = SubProject.objects.get(slug=subproject_slug)
+    if request.method == "POST":
+        form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
+        if form.is_valid():
+            custom_description = form.cleaned_data["custom_description"]
+            custom_focus_area = form.cleaned_data["custom_focus_area"]
+            form.save()
+            
+            if custom_description:
+                subproject.description = custom_description
+            if custom_focus_area:
+                subproject.focus_area = custom_focus_area
+            subproject.save()
+        
+        messages.add_message(request, messages.SUCCESS, "SubProject updated successfully!")
+        return redirect(
+            reverse_lazy(
+                "tralard:program-detail",
+                kwargs={
+                    "program_slug": program_slug,
+                },
+            )
+        )
+        
+
+@login_required(login_url="/login/")
 def sub_project_training_delete(
         request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
@@ -260,7 +312,7 @@ def sub_project_training_delete(
             },
         )
     )
-
+    
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
     """Listed view for SubProject."""

@@ -4,16 +4,16 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from tralard.views.training import (
-    TrainingListView,
-    training_delete,
-    template_testing,
     training_update,
+    training_delete,
+    TrainingListView,
+    template_testing,
 )
 from tralard.views.beneficiary import (
-    BeneficiaryOrgListView,
     beneficiary_detail,
     beneficiary_update,
     beneficiary_delete,
+    BeneficiaryOrgListView,
 )
 from tralard.views.fund import (
     fund_detail,
@@ -25,15 +25,15 @@ from tralard.views.fund import (
     get_disbursement_expenditures,
 )
 from tralard.views.project import (
-    ProjectDetailView,
-    project_create,
+    edit_feedback,
     project_update,
+    project_create,
     project_delete,
+    create_feedback,
+    delete_feedback,
+    ProjectDetailView,
     delete_sub_project,
     update_sub_project,
-    create_feedback,
-    edit_feedback,
-    delete_feedback,
 )
 from tralard.views.sub_project import (
     SubProjectDetailView,
@@ -47,11 +47,11 @@ from tralard.views.sub_project import (
     SubProjectBeneficiaryOrgListView,
     subproject_fund_disbursement_create,
 )
-from tralard.views.sub_project import subproject_disbursement_expenditure_create
-from tralard.views.dashboard import HomeTemplateView
 from tralard.views.map import MapTemplateView
-from tralard.views.profile import user_profile_update
 from tralard.views.program import ProgramDetailView
+from tralard.views.dashboard import HomeTemplateView
+from tralard.views.profile import user_profile_update
+from tralard.views.sub_project import subproject_disbursement_expenditure_create, sub_project_update
 
 app_name = "tralard"
 urlpatterns = [
@@ -256,5 +256,10 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/",
         subproject_disbursement_expenditure_create,
         name="subproject-fund-disbursement-expenditure-create",
-    )
+    ),
+    path(
+        "program/<slug:program_slug>/subproject/<slug:subproject_slug>/update/",
+        sub_project_update,
+        name="subproject-update",
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

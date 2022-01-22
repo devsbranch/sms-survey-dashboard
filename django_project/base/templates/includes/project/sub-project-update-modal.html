@@ -1,0 +1,34 @@
+{% load crispy_forms_tags %} 
+<div id="sub-project-update-modal123" class="modal create-task-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="width: 50% !important;">
+        <div class="flex-card simple-shadow">
+            <div class="modal-hero m-2">
+                <h2 id="beneficiary-form-title" class="has-text-centered dark-text">Update Subproject Entry</h2>
+            </div>
+            <div class="navigation-tabs layout-tabs animated-tabs">
+
+                <div id="task-details" class="navtab-content is-active">
+                    <div class="card-body">
+                        <div class="content">
+                            <!-- New Project form -->
+                            <form action="" id="form123" method="post" enctype="multipart/form-data">
+                                <!-- update data will come here -->
+                            </form>
+                            
+                            <span id="subproject-entry-form123">
+                            <span>
+                            <!-- /New Project form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="modalcloser123" class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<script>
+    document.getElementById("modalcloser123").addEventListener("click", () => {
+        alert("clicked")
+    })
+</script>

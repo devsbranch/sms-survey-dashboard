@@ -130,3 +130,11 @@ def training_update_form(training):
         pass
     training_update_form = TrainingForm(instance=training)
     return training_update_form
+
+def sub_project_form(training):
+    try:
+        from tralard.forms.sub_project import SubProjectForm # don't move this import on top
+    except:
+        pass
+    subproject_update_form = SubProjectForm(instance=training)
+    return subproject_update_form

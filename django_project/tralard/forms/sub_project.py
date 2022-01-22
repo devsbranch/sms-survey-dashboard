@@ -44,7 +44,7 @@ class SubProjectForm(ModelForm):
     class Meta:
 
         model = SubProject
-        exclude = ["created", "description", "focus_area", "project"]
+        exclude = ["created", "description", "focus_area", "project", "slug"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
