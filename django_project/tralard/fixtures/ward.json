@@ -3,8 +3,8 @@
         "model": "tralard.Ward",
         "pk": 1,
         "fields": {
-            "name": "Mpika Cental",
-            "district": 49,
+            "name": "Mpika Central",
+            "district": 17,
             "created": "2021-01-13",
             "slug": "mpika-cental"
         }
@@ -14,7 +14,7 @@
         "pk": 2,
         "fields": {
             "name": "Mukungule",
-            "district": 49,
+            "district": 17,
             "created": "2021-01-13",
             "slug": "mukungule"
         }
@@ -24,7 +24,7 @@
         "pk": 3,
         "fields": {
             "name": "Muchinga",
-            "district": 49,
+            "district": 17,
             "created": "2021-01-13",
             "slug": "muchinga"
         }
@@ -34,7 +34,7 @@
         "pk": 4,
         "fields": {
             "name": "Lavushimanda",
-            "district": 49,
+            "district": 17,
             "created": "2021-01-13",
             "slug": "lavushimanda"
         }
@@ -44,7 +44,7 @@
         "pk": 5,
         "fields": {
             "name": "Isamba",
-            "district": 61,
+            "district": 5,
             "created": "2021-01-13",
             "slug": "isamba"
         }
@@ -54,7 +54,7 @@
         "pk": 6,
         "fields": {
             "name": "Ntumbachushi",
-            "district": 76,
+            "district": 22,
             "created": "2021-01-13",
             "slug": "ntumbachushi"
         }
@@ -74,7 +74,7 @@
         "pk": 8,
         "fields": {
             "name": "Senga",
-            "district": 76,
+            "district": 106,
             "created": "2021-01-13",
             "slug": "senga"
         }
@@ -84,7 +84,7 @@
         "pk": 9,
         "fields": {
             "name": "Kafumbo",
-            "district": 77,
+            "district": 88,
             "created": "2021-01-13",
             "slug": "kafumbo"
         }
@@ -94,7 +94,7 @@
         "pk": 10,
         "fields": {
             "name": "Chinkutila",
-            "district": 77,
+            "district": 76,
             "created": "2021-01-13",
             "slug": "chinkutila"
         }
@@ -104,7 +104,7 @@
         "pk": 11,
         "fields": {
             "name": "Kasongole",
-            "district": 77,
+            "district": 46,
             "created": "2021-01-13",
             "slug": "kasongole"
         }
@@ -124,7 +124,7 @@
         "pk": 13,
         "fields": {
             "name": "Masonde",
-            "district": 77,
+            "district": 61,
             "created": "2021-01-13",
             "slug": "masonde"
         }
@@ -134,7 +134,7 @@
         "pk": 14,
         "fields": {
             "name": "Kapamba",
-            "district": 77,
+            "district": 63,
             "created": "2021-01-13",
             "slug": "kapamba"
         }
