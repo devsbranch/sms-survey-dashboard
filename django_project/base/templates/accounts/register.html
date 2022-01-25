@@ -1,7 +1,7 @@
 {% extends "layouts/base-fullscreen.html" %}
 
 {% load static %}
-
+{% load crispy_forms_tags %}
 {% block title %} Register {% endblock %}
 
 {% block content %}   
@@ -20,8 +20,8 @@
                         <form role="form" method="post" action="">
 
                             {% csrf_token %} 
-
-                            <div class="auth-card">
+                            <div class="auth-card" style="max-width: 680px;">
+                                
                                 <div class="auth-card-header header-primary">
                                     <h2 class="has-text-centered">PPCR-TRALARD</h2>
                                 </div>
@@ -42,57 +42,15 @@
                             
                                 <div class="field">
                                     <div class="control">
-                                        {{ form.username }}
-                                        <div class="form-icon">
-                                            <i data-feather="user"></i>
-                                        </div>
+                                        {{ request.user.profile.user_create_form|crispy }}
                                     </div>
-                                </div>
-                                <div class="field">
-                                    <span class="text-error">{{ form.username.errors }}</span>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        {{ form.email }}
-                                        <div class="form-icon">
-                                            <i data-feather="mail"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <span class="text-error">{{ form.email.errors }}</span>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        {{ form.password1 }}
-                                        <div class="form-icon">
-                                            <i data-feather="lock"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <span class="text-error">{{ form.password1.errors }}</span>
-                                </div>
-
-                                <div class="field">
-                                    <div class="control">
-                                        {{ form.password2 }}
-                                        <div class="form-icon">
-                                            <i data-feather="lock"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <span class="text-error">{{ form.password2.errors }}</span>
                                 </div>
 
                                 <br />
                                 <p class="has-text-centered">
-                                    Have an account? <a class="no-account" href="{% url 'login' %}" >Login</a>
-                                </p>
-                                <div class="button-wrap">
+                                </a><a class="no-account" href="/" >Home</a> Have an account? <a class="no-account" href="{% url 'login' %}" >Login</a>
+                            </p>
+                            <div class="button-wrap">
                                     <button type="submit" name="register" class="button">Register</button>
                                 </div>
                             

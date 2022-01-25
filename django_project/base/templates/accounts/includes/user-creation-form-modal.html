@@ -1,0 +1,75 @@
+{% load crispy_forms_tags %}
+<div id="user-register-modal123" class="modal create-task-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="">
+        <div class="flex-card simple-shadow" style="min-width: 650px;">
+            <div class="navigation-tabs layout-tabs animated-tabs">
+
+                <div id="task-details" class="navtab-content is-active">
+                    <div class="card-body" style="max-height: 700px;">
+                            <div id="classic" class="login-form-wrapper">
+
+                                <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+            
+                                    <form role="form" method="post" action="/accounts/register/">
+            
+                                        {% csrf_token %} 
+                                        <div class="auth-card" style="max-width: 600px;">
+                                            
+                                            <div class="auth-card-header header-primary">
+                                                <h2 class="has-text-centered" style="background: inherit;">PPCR-TRALARD</h2>
+                                            </div>
+                                            <div class="field has-text-centered">
+                                                <p>
+                                                    {% if msg %}
+                                                        {{ msg | safe }}
+                                                    {% else %}
+                                                        Add your credentials 
+                                                    {% endif %}    
+                                                </p>    
+                                            </div>
+            
+                                            <br />
+                                        
+                                        <!-- Hide form fields, if the registration is successfull -->    
+                                        {% if not success %}    
+                                        
+                                            <div class="field">
+                                                <div class="control">
+                                                    {{ request.user.profile.user_create_form|crispy }}
+                                                </div>
+                                            </div>
+            
+                                            <br />
+                                            <p class="has-text-centered">
+                                            </a><a class="no-account" href="/" >Home</a> Have an account? <a class="no-account" href="{% url 'login' %}" >Login</a>
+                                        </p>
+                                        <div class="button-wrap">
+                                                <button type="submit" name="register" class="button">Register</button>
+                                            </div>
+                                        
+                                        {% endif %}
+            
+                                        </div>
+                                    
+                                    </form>
+            
+                                    <p class="has-text-centered">
+                                        &copy; Design <a href="https://cssninja.io/">PPCR</a> - 
+                                        <a href="#">TRALARD</a>.                        
+                                    </p>
+                                    <script>
+                                        document.getElementById("register123").addEventListener("click", ()=>{
+                                            var userRoleSelection = document.querySelector("groups");
+                                            console.log(userRoleSelection);
+                                        })
+                                    </script>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');">ddd</button>
+</div>

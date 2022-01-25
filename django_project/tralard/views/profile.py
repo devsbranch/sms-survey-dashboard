@@ -10,10 +10,9 @@ from django.contrib import messages
 
 @login_required(login_url="/login/")
 def user_profile_update(request):
-    form = ProfileForm()
     training = Profile.objects.get(user=request.user)
     if request.method == "POST":
-        form = ProfileForm(request.POST, instance=training)
+        form = ProfileForm(request.POST, request.FILES or None, instance=training)
         if form.is_valid():
             form.save()
             messages.add_message(request, messages.SUCCESS, "user profile updated successfully!".title())

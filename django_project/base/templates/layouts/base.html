@@ -2,7 +2,7 @@
 <html lang="en">
 
 {% load static %}
-
+{% load crispy_forms_tags %}
 <head>
     <!-- Required meta tags always come first -->
     <meta charset="utf-8">
@@ -36,7 +36,6 @@
     <div class="infraloader is-active"></div>    <!-- Main sidebar menu -->
     
     {% include 'includes/sidebar.html' %}
-
     {% include 'includes/navigation.html' %}
 
     {% block content %}{% endblock content %}

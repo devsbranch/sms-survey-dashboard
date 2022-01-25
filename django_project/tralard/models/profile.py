@@ -5,14 +5,14 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from rolepermissions.roles import get_user_roles
-from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
 from imagekit.models import ProcessedImageField
+from imagekit.models import ProcessedImageField
+from rolepermissions.roles import get_user_roles
 from rolepermissions.roles import get_user_roles
 
-from tralard.utils import user_profile_update_form
 from tralard.constants import GENDER_CHOICES
+from tralard.utils import user_profile_update_form, new_user_create_form
 
 
 class Profile(models.Model):
@@ -24,7 +24,7 @@ class Profile(models.Model):
         on_delete=models.CASCADE
     )
     birth_date = models.DateField(
-        _("Birth Date"), 
+        _("Birth Date"),
         null=True,
         blank=True
     )
@@ -96,6 +96,11 @@ class Profile(models.Model):
     def profile_form(self):
         update_form = user_profile_update_form(self)
         return update_form
+
+    @property
+    def user_create_form(self):
+        user_form = new_user_create_form()
+        return user_form
 
     @property
     def profile_photo_url(self):

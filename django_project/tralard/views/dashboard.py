@@ -10,7 +10,6 @@ from tralard.models.program import Program
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
-
 class HomeTemplateView(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = "index.html"

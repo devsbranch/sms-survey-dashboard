@@ -9,46 +9,6 @@
 				<h4 class="no-margin-bottom">
 					Total Count <small>({{ total_beneficiary_count }})</small>
 				</h4>
-				<!-- Beneficiary List Dropdown-->
-				<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-					<div class="button">
-						<i class="material-icons">more_vert</i>
-					</div>
-					<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-						<div class="dropdown-content">
-							<a class="dropdown-item">
-								<i class="sl sl-icon-pencil"></i>
-								<span>
-                                     <span>Rename</span>
-                                     <span>Rename this task group</span>
-                                </span>
-							</a>
-							<a href="#" class="dropdown-item">
-								<i class="sl sl-icon-grid"></i>
-								<span>
-									<span>Archive</span>
-                                    <span>Archive this task group</span>
-                                </span>
-							</a>
-							<div class="dropdown-divider"></div>
-							<a href="#" class="dropdown-item">
-								<i class="sl sl-icon-equalizer"></i>
-								<span>
-                                    <span>Settings</span>
-									<span>Group settings</span>
-                                </span>
-							</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item">
-								<i class="sl sl-icon-plus"></i>
-								<span>
-                                    <span>Add</span>
-                                    <span>Add new task</span>
-								</span>
-							</a>
-						</div>
-					</div>
-				</div>
 			</div>
 
 			<!-- Beneficiary List Cards-->
@@ -77,37 +37,20 @@
 						</div>
 						<div class="more-drop">
 							<!-- Beneficiary dropdown -->
-							<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-								<div class="button">
-									<i class="material-icons">more_vert</i>
-								</div>
-								<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-									<div class="dropdown-content">
-										<a href="#" class="dropdown-item">
-											<i class="sl sl-icon-eye"></i>
-											<span>
-                                                <span>View</span>
-                                                <span>View task details</span>
-											</span>
-										</a>
-										<a class="dropdown-item">
-											<i class="sl sl-icon-pencil"></i>
-											<span>
-                                                <span>Edit</span>
-												<span>Edit this task</span>
-                                            </span>
-										</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item">
-											<i class="sl sl-icon-trash"></i>
-											<span>
-                                                <span>Delete</span>
-                                                <span>Delete this task</span>
-											</span>
-										</a>
-									</div>
-								</div>
-							</div>
+							<a id="main-beneficiary-redirector123{{beneficiary.slug}}">
+								<span class="member-count" data-toggle="tooltip" data-placement="top" data-title="Click to go to main list" data-trigger="hover" data-original-title="">
+									<i class="sl sl-icon-arrow-right"></i>
+								</span>
+							</a>
+							<script>
+								var navigatorButton = document.getElementById("main-beneficiary-redirector123{{beneficiary.slug}}")
+								navigatorButton.addEventListener("click", () => {
+									if("{{ beneficiary.slug }}" == "{{ beneficiary.slug}}"){
+									  document.getElementById("main-beneficiary-redirector123{{beneficiary.slug}}").href = "{% url 'tralard:beneficiary-list' program_slug beneficiary.sub_project.project.slug %}";
+									  document.getElementById("main-beneficiary-redirector123{{beneficiary.slug}}").click()
+									}
+								  });
+							</script>
 						</div>
 					</div>
 				</div>

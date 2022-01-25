@@ -2,6 +2,7 @@
 {% load static %}
 {% load humanize %}
 {% load crispy_forms_tags %}
+{% load permission_tags %}
 
 {% block title %} {{ title|title }} {% endblock %} 
 
@@ -43,16 +44,22 @@
                             </div>
                             <!-- Filter input -->
                             <div class="actions">
+                                {% if user|has_role:'program_manager, project_manager,' or user.is_staff or user.is_superuser %}
+
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
                                     Beneficiaries
                                 </a>
+                                {% endif %}
+                                {% if user|has_role:'program_manager, project_manager, training_manager' or user.is_staff or user.is_superuser %}
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:training-list' program_slug=project.program.slug project_slug=project.slug %}">
                                     Training Schedules
                                 </a>
+                                {% endif %}
+                                {% if user|has_role:'program_manager, project_manager, funder' or user.is_staff or user.is_superuser %}
                                 <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}">
                                     Fund Overview
                                 </a>
-    
+                                {% endif %}
                                 <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:program-detail' program_slug=project.program.slug %}">
                                     Program Details
                                 </a>
@@ -281,7 +288,51 @@
                                     </div>
                                 </div>
 
-                                
+                                <!-- indicators listing details organization -->
+                                <div class="deal-card" 
+                                style="height: 40em;
+                                overflow-y: auto;"
+                                >
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>All Indicators Under {{ project.name|title }}</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    
+                                    {% comment %} Project indicators list  {% endcomment %}
+                                    <div class="deal-card-content is-active" >
+                                        <div class="list-body">
+                                            <div class="columns is-multiline">
+                                                <div class="column">
+    
+                                                    <!-- Checklist -->
+                                                    <div class="checklist-wrapper">
+    
+                                                        {% for indicator in indicators %}
+                                                            <div class="checklist-item">
+                                                                <div class="checklist-handle">
+                                                                    <span class="material-icons">menu</span>
+                                                                </div>
+                                                                <div class="checklist-checkbox">
+                                                                    <div class="b-checkbox is-secondary">
+                                                                        <input id="checklist-1" class="styled" type="checkbox"
+                                                                            checked>
+                                                                        <label for="checklist-1"></label>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="checklist-text">
+                                                                    {{ indicator.name }}
+                                                                </div>
+                                                            </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                    <!-- /Checklist -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <!-- Right side -->
                             <div class="column is-8">
@@ -296,11 +347,13 @@
                                             <div class="arrow-down"></div>
                                         </div>
                                         <!-- Schedule event action -->
+                                        {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                         <div class="action" data-action="schedule-event">
                                             <i class="sl sl-icon-clock"></i>
                                             <span>Create a New SubProject</span>
                                             <div class="arrow-down"></div>
-                                        </div>
+                                        </div>                                   
+                                         {% endif %}
                                         <!-- Upload files action -->
                                         <div class="action" data-action="upload-files">
                                             <i class="sl sl-icon-paper-clip"></i>
@@ -325,11 +378,13 @@
                                                             <div class="timeline-item">
                                                                 <div class="item-body">
                                                                     <div class="item-body">
+                                                                                                                                                                                                                          
                                                                         <div style="display: flex; justify-content: space-between;"> 
                                                                             <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}">
                                                                                 <h3>{{ subproject.name }}</h3>
                                                                             </a> 
-                                                                        <div> <div
+                                                                            {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
+                                                                         <div
                                                                             class="
                                                                               dropdown
                                                                               is-right
@@ -347,6 +402,7 @@
                                                                             >
                                                                               <div class="dropdown-content">
                                                                                 <div class="dropdown-divider"></div>
+                                                                                
                                                                                 <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}" class="dropdown-item">
                                                                                     <i class="sl sl-icon-equalizer"></i>
                                                                                     <span>
@@ -354,7 +410,8 @@
                                                                                         <span>Go to subproject Management</span>
                                                                                     </span>
                                                                                 </a>
-                                                                             
+                                                                              
+                                                                                {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                                                                 <a
                                                                                 id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}');" href="#"  data-modal="edit-subproject-modal"
                                                                                   class="dropdown-item modal-trigger"
@@ -365,7 +422,9 @@
                                                                                     <span>Edit subproject</span>
                                                                                   </span>
                                                                                 </a>
+                                                                                {% endif %}
                                                                                 <div class="dropdown-divider"></div>
+                                                                                {%if user|can:'can_delete_project'%}
                                                                                 <a
                                                                                 id="delete-button"
                                                                                 onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}', '{{ subproject.name }}');"
@@ -379,10 +438,13 @@
                                                                                     <span>Delete Subproject</span>
                                                                                   </span>
                                                                                 </a>
+                                                                                {% endif %}
                                                                               </div>
                                                                             </div>
-                                                                          </div></div>
+                                                                          </div>
+                                                                          {% endif %}
                                                                         </div>
+                                                                       </div>
                                                                     <div class="meta-list">
                                                                         <div class="meta-list-item">
                                                                             <i class="material-icons">person</i>
@@ -436,13 +498,13 @@
                                         </div>
    
                                         <div id="upload-files" class="action-wrap is-hidden">
-
+                                             {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                              <div class="columns is-multiline m-3" style="display: flex; justify-content: end; align-items: center;" data-modal="create-feedback-modal">
                                                  <div class="add-button modal-trigger" data-modal="create-feedback-modal">
                                                     <i class="material-icons">add</i>
                                                 </div>
                                             </div>
-                                            
+                                            {% endif %}
                                                 <div class="deal-timeline">
                                                     <ul>
                                                         {% for feedback in citizen_feedback_list %}
@@ -454,10 +516,12 @@
                                                             <div class="timeline-item is-note">
                                                                 
                                                                 <div class="item-body">
+                                                                    {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                                                     <div style="display: flex; justify-content: end; align-items: center;">
                                                                         <a id="edit-button" onClick="populateFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}');" href="#" class="tag squared is-secondary m-1 modal-trigger" data-modal="edit-feedback-modal"style="text-decoration: none !important;" >Edit</a>
                                                                         <a id="delete-button" onClick="deleteFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}', '{{project.name|title}}');" href="#" class="tag squared is-danger m-1 modal-trigger" data-modal="delete-feedback-modal" style="text-decoration: none !important;">Delete</a>
                                                                     </div>
+                                                                    {% endif %}
                                                                     <h3>{{ feedback.title|title }}</h3>
                                                                     <p class="note-text">
                                                                         {{ feedback.description|truncatechars:100 }}

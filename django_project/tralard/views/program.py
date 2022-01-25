@@ -111,6 +111,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         context['project_form'] = ProjectForm
         context['projects'] = self.project_paginator_list
         context['program'] = self.program_object
+        context['program_slug'] = self.program_slug
         context['sub_project_list'] = self.subproject_paginator_list
         context['sub_project_page_number'] = self.subproject_page_number
         context['beneficiary_list'] = self.beneficiary_paginator_list

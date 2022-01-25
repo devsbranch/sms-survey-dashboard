@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
 {% load humanize %}
 {% load static %}
+{% load permission_tags %}
 
 {% block title %}
 
@@ -113,12 +114,8 @@
 									<div class="list-header">
 										<div class="list-title">
                                             <span>Showing All SubProjects Under {{ program.name|upper }}
-                                                <h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
+												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
-											<div class="add-button modal-trigger"
-											     data-modal="create-project-modal">
-												<i class="material-icons">add</i>
-											</div>
 										</div>
 										<div class="list-filter">
 											<div class="control">
@@ -154,9 +151,6 @@
 									<div class="list-header">
 										<div class="list-title">
 											<span>Showing All Beneficiaries Under {{ program.name|upper }} </span>
-											<div class="add-button modal-trigger" data-modal="create-task-modal">
-												<i class="material-icons">add</i>
-											</div>
 										</div>
 										<div class="list-filter">
 											<div class="control">
@@ -224,7 +218,8 @@
 	</div>
 	<button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
-<!-- /Invite User Modal --><!-- Create Project Modal -->
+<!-- /Invite User Modal -->
+<!-- Create Project Modal -->
 <div id="create-project-modal" class="modal create-project-modal modal-hero">
 	<div class="modal-background"></div>
 	<div class="modal-content">
@@ -408,7 +403,8 @@
 	</div>
 	<button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
-<!-- Reminder Modal --><!-- Create Task Modal -->
+<!-- Reminder Modal -->
+<!-- Create Task Modal -->
 <div id="create-task-modal" class="modal create-task-modal modal-hero">
 	<div class="modal-background"></div>
 	<div class="modal-content">
@@ -592,7 +588,8 @@
 	</div>
 	<button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
-<!-- Create task Modal --><!-- Create Team Modal -->
+<!-- Create task Modal -->
+<!-- Create Team Modal -->
 <div id="create-team-modal" class="modal modal-md icon-action-modal modal-hero">
 	<div class="modal-background"></div>
 	<div class="modal-content">
