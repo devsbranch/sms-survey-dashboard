@@ -8,7 +8,10 @@
     var prov = prov_labels.replace(/&quot;/g, '"');
     var parsed_list = JSON.parse(prov);
     var parsed_data = JSON.parse(subs_in_prov);
-    
+
+    console.log(parsed_list.length);
+    console.log(parsed_data.length);
+
     if ($("#cjs").length) {
       new Chart(document.getElementById("cjs"), {
         type: "bar",
@@ -58,9 +61,7 @@
   });
 </script>
 
-{%endblock scripts%} 
-{%block content%} 
-{% comment %}
+{%endblock scripts%} {%block content%} {% comment %}
 <div class="column is-4">
   {% endcomment %}
   <div class="flex-card">
@@ -84,5 +85,4 @@
   </div>
   {% comment %}
 </div>
-{% endcomment %} 
-{%endblock content%}
+{% endcomment %} {%endblock content%}
