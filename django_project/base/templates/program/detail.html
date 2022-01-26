@@ -54,16 +54,16 @@
 									data-demo-src="{% static '/assets/images/logos/logo.png' %}">
 							{% endif %}
 							<div>
-								<h2 class="project-title">Program Name: {{ program.name|upper }}</h2>
-								<h4 class="project-tagline no-margin-bottom">program landing page</h4>
+								<h2 class="project-title">Project Name: {{ program.name|upper }}</h2>
+								<h4 class="project-tagline no-margin-bottom">project landing page</h4>
 							</div>
 						</div>
 
 						<div class="navigation-tabs layout-tabs overflow-tabs animated-tabs mt-20 mb-20">
 							<div class="tabs is-toggle is-fullwidth">
 								<ul>
-									<li class="tab-link is-active" data-tab="my-teams" ><a id="projects_tab">Projects</a></li>
-									<li class="tab-link" data-tab="my-projects" ><a id="subprojects_tab">SubProjects</a></li>
+									<li class="tab-link is-active" data-tab="my-teams" ><a id="projects_tab">SubProjects</a></li>
+									<li class="tab-link" data-tab="my-projects" ><a id="subprojects_tab">Interventions</a></li>
 									<li class="tab-link" data-tab="my-tasks"><a id="beneficiaries_tab">Beneficiaries</a></li>
 								</ul>
 							</div>
@@ -75,7 +75,7 @@
 								<div class="projects-list-wrapper">
 									<div class="list-header">
 										<div class="list-title">
-                                                <span>Showing All Projects Under {{ program.name|upper }}
+                                                <span>Showing All SubProjects Under {{ program.name|upper }}
                                                     <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
                                                 </span>
 											<div class="add-button modal-trigger"
@@ -113,7 +113,7 @@
 									<!-- SubProjects Group -->
 									<div class="list-header">
 										<div class="list-title">
-                                            <span>Showing All SubProjects Under {{ program.name|upper }}
+                                            <span>Showing All Interventions Under {{ program.name|upper }}
 												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
 										</div>
@@ -224,7 +224,7 @@
 	<div class="modal-background"></div>
 	<div class="modal-content">
 		<div class="flex-card simple-shadow">
-			<h2 class="has-text-centered dark-text">New Project</h2>
+			<h2 class="has-text-centered dark-text">New SubProject</h2>
 			<div class="navigation-tabs layout-tabs animated-tabs">
 				<div class="tabs is-toggle is-fullwidth no-margin-bottom">
 					<ul>

@@ -22,7 +22,7 @@
           <!-- Page title -->
           <div class="contacts-title-wrapper">
             <div class="title-wrap">
-              <h2 class="project-title">SubProject Funds</h2>
+              <h2 class="project-title">Intervention Funds</h2>
               <h4 class="project-tagline">
                 showing all <b>{{ sub_project.name|title }}</b> funds.
               </h4>
@@ -44,7 +44,7 @@
                 data-ripple-color=""
                 href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
               >
-                <span>Go Back To SubProject</span>
+                <span style="padding-right: 6px;">Intervention</span>
                 <i class="material-icons">send</i>
               </a>
             </div>

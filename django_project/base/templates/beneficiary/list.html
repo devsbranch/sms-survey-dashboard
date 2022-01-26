@@ -19,7 +19,7 @@
                 <div class="profile-heading">
                     <div>
                         <h2 class="project-title">{{header}}</h2>
-                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <b>{{project.name|title|truncatechars:24}}</b> project.</small>
+                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <b>{{project.name|title|truncatechars:24}}</b></small>
                     </div>
                     
                 </div>
@@ -40,7 +40,7 @@
                     class=" button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger " 
                     data-ripple-color="" 
                     href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
-                    <span>Go Back To Sub-Project </span>
+                    <span style="padding-right: 6px;">Go Back </span>
                     <i class="material-icons">send</i>
                 </a>
                 </div>
@@ -97,7 +97,7 @@
                                             <!-- Filter dropdown Sub Project-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
-                                                    <span>Sub Project</span>
+                                                    <span>Intervention</span>
                                                     <i class="material-icons">keyboard_arrow_down</i>
                                                 </div>
 
@@ -137,7 +137,7 @@
                                             <!-- Filter dropdown Project-->
                                             <div class="dropdown filter-dropdown dropdown-trigger">
                                                 <div class="button">
-                                                    <span>Project</span>
+                                                    <span>SubProject</span>
                                                     <i class="material-icons">keyboard_arrow_down</i>
                                                 </div>
 
@@ -287,7 +287,7 @@
 
                                     <!-- Table row -->
 
-                                    {% comment %} name, sub-project, project, total members, date joined {% endcomment %}
+                                    {% comment %} name, interventions, project, total members, date joined {% endcomment %}
                                     
                                     {% for beneficiary in beneficiaries %}
                                         <tr>

@@ -2,6 +2,7 @@
 from django.db.models import Sum
 from django.views.generic import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 
 from tralard.models.fund import Fund
 from tralard.models.profile import Profile
@@ -22,6 +23,11 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
             self.current_user_profile = None
         self.total_project_funds = Fund.objects.all().aggregate(Sum("amount"))
         self.cleaned_total_project_funds = self.total_project_funds["amount__sum"]
+        self.projects = Project.objects.all()
+        self.project_paginator = Paginator(self.projects, 5)
+        self.project_page_number = self.request.GET.get("project_page_number", '')
+        self.project_paginator_list = self.project_paginator.get_page(self.project_page_number)
+        
         context["title"] = "Program: Tralard"
         context["program_list"] = Program.objects.all().order_by("-started")[:5]
         context["project_count"] = Project.objects.all().count()
@@ -49,6 +55,7 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context["total_funded_subprojects"] = (
             SubProject.objects.all().filter(fund=True).count()
         )
+        
         context["total_approved_projects"] = (
             Project.objects.all().filter(approved=True).count()
         )
@@ -61,7 +68,7 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context["subs_in_prov"] = SubProject.custom_objects.get_sub_projects_district_json()[
             "data"
         ]
-        context["projects"] = Project.objects.all()
+        context["projects"] = self.project_paginator_list
         context['funds_in_year_label'] = Fund.count_objects.get_total_funds_in_year()['year_labels']
         context['total_funds_in_year'] = Fund.count_objects.get_total_funds_in_year()['total_funds']
 

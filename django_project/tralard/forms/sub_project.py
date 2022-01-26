@@ -59,6 +59,7 @@ class SubProjectForm(ModelForm):
                 Column("size", css_class="form-group col-md-12 mb-0"),
                 Column("indicators", css_class="form-group col-md-12 mb-0"),
                 Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
+                Column("ward", css_class="form-group col-md-12 mb-0"),
                 Column("approved", css_class="form-group col-md-12 mb-0"),
                 Column("image_file", css_class="form-group col-md-12 mb-0"),
                 Column("custom_description", css_class="form-group col-md-12 mb-0"),

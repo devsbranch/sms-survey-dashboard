@@ -123,7 +123,7 @@ class SubProject(models.Model):
         blank=True
     )
     name = models.CharField(
-        help_text=_("Name of this Sub Project."),
+        help_text=_("Name of this Intervention."),
         max_length=255,
         unique=True
     )
@@ -135,7 +135,7 @@ class SubProject(models.Model):
     ) 
     ward = models.ForeignKey(
         Ward,
-        help_text=_('The ward in which this subproject has been implemented.'),
+        help_text=_('The ward in which this Intervention has been implemented.'),
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -168,7 +168,7 @@ class SubProject(models.Model):
         # null=True, null has no effect on ManyToManyField.
         help_text=_(
             "Managers of all trainings and project activities in this Sub project. "
-            "They will be allowed to create or delete subproject data."
+            "They will be allowed to create or delete Intervention data."
         ),
     )
     approved = models.BooleanField(
@@ -194,7 +194,7 @@ class SubProject(models.Model):
     )
     description = models.TextField(
         help_text=_(
-            "A detailed summary of the Sub Project. Rich text edditing is supported."
+            "A detailed summary of the Intervention. Rich text edditing is supported."
         ),
         max_length=2000,
         blank=True,
@@ -202,7 +202,7 @@ class SubProject(models.Model):
     )
     focus_area = models.TextField(
         help_text=_(
-            "Please describe the focus areas of the sub project."
+            "Please describe the focus areas of the Intervention."
             "(if any). Rich text editing is supported"
         ),
         max_length=10000,
@@ -269,7 +269,7 @@ class SubProject(models.Model):
 
     @property
     def get_total_sub_project_fund(self):
-        """Computes total funds related to this subproject."""
+        """Computes total funds related to this Intervention."""
         related_funds_sum_qs = Fund.objects.filter(
             sub_project__slug=self.slug
         ).aggregate(Sum("amount"))
@@ -279,6 +279,6 @@ class SubProject(models.Model):
 
     @property
     def sub_project_form(self):
-        """Assigns a form to subproject after create."""
+        """Assigns a form to Intervention after create."""
         form = sub_project_form(self)
         return form

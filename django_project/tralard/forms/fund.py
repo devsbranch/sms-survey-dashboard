@@ -59,7 +59,7 @@ class FundForm(ModelForm):
                 css_class="form-row",
             ),
             FormActions(
-                Submit("save", "Create Sub Project Fund"),
+                Submit("save", "Create Fund"),
             ),
         )
 

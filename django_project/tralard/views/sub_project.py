@@ -283,9 +283,10 @@ def sub_project_update(
                 subproject.description = custom_description
             if custom_focus_area:
                 subproject.focus_area = custom_focus_area
+            
             subproject.save()
         
-        messages.add_message(request, messages.SUCCESS, "SubProject updated successfully!")
+        messages.add_message(request, messages.SUCCESS, "Intervention updated successfully!")
         return redirect(
             reverse_lazy(
                 "tralard:program-detail",

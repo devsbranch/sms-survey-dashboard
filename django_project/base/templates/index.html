@@ -40,9 +40,6 @@
                                         <span>Total count</span>
                                     </p>
                                 </div>
-                                <a class="view-all-button">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
                             </div>
                         </div>
 
@@ -61,9 +58,6 @@
 
                                     </p>
                                 </div>
-                                <a class="view-all-button">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
                             </div>
                         </div>
 
@@ -76,15 +70,12 @@
                                     <i class="material-icons secondary">work</i>
                                 </div>
                                 <div class="tile-content">
-                                    <h3>SubProjects</h3>
+                                    <h3>Interventions</h3>
                                     <p>
                                         <span>{{ subproject_count }}</span>
                                         <span>Total count</span>
                                     </p>
                                 </div>
-                                <a class="view-all-button">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
                             </div>
                         </div>
 
@@ -103,9 +94,6 @@
                                         <span>Total Beneficiaries</span>
                                     </p>
                                 </div>
-                                <a class="view-all-button">
-                                    <i class="fa fa-angle-right"></i>
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -145,7 +133,7 @@
                         {% comment %} program widget{% endcomment %}
                         <div class="column is-4">
                             <div class="members-card">
-                                <h3 class="card-heading">All Programs</h3>
+                                <h3 class="card-heading">All Projects</h3>
                                 <ul class="user-list">
 
                                     {% for program in program_list %}
@@ -230,7 +218,7 @@
                             <!-- Projects table widget -->
                             <div class="table-widget">
                                 <h3 class="card-heading is-bordered has-icon">
-                                    <span>Projects Overview</span>
+                                    <span>SubProject Overview</span>
                                     <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
                                         <div class="button">
                                             <i class="material-icons">more_vert</i>
@@ -294,7 +282,32 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
+                                <hr style="margin-top: -1.5em;"/>
+                                {% if projects.paginator.num_pages != 1 %}
+                                    <div class="pagination align-center" style="align-content: center; margin-right: 3em;">
+                                        <hr />
+                                        <span style="font-size: x-medium;" class="step-links">
+                                            {% if projects.has_previous %}
+                                            <a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #b7c5cd; border-color: #21546d; font:200;" href="?project_page_number=1">&laquo;&laquo; first</a>
+                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.previous_page_number }}" data-title="previous page">&laquo;</a>
+                                            {% endif %}
+                                            
+                                            <span class="current" style="color: #21546d;">
+                                                {{ projects.number }} of {{ projects.paginator.num_pages }}.
+                                            </span>
+                                            {% if projects.has_next %}
+                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.next_page_number }}" data-title="next page">&raquo;</a>
+                                            <a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #b7c5cd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.paginator.num_pages }}">last &raquo;&raquo;</a>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                {% else %}
+                                {% endif %}
                             </div>
+                            <script>
+                                var defaultText = "Welcome to Django Report Builder".trim
+                                var spanElements = 
+                            </script>
                             <br/>   
                             {% include 'includes/project_chart.html' %}
                         </div>

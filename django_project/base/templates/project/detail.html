@@ -61,7 +61,7 @@
                                 </a>
                                 {% endif %}
                                 <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:program-detail' program_slug=project.program.slug %}">
-                                    Program Details
+                                    Project Details
                                 </a>
                             </div>
                         </div>
@@ -247,7 +247,7 @@
                                 <!-- program details organization -->
                                 <div class="deal-card">
                                     <div class="deal-card-header is-toggle is-active">
-                                        <h3>Program</h3>
+                                        <h3>Project</h3>
                                         <div class="toggle-icon">
                                             <i class="material-icons">keyboard_arrow_right</i>
                                         </div>
@@ -343,14 +343,14 @@
                                         <!-- Write note action -->
                                         <div class="action is-active" data-action="write-note">
                                             <i class="sl sl-icon-doc"></i>
-                                            <span>All {{ project.name|title }} Related SubProjects</span>
+                                            <span>All {{ project.name|title }} Related Interventions</span>
                                             <div class="arrow-down"></div>
                                         </div>
                                         <!-- Schedule event action -->
                                         {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                         <div class="action" data-action="schedule-event">
                                             <i class="sl sl-icon-clock"></i>
-                                            <span>Create a New SubProject</span>
+                                            <span>Create a New Intervention</span>
                                             <div class="arrow-down"></div>
                                         </div>                                   
                                          {% endif %}
@@ -487,13 +487,12 @@
                                         <div id="schedule-event" class="action-wrap is-hidden">
                                             <!-- Form -->
                                             <form class="event-form" action="{% url 'tralard:project-detail' program_slug project_slug %}" method="post" enctype="multipart/form-data">
-                                                <h3 class="action-title">New SubProject</h3>
                                                 <div class="columns is-multiline">
                                                     {% csrf_token %}
                                                     {% crispy form form.helper %}
                                                 </div>
                                                 
-                                                <button type="submit" class="button is-modal primary-btn">Create SubProject</button>
+                                                <button type="submit" class="button is-modal primary-btn">Create Intervention</button>
                                             </form>
                                         </div>
    
@@ -563,7 +562,7 @@
             <div class="modal-content" style="width: 50% !important;">
                 <div class="flex-card simple-shadow" style="overflow-y: auto;">
                     <div class="help-text has-text-left">
-                        <h2 class="dark-text">Update SubProject</h2>
+                        <h2 class="dark-text">Update Intervention</h2>
                     </div>
                     <div class="card-body">
                         <div class="has-text-centered">
@@ -571,7 +570,7 @@
                                 <img src="{% static 'assets/images/icons/basket.svg' %}">
                             </div>
                             <div class="m-3">
-                                <span class="m-2">Edit SubProject Here</span>
+                                <span class="m-2">Edit Intervention Here</span>
                             </div>
                         </div>
                         <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
@@ -581,7 +580,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button"  class="button modal-dismiss"></a>Cancel</button>
-                                <button type="submit" class="button is-modal">Update SubProject</button>
+                                <button type="submit" class="button is-modal">Update Intervention</button>
                             </div>
 
                         </form>

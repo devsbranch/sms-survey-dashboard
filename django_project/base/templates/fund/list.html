@@ -23,7 +23,7 @@
           <div class="contacts-title-wrapper">
             <div class="title-wrap">
               <h2 class="project-title">Funds</h2>
-              <h4 class="project-tagline">showing all funds for <b>{{ project.name|title }}</b> project.</h4>
+              <h4 class="project-tagline">showing all funds for <b>{{ project.name|title }}</b> subproject.</h4>
           </div>
             <!-- Filter input -->
             <div class="list-filter">
@@ -43,7 +43,7 @@
                 data-ripple-color=""
                 href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
               >
-                <span>Go Back To Project </span>
+                <span style="padding-right: 6px;">SubProject </span>
                 <i class="material-icons">send</i>
               </a>
             </div>
@@ -111,7 +111,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>SubProjects</span>
+                        <span>Intervention</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
