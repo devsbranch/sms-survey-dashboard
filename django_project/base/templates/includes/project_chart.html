@@ -19,7 +19,8 @@
           labels: parsed_list,
           datasets: [
             {
-              label: "Total SubProjects",
+              label: "Total Interventions",
+              data: parsed_data,
               backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
@@ -32,7 +33,6 @@
                 "#e8c3b9",
                 "#c45850",
               ],
-              data: parsed_data,
             },
           ],
         },
@@ -44,6 +44,10 @@
           scales: {
             yAxes: [
               {
+                scaleLabel: {
+                  display: true,
+                  labelString: "Number of Interventions",
+                },
                 ticks: {
                   userCallback(label, index, labels) {
                     // only show if whole number
@@ -71,13 +75,13 @@
     <div class="card-body">
       <div class="row mb-20">
         <div class="col-auto m-b-10">
-          <h3 class="mb-1">{{ total_approved_subprojects|safe }}</h3>
+          <h3 class="mb-1 demo-title">{{ total_approved_subprojects|safe }}</h3>
 
-          <span>Approved</span>
+          <h2 class="border-title">Approved</h2>
         </div>
         <div class="col-auto m-b-10">
-          <h3 class="mb-1">{{ total_funded_subprojects|safe }}</h3>
-          <span>Funded</span>
+          <h3 class="mb-1 demo-title">{{ total_funded_subprojects|safe }}</h3>
+          <h2 class="border-title">Funded</h2>
         </div>
       </div>
       <canvas id="cjs" width="800" height="450"></canvas>

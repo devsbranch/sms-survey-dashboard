@@ -85,7 +85,7 @@ class ProjectListView(LoginRequiredMixin, TemplateView):
 
 
 class DashboardExtrasView(LoginRequiredMixin, TemplateView):
-    template_name = "tralard/dashboard-chartjs.html"
+    template_name = "tralard/dashboard-crm-kanban.html"
 
     def get_context_data(self):
         context = super(DashboardExtrasView, self).get_context_data()
