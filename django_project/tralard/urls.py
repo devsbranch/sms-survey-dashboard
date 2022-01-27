@@ -37,6 +37,7 @@ from tralard.views.project import (
 )
 from tralard.views.sub_project import (
     SubProjectDetailView,
+    fund_approval_view,
     subproject_fund_delete,
     subproject_fund_detail,
     update_sub_project_fund,
@@ -262,4 +263,9 @@ urlpatterns = [
         sub_project_update,
         name="subproject-update",
     ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/approve/",
+        fund_approval_view,
+        name="subproject-fund-approval"
+    )
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

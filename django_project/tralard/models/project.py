@@ -284,6 +284,14 @@ class Project(models.Model):
         return sub_projects_count_queryset
 
     @property
+    def get_total_sub_project_fund(self):
+        total_sub_project_fund = Fund.objects.filter(
+            sub_project__project__slug=self.slug
+        ).aggregate(Sum('amount'))
+        amount_value = total_sub_project_fund["amount__sum"]
+        return amount_value
+
+    @property
     def count_beneficiaries(self):
         beneficiary_count_queryset = Beneficiary.objects.filter(
             sub_project__project__slug=self.slug

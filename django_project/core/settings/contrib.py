@@ -228,3 +228,7 @@ REST_REGISTRATION = {
     'RESET_PASSWORD_VERIFICATION_ENABLED': False,
     'REGISTER_EMAIL_VERIFICATION_ENABLED': False,
 }
+
+
+# Redirect to login page if user is not authorized
+ROLEPERMISSIONS_REDIRECT_TO_LOGIN = True

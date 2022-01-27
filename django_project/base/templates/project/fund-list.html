@@ -4,6 +4,8 @@
 <!--  -->
 {% load static %}
 <!--  -->
+{% load permission_tags %}
+<!--  -->
 {% load humanize %}
 <!--  -->
 {% block title %} {{ title|title }} {% endblock %}
@@ -79,7 +81,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Amount</span>
+                        <span>Amount(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -88,7 +90,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Total Disbursement</span>
+                        <span>Total Disbursement(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -97,7 +99,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Balance</span>
+                        <span>Balance(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -165,7 +167,7 @@
                   </td>
                   <td class="modifications">
                     <span class="inner">
-                      <span class="project-count"> {{ fund.amount }} </span>
+                      <span class="project-count"> {{ fund.amount.amount|intcomma }} </span>
                     </span>
                   </td>
 
@@ -173,10 +175,9 @@
                     <span class="inner">
                       <span class="project-count">
                         {% if fund.get_total_disbursements is not None %}
-                        {{fund.currency}}
                         {{fund.get_total_disbursements|intcomma }}
                         <!--  -->
-                        {% else %} {{ fund.currency }} 0
+                        {% else %}  0
                         <!--  -->
                         {% endif %}
                       </span>
@@ -186,7 +187,6 @@
                   <td class="modifications">
                     <span class="inner">
                       <span class="project-count">
-                        {{fund.currency}}
                         <!--  -->
                         {{fund.sub_project.project.get_total_fund_balance|intcomma}}
                       </span>
@@ -206,7 +206,6 @@
                       <span class="project-count">
                         {{ fund.funding_date }}
                       </span>
-                      <button type="button" class="button">Update</button>
                     </span>
                   </td>
 
@@ -232,6 +231,24 @@
                               <span>View fund details</span>
                             </span>
                           </a>
+                        <div class="dropdown-content">
+                          {% if user|has_role:'program_manager, project_manager, fund_manager' or user.is_staff or user.is_superuser %}
+                            {% if fund.approved is not True %}
+                              <a
+                                class="dropdown-item modal-trigger fund-{{fund.slug}}"
+                                data-ripple-color=""
+                                id="fund_list_modal"
+                                data-modal="approve-subproject-fund-modal"
+                                onclick="subproject_fund_approval_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
+                              >
+                                <i class="fa fa-shield"></i>
+                                <span>
+                                  <span>Approve Fund</span>
+                                  <span>Fund Approval</span>
+                                </span>
+                              </a>
+                            {% endif %}
+                          {% endif %}
                           <a
                             href="#"
                             class="dropdown-item has-icon modal-trigger fund-{{fund.project.slug}}-{{fund.slug}}"
@@ -276,7 +293,7 @@
                             <i class="sl sl-icon-trash"></i>
                             <span>
                               <span>Delete</span>
-                              <span>Delete this subproject fund</span>
+                              <span>Delete this intervention fund</span>
                             </span>
                           </a>
                         </div>
@@ -355,6 +372,40 @@
   ></button>
 </div>
 
+
+<!-- FUND APPROVAL MODAL -->
+<div
+  id="approve-subproject-fund-modal"
+  class="modal modal-md icon-action-modal modal-hero"
+>
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="flex-card simple-shadow">
+      <div class="help-text has-text-left">
+        <h2 class="dark-text">Approve {{ sub_project.project.name|title }} Fund </h2>
+      </div>
+
+      <div class="card-body">
+        <form
+          id="approve-subproject-fund-form"
+          class="form"
+          action=""
+          method="POST"
+        >
+          {% csrf_token %}
+          <!--  -->
+          {% crispy fund_approval_form fund_approval_form.helper %}
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <button
+    class="modal-close is-large is-hidden"
+    aria-label="close"
+  ></button>
+</div>
+
 <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
 <div
   id="delete-subproject-fund-modal"
@@ -364,7 +415,7 @@
   <div class="modal-content">
     <div class="flex-card simple-shadow">
       <div class="help-text has-text-left">
-        <h2 class="dark-text">Delete Subproject Fund</h2>
+        <h2 class="dark-text">Delete Intervention Fund</h2>
       </div>
 
       <div class="card-body">
@@ -661,7 +712,7 @@
     try {
       let url = `${location.origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/manage/fund/${fund_slug}/delete/`;
       $("#delete-subproject-fund-modal #warning-msg").html(
-        `<h3>Are you sure you want to delete this Sub Project Fund?</h3>`
+        `<h3>Are you sure you want to delete this Intervention Fund?</h3>`
       );
       $("#delete-subproject-fund-form").attr("action", url);
     } catch (error) {
@@ -703,6 +754,18 @@
       console.log(error);
     }
   };
+
+  // SUB PROJECT FUND APPROVAL
+  const subproject_fund_approval_action = (program_slug, project_slug, subproject_slug, fund_slug) => {
+    try {
+      let url = `${location.origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/manage/fund/${fund_slug}/approve/`;
+      document
+        .querySelector("#approve-subproject-fund-form")
+        .setAttribute("action", url);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const actionButtons = (e) => {
     e.stopPropagation();

@@ -8,18 +8,36 @@ import logging
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
+from django.contrib.auth import get_user_model
 from django.db.models.aggregates import Sum
 from django.utils.translation import gettext_lazy as _
 from tralard.utils import (
     get_balance,
     unique_slugify,
-    compute_total_amount, 
-    check_requested_deduction_against_balance
+    compute_total_amount,
+    check_requested_deduction_against_balance,
 )
 
 from djmoney.models.fields import MoneyField
 from djmoney.money import Money
 
+User = get_user_model()
+logger = logging.getLogger(__name__)
+
+ZMK = "ZMK"
+USD = "USD"
+GBP = "GBP"
+EU = "EU"
+
+CURRENCY_CHOICES = [(ZMK, "ZMK"), (USD, "USD"), (GBP, "GBP"), (EU, "EU")]
+
+
+PENDING = "PENDING"
+APPROVED = "APPROVED"
+REJECTED = "REJECTED"
+CANCELLED = "CANCELLED"
+
+APPROVAL_STATUS_CHOICES = [(PENDING, "PENDING"), (APPROVED, "APPROVED"), (REJECTED, "REJECTED"), (CANCELLED, "CANCELLED")]
 from tralard.constants import ZMK, CURRENCY_CHOICES
 
 logger = logging.getLogger(__name__)
@@ -27,11 +45,15 @@ logger = logging.getLogger(__name__)
 
 class ApprovedFundManager(models.Manager):
     """Custom manager that shows pproved project funds."""
+
     def get_queryset(self):
-        return super(
-            ApprovedFundManager, self
-        ).get_queryset().filter(
-            approved=True,)
+        return (
+            super(ApprovedFundManager, self)
+            .get_queryset()
+            .filter(
+                approved=True,
+            )
+        )
 
 
 class UnapprovedFundManager(models.Manager):
@@ -39,9 +61,7 @@ class UnapprovedFundManager(models.Manager):
 
     def get_queryset(self):
         """Query set generator."""
-        return super(
-            UnapprovedFundManager, self).get_queryset().filter(
-                approved=False)
+        return super(UnapprovedFundManager, self).get_queryset().filter(approved=False)
 
 class FundCountManager(models.Manager):
     """ Computes total funds spent in current year """
@@ -69,28 +89,36 @@ class Fund(models.Model):
     """
     Project Fund definition.
     """
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
+
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     amount = MoneyField(
         _("Amount Approved"),
         max_digits=14,
         decimal_places=2,
         default_currency=ZMK,
         help_text="Amount approved for the project.",
-        default=Money('0.0', ZMK)
+        default=Money("0.0", ZMK),
     )
     approved = models.BooleanField(
-        help_text=_('Whether this project fund has been approved for use yet.'),
-        default=False
+        help_text=_("Whether this project fund has been approved for use yet."),
+        default=False,
+    )
+    approval_status = models.CharField(
+        help_text=_(
+            "Precise funding status on project fund has been approved for use yet."
+        ),
+        max_length=20,
+        choices=APPROVAL_STATUS_CHOICES,
+        default=PENDING,
+    )
+    approval_status_comment = models.TextField(
+        help_text=_("Comment on the approval status of the project fund."),
+        max_length=255,
+        null=True,
+        blank=True,
     )
     balance = MoneyField(
-        _("Balance"),
-        max_digits=14,
-        decimal_places=2,
-        default=Money(0.0, 'ZMK')
+        _("Balance"), max_digits=14, decimal_places=2, default=Money(0.0, "ZMK")
     )
     variation = MoneyField(
         _("Variation"),
@@ -99,7 +127,7 @@ class Fund(models.Model):
         null=True,
         default_currency=ZMK,
         help_text="Variation if any.",
-        default=Money('0.0', ZMK)
+        default=Money("0.0", ZMK),
     )
     funding_date = models.DateField(
         _("Funding Date"),
@@ -108,14 +136,36 @@ class Fund(models.Model):
         help_text="The date the project was funded.",
     )
     currency = models.CharField(
-        help_text=_('Currency for the project Fund.'),
+        help_text=_("Currency for the project Fund."),
         choices=CURRENCY_CHOICES,
         max_length=10,
         default=ZMK,
     )
     sub_project = models.ForeignKey(
-        'tralard.SubProject',
+        "tralard.SubProject",
         on_delete=models.PROTECT,
+    )
+    requested_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name="requested_by",
+        help_text=_("The user who requested the fund."),
+        blank=True,
+        null=True,
+    )
+    approved_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        related_name="approved_by",
+        help_text=_("The user who approved the fund."),
+        blank=True,
+        null=True,
+    )
+    approved_date = models.DateField(
+        _("Approved Date"),
+        null=True,
+        blank=True,
+        help_text="The date the fund was approved.",
     )
     created = models.DateTimeField(auto_now_add=True)
     objects = models.Manager()
@@ -125,85 +175,81 @@ class Fund(models.Model):
 
     # noinspecti
     class Meta:
-        verbose_name = _('Fund')
-        verbose_name_plural = _('Funds')
+        verbose_name = _("Fund")
+        verbose_name_plural = _("Funds")
 
     class Meta:
-        verbose_name = _('Fund')
-        verbose_name_plural = _('Funds')
+        verbose_name = _("Fund")
+        verbose_name_plural = _("Funds")
 
     def __str__(self):
         return f"Amount: {self.amount}, SubProject: {self.sub_project}, Program: {self.sub_project.project.program.name}."
-
 
     def save(self, *args, **kwargs):
         """
         Override save method to calculate the balance.
         """
         if not self.slug:
-            self.slug = unique_slugify(self, 
-            slugify(f"{self.sub_project.project.slug} \
+            self.slug = unique_slugify(
+                self,
+                slugify(
+                    f"{self.sub_project.project.slug} \
                 fund amount \
                     {self.amount}"
-                    )
-                )
-            
+                ),
+            )
+
         if self.amount is not None:
-            total_disburesment = compute_total_amount(Disbursement, self.pk, "disbursement")
+            total_disburesment = compute_total_amount(
+                Disbursement, self.pk, "disbursement"
+            )
             self.balance = get_balance(self.amount, total_disburesment)
         super().save(*args, **kwargs)
-
 
     def get_absolute_url(self):
         """Return URL to project detail page
         :return: URL
         :rtype: str
         """
-        return reverse_lazy('tralard:project-detail', 
+        return reverse_lazy(
+            "tralard:project-detail",
             kwargs={
-                'program_slug': self.sub_project.project.program.slug, 
-                'project_slug': self.sub_project.project.slug
-                }
-            )
+                "program_slug": self.sub_project.project.program.slug,
+                "project_slug": self.sub_project.project.slug,
+            },
+        )
+
     @property
     def total_disbursed_funds(self):
-        total_disbursed_funds_queryset = Disbursement.objects.filter(
-            fund__id=self.pk
-            )
+        total_disbursed_funds_queryset = Disbursement.objects.filter(fund__id=self.pk)
         return total_disbursed_funds_queryset
 
     @property
     def get_total_disbursements(self):
         """Computes total Expenses related to this Disbursement."""
-        related_funds_sum_qs = Disbursement.objects.filter(
-            fund__id=self.pk
-        ).aggregate(Sum('amount'))
+        related_funds_sum_qs = Disbursement.objects.filter(fund__id=self.pk).aggregate(
+            Sum("amount")
+        )
 
-        amount_value = related_funds_sum_qs['amount__sum']
+        amount_value = related_funds_sum_qs["amount__sum"]
         return amount_value
           
 class Disbursement(models.Model):
     """
     Project Fund disbursement definition.
     """
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
+
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     amount = MoneyField(
         _("Amount Disbursed"),
         max_digits=14,
         decimal_places=2,
         default_currency=ZMK,
         help_text="Amount disbursed for the project.",
-        default=Money('0.0', ZMK)
+        default=Money("0.0", ZMK),
     )
     balance = MoneyField(
-        _("Balance"),
-        max_digits=14,
-        decimal_places=2,
-        default=Money('0.0', ZMK)
+        _("Balance"), max_digits=14, decimal_places=2, default=Money("0.0", ZMK)
     )
     disbursement_date = models.DateField(
         _("Disbursement Date"),
@@ -212,15 +258,15 @@ class Disbursement(models.Model):
         help_text="The date the project was disbursed.",
     )
     currency = models.CharField(
-        help_text=_('Currency for the project Fund.'),
+        help_text=_("Currency for the project Fund."),
         choices=CURRENCY_CHOICES,
         max_length=10,
         default=ZMK,
-    )    
+    )
     fund = models.ForeignKey(
         Fund,
         on_delete=models.PROTECT,
-    )    
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -229,26 +275,27 @@ class Disbursement(models.Model):
 
     def __str__(self):
         return f"Amount: {self.amount}, Fund: {self.fund}. Project: {self.fund.sub_project.project.name}"
-    
+
     def save(self, *args, **kwargs):
         """
         Override save method to calculate the balance.
         """
         if not self.slug:
-            self.slug = unique_slugify(self, slugify(
-                f'{self.fund.slug} \
+            self.slug = unique_slugify(
+                self,
+                slugify(
+                    f"{self.fund.slug} \
                     disbursement amount \
-                        {self.amount}'
-                        )
-                    )
+                        {self.amount}"
+                ),
+            )
         if self.amount is not None:
             self.amount = check_requested_deduction_against_balance(
-                self.fund.balance, 
-                self.amount, 
-                'Disbursement', 
-                'Fund'
-                )
-            total_disbursment = compute_total_amount(Expenditure, self.pk, "expenditure")
+                self.fund.balance, self.amount, "Disbursement", "Fund"
+            )
+            total_disbursment = compute_total_amount(
+                Expenditure, self.pk, "expenditure"
+            )
             self.balance = get_balance(self.amount, total_disbursment)
         super().save(*args, **kwargs)
 
@@ -256,7 +303,7 @@ class Disbursement(models.Model):
     def total_disbursed_expenses(self):
         total_disbursed_expenses_queryset = Expenditure.objects.filter(
             disbursment__id=self.pk
-            )
+        )
         return total_disbursed_expenses_queryset
 
     @property
@@ -264,27 +311,25 @@ class Disbursement(models.Model):
         """Computes total Expenses related to this Disbursement."""
         related_funds_sum_qs = Expenditure.objects.filter(
             disbursment__id=self.pk
-        ).aggregate(Sum('amount'))
+        ).aggregate(Sum("amount"))
 
-        amount_value = related_funds_sum_qs['amount__sum']
+        amount_value = related_funds_sum_qs["amount__sum"]
         return amount_value
+
 
 class Expenditure(models.Model):
     """
     Funds Expenditure definition.
     """
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
+
+    slug = models.SlugField(max_length=255, null=True, blank=True)
     amount = MoneyField(
         _("Amount"),
         max_digits=14,
         decimal_places=2,
         default_currency=ZMK,
         help_text="Amount spent on from disbused funds.",
-        default=Money('0.0', ZMK)
+        default=Money("0.0", ZMK),
     )
     expenditure_date = models.DateField(
         _("Expenditure Date"),
@@ -293,7 +338,7 @@ class Expenditure(models.Model):
         help_text="The date the amount was spent.",
     )
     currency = models.CharField(
-        help_text=_('Currency for the Expenditure.'),
+        help_text=_("Currency for the Expenditure."),
         choices=CURRENCY_CHOICES,
         max_length=10,
         default=ZMK,
@@ -314,18 +359,13 @@ class Expenditure(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slugify(
-                self, slugify(
-                    f'{self.disbursment.slug} \
-                        expenditure amount {self.amount}'
-                    )
-                )
-        self.amount = check_requested_deduction_against_balance(
-            self.disbursment.balance,
-            self.amount,
-            'Expenditure',
-            'Disbursed'
+                self,
+                slugify(
+                    f"{self.disbursment.slug} \
+                        expenditure amount {self.amount}"
+                ),
             )
+        self.amount = check_requested_deduction_against_balance(
+            self.disbursment.balance, self.amount, "Expenditure", "Disbursed"
+        )
         super().save(*args, **kwargs)
-        
-
-

@@ -23,8 +23,11 @@
           <div class="contacts-title-wrapper">
             <div class="title-wrap">
               <h2 class="project-title">Funds</h2>
-              <h4 class="project-tagline">showing all funds for <b>{{ project.name|title }}</b> subproject.</h4>
-          </div>
+              <h4 class="project-tagline">
+                showing all funds for
+                <b>{{ project.name|title }}</b> subproject.
+              </h4>
+            </div>
             <!-- Filter input -->
             <div class="list-filter">
               <div class="control is-hidden-phones">
@@ -43,7 +46,7 @@
                 data-ripple-color=""
                 href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
               >
-                <span style="padding-right: 6px;">SubProject </span>
+                <span style="padding-right: 6px">SubProject </span>
                 <i class="material-icons">send</i>
               </a>
             </div>
@@ -54,11 +57,14 @@
             <!-- Contacts table -->
             <table class="table contacts-table">
               <!-- Table header -->
-              <div data-title="Add new training" class="add-button modal-trigger" 
-              id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal">
+              <div
+                data-title="Add new training"
+                class="add-button modal-trigger"
+                id="fund-{{fund.slug}}-{{fund.project.slug}}"
+                data-modal="create-project-modal"
+              >
                 <i class="material-icons">add</i>
-            </div>
+              </div>
               <thead>
                 <tr>
                   <th>
@@ -209,7 +215,7 @@
                   <td class="modifications">
                     <span class="inner">
                       <span class="project-count">
-                        {{ fund.project.count_sub_projects }}
+                        {{fund.sub_project.name}}
                       </span>
                     </span>
                   </td>
@@ -219,7 +225,6 @@
                       <span class="project-count">
                         {{ fund.funding_date }}
                       </span>
-                      <button type="button" class="button">Update</button>
                     </span>
                   </td>
 

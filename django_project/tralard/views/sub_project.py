@@ -23,8 +23,8 @@ from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import (
-    JsonResponse,
     HttpResponseRedirect,
+    JsonResponse,
     Http404
 )
 from django.shortcuts import (
@@ -39,6 +39,7 @@ from django.views.generic import (
     UpdateView,
 )
 
+from rolepermissions.decorators import has_role_decorator
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
 from tralard.forms import BeneficiaryCreateForm
@@ -50,9 +51,10 @@ from tralard.models import (
     SubProject
 )
 from tralard.forms.fund import (
+    FundApprovalForm,
+    DisbursementForm,
     ExpenditureForm,
-    FundForm,
-    DisbursementForm
+    FundForm
 )
 
 logger = logging.getLogger(__name__)
@@ -718,6 +720,7 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
     form_class = FundForm
     disbursement_form_class = DisbursementForm
     expenditure_form_class = ExpenditureForm
+    fund_approval_form_class = FundApprovalForm
     template_name = "project/fund-list.html"
 
     def get_success_url(self):
@@ -752,13 +755,99 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         context["form"] = self.form_class
         context["disbursement_form"] = self.disbursement_form_class
         context["expenditure_form"] = self.expenditure_form_class
+        context["fund_approval_form"] = self.fund_approval_form_class
         context["disbursement_title"] = "create fund disbursement"
         context["title"] = "funds"
         return context
 
     def form_valid(self, form):
-        form.save()
-        return super(SubProjectFundListAndCreateView, self).form_valid(form)
+        sub_project_object = SubProject.objects.get(slug=self.kwargs["subproject_slug"])
+        if form.is_valid():
+            form.instance.sub_project = sub_project_object
+            form.instance.approval_status = "PENDING"
+            form.save()
+            messages.success(self.request, "Fund created sucessfully")
+            return super(SubProjectFundListAndCreateView, self).form_valid(form)
+        else:
+            messages.error(self.request, "Error creating fund")
+            return self.form_invalid(form)
+
+
+@has_role_decorator(
+    [
+        'program_manager',
+        'project_manager',
+        'fund_manager'
+    ]
+)
+def fund_approval_view(
+    request,
+    program_slug,
+    project_slug,
+    subproject_slug,
+    fund_slug
+):
+    """
+        Approve or reject a fund request
+    """
+    form = FundApprovalForm()
+
+    fund_obj = Fund.objects.get(slug=fund_slug)
+
+    if fund_obj is None:
+        messages.error(request, "Error updating fund approval status")
+        return redirect(
+                reverse_lazy(
+                    "tralard:subproject-fund-list",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": subproject_slug,
+                    }
+                )
+            )
+    else:
+        if request.method == "POST":
+            form = FundApprovalForm(request.POST, instance=fund_obj)
+            if form.is_valid():
+                form.instance.approved_by = request.user
+                form.save()
+                messages.success(request, "Fund Approval Status Updated")
+                return redirect(
+                    reverse_lazy(
+                        "tralard:subproject-fund-list",
+                        kwargs={
+                            "program_slug": program_slug,
+                            "project_slug": project_slug,
+                            "subproject_slug": subproject_slug,
+                        }
+                    )
+                )
+            else:
+                messages.error(request, form.errors)
+                return redirect(
+                    reverse_lazy(
+                        "tralard:subproject-fund-list",
+                        kwargs={
+                            "program_slug": program_slug,
+                            "project_slug": project_slug,
+                            "subproject_slug": subproject_slug,
+                        }
+                    )
+                )
+    messages.error(request, "Error updating fund approval status")
+    return redirect(
+            reverse_lazy(
+                "tralard:subproject-fund-list",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug,
+                    "subproject_slug": subproject_slug,
+                }
+            )
+        )
+
+        
 
 
 def subproject_fund_detail(
@@ -1003,7 +1092,7 @@ def subproject_disbursement_expenditure_create(
                         },
                     )
                 )
-    messages.error(request, "Reached Redirect Block")
+    messages.error(request, "An Error Occurred while creating Expenditure")
     return redirect(
         reverse_lazy(
             "tralard:subproject-fund-list",
