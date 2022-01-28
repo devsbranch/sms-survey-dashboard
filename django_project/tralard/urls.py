@@ -36,6 +36,8 @@ from tralard.views.project import (
     update_sub_project,
 )
 from tralard.views.sub_project import (
+    poll_state,
+    indicator_report,
     SubProjectDetailView,
     fund_approval_view,
     subproject_fund_delete,
@@ -49,10 +51,13 @@ from tralard.views.sub_project import (
     subproject_fund_disbursement_create,
 )
 from tralard.views.map import MapTemplateView
-from tralard.views.program import ProgramDetailView
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.profile import user_profile_update
-from tralard.views.sub_project import subproject_disbursement_expenditure_create, sub_project_update
+from tralard.views.sub_project import (
+    subproject_disbursement_expenditure_create,
+    sub_project_update,
+)
+from tralard.views.program import ProgramDetailView, preview_indicator_document
 
 app_name = "tralard"
 urlpatterns = [
@@ -61,7 +66,6 @@ urlpatterns = [
         template_testing,
         name="test",
     ),
-
     # -------- dashboard --------
     path(
         "",
@@ -73,7 +77,23 @@ urlpatterns = [
         MapTemplateView.as_view(),
         name="map",
     ),
-    # -------- program --------
+    # -------- Indicator report download --------
+    path(
+        "report/<slug:program_slug>/indicators_report/preview_report/",
+        preview_indicator_document,
+        name="preview_indicator_report",
+    ),
+    path(
+        "report/indicators_report/",
+        indicator_report,
+        name="indicators_report_download",
+    ),
+    path(
+        "report/indicators_report/<str:task_id>",
+        poll_state,
+        name="poll_state",
+    ),
+    # -------- Program -----------
     path(
         "program/<slug:program_slug>/detail/",
         ProgramDetailView.as_view(),
@@ -160,9 +180,9 @@ urlpatterns = [
         name="disbursement-update",
     ),
     path(
-        'program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/',
+        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/",
         get_disbursement_expenditures,
-        name='disbursement-expenditure'
+        name="disbursement-expenditure",
     ),
     # -------- project beneficiary --------
     path(

@@ -15,5 +15,7 @@ def user_profile_update(request):
         form = ProfileForm(request.POST, request.FILES or None, instance=training)
         if form.is_valid():
             form.save()
-            messages.add_message(request, messages.SUCCESS, "user profile updated successfully!".title())
+            messages.add_message(
+                request, messages.SUCCESS, "user profile updated successfully!".title()
+            )
             return redirect(reverse_lazy("tralard:home"))

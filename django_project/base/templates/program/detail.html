@@ -65,6 +65,7 @@
 									<li class="tab-link is-active" data-tab="my-teams" ><a id="projects_tab">SubProjects</a></li>
 									<li class="tab-link" data-tab="my-projects" ><a id="subprojects_tab">Interventions</a></li>
 									<li class="tab-link" data-tab="my-tasks"><a id="beneficiaries_tab">Beneficiaries</a></li>
+									<li class="tab-link" data-tab="indicators-list"><a id="indicators_tab">Indicators</a></li>
 								</ul>
 							</div>
 
@@ -174,6 +175,47 @@
 								</div>
 
 							</div>
+
+							<!-- Indicators List -->
+							<div id="indicators-list" class="navtab-content">
+
+								<!-- Beneficiary List -->
+								<div class="projects-list-wrapper">
+									<div class="list-header" style="justify-content: center;">
+										<div class="list-filter m-3">
+											<div class="control">
+												<form method="get" action="">
+													<input class="input"
+													id="search-indicators"
+													name="search-beneficiaries"
+													onkeyup="searchBeneficiariesAction('{{ program.slug }}');"
+													type="text"
+													placeholder="Filter Beneficiaries"/>
+													<div class="form-icon">
+														<i data-feather="filter"></i>
+													</div>
+												</form>
+											</div>
+										</div>
+										<div class="m-3">
+											<a class="button btn-dash primary-btn btn-dash" href="{% url 'tralard:preview_indicator_report' program.slug %}" target="_blank">View as PDF  <i class="sl sl-icon-docs ml-2"></i></a>
+										</div>
+										<button
+											id="download-indicator-report"
+											class="button btn-dash primary-btn btn-dash raised has-icon m-3"
+											data-ripple-color=""
+										>
+											Download Indicator Data  <i class="sl sl-icon-cloud-download ml-2"></i>
+										</button>
+									</div>
+									<div class="list-body" id="indicators-content">
+										{% include 'includes/indicator-list.html' %}
+									</div>
+								</div>
+
+							</div>
+							<!-- Indicators List end -->
+
 						</div>
 					</div>
 
@@ -633,6 +675,7 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+
 <script>
 	let origin = location.origin;
 	const delay_by_in_ms = 700
@@ -785,5 +828,6 @@
 	    })
 	}
 
+	
 </script>
 {% endblock javascripts %}

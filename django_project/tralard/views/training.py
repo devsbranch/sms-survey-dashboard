@@ -32,13 +32,15 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
-            
+
         self.training_paginator = Paginator(self.trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
         self.training_paginator_list = self.training_paginator.get_page(
             self.training_page_number
         )
-        context["trainings"] = self.training_paginator.get_page(self.training_page_number)
+        context["trainings"] = self.training_paginator.get_page(
+            self.training_page_number
+        )
         return context
 
 

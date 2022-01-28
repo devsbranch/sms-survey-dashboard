@@ -10,18 +10,18 @@
 version: "3"
 services:
 
-  # smtp:
-  #   # Note you cannot scale if you use container_name
-  #   container_name: ppcr-smtp
-  #   image: catatnight/postfix
-  #   hostname: postfix
-  #   environment:
-  #     # You could change this to something more suitable
-  #     - maildomain=digiprophets.com
-  #     - smtp_user=noreply:docker
-  #   restart: unless-stopped
-  #   networks:
-  #     - backend
+  smtp:
+    # Note you cannot scale if you use container_name
+    container_name: ppcr-smtp
+    image: catatnight/postfix
+    hostname: postfix
+    environment:
+      # You could change this to something more suitable
+      - maildomain=digiprophets.com
+      - smtp_user=noreply:docker
+    restart: unless-stopped
+    networks:
+      - backend
 
   db:
     # Note you cannot scale if you use container_name
@@ -51,20 +51,21 @@ services:
       context: ./docker
       dockerfile: Dockerfile
     hostname: uwsgi
-    # depends_on:
-      # - elasticsearch
+    links:
+      - redis:redis
     environment:
       - DATABASE_NAME=gis
       - DATABASE_USERNAME=docker
       - DATABASE_PASSWORD=docker
       - DATABASE_HOST=db
-      - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
+      - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
       - VIRTUAL_HOST=ppcr.digiprophets.com
       - VIRTUAL_PORT=8080
       - RABBITMQ_HOST=rabbitmq
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
       - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
       - CONTACT_US_EMAIL=alison@digiprophets.com
+      - CELERY_BROKER_URL=redis://redis:6379/0
     volumes:
       - ../django_project:/home/web/django_project
       - ./static:/home/web/static:rw
@@ -140,7 +141,7 @@ services:
   #     - DATABASE_USERNAME=docker
   #     - DATABASE_PASSWORD=docker
   #     - DATABASE_HOST=db
-  #     - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
+  #     - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
   #     - PYTHONPATH=/home/web/django_project
   #     - VIRTUAL_HOST=ppcr.digiprophets.com
   #     - VIRTUAL_PORT=8080
@@ -187,7 +188,7 @@ services:
   #   env_file:
   #     # The environment file should define two variables:
   #     # SECRET: a RW btsync key if the server is a production server
-  #     #         a RO btsync key if it is staging or development machine
+  #     #         a RO bts ync key if it is staging or development machine
   #     # DEVICE: a unique device name so you can recognise which host is being peered with in btsync
   #     # See the btsync example env in this folder for a template
   #     # NOTE:
@@ -195,40 +196,44 @@ services:
   #     # our media backups etc.
   #     - btsync-media.env
 
-  # rabbitmq:
-  #   image: library/rabbitmq
-  #   hostname: rabbitmq
-  #   environment:
-  #     - RABBIT_PASSWORD=rabbit_test_password
-  #     - USER=rabbit_user
-  #     - RABBITMQ_NODENAME=rabbit
-  #   restart: unless-stopped
-  #   networks:
-  #     - backend
+  redis:
+    image: redis:6
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - backend
 
-  # worker:
-  #   build: docker
-  #   hostname: worker
-  #   command: celery worker -A base.celery -l info  --beat
-  #   environment:
-  #     - DATABASE_NAME=gis
-  #     - DATABASE_USERNAME=docker
-  #     - DATABASE_PASSWORD=docker
-  #     - DATABASE_HOST=db
-  #     - RABBITMQ_HOST=rabbitmq
-  #     - DJANGO_SETTINGS_MODULE=core.settings.prod_docker
-  #     - VIRTUAL_HOST=ppcr.digiprophets.com
-  #     - VIRTUAL_PORT=8080
-  #     - C_FORCE_ROOT=true
-  #   volumes:
-  #     - ../django_project:/home/web/django_project
-  #     - ./static:/home/web/static:rw
-  #     - ./media:/home/web/media:rw
-  #     - ./reports:/home/web/reports
-  #     - ./logs:/var/log/
-  #   restart: on-failure:5
-  #   networks:
-  #     - backend
+  worker:
+    build: docker
+    hostname: worker
+    command: celery -A core.celery worker -l INFO
+    environment:
+      - DATABASE_NAME=gis
+      - DATABASE_USERNAME=docker
+      - DATABASE_PASSWORD=docker
+      - DATABASE_HOST=db
+      - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
+      - VIRTUAL_HOST=ppcr.digiprophets.com
+      - VIRTUAL_PORT=8080
+      - RABBITMQ_HOST=rabbitmq
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - CONTACT_US_EMAIL=alison@digiprophets.com
+      - CELERY_BROKER_URL=redis://redis:6379/0
+  
+    volumes:
+      - ../django_project:/home/web/django_project
+      - ./static:/home/web/static:rw
+      - ./media:/home/web/media:rw
+      - ./reports:/home/web/reports
+      - ./logs:/var/log/
+    restart: on-failure:5
+    depends_on:
+      - redis
+      - uwsgi
+
+    networks:
+      - backend
 
   # elasticsearch:
   #   # Note you cannot scale if you use conteiner_name

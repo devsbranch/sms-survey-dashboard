@@ -9,10 +9,10 @@ __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM
 View classes for a SubProject
 """
 
-# noinspection PyUnresolvedReferences
 import logging
 
 from django.db.models import Q
+from django.conf import settings
 from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse
@@ -39,12 +39,16 @@ from django.views.generic import (
     UpdateView,
 )
 
+from celery.result import AsyncResult
+
 from rolepermissions.decorators import has_role_decorator
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
 from tralard.forms import BeneficiaryCreateForm
 from tralard.models.fund import Disbursement, Fund
 from tralard.forms.sub_project import SubProjectForm
+from tralard.tasks import build_indicator_report
+
 from tralard.models import (
     Beneficiary,
     Project,
@@ -183,10 +187,12 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
-        
+
         self.training_paginator = Paginator(self.sub_project_trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
-        self.training_paginator_list = self.training_paginator.get_page(self.training_page_number)
+        self.training_paginator_list = self.training_paginator.get_page(
+            self.training_page_number
+        )
         context["trainings"] = self.training_paginator_list
         return context
 
@@ -214,6 +220,7 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
                 )
             )
 
+
 class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
     model = Training
     form_class = TrainingForm
@@ -236,11 +243,11 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
                     },
                 )
             )
-            
-            
+
+
 @login_required(login_url="/login/")
 def sub_project_training_update(
-        request, program_slug, project_slug, subproject_slug, training_entry_slug
+    request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
@@ -270,9 +277,7 @@ def sub_project_training_update(
 
 
 @login_required(login_url="/login/")
-def sub_project_update(
-        request, program_slug, subproject_slug
-):
+def sub_project_update(request, program_slug, subproject_slug):
     subproject = SubProject.objects.get(slug=subproject_slug)
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
@@ -280,15 +285,17 @@ def sub_project_update(
             custom_description = form.cleaned_data["custom_description"]
             custom_focus_area = form.cleaned_data["custom_focus_area"]
             form.save()
-            
+
             if custom_description:
                 subproject.description = custom_description
             if custom_focus_area:
                 subproject.focus_area = custom_focus_area
-            
+
             subproject.save()
-        
-        messages.add_message(request, messages.SUCCESS, "Intervention updated successfully!")
+
+        messages.add_message(
+            request, messages.SUCCESS, "Intervention updated successfully!"
+        )
         return redirect(
             reverse_lazy(
                 "tralard:program-detail",
@@ -297,11 +304,11 @@ def sub_project_update(
                 },
             )
         )
-        
+
 
 @login_required(login_url="/login/")
 def sub_project_training_delete(
-        request, program_slug, project_slug, subproject_slug, training_entry_slug
+    request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
@@ -315,7 +322,7 @@ def sub_project_training_delete(
             },
         )
     )
-    
+
 
 class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
     """Listed view for SubProject."""
@@ -421,7 +428,9 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         for indicator_object in sub_proj_indicators:
             indicator_data = {}
             indicator_data["name"] = indicator_object.name
-            indicator_data["indicator_targets"] = indicator_object.indicatortarget_set.all().order_by("start_date")
+            indicator_data[
+                "indicator_targets"
+            ] = indicator_object.indicatortarget_set.all().order_by("start_date")
             indicators.append(indicator_data)
 
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
@@ -614,9 +623,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
             return qs.filter(
                 Q(project=project)
                 & (
-                        Q(project__project_funders=self.request.user)
-                        | Q(project__project_managers=self.request.user)
-                        | Q(project__project_representatives=self.request.user)
+                    Q(project__project_funders=self.request.user)
+                    | Q(project__project_managers=self.request.user)
+                    | Q(project__project_representatives=self.request.user)
                 )
             )
 
@@ -851,7 +860,7 @@ def fund_approval_view(
 
 
 def subproject_fund_detail(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Display a single fund
@@ -904,7 +913,7 @@ def subproject_fund_detail(
 
 @login_required
 def update_sub_project_fund(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Update a single subproject fund.
@@ -955,7 +964,7 @@ def update_sub_project_fund(
 
 @login_required(login_url="/login/")
 def subproject_fund_delete(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Delete a single subproject fund.
@@ -990,7 +999,7 @@ def subproject_fund_delete(
 
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Create a single subproject fund disbursement.
@@ -1042,7 +1051,7 @@ def subproject_fund_disbursement_create(
 
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(
-        request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
+    request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
 ):
     """
     Create a single subproject fund disbursement expenditure.
@@ -1103,3 +1112,56 @@ def subproject_disbursement_expenditure_create(
             },
         )
     )
+
+
+@login_required(login_url="/login/")
+def indicator_report(request, program_slug):
+    if request.is_ajax():
+        try:
+            task = build_indicator_report.delay()
+
+            
+            if isinstance(task, AsyncResult):
+                return JsonResponse({"task_id": task.task_id})
+            else:
+                return JsonResponse({"message": "An error occured"}, status=500)
+
+        except:
+            return JsonResponse({"task_id": task.task_id})
+    else:
+        JsonResponse({"message": "unknown request"})
+
+
+def indicator_report(request):
+    if request.is_ajax():
+        task = build_indicator_report.delay()
+
+        return JsonResponse({"task_id": task.task_id})
+    else:
+        JsonResponse({"error": "Bad request"}, status=400)
+
+
+@login_required(login_url="/login/")
+def poll_state(request, task_id):
+    if request.is_ajax():
+        task = AsyncResult(task_id)
+
+        if task.state == "SUCCESS":
+            filename = task.result["result"]["filename"]
+
+            download_url = f"{settings.MEDIA_URL}temp/reports/{filename}"
+            body = {
+                "state": task.state,
+                "download_url": download_url,
+                "filename": filename,
+            }
+            return JsonResponse(body, status=200)
+
+        elif task.state == "PENDING":
+            body = {"state": task.state}
+            return JsonResponse(body, status=200)
+
+        else:
+            return JsonResponse({"error": "Bad request"}, status=400)
+    else:
+        return JsonResponse({"error": "Bad request"}, status=400)

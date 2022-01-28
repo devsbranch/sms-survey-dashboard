@@ -13,9 +13,34 @@
                     <label id="reader-mode-toggle" for="reader-mode-switch"></label>
                 </div>
             </div>
-                <div class="control searchbox container" style="margin-left: 10em;">
-                    {% include 'includes/messages.html' %}
-                </div>
+            <div class="control searchbox container" style="margin-left: 10em;">
+                {% include 'includes/messages.html' %}
+            </div>
+            <div class="notify-bar-message">
+                <style>
+                    .success {
+                        color: #0f5132;
+                        background-color: #bef0d9;
+                        padding: 15px;
+                    }
+                    .error {
+                        padding: 15px;
+                        color: #842029;
+                        background-color: #f8d7da;
+                    }
+                    .warning {
+                        padding: 15px;
+                        color: #664d03;
+                        background-color: #fff3cd;
+
+                    }
+                </style>
+
+            </div>
+
+            <div id-"notify-bar">
+
+            </div>
             <!-- /Right sidebar trigger -->
             <a id="mobile-dashboard-trigger" class="navbar-item hamburger-btn is-hidden-desktop" href="javascript:void(0);">
                 <span class="menu-toggle">
@@ -172,6 +197,7 @@
                         data-demo-src image
                     {% static 'assets/images/logos/logo.png' %}
                 -->
+                
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">
@@ -226,4 +252,3 @@
             </div>
         </div>
     </div>    
-

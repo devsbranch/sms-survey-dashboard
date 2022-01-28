@@ -1,0 +1,80 @@
+{% extends "layouts/base.html" %}
+
+{% load static %}
+
+{% block title %} Document Details {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+
+<div id="dashboard-wrapper" class="dashboard-outer">
+    <div class="dashboard-inner">
+
+        <!-- Dashboard Wrapper -->
+        <div class="dashboard-wrapper">
+
+            <div id="main-dashboard" class="section-wrapper">
+                <!-- Dashboard content -->
+                <div class="row m-4">
+                    <!-- Share button -->
+                    <a href="{% url 'tralard:program-detail' program_slug %}">
+                        <button type="button"
+                            class="button button-cta secondary-btn is-bold"  
+                        ><i class="sl sl-icon-action-undo mr-2"></i> Go Back
+                        </button>
+                    </a>
+                </div>
+                <div id="basic-layout" class="columns dashboard-columns">
+                    <div class="column is-9 is-hidden-mobile">
+                        <!-- Google docs iframe -->
+                        <div class="document-wrapper">
+                            <div class="is-document">
+                                <iframe id="document-iframe"
+                                    src="{{MEDIA_URL}}{{ path }}"
+                                    height="800"></iframe>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="column is-3 is-hidden-mobile">
+                        <!-- Right side menu -->
+                        <div class="right-options">
+
+
+                            <!-- Share button -->
+                            <a href="{{MEDIA_URL}}{{ path }}">
+                                <button type="button"
+                                    class="button button-cta secondary-btn is-bold"  
+                                >Download document  <i class="sl sl-icon-cloud-download ml-2"></i>
+                                </button>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- Mobile placeholder -->
+                    <div class="column is-8 is-offset-2 is-hidden-desktop is-hidden-tablet">
+                        <div class="flex-card is-not-supported light-bordered">
+                            <img src="{% static 'assets/images/illustrations/not-mobile.svg' %}" alt="">
+                            <div class="has-text-centered">
+                                <h3>Ouch...</h3>
+                                <p>Sorry, the document view is not supported on mobile. Please try a device with a wider
+                                    screen.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

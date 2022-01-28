@@ -11,6 +11,7 @@ from tralard.models.program import Program
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
+
 class HomeTemplateView(LoginRequiredMixin, TemplateView):
     model = Profile
     template_name = "index.html"
@@ -25,9 +26,11 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         self.cleaned_total_project_funds = self.total_project_funds["amount__sum"]
         self.projects = Project.objects.all()
         self.project_paginator = Paginator(self.projects, 5)
-        self.project_page_number = self.request.GET.get("project_page_number", '')
-        self.project_paginator_list = self.project_paginator.get_page(self.project_page_number)
-        
+        self.project_page_number = self.request.GET.get("project_page_number", "")
+        self.project_paginator_list = self.project_paginator.get_page(
+            self.project_page_number
+        )
+
         context["title"] = "Program: Tralard"
         context["program_list"] = Program.objects.all().order_by("-started")[:5]
         context["project_count"] = Project.objects.all().count()
@@ -40,37 +43,39 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         ] = Beneficiary.custom_objects.get_total_females()
         context["hhs_count"] = Beneficiary.custom_objects.get_total_hhs()
         context["hhs_count_female"] = Beneficiary.custom_objects.get_female_hhs()
-        context["org_type_cooperative"] = (
-            Beneficiary.objects.filter(org_type="coorperative").count()
-        )
-        context["org_type_businessfirm"] = (
-            Beneficiary.objects.filter(org_type="businessfirm").count()
-        )
-        context["org_type_other"] = (
-            Beneficiary.objects.filter(org_type="other").count()
-        )
+        context["org_type_cooperative"] = Beneficiary.objects.filter(
+            org_type="coorperative"
+        ).count()
+        context["org_type_businessfirm"] = Beneficiary.objects.filter(
+            org_type="businessfirm"
+        ).count()
+        context["org_type_other"] = Beneficiary.objects.filter(org_type="other").count()
         context["total_approved_subprojects"] = (
             SubProject.objects.all().filter(approved=True).count()
         )
         context["total_funded_subprojects"] = (
             SubProject.objects.all().filter(fund=True).count()
         )
-        
+
         context["total_approved_projects"] = (
             Project.objects.all().filter(approved=True).count()
         )
         context["total_funded_projects"] = (
             Project.objects.all().filter(has_funding=True).count()
         )
-        context["prov_labels"] = SubProject.custom_objects.get_sub_projects_district_json()[
-            "labels"
-        ]
-        context["subs_in_prov"] = SubProject.custom_objects.get_sub_projects_district_json()[
-            "data"
-        ]
+        context[
+            "prov_labels"
+        ] = SubProject.custom_objects.get_sub_projects_district_json()["labels"]
+        context[
+            "subs_in_prov"
+        ] = SubProject.custom_objects.get_sub_projects_district_json()["data"]
         context["projects"] = self.project_paginator_list
-        context['funds_in_year_label'] = Fund.count_objects.get_total_funds_in_year()['year_labels']
-        context['total_funds_in_year'] = Fund.count_objects.get_total_funds_in_year()['total_funds']
+        context["funds_in_year_label"] = Fund.count_objects.get_total_funds_in_year()[
+            "year_labels"
+        ]
+        context["total_funds_in_year"] = Fund.count_objects.get_total_funds_in_year()[
+            "total_funds"
+        ]
 
         return context
 

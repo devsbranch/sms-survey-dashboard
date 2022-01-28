@@ -18,9 +18,10 @@ from tralard.models import (
     District,
     Ward,
     Indicator,
-    IndicatorTarget,
     Expenditure,
     Disbursement,
+    IndicatorTarget,
+    IndicatorTargetValue,
 )
 from tralard.models.profile import Profile
 
@@ -48,10 +49,11 @@ admin.site.register(District)
 admin.site.register(Province)
 admin.site.register(SubProject)
 admin.site.register(Indicator)
-admin.site.register(IndicatorTarget)
 admin.site.register(Attendance)
 admin.site.register(Expenditure)
-admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(TrainingType)
 admin.site.register(Disbursement)
 admin.site.register(Profile)
+admin.site.register(IndicatorTarget)
+admin.site.register(IndicatorTargetValue)
+admin.site.register(Beneficiary, BeneficiaryAdmin)

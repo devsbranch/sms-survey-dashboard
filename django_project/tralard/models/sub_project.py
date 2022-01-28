@@ -100,17 +100,31 @@ class IndicatorTarget(models.Model):
         blank=True,
         help_text="A baseline is data or measurement that is collected prior to the implementation of the project.",
     )
-    target_value = models.CharField(
-        _("Indicator Target"), max_length=200, null=True, blank=True
-    )
-    actual_value = models.CharField(_("Actual"), max_length=200, null=True, blank=True)
-    start_date = models.DateField(_("Target start date"))
-    end_date = models.DateField(_("Target end date"))
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Indicator: {self.indicator.name.lower()}| {self.start_date} to {self.end_date} Target"
+        return f"Indicator: {self.indicator.name}| {self.unit_of_measure} Target"
 
+
+class IndicatorTargetValue(models.Model):
+    year =  models.DateField(_('Target Year'))
+    target_value =  models.CharField(
+        _('Target Value'),
+        max_length=200,
+        default=0
+    )
+    actual_value =  models.CharField(
+        _('Actual Value'), 
+        max_length=200,
+        default=0
+    )
+    indicator_target =  models.ForeignKey(
+        IndicatorTarget,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.indicator_target.indicator.name} Target for: {self.year.year}"
 
 class SubProject(models.Model):
     """

@@ -1,0 +1,329 @@
+[
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 1,
+        "fields": {
+            "target_value": 16914,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 2
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 2,
+        "fields": {
+            "target_value": 54000,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 2
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 3,
+        "fields": {
+            "target_value": 86000,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 2
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 4,
+        "fields": {
+            "target_value": 10000,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 2
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 5,
+        "fields": {
+            "target_value": 116914,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 2
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 6,
+        "fields": {
+            "target_value": 5847,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 3
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 7,
+        "fields": {
+            "target_value": 15007,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 3
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 8,
+        "fields": {
+            "target_value": 30000,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 3
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 9,
+        "fields": {
+            "target_value": 45000,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 3
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 10,
+        "fields": {
+            "target_value": 58457,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 3
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 11,
+        "fields": {
+            "target_value": 5847,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 4
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 12,
+        "fields": {
+            "target_value": 15007,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 4
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 13,
+        "fields": {
+            "target_value": 30000,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 4
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 14,
+        "fields": {
+            "target_value": 45000,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 4
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 15,
+        "fields": {
+            "target_value": 58457,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 4
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 16,
+        "fields": {
+            "target_value": 5836,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 5
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 17,
+        "fields": {
+            "target_value": 13000,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 5
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 18,
+        "fields": {
+            "target_value": 19450,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 5
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 19,
+        "fields": {
+            "target_value": 25000,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 5
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 20,
+        "fields": {
+            "target_value": 27836,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 5
+        }
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 21,
+        "fields": {
+            "target_value": 1351,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 6
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 22,
+        "fields": {
+            "target_value": 2800,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 6
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 23,
+        "fields": {
+            "target_value": 5400,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 6
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 24,
+        "fields": {
+            "target_value": 7200,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 6
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 25,
+        "fields": {
+            "target_value": 8351,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 6
+        }
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 26,
+        "fields": {
+            "target_value": 3485,
+            "actual_value": 0,
+            "year": "2022-01-01",
+            "indicator_target": 7
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 27,
+        "fields": {
+            "target_value": 7500,
+            "actual_value": 0,
+            "year": "2023-01-01",
+            "indicator_target": 7
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 28,
+        "fields": {
+            "target_value": 13000,
+            "actual_value": 0,
+            "year": "2024-01-01",
+            "indicator_target": 7
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 29,
+        "fields": {
+            "target_value": 16500,
+            "actual_value": 0,
+            "year": "2025-01-01",
+            "indicator_target": 7
+        }
+
+    },
+    {
+        "model": "tralard.IndicatorTargetValue",
+        "pk": 30,
+        "fields": {
+            "target_value": 19485,
+            "actual_value": 0,
+            "year": "2026-01-01",
+            "indicator_target": 7
+        }
+    }
+]

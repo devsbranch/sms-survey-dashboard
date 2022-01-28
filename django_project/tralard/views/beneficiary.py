@@ -15,6 +15,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from tralard.forms import BeneficiaryCreateForm
 from tralard.models import Beneficiary, Project, Ward, SubProject
 
+
 class PaginatorMixin(Paginator):
     def validate_number(self, number):
         try:
