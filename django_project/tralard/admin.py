@@ -3,6 +3,19 @@ from django.contrib.gis.db import models
 
 from mapwidgets.widgets import GooglePointFieldWidget
 from import_export.admin import ImportExportActionModelAdmin
+from dj_beneficiary.models import (
+    Agent,
+    Facility,
+    FacilityType,
+    ImplementingPartner
+)
+
+# Abstruct these from admin dashboard 
+# as we do not need them.
+admin.site.unregister(Agent)
+admin.site.unregister(Facility)
+admin.site.unregister(FacilityType)
+admin.site.unregister(ImplementingPartner)
 
 
 from tralard.models import (
