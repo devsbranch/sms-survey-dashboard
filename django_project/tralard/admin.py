@@ -85,11 +85,8 @@ class BeneficiaryAdmin(ImportExportActionModelAdmin):
     )
     search_fields = [
         "name", 
-        "org_type", 
         "email", 
         "cell", 
-        "ward", 
-        "sub_project"
     ]
 
 
@@ -125,12 +122,8 @@ class FundAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "amount",
         "approved",
-        "approval_status",
         "balance",
         "currency",
-        "sub_project",
-        "requested_by",
-        "approved_by",
     ]
 
 
@@ -156,9 +149,7 @@ class DisbursementAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "amount",
         "balance",
-        "disbursement_date",
         "currency",
-        "fund",
     ]
 
 
@@ -180,7 +171,6 @@ class ExpenditureAdmin(ImportExportActionModelAdmin):
     search_fields = [
          "amount",
         "currency",
-        "disbursment",
     ]
 
 
@@ -205,10 +195,7 @@ class DistrictAdmin(ImportExportActionModelAdmin):
         "name",
         "province",
     )
-    search_fields = [
-        "name",
-        "province",
-    ]
+    search_fields = ["name"]
 
 
 class WardAdmin(ImportExportActionModelAdmin):
@@ -241,7 +228,6 @@ class ProgramAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "name",
         "approved",
-        "program_representative",
     ]
 
 
@@ -269,8 +255,6 @@ class ProjectAdmin(ImportExportActionModelAdmin):
         "approved",
         "has_funding",
         "status",
-        "program",
-        "project_representative",
     ]
 
 
@@ -300,9 +284,7 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
         "size",
         "ward",
         "status",
-        "project",
         "approved",
-        "representative",
     ]
 
 
@@ -329,11 +311,8 @@ class TrainingAdmin(ImportExportActionModelAdmin):
     )
     search_fields = [
         "title",
-        "sub_project",
         "start_date",
         "end_date",
-        "moderator",
-        "training_type",
         "completed",
     ]
 
@@ -364,7 +343,6 @@ class ExpenditureAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "amount",
         "currency",
-        "disbursment",
     ]
 
 
@@ -392,7 +370,6 @@ class IndicatorTargetAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "unit_of_measure",
         "baseline_value",
-        "indicator",
     ]
 
 
@@ -414,8 +391,6 @@ class IndicatorTargetValueAdmin(ImportExportActionModelAdmin):
     search_fields = [
         "year",
         "target_value",
-        "actual_value",
-        "indicator_target",
     ]
 
 
