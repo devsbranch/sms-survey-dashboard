@@ -29,17 +29,11 @@ web:
 	@echo "Running in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) up -d web
+	@docker-compose -p $(PROJECT_ID) up -d worker
 	@# Dont confuse this with the dbbackup make command below
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
 	@# @docker-compose -p $(PROJECT_ID) up --no-recreate --no-deps -d dbbackups
-
-worker:
-	@echo
-	@echo "------------------------------------------------------------------"
-	@echo "Running Celery Worker in production mode"
-	@echo "------------------------------------------------------------------"
-	@docker-compose -p $(PROJECT_ID) up -d worker
 
 permissions:
 	# Probably we want something more granular here....
