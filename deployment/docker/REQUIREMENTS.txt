@@ -21,11 +21,11 @@ Pillow==8.4.0
 easy-thumbnails
 django-filer==2.1.1
 requests==2.25.1
-django-import-export==2.7.0
 django-map-widgets==0.3.2
 django-imagekit==4.1.0
 django-report-builder==6.4.2
 django-grappelli==2.13.4
+django-import-export==2.7.1
 django-rest-registration==0.7.0
 django-infinite-scroll-pagination==1.2.0
 # support special characters

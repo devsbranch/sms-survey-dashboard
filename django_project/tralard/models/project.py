@@ -263,11 +263,11 @@ class Project(models.Model):
         :rtype: str
         """
         return reverse_lazy('tralard:project-detail',
-                            kwargs={
-                                'program_slug': self.program.slug,
-                                'project_slug': self.slug
-                            }
-                            )
+                    kwargs={
+                        'program_slug': self.program.slug,
+                        'project_slug': self.slug
+                    }
+                )
 
     @property
     def get_related_sub_projects(self):

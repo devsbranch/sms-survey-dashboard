@@ -33,3 +33,10 @@ PROJECT_STATUS_CHOICES = (
     ("In Progress", _("In Progress")),
     ("Completed", _("Completed"))
     )
+
+CUSTOM_MAP_SETTINGS = {
+    "GooglePointFieldWidget": (
+        ("zoom", 15),
+        ("mapCenterLocation", [-15.7177013, 28.6300491]),
+    ),
+}
