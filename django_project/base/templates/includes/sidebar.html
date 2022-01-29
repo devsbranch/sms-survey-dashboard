@@ -758,9 +758,15 @@
         </a>
       </li>
       <li class="have-children">
-        <a href="http://localhost:8008/" target="_blank"><span class="material-icons">face</span>
-          GraphQL Service
-        </a>
+        {% if 'localhost' in request.get_host or '127.0.0.1' in request.get_host %}
+          <a href="http://localhost:8008/" target="_blank"><span class="material-icons">face</span>
+            GraphQL Service
+          </a>
+        {% else %}
+            <a href="http://81.28.6.181:8008/" target="_blank"><span class="material-icons">face</span>
+              GraphQL Service
+            </a>
+        {% endif %}
       </li>
       {% comment %} <li class="have-children">
         <a class="parent-link" href="#"><span class="material-icons">account_circle</span>User settings</a>
