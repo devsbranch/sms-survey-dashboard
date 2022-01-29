@@ -235,20 +235,18 @@ services:
     networks:
       - backend
 
-  # elasticsearch:
-  #   # Note you cannot scale if you use conteiner_name
-  #   container_name: ppcr-elasticsearch
-  #   restart: on-failure:5
-  #   #  read_only: true
-  #   image: elasticsearch:2.4.2
-  #   hostname: elasticsearch
-  #   environment:
-  #     - cluster.name=docker-cluster
-  #     - bootstrap.memory_lock=true
-  #   networks:
-  #     backend:
-  #       aliases:
-  #           - elasticsearch
+  graphql:
+    image: hasura/graphql-engine:v1.3.3
+    hostname: graphQL
+    restart: always
+    environment: 
+      - HASURA_GRAPHQL_DATABASE_URL=postgres://docker:docker@db:5432/gis
+      - HASURA_GRAPHQL_ENABLE_CONSOLE=true
+      - HASURA_GRAPHQL_ADMIN_SECRET=ppcr
+    ports:
+      - "8008:8080"
+    networks:
+      - backend
 
 networks:
   backend:

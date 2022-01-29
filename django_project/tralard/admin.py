@@ -10,14 +10,6 @@ from dj_beneficiary.models import (
     ImplementingPartner
 )
 
-# Abstruct these from admin dashboard 
-# as we do not need them.
-admin.site.unregister(Agent)
-admin.site.unregister(Facility)
-admin.site.unregister(FacilityType)
-admin.site.unregister(ImplementingPartner)
-
-
 from tralard.models import (
     Ward,
     Fund,
@@ -57,6 +49,13 @@ from tralard.resources import (
 )
 from tralard.models.profile import Profile
 from tralard.constants import CUSTOM_MAP_SETTINGS
+
+# Abstruct these from admin dashboard 
+# as we do not need them.
+admin.site.unregister(Agent)
+admin.site.unregister(Facility)
+admin.site.unregister(FacilityType)
+admin.site.unregister(ImplementingPartner)
 
 
 class BeneficiaryAdmin(ImportExportActionModelAdmin):

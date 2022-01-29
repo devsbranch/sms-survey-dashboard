@@ -689,7 +689,7 @@
         <a href="{% url 'tralard:map' %}"><span class="material-icons">map</span>Map</a>
       </li>
       <li class="have-children">
-        <a data-modal="user-register-modal123" class="modal-trigger modal-trigger" id="register123"><span class="material-icons">face</span>Register</a>
+        <a data-modal="user-register-modal123" class="modal-trigger modal-trigger" id="register123"><span class="material-icons">account_circle</span>Register</a>
       </li>
     </ul>
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
@@ -749,12 +749,17 @@
 
       <li class="have-children">
         <a href="/docs/" target="_blank"><span class="material-icons">assignment</span>
-          API Docs
+          REST API Docs
         </a>
       </li>
       <li class="have-children">
         <a href="/swagger/" target="_blank"><span class="material-icons">developer_board</span>
-          API Interact
+          REST API Interact
+        </a>
+      </li>
+      <li class="have-children">
+        <a href="http://localhost:8008/" target="_blank"><span class="material-icons">face</span>
+          GraphQL Service
         </a>
       </li>
       {% comment %} <li class="have-children">
