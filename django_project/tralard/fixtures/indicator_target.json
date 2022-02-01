@@ -3,7 +3,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 1,
         "fields": {
-            "unit_of_measure": "Hectare",
+            "unit_of_measure": 7,
             "description": "Land area in hectares with activities to increase land quality and restore degraded lands: (Hectare, Ha)",
             "baseline_value": 0,
             "indicator": 1
@@ -13,7 +13,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 2,
         "fields": {
-            "unit_of_measure": "Number of Farmers",
+            "unit_of_measure": 1,
             "description": "Total number of farmers adopting improved agricultural technology",
             "baseline_value": 0,
             "indicator": 2
@@ -23,7 +23,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 3,
         "fields": {
-            "unit_of_measure": "Number of Female farmers",
+            "unit_of_measure": 2,
             "description": "Total number of female farmers adopting improved agricultural technology",
             "baseline_value": 0,
             "indicator": 2
@@ -33,7 +33,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 4,
         "fields": {
-            "unit_of_measure": "Hectare",
+            "unit_of_measure": 3,
             "description": "Total number of male farmers adopting improved agricultural technology ",
             "baseline_value": 0,
             "indicator": 2
@@ -43,7 +43,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 5,
         "fields": {
-            "unit_of_measure": "Number Total \u2013HH",
+            "unit_of_measure": 4,
             "description": "Total number of households adopting diversified livelihood activities supported by the project",
             "baseline_value": 0,
             "indicator": 3
@@ -53,7 +53,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 6,
         "fields": {
-            "unit_of_measure": "Number Female \u2013HH",
+            "unit_of_measure": 5,
             "description": "Total number of Female headed households adopting diversified livelihood activities supported by the project",
             "baseline_value": 0,
             "indicator": 3
@@ -63,7 +63,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 7,
         "fields": {
-            "unit_of_measure": "Number Male \u2013HH",
+            "unit_of_measure": 6,
             "description": "Total number of Male households adopting diversified livelihood activities supported by the project",
             "baseline_value": 0,
             "indicator": 3
@@ -73,7 +73,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 8,
         "fields": {
-            "unit_of_measure": "Hectare",
+            "unit_of_measure": 7,
             "description": "Total forest area brought under sustainable management and covered by management plans in project area.",
             "baseline_value": 0,
             "indicator": 4
@@ -83,7 +83,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 9,
         "fields": {
-            "unit_of_measure": "Number of Farmers",
+            "unit_of_measure": 1,
             "description": "Total number of farmers reached with agricultural assets or services.",
             "baseline_value": 0,
             "indicator": 5
@@ -93,7 +93,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 10,
         "fields": {
-            "unit_of_measure": "Number \u2013 Females",
+            "unit_of_measure": 2,
             "description": "Total number of female farmers reached with agricultural assets or services.",
             "baseline_value": 0,
             "indicator": 5
@@ -103,7 +103,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 11,
         "fields": {
-            "unit_of_measure": "Percentage",
+            "unit_of_measure": 10,
             "description": "Percentage of women participating in savings and credit clubs.",
             "baseline_value": 0,
             "indicator": 6
@@ -113,7 +113,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 12,
         "fields": {
-            "unit_of_measure": "Percentage",
+            "unit_of_measure": 10,
             "description": "Percentage of beneficiaries reporting satisfaction with key aspects of collaboration process ",
             "baseline_value": 0,
             "indicator": 7
@@ -123,7 +123,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 13,
         "fields": {
-            "unit_of_measure": "Number of beneficiaries",
+            "unit_of_measure": 12,
             "description": "Number of beneficiaries with access to improved/new infrastructure",
             "baseline_value": 0,
             "indicator": 8
@@ -133,7 +133,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 14,
         "fields": {
-            "unit_of_measure": "Number - km",
+            "unit_of_measure": 9,
             "description": "Kilometers of water channels rehabilitated for transportation.",
             "baseline_value": 0,
             "indicator": 9
@@ -143,7 +143,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 15,
         "fields": {
-            "unit_of_measure": "Number",
+            "unit_of_measure": 13,
             "description": "Number of improved hydromet system rehabilitated and/or newly installed ",
             "baseline_value": 0,
             "indicator": 10
@@ -153,7 +153,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 16,
         "fields": {
-            "unit_of_measure": "Hectare \u2013 Ha",
+            "unit_of_measure":7,
             "description": "Total area provided with new/improved irrigation or drainage services ",
             "baseline_value": 0,
             "indicator": 11
@@ -163,7 +163,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 17,
         "fields": {
-            "unit_of_measure": "Hectare \u2013 Ha",
+            "unit_of_measure":7,
             "description": "Total area provided with new irrigation or drainage services ",
             "baseline_value": 0,
             "indicator": 11
@@ -173,7 +173,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 18,
         "fields": {
-            "unit_of_measure": "Hectare \u2013 Ha",
+            "unit_of_measure": 7,
             "description": "Total area provided with improved irrigation or drainage services",
             "baseline_value": 0,
             "indicator": 11
@@ -183,7 +183,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 19,
         "fields": {
-            "unit_of_measure": "Number",
+            "unit_of_measure": 14,
             "description": "Total number of Community Forest Management Groups (CFMs) established ",
             "baseline_value": 0,
             "indicator": 12
@@ -193,7 +193,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 20,
         "fields": {
-            "unit_of_measure": "Hectare",
+            "unit_of_measure": 7,
             "description": "Hectares covered by Natural Forest Regeneration (NFR) areas established",
             "baseline_value": 0,
             "indicator": 13
@@ -203,7 +203,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 21,
         "fields": {
-            "unit_of_measure": "Number",
+            "unit_of_measure": 14,
             "description": "Total number of people participating in the CFM and NFR groups ",
             "baseline_value": 0,
             "indicator": 14
@@ -213,7 +213,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 22,
         "fields": {
-            "unit_of_measure": "Number",
+            "unit_of_measure": 14,
             "description": "Percentage of female led Community Forest Management groups ",
             "baseline_value": 0,
             "indicator": 15
@@ -223,7 +223,7 @@
         "model": "tralard.IndicatorTarget",
         "pk": 23,
         "fields": {
-            "unit_of_measure": "Number",
+            "unit_of_measure": 13,
             "description": "Total metric tons of greenhouse gas emissions",
             "baseline_value": 0,
             "indicator": 16

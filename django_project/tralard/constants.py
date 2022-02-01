@@ -40,3 +40,14 @@ CUSTOM_MAP_SETTINGS = {
         ("mapCenterLocation", [-15.7177013, 28.6300491]),
     ),
 }
+
+
+MODEL_FIELD_CHOICES = (
+    ("size", "Sub Project Size"),
+    ("total_beneficiaries", "Total Beneficiaries"),
+    ("total_females", "Total Beneficiary Female Count"),
+    ("total_males", "Total Beneficiary Male Count"),
+    ("total_hhs", "Total HHS"),
+    ("female_hhs", "Female HHS"),
+    ("expenditure_amount", "Expenditure Amount"),
+)

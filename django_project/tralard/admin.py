@@ -29,6 +29,7 @@ from tralard.models import (
     TrainingType,
     IndicatorTarget,
     IndicatorTargetValue,
+    IndicatorUnitOfMeasure
 )
 from tralard.resources import (
     FundResource,
@@ -391,18 +392,33 @@ class IndicatorTargetValueAdmin(ImportExportActionModelAdmin):
     list_display = [
         "year", 
         "target_value", 
-        "actual_value", 
         "indicator_target"
     ]
     list_filter = (
         "year",
         "target_value",
-        "actual_value",
         "indicator_target",
     )
     search_fields = [
         "year",
         "target_value",
+    ]
+
+
+class IndicatorUnitOfMeasureAdmin(ImportExportActionModelAdmin):
+    resource_class = IndicatorTargetValueResource
+    empty_value_display = "-empty-"
+    list_display = [
+        "unit_of_measure", 
+        "data_source", 
+    ]
+    list_filter = (
+        "data_source",
+        "unit_of_measure",
+    )
+    search_fields = [
+        "unit_of_measure",
+        "data_source",
     ]
 
 
@@ -413,10 +429,10 @@ admin.site.register(Attendance)
 admin.site.register(Fund, FundAdmin)
 admin.site.register(Ward, WardAdmin)
 admin.site.register(Program, ProgramAdmin)
-admin.site.register(Province, ProvinceAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Training, TrainingAdmin)
 admin.site.register(District, DistrictAdmin)
+admin.site.register(Province, ProvinceAdmin)
 admin.site.register(Indicator, IndicatorAdmin)
 admin.site.register(SubProject, SubProjectAdmin)
 admin.site.register(Beneficiary, BeneficiaryAdmin)
@@ -425,3 +441,4 @@ admin.site.register(Disbursement, DisbursementAdmin)
 admin.site.register(TrainingType, TrainingTypeAdmin)
 admin.site.register(IndicatorTarget, IndicatorTargetAdmin)
 admin.site.register(IndicatorTargetValue, IndicatorTargetValueAdmin)
+admin.site.register(IndicatorUnitOfMeasure, IndicatorUnitOfMeasureAdmin)

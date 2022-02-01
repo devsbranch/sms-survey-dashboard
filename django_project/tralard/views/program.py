@@ -141,7 +141,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                     yearly_target_values_dict[f"year_{year_count}"] = {
                         "year": yearly_target_values.year,
                         "target_value": yearly_target_values.target_value,
-                        "actual_value": yearly_target_values.actual_value,
+                        "actual_value": target.unit_of_measure.get_actual_data(indicator),
                     }
                     target_dict["yearly_target_values"].append(
                         yearly_target_values_dict

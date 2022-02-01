@@ -18,7 +18,8 @@ from tralard.models.training import Training
 from tralard.models.province import Province
 from tralard.models.district import District
 from tralard.models.beneficiary import Beneficiary
-from tralard.constants import PROJECT_STATUS_CHOICES
+from tralard.constants import PROJECT_STATUS_CHOICES, MODEL_FIELD_CHOICES
+
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -77,15 +78,11 @@ class IndicatorTarget(models.Model):
     """
     Stores a single Indicator target entry, related to model 'Indicator'.
     """
-
-    unit_of_measure = models.CharField(
-        _("Unit of mearsure"),
-        max_length=200,
+    unit_of_measure = models.ForeignKey(
+        "tralard.IndicatorUnitOfMeasure", 
+        on_delete=models.CASCADE,
         null=True,
-        blank=True,
-        help_text=_(
-            "Unit of mearsure of this indicator target e.g Hectres, Kilometers, Number of Farmers."
-        ),
+        blank=True
     )
     description = models.TextField(
         _("Description"),
@@ -113,11 +110,6 @@ class IndicatorTargetValue(models.Model):
         max_length=200,
         default=0
     )
-    actual_value =  models.CharField(
-        _('Actual Value'), 
-        max_length=200,
-        default=0
-    )
     indicator_target =  models.ForeignKey(
         IndicatorTarget,
         on_delete=models.CASCADE
@@ -125,6 +117,55 @@ class IndicatorTargetValue(models.Model):
 
     def __str__(self):
         return f"{self.indicator_target.indicator.name} Target for: {self.year.year}"
+
+
+class IndicatorUnitOfMeasure(models.Model):
+    unit_of_measure = models.CharField(
+        _("Unit of Measure"), max_length=200,
+        null=True,
+        blank=True
+    )
+    data_source = models.CharField(
+        _("Source of data"), 
+        max_length=200,
+        choices=MODEL_FIELD_CHOICES
+    )
+
+    def __str__(self):
+        return self.unit_of_measure
+    
+    def get_actual_data(self, indicator_obj):
+        """
+        This method returns data to be used in the indicator report. This data
+        returned is a number which is a Sum total of the field data for all Sub Projects
+        under the given Indicator.
+        """
+
+        sub_project_filter = {"sub_project__indicators": indicator_obj}
+        
+        total = 0
+
+        if self.data_source == "size":
+            filter_by = {"indicators": indicator_obj}
+            total = float(SubProject.objects.filter(**filter_by).aggregate(Sum('size'))['size__sum'])
+
+        elif self.data_source == "total_beneficiaries":
+            total = Beneficiary.custom_objects.get_total_beneficiaries(sub_project_filter)
+
+        elif self.data_source == "total_females":
+            total = Beneficiary.custom_objects.get_total_females(sub_project_filter)
+        
+        elif self.data_source == "total_males":
+            total = Beneficiary.custom_objects.get_total_males(sub_project_filter)
+        
+        elif self.data_source == "total_hhs":
+            total = Beneficiary.custom_objects.get_total_hhs(sub_project_filter)
+        
+        elif self.data_source == "female_hhs":
+            total = Beneficiary.custom_objects.get_female_hhs(sub_project_filter)
+
+        return total
+        
 
 class SubProject(models.Model):
     """
@@ -141,9 +182,16 @@ class SubProject(models.Model):
         max_length=255,
         unique=True
     )
-    size = models.CharField(
-        help_text=_("Size (number of Hectors, SquareMeters, Products etc,)."),
-        max_length=255,
+    size = models.DecimalField(
+        help_text=_("Size (number of Hectors, SquareMeters, Products etc)."),
+        decimal_places=3,
+        max_digits=10,
+        blank=True,
+        null=True,
+    )
+    size_description = models.TextField(
+        help_text=_("A brief description of the project size, like what the size implies."),
+        max_length=500,
         blank=True,
         null=True,
     ) 

@@ -337,7 +337,6 @@ class IndicatorReportBuild(SimpleDocTemplate):
                 Paragraph("<font size=13><b>Year 5</b></font>"),
             ]
         ]
-
         row_column_spans = []
         actual_values_row_colorfills = []
 
@@ -357,6 +356,8 @@ class IndicatorReportBuild(SimpleDocTemplate):
         actual_values_row_colorfill_end = 2
 
         iter_count = 0
+
+        current_year = datetime.now().year
 
         for indicator_obj in self.indicators:
             indicator_targets = indicator_obj.indicatortarget_set.all()
@@ -387,24 +388,36 @@ class IndicatorReportBuild(SimpleDocTemplate):
                 row.append(Paragraph(target.description))
                 row.append(Paragraph(target.baseline_value))
                 row.append(Paragraph("<b>Targets</b>"))
-                sub_row.insert(1, Paragraph(f"<b>{target.unit_of_measure}</b>"))
+                try:
+                    sub_row.insert(1, Paragraph(f"<b>{target.unit_of_measure.unit_of_measure}</b>"))
+                except AttributeError:
+                    sub_row.insert(1, Paragraph(""))
+
                 sub_row.insert(3, Paragraph("<b>Actual</b>"))
 
                 sub_row_count = 5
 
                 # Get target values and actual values for each target in the
                 # Indicator e.g 5000 - year(2022), 8000 - year(2023), 12000 - year(2024)
-                for (
-                    yearly_target_value
-                ) in target.indicatortargetvalue_set.all().order_by("year"):
+                for (yearly_target_value) in target.indicatortargetvalue_set.all().order_by("year"):
                     row.append(
                         f"year-{yearly_target_value.year.year}\n\n{yearly_target_value.target_value}"
                     )
-
-                    sub_row.insert(
-                        sub_row_count, Paragraph(yearly_target_value.actual_value)
-                    )
+                    if yearly_target_value.year.year <= current_year:
+                        try:
+                            sub_row.insert(
+                                sub_row_count, Paragraph(str(target.unit_of_measure.get_actual_data(indicator_obj)))
+                            )
+                        except AttributeError:
+                            sub_row.insert(
+                                sub_row_count, Paragraph("")
+                            )
+                    else:
+                        sub_row.insert(
+                            sub_row_count, Paragraph("")
+                        )
                     sub_row_count += 1
+                    
                 data.append(row)
                 data.append(sub_row)
 
