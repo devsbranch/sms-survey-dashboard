@@ -94,14 +94,18 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                 name__icontains=self.subproject_search_query
             )
         else:
-            self.subprojects = SubProject.objects.all()
+            self.subprojects = SubProject.objects.all(
+             project__program__slug=self.program_object.slug
+            )
 
         if self.beneficiary_search_query:
             self.beneficiaries = Beneficiary.objects.filter(
                 name__icontains=self.beneficiary_search_query
             )
         else:
-            self.beneficiaries = Beneficiary.objects.all()
+            self.beneficiaries = Beneficiary.objects.all(
+                sub_project__project__program__slug=self.program_object.slug
+            )
         self.subproject_paginator = Paginator(self.subprojects, 9)
         self.subproject_page_number = self.request.GET.get("subproject_page")
         self.subproject_paginator_list = self.subproject_paginator.get_page(
