@@ -47,6 +47,7 @@ INSTALLED_APPS += (
     'import_export',
     'mapwidgets',
     'report_builder',
+    'reversion'
 )
 # Defines whether to log model related events,
 # such as when an object is created, updated, or deleted

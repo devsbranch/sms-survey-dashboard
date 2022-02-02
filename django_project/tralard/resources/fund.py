@@ -5,7 +5,12 @@ Fund model resource class definitions for tralard app.
 
 from import_export import resources
 
-from tralard.models.fund import Fund, Disbursement, Expenditure
+from tralard.models.fund import (
+    Fund,
+    Disbursement,
+    Expenditure,
+    FundVersion
+)
 
 
 class FundResource(resources.ModelResource):
@@ -33,6 +38,24 @@ class FundResource(resources.ModelResource):
             "approved_by",
             "approved_date",
             "created",
+        )
+
+
+class FundVersionResource(resources.ModelResource):
+    class Meta:
+        model = FundVersion
+        
+        fields = (
+            "amount",
+            "approved",
+            "approval_status",
+            "approval_status_comment",
+            "balance",
+            "funding_date",
+            "currency",
+            "requested_by",
+            "approved_by",
+            "approved_date",
         )
 
 

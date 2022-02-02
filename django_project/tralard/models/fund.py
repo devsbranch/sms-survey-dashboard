@@ -18,8 +18,10 @@ from tralard.utils import (
     check_requested_deduction_against_balance,
 )
 
-from djmoney.models.fields import MoneyField
+import reversion
 from djmoney.money import Money
+from reversion.models import Revision
+from djmoney.models.fields import MoneyField
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -85,6 +87,7 @@ class FundCountManager(models.Manager):
             'total_funds': year_data            
         }
 
+@reversion.register
 class Fund(models.Model):
     """
     Project Fund definition.
@@ -234,6 +237,76 @@ class Fund(models.Model):
         amount_value = related_funds_sum_qs["amount__sum"]
         return amount_value
           
+@reversion.register
+class FundVersion(models.Model):
+    revision = models.ForeignKey(
+        Revision,
+        on_delete=models.CASCADE
+    )
+    initial_amount = MoneyField(
+        _("Initial Amount"),
+        max_digits=14,
+        decimal_places=2,
+        default_currency=ZMK,
+        help_text="Initial amount of the fund.",
+        default=Money("0.0", ZMK)
+    )
+    approved = models.BooleanField(
+        help_text=_(
+            "Whether this project fund has been approved for use yet."
+        ),
+        default=False,
+    )
+    approval_status = models.CharField(
+        help_text=_(
+            "Precise funding status on project fund has been approved for use yet."
+        ),
+        max_length=20,
+        choices=APPROVAL_STATUS_CHOICES,
+        default=PENDING,
+    )
+    approval_status_comment = models.TextField(
+        help_text=_(
+            "Comment on the approval status of the project fund."
+        ),
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    funding_date = models.DateField(
+        _("Funding Date"),
+        null=True,
+        blank=True,
+        help_text="The date the project was funded.",
+    )
+    requested_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        help_text=_(
+            "The user who requested the fund."
+        ),
+        blank=True,
+        null=True,
+    )
+    approved_by = models.ForeignKey(
+        User,
+        on_delete=models.PROTECT,
+        help_text=_(
+            "The user who approved the fund."
+        ),
+        blank=True,
+        null=True,
+        related_name="version_approved_by",
+    )
+    approved_date = models.DateField(
+        _("Approved Date"),
+        null=True,
+        blank=True,
+        help_text="The date the fund was approved."
+    )
+
+
+
 class Disbursement(models.Model):
     """
     Project Fund disbursement definition.

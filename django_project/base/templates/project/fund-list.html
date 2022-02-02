@@ -239,7 +239,7 @@
                                 data-ripple-color=""
                                 id="fund_list_modal"
                                 data-modal="approve-subproject-fund-modal"
-                                onclick="subproject_fund_approval_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
+                                onclick="subproject_fund_approval_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}'); populate_fund_approval_form('{{fund.amount.amount}}')"
                               >
                                 <i class="fa fa-shield"></i>
                                 <span>
@@ -262,7 +262,7 @@
                             data-fund-approved="{{ fund.approved }}"
                             data-currency="{{ fund.currency }}"
                             data-fund-date="{{ fund.funding_date }}"
-                            onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
+                            onclick="populate_modal_form('{{fund.funding_date}}','{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
                           >
                             <i class="sl sl-icon-pencil"></i>
                             <span>
@@ -419,12 +419,6 @@
       </div>
 
       <div class="card-body">
-        <div class="has-text-centered">
-          <div class="image">
-            <img src="{% static 'assets/images/icons/basket.svg' %}" />
-          </div>
-        </div>
-
         <form
           id="delete-subproject-fund-form"
           class="form"
@@ -512,6 +506,29 @@
         "X-CSRFToken": $("[name=csrfmiddlewaretoken]").val(),
       },
       success: function (data) {
+        for (version in data.fund.versions) {
+          if(JSON.parse(data.fund.versions[version])[0].fields.approved_date) {
+            document.querySelector('#subproject_fund_approval_history_list').innerHTML += `
+            <div class='disbursement-card deal-card' >
+              <div class='disbursement-card-header deal-card-header is-toggle' >
+                <p>
+                  Fund Amount: ${thousand_seperator(+JSON.parse(data.fund.versions[version])[0].fields.amount)}
+                </p>
+                <p>
+                  Update Date: ${JSON.parse(data.fund.versions[version])[0].fields.approved_date}
+                </p>
+                <p>
+                  Approval Status: ${JSON.parse(data.fund.versions[version])[0].fields.approved ? "Approved" : "Not Approved"}
+                </p>
+                <br />
+              </div>
+              <p>
+                Comment: ${JSON.parse(data.fund.versions[version])[0].fields.approval_status_comment}
+              </p>
+            </div>
+          `
+          } 
+        }
         if (data.fund.approved) {
           document
             .querySelector("#subproject_approved")
@@ -641,6 +658,7 @@
         "#add-disbursement-expenditure-modal"
       ).style.display = "block";
       document.querySelector("#subproject_disbursements_list").innerHTML = "";
+      document.querySelector('#subproject_fund_approval_history_list').innerHTML = "";
     }
   );
 
@@ -674,12 +692,18 @@
     $("#id_approved").removeAttr("checked");
     $("#id_project").val("");
     $("#id_currency").val("ZMK");
-    $("#submit-id-save").val("Create Fund Project");
+    $("#submit-id-save").val("Create Fund");
     $("#project_fund_form").html(`${title}`);
+    $("#id_funding_date").val("")
+  }
+
+  // POPULATE FUND APPROVAL FORM
+  function populate_fund_approval_form(fund_amount) {
+    $("#approved_amount").val(fund_amount);
   }
 
   // POPULATE MODAL FORM
-  function populate_modal_form(amount, approved, project, title, url) {
+  function populate_modal_form(funding_date, amount, approved, project, title, url) {
     $("#amount").val(
       amount
         .toString()
@@ -687,15 +711,11 @@
         .replace(",", "")
         .replace(",", "")
         .replace(",", "")
-    );
-    if (approved) {
-      document.querySelector("#id_approved").setAttribute("checked", "checked");
-    } else {
-      $("#id_approved").removeAttr("checked");
-    }
+    )
     $("#id_project").val("{{project.slug.name}}");
     $("#id_currency").val(amount.substring(0, 3));
-    $("#submit-id-save").val("Update Fund Project");
+    $("#submit-id-save").val("Update Fund");
+    $("#id_funding_date").val(new Date(funding_date).toISOString().substring(0, 10));
     $("#project_fund_form").html(`${title}`);
     document
       .querySelector("#project_fund_form_inputs")

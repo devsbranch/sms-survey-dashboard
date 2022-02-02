@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.gis.db import models
 
+from reversion.admin import VersionAdmin
+
 from mapwidgets.widgets import GooglePointFieldWidget
 from import_export.admin import ImportExportActionModelAdmin
 from dj_beneficiary.models import (
@@ -42,6 +44,7 @@ from tralard.resources import (
     IndicatorResource,
     SubProjectResource,
     BeneficiaryResource,
+    FundVersionResource,
     ExpenditureResource,
     TrainingTypeResource,
     DisbursementResource,
@@ -103,7 +106,36 @@ class BeneficiaryAdmin(ImportExportActionModelAdmin):
     ]
 
 
-class FundAdmin(ImportExportActionModelAdmin):
+class FundVersionAdmin(VersionAdmin):
+    resource_class = FundVersionResource
+    empty_value_display = "-empty-"
+    list_display = [
+        "amount",
+        "approved",
+        "created",
+        "approved_by",
+        "approved_date",
+        "approval_status",
+        "approval_status_comment",
+    ]
+    list_filter = (
+        "fund", 
+        "approved", 
+        "approved_by", 
+        "approved_date", 
+        "approval_status", 
+        "requested_by"
+    )
+    search_fields = [
+        "fund", 
+        "approved_by", 
+        "approved_date", 
+        "approval_status", 
+        "requested_by"
+    ]
+
+
+class FundAdmin(FundVersionAdmin, ImportExportActionModelAdmin):
     resource_class = FundResource
     empty_value_display = "-empty-"
     list_display = [
@@ -426,8 +458,8 @@ admin.site.register(Profile)
 admin.site.register(Feedback)
 admin.site.register(FollowUp)
 admin.site.register(Attendance)
-admin.site.register(Fund, FundAdmin)
 admin.site.register(Ward, WardAdmin)
+admin.site.register(Fund, FundAdmin)
 admin.site.register(Program, ProgramAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Training, TrainingAdmin)

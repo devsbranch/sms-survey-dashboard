@@ -22,15 +22,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import (
-    HttpResponseRedirect,
-    JsonResponse,
-    Http404
-)
-from django.shortcuts import (
-    get_object_or_404,
-    redirect
-)
+from django.http import HttpResponseRedirect, JsonResponse, Http404
+from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (
     ListView,
     CreateView,
@@ -39,26 +32,32 @@ from django.views.generic import (
     UpdateView,
 )
 
+import reversion
+from reversion.models import Version
+from reversion.views import RevisionMixin
+
 from celery.result import AsyncResult
 
 from rolepermissions.decorators import has_role_decorator
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
 from tralard.forms import BeneficiaryCreateForm
-from tralard.models.fund import Disbursement, Fund
+from tralard.models.fund import (
+    Fund,
+    FundVersion,
+    Disbursement,
+)
+
 from tralard.forms.sub_project import SubProjectForm
 from tralard.tasks import build_indicator_report
 
-from tralard.models import (
-    Beneficiary,
-    Project,
-    SubProject
-)
+from tralard.models import Project, SubProject, Beneficiary
+
 from tralard.forms.fund import (
+    FundForm,
+    ExpenditureForm,
     FundApprovalForm,
     DisbursementForm,
-    ExpenditureForm,
-    FundForm
 )
 
 logger = logging.getLogger(__name__)
@@ -428,7 +427,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
             indicator_data["name"] = indicator_object.name
             indicator_data[
                 "indicator_targets"
-            ] = indicator_object.indicatortarget_set.all().order_by("start_date")
+            ] = indicator_object.indicatortarget_set.all()
             indicators.append(indicator_data)
 
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
@@ -718,7 +717,7 @@ class SubProjectBeneficiaryOrgListView(
         return context
 
 
-class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
+class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateView):
     """
     Create a new Sub Project Fund
     """
@@ -755,6 +754,7 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
         self.subproject_funds_qs = Fund.objects.filter(
             sub_project__slug=self.subproject_slug
         )
+
         context["sub_project"] = self.sub_project
         context["funds"] = self.subproject_funds_qs
         context["fund_title"] = "add sub project fund"
@@ -770,32 +770,37 @@ class SubProjectFundListAndCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         sub_project_object = SubProject.objects.get(slug=self.kwargs["subproject_slug"])
         if form.is_valid():
-            form.instance.sub_project = sub_project_object
-            form.instance.approval_status = "PENDING"
-            form.save()
-            messages.success(self.request, "Fund created sucessfully")
-            return super(SubProjectFundListAndCreateView, self).form_valid(form)
+            with reversion.create_revision():
+                form.instance.sub_project = sub_project_object
+                form.instance.approval_status = "PENDING"
+                form.instance.requested_by = self.request.user
+                form.save()
+                reversion.set_user(self.request.user)
+                reversion.set_comment(
+                    "Requested Sub Project Fund: " + str(form.instance.amount)
+                )
+                reversion.add_meta(
+                    FundVersion,
+                    initial_amount=form.instance.amount,
+                    approved=form.instance.approved,
+                    approval_status=form.instance.approval_status,
+                    approval_status_comment=form.instance.approval_status_comment,
+                    funding_date=form.instance.funding_date,
+                    requested_by=form.instance.requested_by,
+                    approved_by=form.instance.approved_by,
+                    approved_date=form.instance.approved_date,
+                )
+                messages.success(self.request, "Fund created sucessfully")
+                return super(SubProjectFundListAndCreateView, self).form_valid(form)
         else:
             messages.error(self.request, "Error creating fund")
             return self.form_invalid(form)
 
 
-@has_role_decorator(
-    [
-        'program_manager',
-        'project_manager',
-        'fund_manager'
-    ]
-)
-def fund_approval_view(
-    request,
-    program_slug,
-    project_slug,
-    subproject_slug,
-    fund_slug
-):
+@has_role_decorator(["program_manager", "project_manager", "fund_manager"])
+def fund_approval_view(request, program_slug, project_slug, subproject_slug, fund_slug):
     """
-        Approve or reject a fund request
+    Approve or reject a fund request
     """
     form = FundApprovalForm()
 
@@ -804,32 +809,38 @@ def fund_approval_view(
     if fund_obj is None:
         messages.error(request, "Error updating fund approval status")
         return redirect(
-                reverse_lazy(
-                    "tralard:subproject-fund-list",
-                    kwargs={
-                        "program_slug": program_slug,
-                        "project_slug": project_slug,
-                        "subproject_slug": subproject_slug,
-                    }
-                )
+            reverse_lazy(
+                "tralard:subproject-fund-list",
+                kwargs={
+                    "program_slug": program_slug,
+                    "project_slug": project_slug,
+                    "subproject_slug": subproject_slug,
+                },
             )
+        )
     else:
         if request.method == "POST":
             form = FundApprovalForm(request.POST, instance=fund_obj)
             if form.is_valid():
-                form.instance.approved_by = request.user
-                form.save()
-                messages.success(request, "Fund Approval Status Updated")
-                return redirect(
-                    reverse_lazy(
-                        "tralard:subproject-fund-list",
-                        kwargs={
-                            "program_slug": program_slug,
-                            "project_slug": project_slug,
-                            "subproject_slug": subproject_slug,
-                        }
+                with reversion.create_revision():
+                    form.instance.approved_by = request.user
+                    form.save()
+                    reversion.set_user(request.user)
+                    reversion.set_comment(
+                        str(form.instance.slug) + " Fund Approval Status Updated"
                     )
-                )
+
+                    messages.success(request, "Fund Approval Status Updated")
+                    return redirect(
+                        reverse_lazy(
+                            "tralard:subproject-fund-list",
+                            kwargs={
+                                "program_slug": program_slug,
+                                "project_slug": project_slug,
+                                "subproject_slug": subproject_slug,
+                            },
+                        )
+                    )
             else:
                 messages.error(request, form.errors)
                 return redirect(
@@ -839,22 +850,20 @@ def fund_approval_view(
                             "program_slug": program_slug,
                             "project_slug": project_slug,
                             "subproject_slug": subproject_slug,
-                        }
+                        },
                     )
                 )
     messages.error(request, "Error updating fund approval status")
     return redirect(
-            reverse_lazy(
-                "tralard:subproject-fund-list",
-                kwargs={
-                    "program_slug": program_slug,
-                    "project_slug": project_slug,
-                    "subproject_slug": subproject_slug,
-                }
-            )
+        reverse_lazy(
+            "tralard:subproject-fund-list",
+            kwargs={
+                "program_slug": program_slug,
+                "project_slug": project_slug,
+                "subproject_slug": subproject_slug,
+            },
         )
-
-        
+    )
 
 
 def subproject_fund_detail(
@@ -865,6 +874,10 @@ def subproject_fund_detail(
     """
     context = {}
     single_fund = Fund.objects.get(slug=fund_slug)
+    version_list = Version.objects.get_for_object(single_fund)
+    versions = []
+    for version in version_list:
+        versions.append(version.serialized_data)
     single_subproject = SubProject.objects.get(slug=subproject_slug)
     disbursements_qs = Disbursement.objects.filter(fund__slug=fund_slug)
     disbursements = []
@@ -898,7 +911,7 @@ def subproject_fund_detail(
     context["funds"] = funds
     context["form"] = FundForm
     context["modal_display"] = "block"
-
+    fund["versions"] = versions
     return JsonResponse(
         {
             "disbursements": list(disbursements),
@@ -924,18 +937,21 @@ def update_sub_project_fund(
         if request.method == "POST":
             form = FundForm(request.POST, instance=fund_obj)
             if form.is_valid():
-                form.save()
-                messages.success(request, "Fund updated successfully.")
-                return redirect(
-                    reverse_lazy(
-                        "tralard:subproject-fund-list",
-                        kwargs={
-                            "program_slug": program_slug,
-                            "project_slug": project_slug,
-                            "subproject_slug": subproject_slug,
-                        },
+                with reversion.create_revision():
+                    form.save()
+                    reversion.set_user(request.user)
+                    reversion.set_comment(form.instance.slug + " Fund Updated")
+                    messages.success(request, "Fund updated successfully.")
+                    return redirect(
+                        reverse_lazy(
+                            "tralard:subproject-fund-list",
+                            kwargs={
+                                "program_slug": program_slug,
+                                "project_slug": project_slug,
+                                "subproject_slug": subproject_slug,
+                            },
+                        )
                     )
-                )
     else:
         messages.error(request, "Fund not found")
         return redirect(
@@ -969,18 +985,21 @@ def subproject_fund_delete(
     """
     try:
         fund = Fund.objects.get(slug=fund_slug)
-        fund.delete()
-        messages.success(request, "Subproject Fund deleted successfully")
-        return redirect(
-            reverse_lazy(
-                "tralard:subproject-fund-list",
-                kwargs={
-                    "program_slug": program_slug,
-                    "project_slug": project_slug,
-                    "subproject_slug": subproject_slug,
-                },
+        with reversion.create_revision():
+            fund.delete()
+            reversion.set_user(request.user)
+            reversion.set_comment(fund.slug + " Fund Deleted")
+            messages.success(request, "Subproject Fund deleted successfully")
+            return redirect(
+                reverse_lazy(
+                    "tralard:subproject-fund-list",
+                    kwargs={
+                        "program_slug": program_slug,
+                        "project_slug": project_slug,
+                        "subproject_slug": subproject_slug,
+                    },
+                )
             )
-        )
     except Fund.DoesNotExist:
         messages.error(request, "Subproject Fund not found")
         return redirect(
@@ -1118,7 +1137,6 @@ def indicator_report(request, program_slug):
         try:
             task = build_indicator_report.delay()
 
-            
             if isinstance(task, AsyncResult):
                 return JsonResponse({"task_id": task.task_id})
             else:
