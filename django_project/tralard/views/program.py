@@ -81,8 +81,9 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         if self.search_query:
             self.projects = Project.objects.filter(
-                program__slug=self.program_object.slug,
-                name__icontains=self.search_query,
+                    program__slug=self.program_object.slug
+                ).filter(
+                    name__icontains=self.search_query
             )
         else:
             self.projects = Project.objects.filter(
@@ -91,7 +92,9 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         if self.subproject_search_query:
             self.subprojects = SubProject.objects.filter(
-                name__icontains=self.subproject_search_query
+                    project__program__slug=self.program_object.slug
+                ).filter(
+                    name__icontains=self.subproject_search_query
             )
         else:
             self.subprojects = SubProject.objects.filter(
@@ -100,7 +103,9 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         if self.beneficiary_search_query:
             self.beneficiaries = Beneficiary.objects.filter(
-                name__icontains=self.beneficiary_search_query
+                    sub_project__project__program__slug=self.program_object.slug
+                ).filter( 
+                    name__icontains=self.beneficiary_search_query
             )
         else:
             self.beneficiaries = Beneficiary.objects.filter(
