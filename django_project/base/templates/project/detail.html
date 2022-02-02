@@ -11,6 +11,40 @@
 
 <!-- PAGE content goes HERE -->
 {% block content %}
+       <!-- Edit SubProject Modal -->
+        <div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
+            <div class="modal-background"></div>
+            <div class="modal-content" style="width: 50% !important;">
+                <div class="flex-card simple-shadow" style="overflow-y: auto;">
+                    <div class="help-text has-text-left">
+                        <h2 class="dark-text">Update Intervention</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="has-text-centered">
+                                <div class="image">
+                                    <img src="{% static 'assets/images/icons/basket.svg' %}">
+                                </div>
+                                <div class="m-3">
+                                    <span class="m-2">Edit Intervention Here</span>
+                                </div>
+                            </div>
+                            <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div id="intervention-update123" class="m-4 column is-multiline">
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"  class="button modal-dismiss"></a>Cancel</button>
+                                    <button type="submit" class="button is-modal">Update Intervention</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+            </div>
+        <!-- Edit SubProject Modal -->
 
     <!-- Main dashboard container -->
     <div id="dashboard-wrapper" class="dashboard-outer">
@@ -287,52 +321,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- indicators listing details organization -->
-                                <div class="deal-card" 
-                                style="height: 40em;
-                                overflow-y: auto;"
-                                >
-                                    <div class="deal-card-header is-toggle is-active">
-                                        <h3>All Indicators Under {{ project.name|title }}</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    
-                                    {% comment %} Project indicators list  {% endcomment %}
-                                    <div class="deal-card-content is-active" >
-                                        <div class="list-body">
-                                            <div class="columns is-multiline">
-                                                <div class="column">
-    
-                                                    <!-- Checklist -->
-                                                    <div class="checklist-wrapper">
-    
-                                                        {% for indicator in indicators %}
-                                                            <div class="checklist-item">
-                                                                <div class="checklist-handle">
-                                                                    <span class="material-icons">menu</span>
-                                                                </div>
-                                                                <div class="checklist-checkbox">
-                                                                    <div class="b-checkbox is-secondary">
-                                                                        <input id="checklist-1" class="styled" type="checkbox"
-                                                                            checked>
-                                                                        <label for="checklist-1"></label>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="checklist-text">
-                                                                    {{ indicator.name }}
-                                                                </div>
-                                                            </div>
-                                                        {% endfor %}
-                                                    </div>
-                                                    <!-- /Checklist -->
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                             <!-- Right side -->
                             <div class="column is-8">
@@ -413,7 +401,7 @@
                                                                               
                                                                                 {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                                                                 <a
-                                                                                id="edit-button" onClick="populateSubProjectForm('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}');" href="#"  data-modal="edit-subproject-modal"
+                                                                                id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
                                                                                   class="dropdown-item modal-trigger"
                                                                                 >
                                                                                   <i class="sl sl-icon-pencil"></i>
@@ -422,6 +410,21 @@
                                                                                     <span>Edit subproject</span>
                                                                                   </span>
                                                                                 </a>
+                                                                        
+                                                                                <script>
+                                                                                    var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
+                                                                                      uniqueEditSelectorButton.addEventListener("click", () => {    
+                                                                                         if("{{ subproject.slug }}" == "{{ subproject.slug }}"){
+                                                                                            document.getElementById("intervention-update123").innerHTML = `{% csrf_token %}`;
+                                                                                            document.getElementById("update-subproject-form").action = `{% url 'tralard:subproject-update' subproject.project.program.slug subproject.slug %}`;
+                                                                                            document.getElementById("intervention-update123").innerHTML += `{% load crispy_forms_tags %}`;
+                                                                                            document.getElementById("intervention-update123").innerHTML += `{{ subproject.sub_project_update_form|crispy }}`;
+                                                                                            document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
+                                                                                            document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
+                                                                                         }
+                                                                                       });
+                                                                                 </script>
+
                                                                                 {% endif %}
                                                                                 <div class="dropdown-divider"></div>
                                                                                 {%if user|can:'can_delete_project'%}
@@ -556,39 +559,6 @@
     </div>
 
 
-       <!-- Edit SubProject Modal --><!-- Edit SubProject Modal -->
-       <div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
-            <div class="modal-background"></div>
-            <div class="modal-content" style="width: 50% !important;">
-                <div class="flex-card simple-shadow" style="overflow-y: auto;">
-                    <div class="help-text has-text-left">
-                        <h2 class="dark-text">Update Intervention</h2>
-                    </div>
-                    <div class="card-body">
-                        <div class="has-text-centered">
-                            <div class="image">
-                                <img src="{% static 'assets/images/icons/basket.svg' %}">
-                            </div>
-                            <div class="m-3">
-                                <span class="m-2">Edit Intervention Here</span>
-                            </div>
-                        </div>
-                        <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
-                            {% csrf_token %}
-                            <div class="m-4 column is-multiline">
-                                {% crispy form form.helper %}
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button"  class="button modal-dismiss"></a>Cancel</button>
-                                <button type="submit" class="button is-modal">Update Intervention</button>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-            {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
-        </div>          
 
      <!-- Delete SubProject Modal --><!-- Delete SubProject Modal -->
      <div id="delete-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
@@ -670,7 +640,6 @@
             <div class="flex-card simple-shadow">
                 <div class="help-text has-text-left">
                     <h2 class="dark-text">Leave Feedback</h2>
-
                 </div>
 
                 <div class="card-body">
@@ -739,55 +708,13 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
-
 <script>
-
-function populateSubProjectForm(program_slug, project_slug, sub_project_slug, subproject_name) {
-        let origin = location.origin;
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/sub_project/${sub_project_slug}/update/`
-        $.get(url, function( { data } ) {
-            $("#update-subproject-form input[name='name']").val(data.name);
-            $("#update-subproject-form select[name='project']").val(data.project);
-            $("#update-subproject-form select[name='supervisor']").val(data.supervisor);
-            $("#update-subproject-form input[name='size']").val(data.size);
-            $("#update-subproject-form input[name='subproject_managers']").val(data.subproject_managers);
-            $(`#update-subproject-form option[value="${data.approved}"]`).prop('selected', true);
-           $("#update-subproject-form textarea[name='custom_focus_area']").val(data.focus_area);
-            $("#update-subproject-form textarea[name='custom_description']").val(data.description);            
-            $("#update-subproject-form").attr('action', url);
-            
-            
-            console.log(data)
-
-            
-            let indicators = data.indicators
-
-            indicators.forEach((item, index) => {
-                $(`#id_indicators option[value="${item.id}"]`).prop('selected', true);
-                cache: false
-                console.log(`${index} : ${item.id}`);
-            });
-           
-          
-            
-        });
-    }
-
-    $('input[type="file"]').change(function(e){
-        var fileName = e.target.files[0].name;
-        $('.custom-file-label').html(fileName);
-    });
-
-
 function deleteSubproject(program_slug, project_slug, sub_project_slug, subproject_name) {
         let origin = location.origin;
         const url = `${origin}/program/${program_slug}/project/${project_slug}/sub_project/${sub_project_slug}/delete/`
         $("#delete-subproject-form #warning-msg").html(`<h3>Are you sure you want to delete <i>"${subproject_name}"</i> project</h3>`)
         $("#delete-subproject-form").attr('action', url);
     }
-
-
 
 </script>
 

@@ -1,0 +1,36 @@
+{% load crispy_forms_tags %}
+<div id="user-update-modal123" class="modal create-task-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="">
+        <div class="flex-card simple-shadow" style="min-width: 650px; margin:4px, 4px; padding:4px; overflow-x: hidden; overflow-y: auto; text-align:justify;">
+            <div id="classic" class="login-form-wrapper">
+                <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+                    <form name="user_update_form123" role="form" method="post">
+                        {% csrf_token %}<br />
+                        <div class="field has-text-centered">
+                            <p>
+                                Update user credentials
+                            </p> 
+                        </div>
+                        <div class="auth-card" style="max-width: 600px;">
+                        {% if not success %}    
+                        
+                            <div class="field">
+                                <div id="user-form-receiver123" class="control">
+                                    <!-- user update form comes here -->
+                                </div>
+                            </div>
+                            <br />
+                        <div class="button-wrap">
+                            <button type="submit" name="register" id="update-button123" class="button">Update</button>
+                        </div>
+                        
+                        {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');"></button>
+</div>

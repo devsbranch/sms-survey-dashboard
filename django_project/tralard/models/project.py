@@ -13,8 +13,6 @@ from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-
-
 from tralard.models.fund import Fund
 from tralard.utils import unique_slugify
 # (TODO:Alison) take the get_related_sub_project method to utilities or model managers.

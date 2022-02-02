@@ -12,7 +12,13 @@ from rolepermissions.roles import get_user_roles
 from rolepermissions.roles import get_user_roles
 
 from tralard.constants import GENDER_CHOICES
-from tralard.utils import user_profile_update_form, new_user_create_form
+from tralard.utils import (
+    all_users,
+    user_update_form,
+    get_available_roles,
+    new_user_create_form,
+    user_profile_update_form, 
+)
 
 
 class Profile(models.Model):
@@ -93,6 +99,17 @@ class Profile(models.Model):
         return user_roles
 
     @property
+    def available_roles(self):
+        user_role_dict = []
+        role_storage = get_available_roles()
+        for cleaned_role_appearance in enumerate(role_storage):
+            original_role_appearance = cleaned_role_appearance[1].replace(' ', "_").lower()
+            user_role_dict.append(
+                { "key": cleaned_role_appearance[0]+1, "value":cleaned_role_appearance[1]}
+            )
+        return user_role_dict
+    
+    @property
     def profile_form(self):
         update_form = user_profile_update_form(self)
         return update_form
@@ -101,6 +118,21 @@ class Profile(models.Model):
     def user_create_form(self):
         user_form = new_user_create_form()
         return user_form
+    
+    @property
+    def user_update_form(self):
+        user_form = user_update_form(self.user)
+        return user_form
+    
+    @property
+    def all_users(self):
+        all_users = all_users()
+        return all_users
+    
+    @property
+    def total_current_user_roles(self):
+        total_roles = get_user_roles(self.user)
+        return len(total_roles)
 
     @property
     def profile_photo_url(self):

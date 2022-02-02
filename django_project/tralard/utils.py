@@ -161,6 +161,21 @@ def new_user_create_form():
     user_update_form = SignUpForm()
     return user_update_form
 
+def user_update_form(instance):
+    try:
+        from authentication.forms import UserUpdateForm
+    except:
+        pass
+    user_update_form = UserUpdateForm(instance=instance)
+    return user_update_form
+
+def all_users():
+    try:
+        from django.contrib.auth.models import User # don't move this import on top
+    except:
+        pass
+    available_user_list = User.objects.all()
+    return available_user_list
 
 def training_update_form(training):
     try:
@@ -474,4 +489,21 @@ def sub_project_form(training):
     except:
         pass
     subproject_update_form = SubProjectForm(instance=training)
+    return subproject_update_form
+
+
+def sub_project_update_form(instance):
+    try:
+        from tralard.forms.sub_project import SubProjectForm # don't move this import on top
+    except:
+        pass
+    subproject_update_form = SubProjectForm(instance=instance)
+    return subproject_update_form
+
+def sub_project_create_form():
+    try:
+        from tralard.forms.sub_project import SubProjectForm # don't move this import on top
+    except:
+        pass
+    subproject_update_form = SubProjectForm()
     return subproject_update_form

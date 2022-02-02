@@ -1,0 +1,475 @@
+{% extends "layouts/base.html" %}
+<!--  -->
+{% load crispy_forms_tags %}
+<!--  -->
+{% load static %}
+<!--  -->
+{% load humanize %}
+<!--  -->
+{% block title %} {{ title|title }} {% endblock %}
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+<!-- PAGE content goes HERE -->
+{% block content %}
+{% include 'accounts/includes/user-delete-modal.html' %}
+{% include 'accounts/includes/user-roles-display-modal.html' %}
+{% include 'accounts/includes/user-detail-modal.html' %}
+<!-- Main dashboard container -->
+<div id="dashboard-wrapper" class="dashboard-outer" id="funds-list">
+  <div class="dashboard-inner">
+    <!-- Dashboard Wrapper -->
+    <div class="dashboard-wrapper">
+      <div id="main-dashboard" style="margin-top: -10em;" class="section-wrapper">
+        <!-- Dashboard content -->
+        <div id="basic-layout" class="dashboard-columns">
+          <!-- Page title -->
+          <div class="contacts-title-wrapper">
+            <div class="title-wrap">
+              <h2 class="project-title">System Users</h2>
+              <h4 class="project-tagline">showing all available users: {{available_user_count}}</h4>
+          </div>
+            <!-- Filter input -->
+            <div class="list-filter">
+              <div class="control is-hidden-phones">
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Filter Users"
+                />
+                <div class="form-icon">
+                  <i data-feather="filter"></i>
+                </div>
+              </div>
+
+              <a href="/" style="color: white;"
+                class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
+                data-ripple-color=""
+              >
+                <span style="padding-right: 6px;">Home</span>
+                <i class="material-icons">send</i>
+              </a>
+            </div>
+          </div>
+          <div
+            class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
+          >
+            <!-- Contacts table -->
+            <table class="table contacts-table">
+              <!-- Table header -->
+              <div data-title="Add new user" class="add-button modal-trigger" 
+              id="save-user-button123"
+                data-modal="user-register-modal123">
+                <i class="material-icons">add</i>
+            </div>
+            <script>
+              document.getElementById("save-user-button123").addEventListener("click", function(){
+                document.getElementById("user-creator-form123").action = "/accounts/register/from-user-management/"
+
+              })
+              document.getElementById("modal-closer-button123").addEventListener("click", ()=>{
+                  document.getElementById("user-creator-form123").action = "/accounts/register/new-user/"
+              })
+            </script>
+              <thead>
+                <tr>
+                  <th>
+                    <div class="b-checkbox is-secondary">
+                        <input id="checkbox-docs-all" class="styled styled-checkbox" type="checkbox">
+                        <label for="checkbox-docs-all"></label>
+                    </div>
+                </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Username</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Full name</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Email</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Total Roles</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Active</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Is Staff</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th>
+                    <!-- Filter dropdown -->
+                    <div class="dropdown filter-dropdown dropdown-trigger">
+                      <div class="button">
+                        <span>Is Superuser</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                    </div>
+                  </th>
+
+                  <th class="w-5">
+                    <!-- Filter dropdown -->
+                    <div
+                      class="dropdown filter-dropdown is-right dropdown-trigger"
+                    >
+                      <div class="button">
+                        <span class="material-icons">subject</span>
+                        <i class="material-icons">keyboard_arrow_down</i>
+                      </div>
+                      <div class="dropdown-menu" role="menu">
+                        <div class="dropdown-content">
+                          <div class="dropdown-item filter-title">
+                            View type
+                          </div>
+                          <a href="#" class="dropdown-item is-spaced is-active">
+                            <span><i class="fa fa-check"></i> List view</span>
+                            <i class="material-icons">view_list</i>
+                          </a>
+                          <a class="dropdown-item is-spaced">
+                            <span><i class="fa fa-check"></i> Grid view</span>
+                            <i class="material-icons">view_module</i>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <!-- Table body -->
+              <tbody style="color: gray;">
+                <!-- Table row -->
+                {% for user in all_users %}
+                <tr>
+                  <td>
+                    <div class="b-checkbox is-secondary">
+                        <input id="checkbox-docs-1" class="styled styled-checkbox" type="checkbox">
+                        <label for="checkbox-docs-1"></label>
+                    </div>
+                </td>
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="project-count"> {{ user.username|truncatechars:24 }} </span>
+                    </span>
+                  </td>
+
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="project-count">
+                        {{ user.first_name|truncatechars:15 }} {{ user.last_name|truncatechars:15 }}
+                      </span>
+                    </span>
+                  </td>
+
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="project-count">
+                        {{ user.email|truncatechars:26 }}
+                      </span>
+                    </span>
+                  </td>
+
+                  <td class="modifications" data-original-title data-title="click to view roles" style="padding-right: auto;">
+                    <span class="inner">
+                      <div
+                      class="project-count">
+                        <span>
+                          <b onclick="document.getElementById('user_roles_display').style.display='block'" class="view-btn{{ user.id }}" style="cursor:pointer; color: #a79b9b; background-color: #e7dcdc; padding: 6px; border-radius: 12em;">
+                            {{ user.profile.total_current_user_roles }}
+                          </b>
+                        </span>
+                      </div>
+                    </span>
+                    <script>
+                    var uniqueSelectorButton = document.querySelector(".view-btn{{ user.id }}");
+                      uniqueSelectorButton.addEventListener("click", () => {
+                        var user_role_list = "{{ user.profile.current_user_roles }}";
+                        if("{{ user.username }}" == "{{ user.username }}"){
+                          if(user_role_list){
+                            document.getElementById("user-role-container").innerHTML = `
+                            {% for role in user.profile.current_user_roles %}
+                            <span class="badge badge-info">{{role}}</span>
+                            {% endfor %}
+                            `;
+                            document.getElementById("user-profile-photo123").src = "{{ user.profile.profile_photo_url }}";
+                          }else{
+                            document.getElementById("user-role-container").innerHTML = `<h1>0</h1>`;
+                            document.getElementById("user-profile-photo123").src = "{{ user.profile.profile_photo_url }}";
+                          }
+                        }
+                      })
+                    </script>
+                  </td>
+                  
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="user-activity-state">
+                        {% if user.is_active %}
+                        <img style="width: 20px; height: 20px" class="img-xs rounded-circle" src="/static/assets/images/green-check-icon.png"   alt="active">
+                        {% else %}
+                        <span style=" margin-left: -2.9px;">
+                          <img style="width: 20.2px; height: 20.2px" class="img-xs rounded-circle" src="/static/assets/images/red-check-icon.png"   alt="inactive">
+                        </span>
+                        {% endif %}
+                      </span>
+                    </span>
+                  </td>
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="user-activity-state">
+                        {% if user.is_staff %}
+                          Yes
+                        {% else %}
+                          No
+                        {% endif %}
+                      </span>
+                    </span>
+                  </td>
+                  <td class="modifications">
+                    <span class="inner">
+                      <span class="user-activity-state">
+                        {% if user.is_superuser %}
+                          Yes
+                        {% else %}
+                          No
+                        {% endif %}
+                      </span>
+                    </span>
+                  </td>
+                  <td class="actions">
+                    <div
+                      class="dropdown is-right dropdown-trigger contacts-list-dropdown"
+                    >
+                      <div class="button">
+                        <i class="material-icons">more_horiz</i>
+                      </div>
+                      <div class="dropdown-menu is-text-bigger" role="menu">
+                        <div class="dropdown-content">
+                          <a 
+                          onclick="document.getElementById('user_detail_display').style.display='block'"
+                            class="dropdown-item modal-trigger" id="view-btn{{ user.username }}{{ user.id }}"
+                            data-ripple-color=""
+                            data-modal="user_detail_display"
+                          >
+                            <i class="sl sl-icon-eye"></i>
+                            <span>
+                              <span>View</span>
+                              <span>View this user details</span>
+                            </span>
+                          </a>
+                          <script>
+                            var uniqueSelectorButton = document.getElementById("view-btn{{ user.username }}{{ user.id }}");
+                              uniqueSelectorButton.addEventListener("click", () => {
+                                if("{{ user.username }}" == "{{ user.username }}"){
+                                  document.getElementById("username-123").innerHTML = "{{ user.username }}";
+                                  document.getElementById("user-full-name123").innerHTML = "{{ user.first_name }} {{ user.last_name }}";
+                                  document.getElementById("user-email123").innerHTML = "{{ user.email }}";
+                                  document.getElementById("user-province123").innerText = "{{ user.profile.district }}";
+                                  document.getElementById("user-district123").innerText = "{{ user.profile.district }}";
+                                  document.getElementById("user-birthdate123").innerText = "{{ user.profile.birth_date }}";
+                                  document.getElementById("user-postal-code123").innerText = "{{ user.profile.postal_code }}";
+                                  document.getElementById("user-address123").innerText = "{{ user.profile.address }}";
+                                  document.getElementById("user-profile-image123").src = "{{ user.profile.profile_photo_url }}";
+                                  document.getElementById("user-role-container123").innerHTML =  `
+                                  {% for role in user.profile.current_user_roles %}
+                                  <span class="badge badge-info">{{role}}</span>
+                                  {% endfor %}
+                                  `;
+                                  var userIsActiveState = document.getElementById("prospectSwitch");
+                                  var userIsStaffState = document.getElementById("is-staff123");
+                                  var userIsSuperuserState = document.getElementById("is-superuser123");
+
+                                  if("{{ user.is_active }}" == "True"){
+                                    userIsActiveState.checked = true;
+                                  }else{
+                                    userIsActiveState.checked = false;
+                                  }
+
+                                  if("{{user.is_staff}}" == "True"){
+                                    userIsStaffState.innerText = "Yes";
+                                  }else{
+                                    userIsStaffState.innerText = "No";
+                                  }
+
+                                  if("{{user.is_superuser}}" == "True"){
+                                    userIsSuperuserState.innerText = "Yes";
+                                  }else{
+                                    userIsSuperuserState.innerText = "No";
+                                  }
+                                }
+                              })
+                            </script>
+
+                          <a
+                            class="dropdown-item has-icon modal-trigger" id="edit-btn{{ user.username }}{{ user.id }}" data-modal="user-update-modal123"
+                            data-ripple-color=""
+                          >
+                            <i class="sl sl-icon-pencil"></i>
+                            <span>
+                              <span>Edit</span>
+                              <span>Edit this user details</span>
+                            </span>
+                          </a>
+                          <script>
+                            var uniqueEditSelectorButton = document.getElementById("edit-btn{{ user.username }}{{ user.id }}");
+                              uniqueEditSelectorButton.addEventListener("click", () => {
+                                 if("{{ user.username }}" == "{{ user.username }}"){
+                                   document.getElementById("user-form-receiver123").innerHTML = `
+                                     <form action="" method="post" enctype="multipart/form-data">
+                                       {% csrf_token %}
+                                       {% load crispy_forms_tags %}
+                                       {{ user.profile.user_update_form.username|as_crispy_field }}
+                                       {{ user.profile.user_update_form.first_name|as_crispy_field }}
+                                       {{ user.profile.user_update_form.last_name|as_crispy_field }}
+                                       {{ user.profile.user_update_form.email|as_crispy_field }}
+                                       <div id="div_id_groups" class="form-group"> 
+                                         <label for="id_groups" class=" requiredField">
+                                           Groups<span class="asteriskField">*</span> 
+                                         </label> 
+                                         <div class=""> 
+                                           <select name="groups" class="form-control" id="id_groups" multiple> 
+                                             {% for role in user.profile.available_roles %} 
+                                                {% if role.value in user.profile.current_user_roles %} 
+                                                  <option class="option123" value="{{role.key}}" selected>{{ role.value }}</option> 
+                                                {% else %}
+                                                  <option class="option123" value="{{role.key}}">{{ role.value }}</option> 
+                                                {% endif %}
+                                              {% endfor %}
+                                           </select> 
+                                         </div>
+                                       </div>
+                                       {{ user.profile.user_update_form.password1|as_crispy_field }}
+                                       {{ user.profile.user_update_form.password2|as_crispy_field }}
+                                     </form>
+                                    `;
+                                    document.user_update_form123.action = "/accounts/user/{{ user.id }}/update/"
+                                  }
+                               });
+                         </script>
+                          <!-- user-update-form123 -->
+                          <div class="dropdown-divider"></div>
+                          <a 
+                            class="dropdown-item modal-trigger modal-trigger delete-btn{{ user.id }}" data-modal="user-delete-modal123"
+                          >
+                            <i class="sl sl-icon-trash"></i>
+                            <span>
+                              <span>Delete</span>
+                              <span>Delete this user</span>
+                            </span>
+                          </a>
+                          <script>
+                            var uniqueEditSelectorButton = document.querySelector(".delete-btn{{ user.id }}");
+                            uniqueEditSelectorButton.addEventListener("click", () => {
+                              if("{{ user.id }}" == "{{ user.id }}"){
+                                 document.getElementById("user-delete-form123").innerHTML += `
+                                   <div style="align-content: center; margin-left: 12em;">
+                                     {% csrf_token %}
+                                     <i><b>"{{ user.username }}"</i></b>
+                                     <div class="" style="margin-right: 8em; margin-top: 0.8em;">
+                                        <a href="" style="" class="btn btn-danger modal-dismiss">Cancel</a>
+                                        <a style="" href="/accounts/user/{{user.username}}/delete/" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
+                                      </div>
+                                  </div>
+                                  `;
+                               }
+                             });
+                          </script>
+                        </div>
+                      </div>
+                    </div>
+                    <a href="#" class="button is-hidden"
+                      ><i class="material-icons">remove_red_eye</i></a
+                    >
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            {% if all_users.paginator.num_pages != 1 %}
+            <hr />
+              <div class="pagination align-center" style="float: right; align-content: center;">
+                <span style="font-size: x-medium;" class="step-links">
+                  {% if all_users.has_previous %}
+                  <a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?user_page_number=1">&laquo;&laquo; first</a>
+                  <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?user_page_number={{ all_users.previous_page_number }}" data-title="previous page">&laquo;</a>
+                  {% endif %}
+                  
+                  <span class="current" style="color: #21546d;">
+                    {{ all_users.number }} of {{ all_users.paginator.num_pages }}.
+                  </span>
+                  {% if all_users.has_next %}
+                  <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?user_page_number={{ all_users.next_page_number }}" data-title="next page">&raquo;</a>
+                  <a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?user_page_number={{ all_users.paginator.num_pages }}">last &raquo;&raquo;</a>
+                  {% endif %}
+                </span>
+              </div>
+              <br>
+            {% else %}
+            {% endif %}
+          </div>
+          <!--Placeholder-->
+          {% comment %}
+          <div class="flex-card is-not-supported light-bordered">
+            <img
+              src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
+              alt=""
+            />
+            <div class="has-text-centered">
+              <h3>Ouch...</h3>
+              <p>
+                Sorry, the contacts list is not supported on mobile. Please try
+                a device with a wider screen.
+              </p>
+            </div>
+          </div>
+          {% endcomment %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+{% endblock javascripts %}

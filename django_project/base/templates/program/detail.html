@@ -79,10 +79,10 @@
                                                 <span>Showing All SubProjects Under {{ program.name|upper }}
                                                     <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
                                                 </span>
-											<div class="add-button modal-trigger"
-											     data-modal="project-form-modal">
-												<i class="material-icons" title="Create new project">add</i>
-											</div>
+												<div class="add-button modal-trigger"
+													data-modal="project-form-modal">
+													<i class="material-icons" title="Create new project">add</i>
+												</div>
 										</div>
 										<div class="list-filter">
 											<div class="control">
@@ -117,6 +117,10 @@
                                             <span>Showing All Interventions Under {{ program.name|upper }}
 												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
+											<div class="add-button modal-trigger"
+												data-modal="project-form-modal">
+												<i class="material-icons" title="Create new project">add</i>
+											</div>
 										</div>
 										<div class="list-filter">
 											<div class="control">
@@ -140,10 +144,7 @@
 										{% include 'includes/sub-project-list.html' %}
 									</div>
 								</div>
-
 							</div>
-
-
 							<!-- Beneficiary List -->
 							<div id="my-tasks" class="navtab-content">
 
@@ -521,7 +522,6 @@
 								<div class="form-footer">
 									<button type="submit" class="button is-modal">Create Task</button>
 								</div>
-
 							</form>
 							<!-- /New Project form -->
 						</div>

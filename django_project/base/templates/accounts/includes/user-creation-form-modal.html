@@ -4,35 +4,22 @@
     <div class="modal-content" style="">
         <div class="flex-card simple-shadow" style="min-width: 650px;">
             <div class="navigation-tabs layout-tabs animated-tabs">
-
                 <div id="task-details" class="navtab-content is-active">
                     <div class="card-body" style="max-height: 700px;">
                             <div id="classic" class="login-form-wrapper">
-
                                 <div id="login-form" class="animated preFadeInLeft fadeInLeft">
-            
-                                    <form role="form" method="post" action="/accounts/register/">
-            
-                                        {% csrf_token %} 
+                                    <form id="user-creator-form123" role="form" method="post" action="/accounts/register/new-user/">
+                                        {% csrf_token %}
+                                        <div class="field has-text-centered">
+                                            <p>
+                                                Add user credentials
+                                            </p> 
+                                        </div>
+                                        <br />
                                         <div class="auth-card" style="max-width: 600px;">
                                             
-                                            <div class="auth-card-header header-primary">
-                                                <h2 class="has-text-centered" style="background: inherit;">PPCR-TRALARD</h2>
-                                            </div>
-                                            <div class="field has-text-centered">
-                                                <p>
-                                                    {% if msg %}
-                                                        {{ msg | safe }}
-                                                    {% else %}
-                                                        Add your credentials 
-                                                    {% endif %}    
-                                                </p>    
-                                            </div>
-            
-                                            <br />
-                                        
-                                        <!-- Hide form fields, if the registration is successfull -->    
-                                        {% if not success %}    
+                                            <!-- Hide form fields, if the registration is successfull -->    
+                                            {% if not success %}    
                                         
                                             <div class="field">
                                                 <div class="control">
@@ -41,23 +28,14 @@
                                             </div>
             
                                             <br />
-                                            <p class="has-text-centered">
-                                            </a><a class="no-account" href="/" >Home</a> Have an account? <a class="no-account" href="{% url 'login' %}" >Login</a>
-                                        </p>
                                         <div class="button-wrap">
-                                                <button type="submit" name="register" class="button">Register</button>
-                                            </div>
-                                        
+                                            <button type="submit" name="register" id="register-button123" class="button">Register</button>
+                                        </div>
                                         {% endif %}
             
                                         </div>
                                     
                                     </form>
-            
-                                    <p class="has-text-centered">
-                                        &copy; Design <a href="https://cssninja.io/">PPCR</a> - 
-                                        <a href="#">TRALARD</a>.                        
-                                    </p>
                                 </div>
                             </div>
                     </div>
@@ -65,5 +43,5 @@
             </div>
         </div>
     </div>
-    <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');">ddd</button>
+    <button id="modal-closer-button123" class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');"></button>
 </div>

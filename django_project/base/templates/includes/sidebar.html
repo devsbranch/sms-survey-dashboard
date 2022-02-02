@@ -1,7 +1,8 @@
 {% load static %}
 {% load crispy_forms_tags %}
+{% load permission_tags %}
 {% include 'accounts/includes/user-creation-form-modal.html' %}
-
+{% include 'accounts/includes/user-update-form-modal.html' %}
 <nav class="main-menu">
   <div class="main-menu-inner">
     <!-- Side icon menu -->
@@ -94,7 +95,7 @@
                       </div>
                       <div class="stat-wrap has-text-centered is-hidden-mobile">
                         <p class="stat-val">2</p>
-                        <p class="stat-key">Sub Projects Attache</p>
+                        <p class="stat-key">Interventions Attached</p>
                       </div>
                       <div class="stat-wrap has-text-centered is-hidden-mobile">
                         <p class="stat-val">3</p>
@@ -221,10 +222,10 @@
                               <div class="meta">
                                 {% if request.user.profile.user.is_active %}
                                 <img style="width: 20px; height: 20px" class="img-xs rounded-circle"
-                                  src="/static/assets/images/green-check-icon.jpeg" alt="active" />
+                                  src="/static/assets/images/green-check-icon.png" alt="active" />
                                 {% else %}
                                 <img style="width: 20px; height: 20px" class="img-xs rounded-circle"
-                                  src="/static/assets/images/red-check-icon.jpg" alt="inactive" />
+                                  src="/static/assets/images/red-check-icon.png" alt="inactive" />
                                 {% endif %}
                               </div>
                             </div>
@@ -691,6 +692,12 @@
       <li class="have-children">
         <a data-modal="user-register-modal123" class="modal-trigger modal-trigger" id="register123"><span class="material-icons">account_circle</span>Register</a>
       </li>
+        {% if request.user.is_staff or request.user.is_superuer %}
+          <li class="have-children">
+            <a href="/accounts/user/management/list/"><span class="material-icons">groups</span><div style="margin-left: -2em;">Manage Users</div></a>
+          </li>
+        {% else %}
+        {% endif %}
     </ul>
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">

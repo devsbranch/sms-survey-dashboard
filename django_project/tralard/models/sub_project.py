@@ -13,7 +13,11 @@ from django.utils.translation import gettext_lazy as _
 
 from tralard.models.fund import Fund
 from tralard.models.ward import Ward
-from tralard.utils import unique_slugify, sub_project_form
+from tralard.utils import (
+    unique_slugify, 
+    sub_project_update_form, 
+    sub_project_create_form,
+)
 from tralard.models.training import Training
 from tralard.models.province import Province
 from tralard.models.district import District
@@ -340,7 +344,13 @@ class SubProject(models.Model):
         return amount_value
 
     @property
-    def sub_project_form(self):
+    def sub_project_update_form(self):
         """Assigns a form to Intervention after create."""
-        form = sub_project_form(self)
+        form = sub_project_update_form(self)
         return form
+
+    @property
+    def sub_project_create_form():
+        """Assigns a form to Intervention after create."""
+        form = sub_project_create_form()
+        return "Hello form"

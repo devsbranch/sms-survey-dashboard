@@ -43,4 +43,63 @@ class SignUpForm(UserCreationForm):
             'last_name',
             'email',
             'groups',
+            'password1',
+            'password2'
+        ]
+
+
+class UserUpdateForm(UserCreationForm):
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Username",
+                "class": "input",
+            }
+        ))
+    first_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "First name",
+                "class": "input",
+            }
+        ))
+    last_name = forms.CharField(
+        widget=forms.TextInput(
+            attrs={
+                "placeholder": "Last name",
+                "class": "input",
+            }
+        ))
+    groups = forms.MultipleChoiceField(
+        widget=forms.SelectMultiple(),
+        choices=ALL_USER_ROLES
+    )
+    password1 = forms.CharField(
+        label='password', 
+        widget=forms.PasswordInput(
+            attrs={
+                'minlength': 6
+            }    
+        ), 
+        required=False
+    )  
+    password2 = forms.CharField(
+        label='Confirm password', 
+        widget=forms.PasswordInput(
+            attrs={
+                'minlength': 6
+            }    
+        ), 
+        required=False
+    )  
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'groups',
+            'password1',
+            'password2',
         ]

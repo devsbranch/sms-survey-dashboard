@@ -72,24 +72,7 @@
                             </div>
                             <div class="notifications-body">
                                 <ul class="notifications-list">
-                                    <li>
-                                        <i class="sl sl-icon-heart red"></i>
-                                        <div class="notification-content">
-                                          {% if request.user.profile.profile_photo %}
-                                            <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" class="profile-photo img-xs rounded-circle" alt="">
-                                          {% else %}
-                                            <img src="/assets/images/logos/logo.png" class="profile-photo " data-demo-src="/assets/images/logos/logo.png" alt="{{ request.user.profile.user.username }}'s default profile photo"/>
-                                           {% endif %}
-                                            <div class="notification-text">
-                                                <div class="text">
-                                                    <b>Henry</b> liked your <b>comment</b>.
-                                                </div>
-                                                <div class="timestamp">
-                                                    23 minutes ago
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </li>
+                                   
                                     <li>
                                         <i class="sl sl-icon-check"></i>
                                         <div class="notification-content">
@@ -125,79 +108,6 @@
                         </div>
                     </div>
                 </div>
-                <!-- /Notifications dropdown -->
-                <!-- Messages dropdown (hidden on mobile) -->
-                <div class="drop-pop">
-                    <div class="icon-button">
-                        <i data-feather="mail"></i>
-                        <span class="indicator"></span>
-                    </div>
-                    <div class="drop-wrapper emails-drop">
-                        <div class="drop-inner has-arrow">
-                            <div class="emails-header">
-                                <h3>Messages</h3>
-                            </div>
-                            <div class="emails-body">
-                                <ul class="emails-list">
-                                    <li>
-                                        <img src="https://via.placeholder.com/250x250" alt=""
-                                            data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
-                                        <div class="email-content">
-                
-                                            <div class="email-text">
-                                                <div class="text">
-                                                    Hello, after our last meetings, it seems that some goals were...
-                                                </div>
-                                                <!--div class="timestamp">
-                                                    Nov 09, 14:18
-                                                </div-->
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="fake-avatar is-secondary">B</span>
-                                        <div class="email-content">
-                                            <div class="email-text">
-                                                <div class="text is-read">
-                                                    We did not receive the order yet, can you please check if it has...
-                                                </div>
-                                                <!--div class="timestamp">
-                                                    Nov 05, 13:31
-                                                </div-->
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span class="fake-avatar is-primary">J</span>
-                                        <div class="email-content">
-                                            <div class="email-text">
-                                                <div class="text is-read">
-                                                    My boss was very grateful that you found a solution during the week as...
-                                                </div>
-                                                <!--div class="timestamp">
-                                                    Nov 05, 09:47
-                                                </div-->
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- Messages dropdown -->
-                <!-- Right sidebar trigger (desktop and tablet only) -->
-                <div class="icon-button chat-button quickview-trigger" data-quickview="main-quickview">
-                    <i data-feather="message-square"></i>
-                    <span class="indicator is-alt"></span>
-                </div>
-                <!-- 
-                        default image
-                    {% static 'assets/images/logos/logo.png' %}
-                        data-demo-src image
-                    {% static 'assets/images/logos/logo.png' %}
-                -->
-                
                 <!-- Account dropdown -->
                 <div class="drop-pop">
                     <div class="icon-button accounts-button">

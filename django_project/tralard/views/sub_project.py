@@ -282,8 +282,6 @@ def sub_project_update(request, program_slug, subproject_slug):
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
         if form.is_valid():
-            custom_description = form.cleaned_data["custom_description"]
-            custom_focus_area = form.cleaned_data["custom_focus_area"]
             form.save()
 
             if custom_description:

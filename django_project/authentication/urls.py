@@ -1,13 +1,23 @@
 # -*- encoding: utf-8 -*-
 from django.urls import path
-from .views import login_view, register_user
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 
+from .views import (
+    login_view, 
+    user_delete,
+    user_update,
+    register_user,
+    list_user,
+)
+ 
 urlpatterns = [
     path("login/", login_view, name="login"),
-    path("register/", register_user, name="register"),
+    path("register/<str:extra_arg>/", register_user, name="register"),
     path("logout/", LogoutView.as_view(), name="logout"),
+    path("user/<str:username>/delete/", user_delete, name="user-delete"),
+    path("user/<int:pk>/update/", user_update, name="user-update"),
+    path("user/management/list/", list_user, name="user-list"),
     path(
         "reset_password/",
         auth_views.PasswordResetView.as_view(
