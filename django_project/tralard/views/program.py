@@ -94,7 +94,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                 name__icontains=self.subproject_search_query
             )
         else:
-            self.subprojects = SubProject.objects.all(
+            self.subprojects = SubProject.objects.filter(
              project__program__slug=self.program_object.slug
             )
 
@@ -103,7 +103,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                 name__icontains=self.beneficiary_search_query
             )
         else:
-            self.beneficiaries = Beneficiary.objects.all(
+            self.beneficiaries = Beneficiary.objects.filter(
                 sub_project__project__program__slug=self.program_object.slug
             )
         self.subproject_paginator = Paginator(self.subprojects, 9)
@@ -124,9 +124,11 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         )
 
         indicators_list = []
-
-        indicators = Indicator.objects.all()
-
+        
+        indicators = Indicator.objects.filter(
+            subproject__in=self.subprojects
+        ).distinct()
+       
         for indicator in indicators:
             indicator_data = {"name": "", "targets": []}
             indicator_data["name"] = indicator.name
