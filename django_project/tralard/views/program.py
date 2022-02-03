@@ -173,7 +173,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         
         indicators = Indicator.objects.filter(
-            subproject__in=self.subprojects
+            subproject_indicators__in=self.subprojects
         ).distinct()
 
         for indicator in indicators:
