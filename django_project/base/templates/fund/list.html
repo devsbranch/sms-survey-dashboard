@@ -81,7 +81,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Amount</span>
+                        <span>Amount(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -90,7 +90,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Total Disbursement</span>
+                        <span>Total Disbursement(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -99,7 +99,7 @@
                     <!-- Filter dropdown -->
                     <div class="dropdown filter-dropdown dropdown-trigger">
                       <div class="button">
-                        <span>Balance</span>
+                        <span>Balance(ZMK)</span>
                         <i class="material-icons">keyboard_arrow_down</i>
                       </div>
                     </div>
@@ -176,7 +176,9 @@
                   </td>
                   <td class="modifications">
                     <span class="inner">
-                      <span class="project-count"> {{ fund.amount }} </span>
+                      <span class="project-count">
+                        {{ fund.amount.amount|intcomma }}
+                      </span>
                     </span>
                   </td>
 
@@ -184,10 +186,9 @@
                     <span class="inner">
                       <span class="project-count">
                         {% if fund.get_total_disbursements is not None %}
-                        {{fund.currency}}
                         {{fund.get_total_disbursements|intcomma }}
                         <!--  -->
-                        {% else %} {{ fund.currency }} 0
+                        {% else %} 0
                         <!--  -->
                         {% endif %}
                       </span>
@@ -197,8 +198,6 @@
                   <td class="modifications">
                     <span class="inner">
                       <span class="project-count">
-                        {{fund.currency}}
-                        <!--  -->
                         {{fund.sub_project.project.get_total_fund_balance|intcomma}}
                       </span>
                     </span>
