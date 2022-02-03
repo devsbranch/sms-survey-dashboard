@@ -19,7 +19,11 @@ class BeneficiaryCreateForm(ModelForm):
     class Meta:
 
         model = Beneficiary
-        exclude = ["created",  "slug"]
+        exclude = [
+            "created",  
+            "slug", 
+            "location"
+        ]
         widgets = {
             "location": GooglePointFieldWidget,
             "registered_date": widgets.DateInput(
@@ -74,7 +78,6 @@ class BeneficiaryCreateForm(ModelForm):
                     Column("above_fourty_five", css_class="form-group col-md-6 mb-0"),
                     Column("sub_project", css_class="form-group col-md-6 mb-0"),
                     Column("ward", css_class="form-group col-md-12 mb-0"),
-                    Column("location", css_class="form-group col-md-12 mb-0"),
                     css_class="form-row",
                 ),
             ),

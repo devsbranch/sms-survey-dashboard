@@ -58,7 +58,7 @@ class Training(models.Model):
     sub_project = models.ForeignKey(
         'tralard.SubProject',
         on_delete=models.CASCADE,
-        verbose_name=_('SubProject name')
+        verbose_name=_('Intervention')
     )
     title = models.CharField(
         verbose_name=_('Title'),

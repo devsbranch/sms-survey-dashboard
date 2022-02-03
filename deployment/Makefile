@@ -32,6 +32,7 @@ web:
 	@docker-compose -p $(PROJECT_ID) up -d web
 	@docker-compose -p $(PROJECT_ID) up -d worker
 	@docker-compose -p $(PROJECT_ID) up -d graphql
+	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py sync_roles
 	@# Dont confuse this with the dbbackup make command below
 	@# This one runs the postgis-backup cron container
 	@# We add --no-recreate so that it does not destroy & recreate the db container
