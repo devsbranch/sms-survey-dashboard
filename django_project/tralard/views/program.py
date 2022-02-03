@@ -172,8 +172,10 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         current_year = datetime.now().year
 
         
-        indicators = Indicator.objects.all()
-       
+        indicators = Indicator.objects.filter(
+            subproject__in=self.subprojects
+        ).distinct()
+
         for indicator in indicators:
             indicator_data = {"name": "", "targets": []}
             indicator_data["name"] = indicator.name
