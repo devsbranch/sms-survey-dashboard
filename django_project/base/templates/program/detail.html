@@ -19,6 +19,7 @@
 {% include 'includes/project/project-delete-modal.html' %}
 {% include 'includes/project/sub-project-update-modal.html' %}
 {% include 'includes/project/sub-project-delete-modal.html' %}
+{% include 'includes/indicator-forms.html' %}
 
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer">
@@ -182,32 +183,30 @@
 
 								<!-- Beneficiary List -->
 								<div class="projects-list-wrapper">
-									<div class="list-header" style="justify-content: center;">
-										<div class="list-filter m-3">
-											<div class="control">
-												<form method="get" action="">
-													<input class="input"
-													id="search-indicators"
-													name="search-beneficiaries"
-													onkeyup="searchBeneficiariesAction('{{ program.slug }}');"
-													type="text"
-													placeholder="Filter Beneficiaries"/>
-													<div class="form-icon">
-														<i data-feather="filter"></i>
-													</div>
-												</form>
+									
+									<div class="" style="display: flex; justify-content: center;">
+										<ul>
+											<div class="column is-12" style="display: flex; justify-content: center;">
+												{% for form in indicator_forms %}
+													<button type="button" class="button btn-dash primary-btn btn-dash modal-trigger m-1"data-modal="{{form.modal_id}}">{{form.modal_subheader}}</button>
+												{% endfor %}
 											</div>
-										</div>
-										<div class="m-3">
-											<a class="button btn-dash primary-btn btn-dash" href="{% url 'tralard:preview_indicator_report' program.slug %}" target="_blank">View as PDF  <i class="sl sl-icon-docs ml-2"></i></a>
-										</div>
-										<button
-											id="download-indicator-report"
-											class="button btn-dash primary-btn btn-dash raised has-icon m-3"
-											data-ripple-color=""
-										>
-											Download Indicator Data  <i class="sl sl-icon-cloud-download ml-2"></i>
-										</button>
+											
+											{% comment %} <li>
+											</li> {% endcomment %}
+											<div class="column is-12" style="display: flex; justify-content: center;">
+												<a class="button btn-dash primary-btn btn-dash m-1" href="{% url 'tralard:preview_indicator_report' program.slug %}" target="_blank">View as PDF  <i class="sl sl-icon-docs ml-2"></i></a>
+												<button
+													id="download-indicator-report"
+													program-slug="{{program.slug}}"
+													class="button btn-dash primary-btn btn-dash has-icon m-1"
+													data-ripple-color=""
+												>
+													Download <i class="sl sl-icon-cloud-download ml-2"></i>
+												</button>
+											</div>
+										</ul>
+										
 									</div>
 									<div class="list-body" id="indicators-content">
 										{% include 'includes/indicator-list.html' %}
@@ -670,6 +669,33 @@
 	<button class="modal-close is-large" aria-label="close"></button>
 </div>
 
+ <!-- Delete Beneficiary Modal --><!-- Delete Beneficiary Modal -->
+<div id="delete-indicator-modal" class="modal modal-md icon-action-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<div class="help-text has-text-left">
+				<h2 class="dark-text">Delete Indicator</h2>
+
+			</div>
+
+			<div class="card-body">
+				
+				<form id="delete-indicator-form" class="form" action="" method="post">
+					{% csrf_token %}
+					<div id="warning-msg">
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
+						<button class=" is-danger is-modal" type="submit">Confirm</button>
+					</div>
+				</form>
+			</div>
+			
+		</div>
+	</div>
+</div>
 
 {% endblock content %}
 
@@ -828,6 +854,131 @@
 	    })
 	}
 
-	
+	function populateIndicatorForm(actionType, program_slug, indicator_slug='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_name/${indicator_slug}/update`
+        const createUrl = `${baseUrl}/indicator_name`
+
+
+		if (actionType === "POPULATE_FORM") {
+			$("#indicator_name input[name='name']").val(field_name);
+
+			$("#indicator_name").attr('action', updateUrl);
+			// $('#modal_header').text("Indicator Name")
+			$('#modal_subheader0').text("Update Indicator Name")
+			$('#form-submit-button0').text("Update")
+		} else {
+			$("#indicator_name input[name='name']").val('');
+            $("#indicator_name").attr('action', createUrl);
+            $('#modal_subheader0').text("Create Indicator Name")
+            $('#form-submit-button0').text("Create")
+		}
+    }
+
+	function fetchData (url) {
+        const formData = $.get(url)
+        return formData
+    }
+
+	async function populateIndicatorTargetForm(actionType, program_slug, indicator_target_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target/${indicator_target_id}/update`
+        const createUrl = `${baseUrl}/indicator_target`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+			console.log(data)
+        }
+
+
+		
+		data.unit_of_measure ? $(`#id_unit_of_measure option[value="${data.unit_of_measure}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
+		$("#indicator_target textarea[name='description']").val(data.description || '');
+		$("#indicator_target input[name='baseline_value']").val(data.baseline_value || '');
+		$("#indicator_target").attr('action', updateUrl);
+		data.indicator ? $(`#id_indicator option[value="${data.indicator}"]`).prop('selected', true) : $(`#id_indicator option[value=""]`).prop('selected', true).text('---------');
+		$('#modal_subheader1').text("Update Indicator Target")
+		$('#form-submit-button1').text("Update")
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target").attr('action', createUrl);
+			$('#modal_subheader1').text("Create Indicator Target")
+			$('#form-submit-button1').text("Create")
+		}
+    }
+
+
+	async function populateIndicatorTargetValueForm(actionType, program_slug, indicator_target_value_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target_value/${indicator_target_value_id}/update`
+        const createUrl = `${baseUrl}/indicator_target_value`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+        }
+
+		$("#indicator_target_value input[name='year']").val(data.year || '');
+		$("#indicator_target_value input[name='target_value']").val(data.target_value || '');
+		data.indicator_target ? $(`#id_indicator_target option[value="${data.indicator_target}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
+		
+		$("#indicator_target_value").attr('action', updateUrl);
+		$('#modal_subheader2').text("Update Indicator Target Value")
+		$('#form-submit-button2').text("Update")
+
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target_value").attr('action', createUrl);
+			$('#modal_subheader2').text("Create Indicator Target Value")
+			$('#form-submit-button2').text("Create")
+		}
+    }
+
+
+	async function populateIndicatorUnitOfMeasureForm(actionType, program_slug, indicator_target_unit_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target_unit/${indicator_target_unit_id}/update`
+        const createUrl = `${baseUrl}/indicator_target_unit`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+        }
+
+
+		$("#indicator_target_unit input[name='unit_of_measure']").val(data.unit_of_measure || '');
+		data.data_source ? $(`#id_data_source option[value="${data.data_source}"]`).prop('selected', true) : $(`#id_data_source option[value=""]`).prop('selected', true).text('---------');
+		
+		$("#indicator_target_unit").attr('action', updateUrl);
+		$('#modal_subheader3').text("Update Indicator Unit of Measure")
+		$('#form-submit-button3').text("Update")
+
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target_unit").attr('action', createUrl);
+			$('#modal_subheader3').text("Create Indicator Indicator Unit of Measure")
+			$('#form-submit-button3').text("Create")
+		}
+    }
+
+	function handleDeleteIndicator(actionType, program_slug='', indicator_slug='') {
+        const origin = location.origin;
+        const baseUrl = `${origin}/program/${program_slug}/detail`
+        const formActionUrl = `${baseUrl}/indicator_name/${indicator_slug}/delete`
+
+        if (actionType === "SET_ACTION_URL") {
+            $('#delete-indicator-form').attr('action', formActionUrl)
+        } else if (actionType === "UNSET_ACTION_URL") {
+            $('#delete-indicator-form').attr('action', " ")
+        }
+    }
 </script>
 {% endblock javascripts %}

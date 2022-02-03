@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 import os
 from django.urls import reverse_lazy
 from django.http import JsonResponse
@@ -12,7 +13,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.models.program import Program
 from tralard.models.project import Project
-from tralard.forms.project import ProjectForm
+from tralard.forms import (
+    ProjectForm,
+    Indicator,
+    IndicatorTargetForm,
+    IndicatorTargetValueForm,
+    IndicatorUnitOfMeasureForm,
+    IndicatorForm
+)
 from tralard.models.beneficiary import Beneficiary
 from tralard.models.sub_project import Indicator, SubProject
 
@@ -128,31 +136,69 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
             self.project_page_number
         )
 
+        indicator_forms = [
+            {
+                "modal_id": "indicator_form",
+                "form": IndicatorForm,
+                "modal_header": "Indicator Name",
+                "modal_subheader": "Create Indicator Name",
+                "action_url": "indicator_name",
+            },
+            {
+                "modal_id": "indicator_target_form",
+                "form": IndicatorTargetForm,
+                "modal_header": "Indicator Target",
+                "modal_subheader": "Create Indicator Target",
+                "action_url": "indicator_target",
+            },
+            {
+                "modal_id": "indicator_target_value_form",
+                "form": IndicatorTargetValueForm,
+                "modal_header": "Indicator Target Value",
+                "modal_subheader": "Create Indicator Target Value",
+                "action_url": "indicator_target_value",
+            },
+            {
+                "modal_id": "indicator_target_unit_form",
+                "form": IndicatorUnitOfMeasureForm,
+                "modal_header": "Indicator Unit of Measure",
+                "modal_subheader": "Create Indicator Unit of Measure",
+                "action_url": "indicator_target_unit",
+            },
+        ]
+
         indicators_list = []
+
+        current_year = datetime.now().year
+
         
-        indicators = Indicator.objects.filter(
-            subproject_indicators__in=self.subprojects
-        ).distinct()
+        indicators = Indicator.objects.all()
        
         for indicator in indicators:
             indicator_data = {"name": "", "targets": []}
             indicator_data["name"] = indicator.name
+            indicator_data["slug"] = indicator.slug
 
             targets = indicator.indicatortarget_set.all()
             for target in targets:
                 target_dict = {}
+                target_dict["id"] = target.id
                 target_dict["description"] = target.description
-                target_dict["unit_of_measure"] = target.unit_of_measure
+                target_dict["unit_of_measure"] = target.unit_of_measure.unit_of_measure
                 target_dict["baseline"] = target.baseline_value
                 target_dict["yearly_target_values"] = []
+                target_dict["unit_of_measure_id"] = target.unit_of_measure.id
 
                 year_count = 1
-                for yearly_target_values in target.indicatortargetvalue_set.all():
+                for yearly_target_values in target.indicatortargetvalue_set.all().order_by("year"):
                     yearly_target_values_dict = {}
                     yearly_target_values_dict[f"year_{year_count}"] = {
-                        "year": yearly_target_values.year,
+                        "id": yearly_target_values.id,
+                        "year": yearly_target_values.year.year,
                         "target_value": yearly_target_values.target_value,
-                        "actual_value": target.unit_of_measure.get_actual_data(indicator),
+                        "actual_value": target.unit_of_measure.get_actual_data(
+                            indicator
+                        ) if yearly_target_values.year.year <= current_year else 0
                     }
                     target_dict["yearly_target_values"].append(
                         yearly_target_values_dict
@@ -176,6 +222,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         context["total_sub_projects"] = SubProject.objects.all().count()
         context["total_beneficiary_count"] = Beneficiary.objects.all().count()
         context["indicators"] = indicators_list
+        context["indicator_forms"] = indicator_forms
         return context
 
     def dispatch(self, request, *args, **kwargs):
@@ -207,21 +254,26 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 @login_required(login_url="/login/")
 def preview_indicator_document(request, program_slug):
     from tralard.tasks import build_indicator_report
-    document_directory = "temp/reports/"
+
+    document_directory = f"{settings.MEDIA_ROOT}/temp/reports"
 
     # for now we just get a recently created file in the directory where the indicator reports are saved
     # we can have a doc that can be generated and updated at regular intervals and ready for preview.
-    filenames_list = os.listdir(f"{settings.MEDIA_ROOT}/{document_directory}")
+    if not os.path.exists(document_directory):
+        os.makedirs(document_directory)
+
+    filenames_list = os.listdir(document_directory)
+
 
     # TODO: Add background scheduled task that generates a file ready for preview in the browser
-       
-    try:
-        filename = filenames_list[0]
-    except IndexError:
-         # for now this is a temporary work around
-        build_indicator_report()
+
+    if not filenames_list:
+        # for now this is a temporary work around
+        results = build_indicator_report(program_slug)
+        filename = results["result"]["filename"]
+    else:
         filename = filenames_list[0]
 
-    path = f"{document_directory}{filename}"
-    context = {"path": path, "program_slug": program_slug, "filenames": filenames_list}
+    path = f"temp/reports/{filename}"
+    context = {"path": path, "program_slug": program_slug}
     return render(request, "tralard/indicator_report_preview.html", context)

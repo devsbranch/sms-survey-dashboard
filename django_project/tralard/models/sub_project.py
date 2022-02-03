@@ -65,8 +65,6 @@ class Indicator(models.Model):
     name = models.CharField(
         _("Name"),
         max_length=200,
-        null=True,
-        blank=True,
     )
 
     def __str__(self):
@@ -104,7 +102,7 @@ class IndicatorTarget(models.Model):
     indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Indicator: {self.indicator.name}| {self.unit_of_measure} Target"
+        return f"{self.description[:75]}| {self.unit_of_measure} Target"
 
 
 class IndicatorTargetValue(models.Model):
@@ -120,7 +118,7 @@ class IndicatorTargetValue(models.Model):
     )
 
     def __str__(self):
-        return f"{self.indicator_target.indicator.name} Target for: {self.year.year}"
+        return f"{self.indicator_target.description} Target for: {self.year.year}"
 
 
 class IndicatorUnitOfMeasure(models.Model):
@@ -151,7 +149,10 @@ class IndicatorUnitOfMeasure(models.Model):
 
         if self.data_source == "size":
             filter_by = {"indicators": indicator_obj}
-            total = float(SubProject.objects.filter(**filter_by).aggregate(Sum('size'))['size__sum'])
+            try:
+                total = float(SubProject.objects.filter(**filter_by).aggregate(Sum('size'))['size__sum'])
+            except TypeError:
+                total = 0
 
         elif self.data_source == "total_beneficiaries":
             total = Beneficiary.custom_objects.get_total_beneficiaries(sub_project_filter)
@@ -167,6 +168,8 @@ class IndicatorUnitOfMeasure(models.Model):
         
         elif self.data_source == "female_hhs":
             total = Beneficiary.custom_objects.get_female_hhs(sub_project_filter)
+        elif self.data_source == "beneficiary_orgs":
+            total = Beneficiary.objects.filter(**sub_project_filter).count()
 
         return total
         

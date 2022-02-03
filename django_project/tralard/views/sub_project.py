@@ -49,7 +49,6 @@ from tralard.models.fund import (
 )
 
 from tralard.forms.sub_project import SubProjectForm
-from tralard.tasks import build_indicator_report
 
 from tralard.models import Project, SubProject, Beneficiary
 
@@ -281,6 +280,8 @@ def sub_project_update(request, program_slug, subproject_slug):
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
         if form.is_valid():
+            custom_description = form.cleaned_data["custom_description"]
+            custom_focus_area = form.cleaned_data["custom_focus_area"]
             form.save()
 
             if custom_description:
@@ -1130,54 +1131,3 @@ def subproject_disbursement_expenditure_create(
         )
     )
 
-
-@login_required(login_url="/login/")
-def indicator_report(request, program_slug):
-    if request.is_ajax():
-        try:
-            task = build_indicator_report.delay()
-
-            if isinstance(task, AsyncResult):
-                return JsonResponse({"task_id": task.task_id})
-            else:
-                return JsonResponse({"message": "An error occured"}, status=500)
-
-        except:
-            return JsonResponse({"task_id": task.task_id})
-    else:
-        JsonResponse({"message": "unknown request"})
-
-
-def indicator_report(request):
-    if request.is_ajax():
-        task = build_indicator_report.delay()
-
-        return JsonResponse({"task_id": task.task_id})
-    else:
-        JsonResponse({"error": "Bad request"}, status=400)
-
-
-@login_required(login_url="/login/")
-def poll_state(request, task_id):
-    if request.is_ajax():
-        task = AsyncResult(task_id)
-
-        if task.state == "SUCCESS":
-            filename = task.result["result"]["filename"]
-
-            download_url = f"{settings.MEDIA_URL}temp/reports/{filename}"
-            body = {
-                "state": task.state,
-                "download_url": download_url,
-                "filename": filename,
-            }
-            return JsonResponse(body, status=200)
-
-        elif task.state == "PENDING":
-            body = {"state": task.state}
-            return JsonResponse(body, status=200)
-
-        else:
-            return JsonResponse({"error": "Bad request"}, status=400)
-    else:
-        return JsonResponse({"error": "Bad request"}, status=400)

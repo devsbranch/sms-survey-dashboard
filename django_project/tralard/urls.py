@@ -36,8 +36,7 @@ from tralard.views.project import (
     update_sub_project,
 )
 from tralard.views.sub_project import (
-    poll_state,
-    indicator_report,
+    sub_project_update,
     SubProjectDetailView,
     fund_approval_view,
     subproject_fund_delete,
@@ -49,13 +48,24 @@ from tralard.views.sub_project import (
     SubProjectFundListAndCreateView,
     SubProjectBeneficiaryOrgListView,
     subproject_fund_disbursement_create,
+    subproject_disbursement_expenditure_create
 )
 from tralard.views.map import MapTemplateView
 from tralard.views.dashboard import HomeTemplateView
 from tralard.views.profile import user_profile_update
-from tralard.views.sub_project import (
-    subproject_disbursement_expenditure_create,
-    sub_project_update,
+from tralard.views.indicator import (
+    delete_indicator,
+    poll_state,
+    indicator_report,
+    create_indicator,
+    update_indicator,
+    delete_indicator,
+    create_indicator_target,
+    update_indicator_target,
+    create_indicator_target_value,
+    update_indicator_target_value,
+    create_indicator_unit_of_measure,
+    update_indicator_unit_of_measure
 )
 from tralard.views.program import ProgramDetailView, preview_indicator_document
 
@@ -84,7 +94,7 @@ urlpatterns = [
         name="preview_indicator_report",
     ),
     path(
-        "report/indicators_report/",
+        "report/<slug:program_slug>/indicators_report/",
         indicator_report,
         name="indicators_report_download",
     ),
@@ -98,6 +108,51 @@ urlpatterns = [
         "program/<slug:program_slug>/detail/",
         ProgramDetailView.as_view(),
         name="program-detail",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_name",
+        create_indicator,
+        name="indicator-name",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_name/<slug:indicator_slug>/update",
+        update_indicator,
+        name="indicator-name-update",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_name/<slug:indicator_slug>/delete",
+        delete_indicator,
+        name="indicator-name-delete",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target",
+        create_indicator_target,
+        name="indicator-target",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target/<int:target_id>/update",
+        update_indicator_target,
+        name="indicator-target-update",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target_value",
+        create_indicator_target_value,
+        name="indicator-target-value",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target_value/<int:indicator_target_value_id>/update",
+        update_indicator_target_value,
+        name="indicator-target-value-update",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target_unit",
+        create_indicator_unit_of_measure,
+        name="indicator-target-unit",
+    ),
+    path(
+        "program/<slug:program_slug>/detail/indicator_target_unit/<int:indicator_target_unit_id>/update",
+        update_indicator_unit_of_measure,
+        name="indicator-target-unit-update",
     ),
     # -------- user profile --------
     path(

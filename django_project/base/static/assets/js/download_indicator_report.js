@@ -84,6 +84,8 @@ $(document).ready(function () {
 $('#download-indicator-report').on('click', function(e) {
     e.preventDefault();
     const downloadMetaData = getItem("downloadMetadata");
+    const programSlug = $('#download-indicator-report').attr("program-slug")
+
 
     if (downloadMetaData?.pendingDownload) {
         $.notifyBar({ cssClass: "warning", html: "Your have already requested this download. Your download will start automatically when ready.", delay: 6000});
@@ -93,7 +95,7 @@ $('#download-indicator-report').on('click', function(e) {
         $.notifyBar({ cssClass: "success", html: "Your download request is being processed. You download will start automatically once the file is ready.", delay: 6000});
         // see the URL Setup for where this url came from
         const baseUrl = location.origin;
-        const url = `${baseUrl}/report/indicators_report`
+        const url = `${baseUrl}/report/${programSlug}/indicators_report/`
         
         $('#download-indicator-report').addClass('disabled').html('Processing');
         

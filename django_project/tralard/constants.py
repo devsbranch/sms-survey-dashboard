@@ -49,5 +49,5 @@ MODEL_FIELD_CHOICES = (
     ("total_males", "Total Beneficiary Male Count"),
     ("total_hhs", "Total HHS"),
     ("female_hhs", "Female HHS"),
-    ("expenditure_amount", "Expenditure Amount"),
+    ("beneficiary_orgs", "Number of Beneficiary Organizations"),
 )

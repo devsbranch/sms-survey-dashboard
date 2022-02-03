@@ -1,0 +1,50 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+
+{% for form in indicator_forms %}
+    <div class="modal icon-action-modal modal-hero"
+        id="{{form.modal_id}}"
+        aria-labelledby="create-project">
+        <div class="modal-background modal-dismiss"></div>
+        <div class="modal-content" style="width:800px; !important;">
+            <div class="flex-card simple-shadow" style="overflow-y: auto;">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text" id="modal_header{{forloop.counter0}}"> {{form.modal_header}}</h2>
+                </div>
+                <div class="card-body">
+                    <form id="{{form.action_url}}"
+                        method="post"
+                        action="{% url 'tralard:program-detail' program.slug %}{{form.action_url}}"
+                        enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="m-4 column is-multiline">
+                             {{form.form | crispy}}
+                        </div>
+                        <div class="m-4 column is-multiline">
+                            <button id="form-submit-button{{forloop.counter0}}" type="submit" class="button btn-dash primary-btn btn-dash">Create</button>
+                        </div>
+                        <div class="modal-footer">
+                            <button 
+                                type="button" 
+                                class="button modal-dismiss"
+                                {% if forloop.counter == 1 %} 
+                                    onClick="populateIndicatorForm('CLEAR_FORM', '{{program.slug}}')" 
+                                {% elif forloop.counter == 2 %}
+                                    onClick="populateIndicatorTargetForm('CLEAR_FORM', '{{program.slug}}')"
+                                {% elif forloop.counter == 3 %}
+                                    onClick="populateIndicatorTargetValueForm('CLEAR_FORM', '{{program.slug}}')"
+                                {% elif forloop.counter == 4 %}
+                                    onClick="populateIndicatorUnitOfMeasureForm('CLEAR_FORM', '{{program.slug}}')"
+                                {% endif %}>
+                                Cancel
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endfor %}
