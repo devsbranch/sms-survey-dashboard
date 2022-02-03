@@ -38,6 +38,7 @@ from tralard.views.project import (
 from tralard.views.sub_project import (
     sub_project_update,
     SubProjectDetailView,
+    file_upload_view,
     fund_approval_view,
     subproject_fund_delete,
     subproject_fund_detail,
@@ -287,6 +288,11 @@ urlpatterns = [
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
         SubProjectDetailView.as_view(),
         name="subproject-manage",
+    ),
+    path(
+        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/upload/",
+        file_upload_view,
+        name="subproject-file-upload",
     ),
     path(
         "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/list/",

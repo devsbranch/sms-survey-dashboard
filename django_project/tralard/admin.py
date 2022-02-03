@@ -29,6 +29,7 @@ from tralard.models import (
     Expenditure,
     Disbursement,
     TrainingType,
+    SubProjectImage,
     IndicatorTarget,
     IndicatorTargetValue,
     IndicatorUnitOfMeasure
@@ -333,6 +334,16 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
     ]
 
 
+class SubProjectImageAdmin(admin.ModelAdmin):
+    empty_value_display = "-empty-"
+    list_display = [
+        "name", 
+        "image", 
+        "subproject",
+        "created",
+    ]
+
+
 class TrainingAdmin(ImportExportActionModelAdmin):
     resource_class = TrainingResource
     empty_value_display = "-empty-"
@@ -435,6 +446,7 @@ class IndicatorTargetValueAdmin(ImportExportActionModelAdmin):
         "year",
         "target_value",
     ]
+    
 
 
 class IndicatorUnitOfMeasureAdmin(ImportExportActionModelAdmin):
@@ -471,6 +483,7 @@ admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(Expenditure, ExpenditureAdmin)
 admin.site.register(Disbursement, DisbursementAdmin)
 admin.site.register(TrainingType, TrainingTypeAdmin)
+admin.site.register(SubProjectImage, SubProjectImageAdmin)
 admin.site.register(IndicatorTarget, IndicatorTargetAdmin)
 admin.site.register(IndicatorTargetValue, IndicatorTargetValueAdmin)
 admin.site.register(IndicatorUnitOfMeasure, IndicatorUnitOfMeasureAdmin)

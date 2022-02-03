@@ -1,4 +1,5 @@
 from django.utils.translation import gettext_lazy as _
+from django.conf import settings
 
 ZMK = 'ZMK'
 USD = 'USD'
@@ -41,6 +42,8 @@ CUSTOM_MAP_SETTINGS = {
     ),
 }
 
+
+BASE_TEMP_DIR = f"{settings.MEDIA_ROOT}/temp/"
 
 MODEL_FIELD_CHOICES = (
     ("size", "Sub Project Size"),

@@ -1,0 +1,57 @@
+{% load thumbnail %}
+
+<!-- Blueimp -->
+<!-- The Gallery as lightbox dialog, should be a document body child element -->
+
+<div class="contacts-title-wrapper"><h2 class="contacts-title">Gallery</h2></div>
+<p></p>
+<div
+  id="blueimp-gallery"
+  class="blueimp-gallery blueimp-gallery-controls"
+  aria-label="image gallery"
+  aria-modal="true"
+  role="dialog"
+>
+  <div class="slides" aria-live="polite"></div>
+  <h3 class="title"></h3>
+  <a
+    class="prev"
+    aria-controls="blueimp-gallery"
+    aria-label="previous slide"
+    aria-keyshortcuts="ArrowLeft"
+  ></a>
+  <a
+    class="next"
+    aria-controls="blueimp-gallery"
+    aria-label="next slide"
+    aria-keyshortcuts="ArrowRight"
+  ></a>
+  <a
+    class="close"
+    aria-controls="blueimp-gallery"
+    aria-label="close"
+    aria-keyshortcuts="Escape"
+  ></a>
+  <ol class="indicator"></ol>
+</div>
+
+<!-- Images -->
+<div id="links" class="links">
+    {% for img in subproject_images %}
+        <a href="{{ img.image.url }}" title="Photo">
+            <img src="{% thumbnail img.image 250x250 crop %}" width="155" alt="Photo" />
+        </a>
+    {% endfor %}
+</div>
+
+
+<script>
+    document.getElementById('links').onclick = function (event) {
+      event = event || window.event
+      var target = event.target || event.srcElement
+      var link = target.src ? target.parentNode : target
+      var options = { index: link, event: event }
+      var links = this.getElementsByTagName('a')
+      blueimp.Gallery(links, options)
+    }
+</script>

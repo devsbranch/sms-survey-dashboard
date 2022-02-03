@@ -8,21 +8,28 @@ __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM
 """
 View classes for a SubProject
 """
-
+from email.mime import image
+from email.policy import default
 import logging
+from os import name
 
 from django.db.models import Q
+from django.contrib import messages
 from django.conf import settings
 from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from braces.views import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import HttpResponseRedirect, JsonResponse, Http404
+from django.http import (
+    Http404,
+    HttpResponse, 
+    JsonResponse, 
+    HttpResponseRedirect,
+) 
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (
     ListView,
@@ -33,12 +40,14 @@ from django.views.generic import (
 )
 
 import reversion
+from exif import Image
 from reversion.models import Version
-from reversion.views import RevisionMixin
-
 from celery.result import AsyncResult
-
+from reversion.views import RevisionMixin
+from braces.views import LoginRequiredMixin
+from filer.models import Image as ImageSave
 from rolepermissions.decorators import has_role_decorator
+
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
 from tralard.forms import BeneficiaryCreateForm
@@ -50,13 +59,23 @@ from tralard.models.fund import (
 
 from tralard.forms.sub_project import SubProjectForm
 
-from tralard.models import Project, SubProject, Beneficiary
-
+from tralard.models import (
+    Beneficiary,
+    Project,
+    SubProject,
+    SubProjectImage
+)
 from tralard.forms.fund import (
     FundForm,
     ExpenditureForm,
     FundApprovalForm,
     DisbursementForm,
+)
+
+from tralard.utils import (
+    delete_temp_dir,
+    save_to_temp_dir, 
+    delete_temp_file
 )
 
 logger = logging.getLogger(__name__)
@@ -417,10 +436,14 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
                 raise Http404("The subproject you requested does not exist.")
         else:
             raise Http404("Sorry! We could not find your subproject!")
+    
+
 
     def get_context_data(self, **kwargs):
         sub_project = self.get_object()
         sub_proj_indicators = sub_project.indicators.all()
+        sub_proj_images = SubProjectImage.objects.filter(subproject__name=sub_project.name).order_by('-created')
+
         indicators = []
 
         for indicator_object in sub_proj_indicators:
@@ -434,7 +457,35 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
         context["indicators"] = indicators
+        context['subproject_images'] = sub_proj_images
         return context
+
+def file_upload_view(request, program_slug, project_slug, subproject_slug):
+    subproject_obj = SubProject.objects.get(slug=subproject_slug)
+
+    if request.method == 'POST':
+        image_files = request.FILES.getlist('file')        
+        for file in image_files:
+            created = ImageSave(file=file)
+            created.save()
+            instance = SubProjectImage(name=file.name, image=created, subproject=subproject_obj)
+            instance.save()
+
+            clean_subproject_name = subproject_obj.name.lower().replace(' ', '_').replace(',', '')
+
+            img_path = save_to_temp_dir(clean_subproject_name, file)
+            
+            with open(img_path, 'rb') as src:
+                image_bytes = src.read()
+                img = Image(image_bytes)
+                # print(img)
+            delete_temp_file(file)
+        
+        delete_temp_dir(clean_subproject_name)        
+        return HttpResponse({}, content_type="applicaiton/json")
+    
+  
+    
 
 
 # noinspection PyAttributeOutsideInit
@@ -558,7 +609,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
             super(SubProjectCreateView, self).form_valid(form)
             return HttpResponseRedirect(self.get_success_url())
         except IntegrityError:
-            return ValidationError("ERROR: SubProject by this name already exists!")
+            return ValidationError("ERROR: SubProject by this name already exists!")    
 
     def get_form_kwargs(self):
         """Get keyword arguments from form.

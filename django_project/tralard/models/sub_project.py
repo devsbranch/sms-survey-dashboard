@@ -20,8 +20,9 @@ from tralard.utils import (
 )
 from tralard.models.training import Training
 from tralard.models.province import Province
-from tralard.models.district import District
 from tralard.models.beneficiary import Beneficiary
+
+from filer.fields.image import FilerImageField
 from tralard.constants import PROJECT_STATUS_CHOICES, MODEL_FIELD_CHOICES
 
 
@@ -351,6 +352,34 @@ class SubProject(models.Model):
         """Assigns a form to Intervention after create."""
         form = sub_project_update_form(self)
         return form
+
+
+class SubProjectImage(models.Model):
+    """Image model for subproject photos"""
+
+    name = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    image = FilerImageField(
+        null=False, 
+        db_column="img_id",
+        on_delete=models.CASCADE
+    )
+    subproject = models.ForeignKey(
+        'tralard.SubProject', 
+        on_delete=models.CASCADE
+    )
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self) -> str:
+        return f"{self.image} {self.name}"
+
+    @property
+    def get_image(self):
+        return self.image.file
+
 
     @property
     def sub_project_create_form():

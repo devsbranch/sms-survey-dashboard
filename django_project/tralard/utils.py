@@ -1,9 +1,12 @@
+import os
+import shutil
 from datetime import datetime
 from django.conf import settings
 from django.utils.crypto import get_random_string
+from django.core.files.storage import FileSystemStorage
 
+from PIL import Image
 from djmoney.money import Money
-
 from rolepermissions.roles import get_user_roles, RolesManager
 
 from reportlab.lib import colors
@@ -18,6 +21,7 @@ from reportlab.platypus import (
     SimpleDocTemplate,
 )
 
+from tralard.constants import BASE_TEMP_DIR
 
 def unique_slugify(instance, slug):
     """
@@ -492,6 +496,33 @@ def sub_project_form(training):
     return subproject_update_form
 
 
+def save_to_temp_dir(base_dir, file_obj):
+    file_system_storage = FileSystemStorage()
+
+    path_name = f"{BASE_TEMP_DIR}{base_dir}"
+
+    if not os.path.exists(path_name):
+        os.makedirs(path_name)
+    
+    clean_image_name = file_obj.name.lower().replace(' ', '_')
+
+    file_system_storage.save(f"{path_name}/{clean_image_name}", file_obj)
+
+    local_v = os.path.join(path_name, clean_image_name)
+    
+    return local_v
+
+def delete_temp_dir(base_dir):
+    path_name = f"{BASE_TEMP_DIR}{base_dir}"
+
+    if os.path.exists(path_name):
+        shutil.rmtree(path_name)
+
+def delete_temp_file(file_obj):
+    clean_image_name = file_obj.name.lower().replace(' ', '_')
+    if os.path.exists(clean_image_name):
+        os.remove(clean_image_name)
+   
 def sub_project_update_form(instance):
     try:
         from tralard.forms.sub_project import SubProjectForm # don't move this import on top

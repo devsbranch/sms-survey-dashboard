@@ -51,4 +51,4 @@ git+https://github.com/Digital-Prophets/dj-beneficiary.git
 folium==0.12.1.post1
 altair==4.1.0
 pandas==1.1.5
-
+exif==1.2.2

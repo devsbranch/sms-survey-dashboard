@@ -14,6 +14,7 @@
     </title>
 
     <link rel="icon" type="image/png" href="{% static 'assets/images/favicon.png' %}" />
+    <script type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
 
     <!--Core CSS -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap" rel="stylesheet">
@@ -25,9 +26,26 @@
     <link href="{% static 'assets/js/jquery-ui.min.js' %}" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'assets/css/dashboard.css' %}">
     <link rel="stylesheet" href="{% static 'assets/css/icons.min.css' %}">
+     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"
+            integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ"
+            crossorigin="anonymous">
+        </script> -->
+    <script type="text/javascript" src="{% static 'jquery-3.6.0.min.js' %}"></script>
+    <!-- Drop Zone js and css -->
+    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+
+  
+    <!-- Blueimp Gallery -->
+    <link rel="stylesheet" href="{% static 'assets/css/blueimp-gallery.min.css' %}" />
+
+
+    <script src="{% static 'assets/js/blueimp-gallery.min.js'%}"></script>
+
 
     <!-- Specific CSS goes HERE -->
     {% block stylesheets %}{% endblock stylesheets %}
+    
 
 </head>
 
@@ -43,6 +61,12 @@
     {% include 'includes/scripts.html' %}
 
     <!-- Specific Page JS goes HERE  -->
-    {% block javascripts %}{% endblock javascripts %}
+    {% block javascripts %}       
+
+    
+    {% endblock javascripts %}
+    
+
+</body>
 
 </html>

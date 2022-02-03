@@ -376,27 +376,41 @@
                         </div>
 
                         <!-- Send email action -->
-                        <a
-                          class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                          data-ripple-color=""
-                          data-modal="message-contact-modal"
-                          href="#"
-                        >
-                          {% comment %}
-                          <i class="material-icons">mail</i> {%endcomment %}
-                          Download Report
-                        </a>
+                        <div class="list-filter">
+                          <div class="control">
+                              <span style="float: right;">
+                              <a
+                              class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
+                              data-ripple-color=""
+                              data-modal="message-contact-modal"
+                              href="#"
+                            >
+                              {% comment %}
+                              <i class="material-icons">mail</i> {%endcomment %}
+                              Upload Photos
+                            </a> 
+                          </span>
+                                       
+                          </div>
+                        </div>
+                        
                       </div>
                     </div>
                   </div>
                 </div>
+                
               </div>
             </div>
           </div>
         </div>
+        
+        {% include 'includes/subproject-image-gallery.html' %}
+        
       </div>
     </div>
   </div>
+  
+
 </div>
 
 <!-- Send message modal -->
@@ -408,7 +422,7 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="flex-card simple-shadow">
-      <h2 class="dark-text">Send Message</h2>
+      <h2 class="dark-text">Upload Files</h2>
       <div class="card-body">
         <div class="has-text-centered">
           <div class="image">
@@ -416,51 +430,17 @@
               src="{% static 'assets/images/icons/send-message.svg' %}"
               alt=""
             />
+          </div>       
+         <!-- Drop Zone -->
+         <form action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
+          {% csrf_token %}              
+          <div class="fallback">
+            <input name="file" type="file" multiple>
           </div>
-          <div class="help-text has-text-centered">
-            Send a message to this contact's email
-          </div>
+        </form>
 
-          <div class="field">
-            <div class="control has-icons-left">
-              <input
-                class="input is-medium"
-                type="text"
-                placeholder="Message subject"
-              />
-              <span class="icon is-left">
-                <i class="fa fa-sticky-note-o"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <textarea
-                class="textarea"
-                rows="6"
-                placeholder="Your message ..."
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="send-copy">
-            <div class="field">
-              <input
-                id="messageSwitch"
-                type="checkbox"
-                name="messageSwitch"
-                class="switch is-secondary"
-              />
-              <label for="messageSwitch"
-                ><span>Send a copy to my inbox?</span></label
-              >
-            </div>
-          </div>
+         
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="button is-modal">Send Message</button>
       </div>
     </div>
   </div>
@@ -555,9 +535,15 @@
   </div>
   <button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
-<!-- /Invite User Modal -->
+
 
 {% endblock content %}
 
+
+
+
+
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+{% endblock javascripts %}

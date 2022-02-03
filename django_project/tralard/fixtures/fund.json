@@ -6,6 +6,7 @@
             "amount": 250400.634,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2022-01-01",
             "sub_project": 2,
             "slug": "fichilisya-vegetable-oil-production-amount250000",
             "created": "2022-01-13"
@@ -18,6 +19,7 @@
             "amount": 8500000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2021-03-01",
             "sub_project": 3,
             "slug": "tutulane-goat-rearing-amount-100000",
             "created": "2022-01-13"
@@ -30,6 +32,7 @@
             "amount": 750000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2020-06-01",
             "sub_project": 4,
             "slug": "chilanga-fish-harvest-winter-crop-amount-350000",
             "created": "2022-01-13"
@@ -42,6 +45,7 @@
             "amount": 1508400.4,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2019-09-15",
             "sub_project": 5,
             "slug": "wuyakwelelo-goat-rearing-and-vegetable-amount-150000",
             "created": "2022-01-13"
@@ -54,6 +58,7 @@
             "amount": 20600000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2018-08-07",
             "sub_project": 6,
             "slug": "salamo-bulking-center-amount-260000",
             "created": "2022-01-13"
@@ -66,6 +71,7 @@
             "amount": 1700000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2021-11-14",
             "sub_project": 7,
             "slug": "chiundaponde-bulking-center-170000",
             "created": "2022-01-13"
@@ -78,6 +84,7 @@
             "amount": 509000.40,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2022-06-01",
             "sub_project": 11,
             "slug": "dytech-honey-processing-project-500000",
             "created": "2022-01-13"
@@ -90,6 +97,7 @@
             "amount": 45000000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2018-01-01",
             "sub_project": 14,
             "slug": "kalwalwa-project-amount-450000",
             "created": "2022-01-13"
@@ -102,6 +110,7 @@
             "amount": 1005000.5,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2020-04-12",
             "sub_project": 8,
             "slug": "katangalika-bulking-center-amount-150000",
             "created": "2022-01-13"
@@ -114,6 +123,7 @@
             "amount": 36005000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2019-01-01",
             "sub_project": 9,
             "slug": "chibale-bulking-center-amount-365000",
             "created": "2022-01-13"
@@ -126,6 +136,7 @@
             "amount": 700460000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2022-01-01",
             "sub_project": 1,
             "slug": "twasechela-goat-rearing-amount-160000",
             "created": "2022-01-13"
@@ -138,6 +149,7 @@
             "amount": 2060600.51,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2020-01-01",
             "sub_project": 12,
             "slug": "lumika-project-amount-260000",
             "created": "2022-01-13"
@@ -150,6 +162,7 @@
             "amount": 2530090.80,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2021-10-31",
             "sub_project": 13,
             "slug": "sambolye-project-amount-250000",
             "created": "2022-01-13"
@@ -162,6 +175,7 @@
             "amount": 160506.20,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2018-01-01",
             "sub_project": 14,
             "slug": "kalwalwa-project-amount-160000",
             "created": "2022-01-13"
@@ -174,6 +188,7 @@
             "amount": 190303.56,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2020-01-01",
             "sub_project": 15,
             "slug": "kabembe-project-amount-190000",
             "created": "2022-01-13"
@@ -186,6 +201,7 @@
             "amount": 2305000,
             "amount_currency": "ZMK",
             "approved": true,
+            "funding_date": "2021-01-01",
             "sub_project": 16,
             "slug": "kanyembo-project-amount-235000",
             "created": "2022-01-13"
