@@ -1,7 +1,7 @@
-{% load static %}
-{% load crispy_forms_tags %}
-{% load permission_tags %}
-{% include 'accounts/includes/user-creation-form-modal.html' %}
+{% load static %} 
+{% load crispy_forms_tags %} 
+{% load permission_tags %} 
+{% include 'accounts/includes/user-creation-form-modal.html' %} 
 {% include 'accounts/includes/user-update-form-modal.html' %}
 <nav class="main-menu">
   <div class="main-menu-inner">
@@ -13,15 +13,19 @@
             data-demo-src="{% static 'assets/images/logos/logo.png' %}" />
         </a>
       </li>
-      {% comment %} <li class="side-icon" data-child-menu="dashboard-menu">
+      {% comment %}
+      <li class="side-icon" data-child-menu="dashboard-menu">
         <i class="sl sl-icon-speedometer"></i>
-      </li> {% endcomment %}
-      {% comment %} <li class="side-icon" data-child-menu="documents-menu">
+      </li>
+      {% endcomment %} {% comment %}
+      <li class="side-icon" data-child-menu="documents-menu">
         <i class="sl sl-icon-docs"></i>
-      </li> {% endcomment %}
-      {% comment %} <li class="side-icon" data-child-menu="business-menu">
+      </li>
+      {% endcomment %} {% comment %}
+      <li class="side-icon" data-child-menu="business-menu">
         <i class="sl sl-icon-briefcase"></i>
-      </li> {% endcomment %}
+      </li>
+      {% endcomment %}
       <li class="side-icon" data-child-menu="misc-menu">
         <i class="sl sl-icon-graph"></i>
       </li>
@@ -37,10 +41,19 @@
         <!-- Profile avatar -->
         <a class="profile-trigger" href="javascript:void(0);">
           {% if request.user.profile.profile_photo %}
-          <img class="main-menu-avatar" src="https://via.placeholder.com/250x250" data-demo-src="{{ request.user.profile.profile_photo.url }}" id="user-profile-page-opener-button" class="profile-photo"
-          alt="">
+          <img
+            class="main-menu-avatar"
+            src="https://via.placeholder.com/250x250"
+            data-demo-src="{{ request.user.profile.profile_photo.url }}"
+            id="user-profile-page-opener-button"
+            class="profile-photo"
+            alt=""
+          />
           {% else %}
-            <img src="/static/assets/images/logos/logo.png" alt="Default profile photo">
+          <img
+            src="/static/assets/images/logos/logo.png"
+            alt="Default profile photo"
+          />
           {% endif %}
           <span class="dot"></span>
         </a>
@@ -80,7 +93,11 @@
                         <div class="avatar-overlay">
                           <i class="fa fa-camera fa-2x"></i>
                         </div>
-                        <img src="{% static 'assets/images/logos/logo.png' %}" alt="" data-demo-src="{{ request.user.profile.profile_photo_url }}">
+                        <img
+                          src="{% static 'assets/images/logos/logo.png' %}"
+                          alt=""
+                          data-demo-src="{{ request.user.profile.profile_photo_url }}"
+                        />
                       </div>
                       <div class="name">
                         <h3>{{ request.user.username }}</h3>
@@ -107,16 +124,31 @@
                 <!-- Profile menu FAB -->
                 <div class="profile-fab">
                   <div class="fab-wrapper">
-                    <button id="show-notifications" class="notifications fab-btn mini ripple" data-toggle="tooltip"
-                      data-placement="left" data-title="Edit">
+                    <button
+                      id="show-notifications"
+                      class="notifications fab-btn mini ripple"
+                      data-toggle="tooltip"
+                      data-placement="left"
+                      data-title="Edit"
+                    >
                       <i class="material-icons">edit</i>
                     </button>
-                    <button id="show-team" class="team fab-btn mini ripple" data-toggle="tooltip" data-placement="top"
-                      data-title="Team">
+                    <button
+                      id="show-team"
+                      class="team fab-btn mini ripple"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-title="Team"
+                    >
                       <i class="material-icons">work_outline</i>
                     </button>
-                    <button id="show-details" class="details fab-btn mini ripple" data-toggle="tooltip"
-                      data-placement="top" data-title="Profile">
+                    <button
+                      id="show-details"
+                      class="details fab-btn mini ripple"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      data-title="Profile"
+                    >
                       <i class="material-icons">verified_user</i>
                     </button>
                     <button id="profile-fab-trigger" class="fab-btn pop-fab">
@@ -137,7 +169,10 @@
               <div class="profile-sections-outer">
                 <div class="profile-sections-wrapper">
                   <!-- Profile details -->
-                  <div id="profile-details" class="profile-details animated preFadeInUp fadeInUp">
+                  <div
+                    id="profile-details"
+                    class="profile-details animated preFadeInUp fadeInUp"
+                  >
                     <!-- Details sub view -->
                     <div id="profile-view" class="profile-view">
                       <div class="columns is-multiline">
@@ -151,7 +186,8 @@
                               <div class="meta">
                                 <label>Full name</label>
                                 <p>
-                                    {{ request.user.profile.user.first_name|title }} {{ profile.user.last_name|title }}
+                                  {{ request.user.profile.user.first_name|title
+                                  }} {{ profile.user.last_name|title }}
                                 </p>
                               </div>
                             </div>
@@ -164,7 +200,9 @@
                             <div class="info-block">
                               <div class="meta">
                                 <label>Province</label>
-                                <p>{{ request.user.profile.district.province }}</p>
+                                <p>
+                                  {{ request.user.profile.district.province }}
+                                </p>
                               </div>
                             </div>
 
@@ -197,12 +235,17 @@
                             <div class="info-block">
                               <div class="meta">
                                 <label>User Roles</label>
-                                <div style="
+                                <div
+                                  style="
                                     display: flex-container;
                                     font-size: 16px;
-                                  " class="flex-container">
+                                  "
+                                  class="flex-container"
+                                >
                                   {% for role in request.user.profile.current_user_roles %}
-                                  <span class="badge badge-info">{{ role }} </span>
+                                  <span class="badge badge-info"
+                                    >{{ role }}
+                                  </span>
                                   {% endfor %}
                                   <span class="e"></span>
                                 </div>
@@ -221,16 +264,25 @@
                             <div class="info-block" style="float: right">
                               <div class="meta">
                                 {% if request.user.profile.user.is_active %}
-                                <img style="width: 20px; height: 20px" class="img-xs rounded-circle"
-                                  src="/static/assets/images/green-check-icon.png" alt="active" />
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/green-check-icon.png"
+                                  alt="active"
+                                />
                                 {% else %}
-                                <img style="width: 20px; height: 20px" class="img-xs rounded-circle"
-                                  src="/static/assets/images/red-check-icon.png" alt="inactive" />
+                                <img
+                                  style="width: 20px; height: 20px"
+                                  class="img-xs rounded-circle"
+                                  src="/static/assets/images/red-check-icon.png"
+                                  alt="inactive"
+                                />
                                 {% endif %}
                               </div>
                             </div>
                           </div>
-                          <button style="
+                          <button
+                            style="
                               visibility: hidden;
                               width: 100%;
                               display: block;
@@ -238,9 +290,13 @@
                               color: white;
                               font-size: 14px;
                               padding-bottom: 6px;
-                            " onclick="document.getElementById('user-roles-update-trigger').style.display='block'"
-                            class="w3-button button block_">
-                            <span style="margin-bottom: 8px">Update User Roles</span>
+                            "
+                            onclick="document.getElementById('user-roles-update-trigger').style.display='block'"
+                            class="w3-button button block_"
+                          >
+                            <span style="margin-bottom: 8px"
+                              >Update User Roles</span
+                            >
                           </button>
                           <div style="width: 100%" class="column is-6">
                             <div class="info-card">
@@ -262,7 +318,9 @@
                               </div>
                               <div style="float: right" class="info-block">
                                 <div class="meta">
-                                  <label style="margin-left: 8em">Address</label>
+                                  <label style="margin-left: 8em"
+                                    >Address</label
+                                  >
                                   <p>{{ request.user.profile.address }}</p>
                                 </div>
                               </div>
@@ -314,12 +372,17 @@
                     <!-- Team header -->
                     <div class="columns">
                       <div class="column is-10 is-offset-1">
-                        <div class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp">
+                        <div
+                          class="flex-card is-top light-bordered raised animated preFadeInUp fadeInUp"
+                        >
                           <div class="card-body">
                             <div class="columns is-vcentered">
                               <div class="column is-6">
                                 <div class="team-logo">
-                                  <img src="/static/assets/images/logos/partners/acme.svg" alt="" />
+                                  <img
+                                    src="/static/assets/images/logos/partners/acme.svg"
+                                    alt=""
+                                  />
                                 </div>
                               </div>
                               <div class="column is-6">
@@ -328,18 +391,36 @@
                                     <span>15</span> Team members
                                   </div>
                                   <div class="team-avatars">
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/anthony.jpg" />
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/barry.jpg" />
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/carolin.png" />
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/ray.jpg" />
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/nina.jpg" />
-                                    <img src="https://via.placeholder.com/250x250" alt=""
-                                      data-demo-src="/static/assets/images/avatars/marc.jpg" />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/anthony.jpg"
+                                    />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/barry.jpg"
+                                    />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/carolin.png"
+                                    />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/ray.jpg"
+                                    />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/nina.jpg"
+                                    />
+                                    <img
+                                      src="https://via.placeholder.com/250x250"
+                                      alt=""
+                                      data-demo-src="/static/assets/images/avatars/marc.jpg"
+                                    />
                                     <span>+9</span>
                                   </div>
                                 </div>
@@ -352,17 +433,24 @@
                     <!-- /Team header -->
 
                     <!-- Team List -->
-                    <div class="columns is-vcentered is-multiline animated preFadeInUp fadeInUp">
+                    <div
+                      class="columns is-vcentered is-multiline animated preFadeInUp fadeInUp"
+                    >
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/anthony.jpg" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/anthony.jpg"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Anthony Briggs</div>
@@ -376,7 +464,9 @@
                               abandoned cart recovery process
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -385,14 +475,19 @@
                       </div>
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/barry.jpg" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/barry.jpg"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Arthur Baxter</div>
@@ -406,7 +501,9 @@
                               an Online sales specialist
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -415,14 +512,19 @@
                       </div>
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/carolin.png" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/carolin.png"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Marjory Cambell</div>
@@ -436,7 +538,9 @@
                               our subscribers
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -445,14 +549,19 @@
                       </div>
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag is-success">Online</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/nina.jpg" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/nina.jpg"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Elisabeth Lopez</div>
@@ -466,7 +575,9 @@
                               abandoned cart recovery process
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -475,14 +586,19 @@
                       </div>
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag is-warning">Busy</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/ben.jpg" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/ben.jpg"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Kevin Smith</div>
@@ -496,7 +612,9 @@
                               warehouse to the customers
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -505,14 +623,19 @@
                       </div>
                       <!-- Team member -->
                       <div class="column is-4">
-                        <div class="flex-card team-card light-bordered light-raised">
+                        <div
+                          class="flex-card team-card light-bordered light-raised"
+                        >
                           <div class="card-heading padding-10">
                             <span class="tag">Offline</span>
                           </div>
                           <div class="card-body">
                             <div class="avatar">
-                              <img src="https://via.placeholder.com/250x250" alt=""
-                                data-demo-src="/static/assets/images/avatars/marc.jpg" />
+                              <img
+                                src="https://via.placeholder.com/250x250"
+                                alt=""
+                                data-demo-src="/static/assets/images/avatars/marc.jpg"
+                              />
                             </div>
                             <div class="user-id">
                               <div class="name">Marc Walters</div>
@@ -526,7 +649,9 @@
                               project management skills
                             </div>
                             <div class="card-action has-text-centered">
-                              <button class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh">
+                              <button
+                                class="button btn-dash rounded secondary-btn is-fullwidth ripple no-lh"
+                              >
                                 Profile
                               </button>
                             </div>
@@ -538,18 +663,28 @@
                   </div>
                   <!-- /Profile team -->
                   <!-- Profile notifications -->
-                  <div style="width: 100%" id="profile-notifications" class="profile-notifications is-hidden">
-                    <div class="profile-notifications-inner animated preFadeInUp fadeInUp">
-                      <div class="profile-notifications-title" style="width: 100%;">
+                  <div
+                    style="width: 100%"
+                    id="profile-notifications"
+                    class="profile-notifications is-hidden"
+                  >
+                    <div
+                      class="profile-notifications-inner animated preFadeInUp fadeInUp"
+                    >
+                      <div
+                        class="profile-notifications-title"
+                        style="width: 100%"
+                      >
                         {% if request.user.profile.profile_form %}
-                            <form name="user_profile_form" method="post"
-                              action="{% url 'tralard:profile-update' %}">
-                              {% crispy request.user.profile.profile_form request.user.profile.profile_form.helper %}
-                            </form>
-                        {% else %}
-                        {% endif %}
-                        <script>
-                        </script>
+                        <form
+                          name="user_profile_form"
+                          method="post"
+                          action="{% url 'tralard:profile-update' %}"
+                        >
+                          {% crispy request.user.profile.profile_form request.user.profile.profile_form.helper %}
+                        </form>
+                        {% else %} {% endif %}
+                        <script></script>
                       </div>
                     </div>
                   </div>
@@ -589,220 +724,331 @@
     <!-- /Child menu header -->
 
     <!-- Sidebar menu 1 -->
-    {% comment %} <ul id="dashboard-menu" class="sidebar-menu is-active animated preFadeInRIght fadeInRight">
+    {% comment %}
+    <ul
+      id="dashboard-menu"
+      class="sidebar-menu is-active animated preFadeInRIght fadeInRight"
+    >
       <li class="have-children">
-        <a  href="/"><span class="material-icons">dashboard</span>Project</a>
+        <a href="/"><span class="material-icons">dashboard</span>Project</a>
       </li>
-    </ul>  {% endcomment %}
+    </ul>
+    {% endcomment %}
     <!-- /Sidebar menu 1 -->
     <!-- Sidebar menu 2 -->
-    {% comment %} <ul id="documents-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+    {% comment %}
+    <ul
+      id="documents-menu"
+      class="sidebar-menu animated preFadeInRIght fadeInRight"
+    >
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">insert_drive_file</span>Documents</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">insert_drive_file</span>Documents</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-document-list.html">Document list
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-document-list.html"
+              >Document list
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-document-details.html">Document details
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-document-details.html"
+              >Document details
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-document-invoice.html">Invoice
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-document-invoice.html"
+              >Invoice
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
         </ul>
       </li>
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">assignment</span>Projects</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">assignment</span>Projects</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-project-list.html">Project list
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-project-list.html"
+              >Project list
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-project-details.html">Project details
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-project-details.html"
+              >Project details
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
         </ul>
       </li>
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">assignment_turned_in</span>Tasks</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">assignment_turned_in</span>Tasks</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-project-task.html">Single Task
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-project-task.html"
+              >Single Task
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-project-mytasks.html">My Tasks
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-project-mytasks.html"
+              >My Tasks
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
         </ul>
       </li>
-    </ul> {% endcomment %}
+    </ul>
+    {% endcomment %}
     <!-- /Sidebar menu 2 -->
     <!-- Sidebar menu 3 -->
-    {% comment %} <ul id="business-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+    {% comment %}
+    <ul
+      id="business-menu"
+      class="sidebar-menu animated preFadeInRIght fadeInRight"
+    >
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">group</span>Contacts</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">group</span>Contacts</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-contacts-list.html">Contact list
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-contacts-list.html"
+              >Contact list
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-contacts-grid.html">Contact grid
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-contacts-grid.html"
+              >Contact grid
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-contacts-single.html">Contact details
-              <span class="tag is-primary font-w-600 ml-10">2.1</span></a>
+            <a href="/dashboard-contacts-single.html"
+              >Contact details
+              <span class="tag is-primary font-w-600 ml-10">2.1</span></a
+            >
           </li>
         </ul>
       </li>
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">work</span>CRM</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">work</span>CRM</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-crm-boards.html">All Boards
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-crm-boards.html"
+              >All Boards
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-crm-kanban.html">Deals Kanban
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-crm-kanban.html"
+              >Deals Kanban
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-crm-deal.html">Single Deal
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-crm-deal.html"
+              >Single Deal
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
         </ul>
       </li>
-    </ul> {% endcomment %}
+    </ul>
+    {% endcomment %}
     <!-- /Sidebar menu 3 -->
     <!-- Sidebar menu 4 -->
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
-        <a href="/reports_builder/"><span class="material-icons">grid_on</span>Reports</a>
-       
+        <a href="/reports_builder/"
+          ><span class="material-icons">grid_on</span>Reports</a
+        >
       </li>
       <li class="have-children">
-        <a href="{% url 'tralard:map' %}"><span class="material-icons">map</span>Map</a>
+        <a href="{% url 'tralard:map' %}"
+          ><span class="material-icons">map</span>Map</a
+        >
       </li>
       <li class="have-children">
-        <a data-modal="user-register-modal123" class="modal-trigger modal-trigger" id="register123"><span class="material-icons">account_circle</span>Register</a>
+        <a
+          data-modal="user-register-modal123"
+          class="modal-trigger modal-trigger"
+          id="register123"
+          ><span class="material-icons">account_circle</span>Register</a
+        >
       </li>
-        {% if request.user.is_staff or request.user.is_superuer %}
-          <li class="have-children">
-            <a href="/accounts/user/management/list/"><span class="material-icons">groups</span><div style="margin-left: -2em;">Manage Users</div></a>
-          </li>
-        {% else %}
-        {% endif %}
+      {% if request.user.is_staff or request.user.is_superuer %}
+      <li class="have-children">
+        <a href="/accounts/user/management/list/"
+          ><span class="material-icons">groups</span>
+          <div style="margin-left: -2em">Manage Users</div></a
+        >
+      </li>
+      {% else %} {% endif %}
     </ul>
     <ul id="misc-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">grid_on</span>Datatables</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">grid_on</span>Datatables</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-datatable-basic.html">Basic Datatable
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-datatable-basic.html"
+              >Basic Datatable
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-datatable-variations.html">Variations
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-datatable-variations.html"
+              >Variations
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-datatable-advanced.html">Advanced Example
-              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a>
+            <a href="/dashboard-datatable-advanced.html"
+              >Advanced Example
+              <span class="tag is-secondary font-w-600 ml-10">2.0</span></a
+            >
           </li>
         </ul>
       </li>
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">apps</span>Apps</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">apps</span>Apps</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-chat-app.html">Chat UI
-              <span class="tag is-danger font-w-600 ml-10">2.3</span></a>
+            <a href="/dashboard-chat-app.html"
+              >Chat UI
+              <span class="tag is-danger font-w-600 ml-10">2.3</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-mailbox-inbox.html">Inbox UI<span class="tag is-danger font-w-600 ml-10">2.3</span></a>
+            <a href="/dashboard-mailbox-inbox.html"
+              >Inbox UI<span class="tag is-danger font-w-600 ml-10"
+                >2.3</span
+              ></a
+            >
           </li>
         </ul>
       </li>
       <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">thumbs_up_down</span>Forum</a>
+        <a class="parent-link" href="#"
+          ><span class="material-icons">thumbs_up_down</span>Forum</a
+        >
         <ul>
           <li>
-            <a href="/dashboard-forum-home.html">Forum home
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-forum-home.html"
+              >Forum home
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-forum-channel.html">Forum Channel
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-forum-channel.html"
+              >Forum Channel
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
           <li>
-            <a href="/dashboard-forum-topic.html">Forum Topic
-              <span class="tag is-primary font-w-600 ml-10">2.2</span></a>
+            <a href="/dashboard-forum-topic.html"
+              >Forum Topic
+              <span class="tag is-primary font-w-600 ml-10">2.2</span></a
+            >
           </li>
         </ul>
       </li>
     </ul>
     <!-- /Sidebar menu 4 -->
     <!-- Sidebar menu 5 -->
-    <ul id="settings-menu" class="sidebar-menu animated preFadeInRIght fadeInRight">
+    <ul
+      id="settings-menu"
+      class="sidebar-menu animated preFadeInRIght fadeInRight"
+    >
       <li class="have-children">
-        <a href="/admin/" href="#"><span class="material-icons">settings</span>Admin</a>
+        <a href="/admin/" href="#"
+          ><span class="material-icons">settings</span>Admin</a
+        >
       </li>
 
       <li class="have-children">
-        <a href="/docs/" target="_blank"><span class="material-icons">assignment</span>
+        <a href="/docs/" target="_blank"
+          ><span class="material-icons">assignment</span>
           REST API Docs
         </a>
       </li>
       <li class="have-children">
-        <a href="/swagger/" target="_blank"><span class="material-icons">developer_board</span>
+        <a href="/swagger/" target="_blank"
+          ><span class="material-icons">developer_board</span>
           REST API Interact
         </a>
       </li>
       <li class="have-children">
         {% if 'localhost' in request.get_host or '127.0.0.1' in request.get_host %}
-          <a href="http://localhost:8008/" target="_blank"><span class="material-icons">face</span>
-            GraphQL Service
-          </a>
+        <a href="http://localhost:8008/" target="_blank"
+          ><span class="material-icons">face</span>
+          GraphQL Service
+        </a>
         {% else %}
-            <a href="http://81.28.6.181:8008/" target="_blank"><span class="material-icons">face</span>
-              GraphQL Service
-            </a>
+        <a href="http://81.28.6.181:8008/" target="_blank"
+          ><span class="material-icons">face</span>
+          GraphQL Service
+        </a>
         {% endif %}
       </li>
-      {% comment %} <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">account_circle</span>User settings</a>
+      {% comment %}
+      <li class="have-children">
+        <a class="parent-link" href="#"
+          ><span class="material-icons">account_circle</span>User settings</a
+        >
         <ul>
           <li>
-            <a href="javascript:void(0);">User list <span class="sl sl-icon-lock warning-text ml-10"></span></a>
+            <a href="javascript:void(0);"
+              >User list <span class="sl sl-icon-lock warning-text ml-10"></span
+            ></a>
           </li>
           <li>
-            <a href="javascript:void(0);">Add user <span class="sl sl-icon-lock warning-text ml-10"></span></a>
+            <a href="javascript:void(0);"
+              >Add user <span class="sl sl-icon-lock warning-text ml-10"></span
+            ></a>
           </li>
           <li>
-            <a href="javascript:void(0);">Access rights
-              <span class="sl sl-icon-lock warning-text ml-10"></span></a>
+            <a href="javascript:void(0);"
+              >Access rights
+              <span class="sl sl-icon-lock warning-text ml-10"></span
+            ></a>
           </li>
         </ul>
-      </li> {% endcomment %}
-      {% comment %} <li class="have-children">
-        <a class="parent-link" href="#"><span class="material-icons">domain</span>Organizations</a>
+      </li>
+      {% endcomment %} {% comment %}
+      <li class="have-children">
+        <a class="parent-link" href="#"
+          ><span class="material-icons">domain</span>Organizations</a
+        >
         <ul>
           <li>
-            <a href="javascript:void(0);">Organizations list
-              <span class="sl sl-icon-lock warning-text ml-10"></span></a>
+            <a href="javascript:void(0);"
+              >Organizations list
+              <span class="sl sl-icon-lock warning-text ml-10"></span
+            ></a>
           </li>
           <li>
-            <a href="javascript:void(0);">Add organization
-              <span class="sl sl-icon-lock warning-text ml-10"></span></a>
+            <a href="javascript:void(0);"
+              >Add organization
+              <span class="sl sl-icon-lock warning-text ml-10"></span
+            ></a>
           </li>
         </ul>
-      </li> {% endcomment %}
+      </li>
+      {% endcomment %}
     </ul>
     <!-- /Sidebar menu 5 -->
   </div>

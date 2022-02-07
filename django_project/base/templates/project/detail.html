@@ -59,8 +59,19 @@
     
                         <!-- Page title -->
                         <div class="deal-title-wrapper is-mobile">
-                            <img class="deal-image" src="https://via.placeholder.com/150x150" alt=""
-                                data-demo-src="{% static 'assets/images/logos/mgee.png' %}">
+                            {% if project.image_file %}
+                            <img 
+                                class="deal-image" 
+                                src="https://via.placeholder.com/50x50" 
+                                alt=""
+                                data-demo-src="{{ project.image_file.url }}"
+                            />
+                            {% else %}
+                            <img
+                              src="https://via.placeholder.com/50x50"
+                              alt="Default profile photo"
+                            />
+                            {% endif %}
                             <div class="inner-wrap">
                                 <h3 class="deal-title">{{ project.name|title }}</h3>
                                 <div class="title-meta">
@@ -739,4 +750,3 @@ function deleteSubproject(program_slug, project_slug, sub_project_slug, subproje
     }
 </script>
 {% endblock javascripts %}
-

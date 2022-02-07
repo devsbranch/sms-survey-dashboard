@@ -4324,6 +4324,7 @@ body {
   .dashboard-outer .dashboard-inner {
     max-width: 1340px;
     margin: 0 auto; }
+    
 
 .is-inbox {
   min-height: 100vh;
@@ -4668,6 +4669,7 @@ TABLE OF CONTENTS
       .main-menu .main-menu-inner .main-logo img {
         width: 32px;
         height: 32px;
+        border-radius: 100px;
         margin-top: -5px;
         transition: opacity .3s; }
         .main-menu .main-menu-inner .main-logo img:hover {
