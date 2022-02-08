@@ -36,41 +36,21 @@
                   <!-- Dropdown menu -->
                   <div class="dropdown-menu is-text-bigger" role="menu">
                     <div class="dropdown-content">
-                      <a href="#" class="dropdown-item">
-                        <i class="sl sl-icon-paper-plane"></i>
+                      <a id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
+                        class="dropdown-item modal-trigger"
+                      >
+                        <i class="sl sl-icon-pencil"></i>
                         <span>
-                          <span>Send</span>
-                          <span>Send contact details</span>
+                          <span>Update</span>
+                          <span>Edit subproject</span>
                         </span>
                       </a>
                       <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">
-                        <i class="sl sl-icon-rocket"></i>
-                        <span>
-                          <span>New Deal</span>
-                          <span>Start new deal involving this contact</span>
-                        </span>
-                      </a>
-                      <a href="#" class="dropdown-item">
-                        <i class="sl sl-icon-bell"></i>
-                        <span>
-                          <span>Subscribe me</span>
-                          <span>Subscribe me to contact updates</span>
-                        </span>
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">
-                        <i class="sl sl-icon-shield"></i>
-                        <span>
-                          <span>Disable</span>
-                          <span>Disables this contact</span>
-                        </span>
-                      </a>
                       <a class="dropdown-item">
                         <i class="sl sl-icon-trash"></i>
                         <span>
                           <span>Delete</span>
-                          <span>Delete this event</span>
+                          <span>Delete subproject</span>
                         </span>
                       </a>
                     </div>
@@ -413,8 +393,8 @@
 
 </div>
 
-<!-- Send message modal -->
-<!-- Send message to contact Modal -->
+<!-- Dropzone modal -->
+<!-- Image Upload Modal -->
 <div
   id="message-contact-modal"
   class="modal modal-md message-contact-modal modal-hero"
@@ -432,7 +412,7 @@
             />
           </div>       
          <!-- Drop Zone -->
-         <form action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
+         <form id="my-dropzone" action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
           {% csrf_token %}              
           <div class="fallback">
             <input name="file" type="file" multiple>
@@ -447,6 +427,13 @@
   <button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
 <!-- /Invite User Modal -->
+
+<!-- Update Subproject Modal -->
+
+{% include 'includes/subproject-update-modal.html' %}
+
+<!-- End of subproject modal -->
+
 
 <!-- Log call Modal -->
 <div
@@ -545,5 +532,25 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+
+<script>
+
+  Dropzone.autoDiscover = false;
+
+  const myDropzone = new Dropzone("#my-dropzone", {
+    url:"upload/",
+    maxFiles: 4,
+    maxFilesize: 2,
+    acceptedFiles: ".jpeg,.jpg,.png,.gif",
+    addRemoveLinks: true,
+    dictDefaultMessage:
+      '<span class="text-center"><span class="font-weight-bold file-icon"></span> Drop files here to upload</span>',
+    dictRemoveFile: "Remove file",
+    dictMaxFilesExceeded: "You can only upload 4 files",
+    dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
+    dictInvalidFileType: "You can't upload files of this type",
+  })
+  
+</script>
 
 {% endblock javascripts %}

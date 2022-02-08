@@ -218,7 +218,7 @@
                             <!-- Projects table widget -->
                             <div class="table-widget">
                                 <h3 class="card-heading is-bordered has-icon">
-                                    <span>SubProject Overview</span>
+                                    <span>Intervention Overview</span>
                                     <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
                                         <div class="button">
                                             <i class="material-icons">more_vert</i>
@@ -306,19 +306,18 @@
                             </div>
                             <script>
                                 var defaultText = "Welcome to Django Report Builder".trim
-                                var spanElements = 
                             </script>
                             <br/>   
                             {% include 'includes/project_chart.html' %}
                         </div>
-
                         
+                        
+                        {% include 'includes/interventions_chart.html' %}
                         
                     </div>
                     {% comment %} end dashboard widgets begin  {% endcomment %}
                 </div>
                 {% comment %} end top bar card and dashboard widget wrapper {% endcomment %}
-
 
             </div>
         </div>

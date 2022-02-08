@@ -31,8 +31,10 @@ logger = logging.getLogger(__name__)
 
 
 class SubProjectManager(models.Manager):
-    """ Custom manager that aggregates sub project overview. """
-    def get_sub_projects_district_json(self):        
+    """ Custom manager that aggregates interventions and subprojects provincial overview. """
+
+    def get_sub_projects_district_json(self):    
+        """ Queryset to aggregate suprojects in each province """            
         province_labels = []
         sub_projects_count = []
 
@@ -49,9 +51,36 @@ class SubProjectManager(models.Manager):
             "labels": province_labels_json,
             "data" : sub_projects_count_json
         }
-            
 
-        
+    def get_projects_in_district_json(self):    
+        """ Queryset to aggregate interventions in each province """            
+        province_labels = []
+        interventions_count = []
+        intervention_names = []
+
+        #  Get Sub projects in province
+        for province in Province.objects.all():
+            total_subs = self.filter(ward__district__province__name=province.name)
+            province_labels.append(province.name)
+
+            for subproject in total_subs:
+                intervention_names.append(subproject.project.name)
+
+            unique_intervention_names = list(set(intervention_names))
+            interventions_count.append(len(unique_intervention_names))
+
+
+        province_labels_json = json.dumps(province_labels)
+        interventions_count_json = json.dumps(interventions_count)
+
+        return {
+            "labels": province_labels_json,
+            "data" : interventions_count_json,
+        }     
+
+class CountProjects(models.Manager):
+    """ Custom manager that aggregates interventions in each province. """
+    
  
 class Indicator(models.Model):
     """

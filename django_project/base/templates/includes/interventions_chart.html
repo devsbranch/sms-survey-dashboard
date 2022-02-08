@@ -1,0 +1,113 @@
+{%block scripts%}
+<script>
+    $(document).ready(function () {
+
+    if ($("#lineChart").length) {
+    var dashLineChart = new Chart(ctx2, {
+      type: "line",
+      data: {
+        labels: ["Lusaka", "Central", "Southern", "Eastern", "Copperbelt", "Western"],
+        datasets: [
+          {
+            data: [85698, 196325, 225149, 120589, 45036, 68749],
+            backgroundColor: ["rgba(127, 0, 255,1)"],
+            borderColor: "rgba(127, 0, 255,0.9)",
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "rgba(127, 0, 255,1)",
+          },
+          {
+            data: [241032, 329211.43, 178431, 205987, 153687, 178964],
+            backgroundColor: ["rgba(0, 209, 178,0.6)"],
+            borderColor: "rgba(0, 209, 178,1)",
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "rgba(0, 209, 178,1)",
+          },
+        ],
+      },
+      options: {
+        scales: {
+          xAxes: [
+            {
+              display: false,
+              //stacked: true,
+              gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+              },
+              scaleLabel: {
+                display: false,
+              },
+            },
+          ],
+          yAxes: [
+            {
+              display: true,
+              //stacked: true,
+              gridLines: {
+                color: "rgba(0, 0, 0, 0)",
+              },
+              ticks: {
+                fontSize: 9,
+                fontColor: "#999",
+                autoSkip: true,
+                maxTicksLimit: 6,
+                callback: function (value) {
+                  var ranges = [
+                    { divider: 1e6, suffix: "M" },
+                    { divider: 1e3, suffix: "k" },
+                  ];
+                  function formatNumber(n) {
+                    for (var i = 0; i < ranges.length; i++) {
+                      if (n >= ranges[i].divider) {
+                        return (
+                          (n / ranges[i].divider).toString() + ranges[i].suffix
+                        );
+                      }
+                    }
+                    return n;
+                  }
+                  return "$" + formatNumber(value);
+                },
+              },
+            },
+          ],
+        },
+        tooltips: {
+          backgroundColor: "rgba(68, 79, 96,0.7)",
+          xPadding: 10,
+          yPadding: 15,
+          cornerRadius: 4,
+          borderColor: "rgba(68, 79, 96,0.7)",
+          caretSize: 4,
+        },
+        legend: {
+          display: false,
+          labels: {
+            usePointStyle: true,
+            fontSize: 11,
+            fontColor: "#A9ABAC",
+          },
+        },
+        title: {
+          display: false,
+          text: "Main suppliers",
+          fontSize: 14,
+          fontColor: "#A9ABAC",
+          fontStyle: "normal",
+        },
+      },
+    });
+  }
+})
+     
+</script>
+{%endblock scripts%}
+{%block content%}
+<div class="flex-card light-bordered light-raised mt-20">
+  <div class="card-heading has-icon no-margin">
+    <span>Funds Disbursements By Year</span>
+  </div>
+  <div>
+    <canvas id="lineChart" width="200"></canvas>
+  </div>
+</div>
+{%endblock content%}

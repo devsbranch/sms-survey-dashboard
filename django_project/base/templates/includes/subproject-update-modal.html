@@ -1,0 +1,35 @@
+<!--  -->
+{% load static %}
+
+<div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
+    <div class="modal-background"></div>
+    <div class="modal-content" style="width: 50% !important;">
+        <div class="flex-card simple-shadow" style="overflow-y: auto;">
+            <div class="help-text has-text-left">
+                <h2 class="dark-text">Update Intervention</h2>
+                </div>
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                        <div class="m-3">
+                            <span class="m-2">Edit Intervention Here</span>
+                        </div>
+                    </div>
+                    <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div id="intervention-update123" class="m-4 column is-multiline">
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"  class="button modal-dismiss"></a>Cancel</button>
+                            <button type="submit" class="button is-modal">Update Intervention</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+</div>
