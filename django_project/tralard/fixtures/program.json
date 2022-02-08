@@ -5,7 +5,7 @@
         "fields": {
             "name": "TRALARD",
             "approved": true,
-            "started": "2022-01-13",
+            "started": "2011-01-12",
             "program_representative": 1,
             "description": "To improve natural resource management in select districts to support sustainable livelihoods",
             "slug": "tralard"
@@ -17,7 +17,7 @@
         "fields": {
             "name": "SCReBs",
             "approved": true,
-            "started": "2022-01-12",
+            "started": "2010-01-12",
             "program_representative": 2,
             "description": "Aims to improve the adaptive capacity of vulnerable communities in the Baroste Sub-basin.",
             "slug": "screbs"
@@ -25,11 +25,11 @@
     },
     {
         "model": "tralard.program",
-        "pk": 2,
+        "pk": 3,
         "fields": {
             "name": "SCRiKA",
             "approved": false,
-            "started": "2022-01-12",
+            "started": "2019-01-12",
             "program_representative": 2,
             "description": "Aims to improve the adaptive capacity of vulnerable communities in the Kafue Sub-basin.",
             "slug": "scrika"
