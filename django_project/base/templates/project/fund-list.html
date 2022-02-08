@@ -684,7 +684,7 @@
           '    <label class="input-group-text" for="inputGroupApproval">Approval</label>' +
           '  </div>' +
           '  <select class="custom-select" id="inputGroupApproval">' +
-          '    <option selected>Choose...</option>' +
+          '    <option value="reset" selected>Choose...</option>' +
           '    <option value="yes">Approved</option>' +
           '    <option value="no">Not Approved</option>' +
           '  </select>' +
@@ -693,8 +693,8 @@
         $('.custom-select').on('change', function (e) {
           const approvalStatus = $(this).val();
           $('.custom-select').val(approvalStatus)
-          if (approvalStatus === "") {
-            interventionFundsTable.column([3]).search(approvalStatus)
+          if (approvalStatus === "reset") {
+            interventionFundsTable.column([3]).search("")
           }
           interventionFundsTable.column([3]).search(approvalStatus).draw();
         })
