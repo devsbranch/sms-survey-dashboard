@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from tralard.filters.training import TrainingFilter
 from tralard.models.training import Training
 from tralard.forms.training import TrainingForm
 from tralard.models.beneficiary import Beneficiary
@@ -32,12 +33,15 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
+        training_filter = TrainingFilter(self.request.GET, queryset=self.get_queryset())
 
         self.training_paginator = Paginator(self.trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
         self.training_paginator_list = self.training_paginator.get_page(
             self.training_page_number
         )
+
+        context["trainings_filter"] = training_filter
         context["trainings"] = self.training_paginator.get_page(
             self.training_page_number
         )
@@ -90,4 +94,4 @@ def training_update(request, program_slug, project_slug, training_entry_slug):
 # temporal view for previewing templates
 @login_required(login_url="/login/")
 def template_testing(request):
-    return render(request, "tralard/dashboard-datatable-variationss.html")
+    return render(request, "tralard/dashboard-datatable-advanced.html")

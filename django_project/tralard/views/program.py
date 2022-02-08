@@ -1,27 +1,27 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 import os
-from django.urls import reverse_lazy
-from django.http import JsonResponse
-from django.shortcuts import render
+from datetime import datetime
+
 from django.conf import settings
-from django.views.generic import ListView
-from django.core.paginator import Paginator
-from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
+from django.http import JsonResponse
+from django.shortcuts import render
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
+from django.views.generic import ListView
 
-from tralard.models.program import Program
-from tralard.models.project import Project
 from tralard.forms import (
     ProjectForm,
-    Indicator,
     IndicatorTargetForm,
     IndicatorTargetValueForm,
     IndicatorUnitOfMeasureForm,
-    IndicatorForm
+    IndicatorForm,
 )
 from tralard.models.beneficiary import Beneficiary
+from tralard.models.program import Program
+from tralard.models.project import Project
 from tralard.models.sub_project import Indicator, SubProject
 
 
@@ -44,7 +44,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         to the SubProject list page for the object's parent Project
 
         :returns: URL
-        :rtype: HttpResponse
+        rtype: HttpResponse
         """
         return reverse_lazy(
             "tralard:program-detail",
@@ -74,7 +74,6 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                 "project_slug": self.project,
             }
         )
-
         return kwargs
 
     def get_context_data(self):
@@ -89,10 +88,8 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         if self.search_query:
             self.projects = Project.objects.filter(
-                    program__slug=self.program_object.slug
-                ).filter(
-                    name__icontains=self.search_query
-            )
+                program__slug=self.program_object.slug
+            ).filter(name__icontains=self.search_query)
         else:
             self.projects = Project.objects.filter(
                 program__slug=self.program_object.slug
@@ -100,25 +97,22 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         if self.subproject_search_query:
             self.subprojects = SubProject.objects.filter(
-                    project__program__slug=self.program_object.slug
-                ).filter(
-                    name__icontains=self.subproject_search_query
-            )
+                project__program__slug=self.program_object.slug
+            ).filter(name__icontains=self.subproject_search_query)
         else:
             self.subprojects = SubProject.objects.filter(
-             project__program__slug=self.program_object.slug
+                project__program__slug=self.program_object.slug
             )
 
         if self.beneficiary_search_query:
             self.beneficiaries = Beneficiary.objects.filter(
-                    sub_project__project__program__slug=self.program_object.slug
-                ).filter( 
-                    name__icontains=self.beneficiary_search_query
-            )
+                sub_project__project__program__slug=self.program_object.slug
+            ).filter(name__icontains=self.beneficiary_search_query)
         else:
             self.beneficiaries = Beneficiary.objects.filter(
                 sub_project__project__program__slug=self.program_object.slug
             )
+
         self.subproject_paginator = Paginator(self.subprojects, 9)
         self.subproject_page_number = self.request.GET.get("subproject_page")
         self.subproject_paginator_list = self.subproject_paginator.get_page(
@@ -129,7 +123,6 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         self.beneficiary_paginator_list = self.beneficiary_paginator.get_page(
             self.beneficiary_page_number
         )
-
         self.project_paginator = Paginator(self.projects, 9)
         self.project_page_number = self.request.GET.get("project_page")
         self.project_paginator_list = self.project_paginator.get_page(
@@ -168,47 +161,47 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         ]
 
         indicators_list = []
-
         current_year = datetime.now().year
-
-        
         indicators = Indicator.objects.filter(
             subproject_indicators__in=self.subprojects
         ).distinct()
-
         for indicator in indicators:
-            indicator_data = {"name": "", "targets": []}
-            indicator_data["name"] = indicator.name
-            indicator_data["slug"] = indicator.slug
-
+            indicator_data = {
+                "name": indicator.name,
+                "targets": [],
+                "slug": indicator.slug,
+            }
             targets = indicator.indicatortarget_set.all()
             for target in targets:
-                target_dict = {}
-                target_dict["id"] = target.id
-                target_dict["description"] = target.description
-                target_dict["unit_of_measure"] = target.unit_of_measure.unit_of_measure
-                target_dict["baseline"] = target.baseline_value
-                target_dict["yearly_target_values"] = []
-                target_dict["unit_of_measure_id"] = target.unit_of_measure.id
-
-                year_count = 1
-                for yearly_target_values in target.indicatortargetvalue_set.all().order_by("year"):
-                    yearly_target_values_dict = {}
-                    yearly_target_values_dict[f"year_{year_count}"] = {
-                        "id": yearly_target_values.id,
-                        "year": yearly_target_values.year.year,
-                        "target_value": yearly_target_values.target_value,
-                        "actual_value": target.unit_of_measure.get_actual_data(
-                            indicator
-                        ) if yearly_target_values.year.year <= current_year else 0
+                target_dict = {
+                    "id": target.id,
+                    "description": target.description,
+                    "unit_of_measure": target.unit_of_measure.unit_of_measure,
+                    "baseline": target.baseline_value,
+                    "yearly_target_values": [],
+                    "unit_of_measure_id": target.unit_of_measure.id,
+                }
+                target_values = target.indicatortargetvalue_set.all().order_by("year")
+                for year_count, yearly_target_values in enumerate(
+                    target_values, start=1
+                ):
+                    yearly_target_values_dict = {
+                        f"year_{year_count}": {
+                            "id": yearly_target_values.id,
+                            "year": yearly_target_values.year.year,
+                            "target_value": yearly_target_values.target_value,
+                            "actual_value": target.unit_of_measure.get_actual_data(
+                                indicator
+                            )
+                            if yearly_target_values.year.year <= current_year
+                            else 0,
+                        }
                     }
                     target_dict["yearly_target_values"].append(
                         yearly_target_values_dict
                     )
-                    year_count += 1
-
                 indicator_data["targets"].append(target_dict)
-            indicators_list.append(indicator_data)
+        indicators_list.append(indicator_data)
 
         context["title"] = "Program Detail"
         context["project_form"] = ProjectForm
@@ -227,30 +220,31 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         context["indicator_forms"] = indicator_forms
         return context
 
-    def dispatch(self, request, *args, **kwargs):
-        response = super().dispatch(request, *args, **kwargs)
-        if request.is_ajax():
-            project_list_html = render_to_string(
-                template_name="includes/project/project-list.html",
-                context={"projects": self.projects},
-            )
-            subprojects_html = render_to_string(
-                template_name="includes/sub-project-list.html",
-                context={"sub_project_list": self.subprojects},
-            )
-            beneficiaries_html = render_to_string(
-                template_name="includes/beneficiary-list.html",
-                context={"beneficiary_list": self.beneficiaries},
-            )
 
-            data_dict = {
-                "search_result_view": project_list_html,
-                "subproj_search_result": subprojects_html,
-                "beneficiaries_search_result": beneficiaries_html,
-            }
-            return JsonResponse(data=data_dict, safe=False)
-        else:
-            return response
+def dispatch(self, request, *args, **kwargs):
+    response = super().dispatch(request, *args, **kwargs)
+    if request.is_ajax():
+        project_list_html = render_to_string(
+            template_name="includes/project/project-list.html",
+            context={"projects": self.projects},
+        )
+        subprojects_html = render_to_string(
+            template_name="includes/sub-project-list.html",
+            context={"sub_project_list": self.subprojects},
+        )
+        beneficiaries_html = render_to_string(
+            template_name="includes/beneficiary-list.html",
+            context={"beneficiary_list": self.beneficiaries},
+        )
+
+        data_dict = {
+            "search_result_view": project_list_html,
+            "subproj_search_result": subprojects_html,
+            "beneficiaries_search_result": beneficiaries_html,
+        }
+        return JsonResponse(data=data_dict, safe=False)
+    else:
+        return response
 
 
 @login_required(login_url="/login/")
@@ -265,7 +259,6 @@ def preview_indicator_document(request, program_slug):
         os.makedirs(document_directory)
 
     filenames_list = os.listdir(document_directory)
-
 
     # TODO: Add background scheduled task that generates a file ready for preview in the browser
 

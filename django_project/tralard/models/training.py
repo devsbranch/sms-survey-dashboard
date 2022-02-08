@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 
 class CompletedTrainingManager(models.Manager):
     """Custom manager that shows completed trainings."""
+
     def get_queryset(self):
         return super(
             CompletedTrainingManager, self
-        ).get_queryset().filter(
-            completed=True,)
+        ).get_queryset().filter(completed=True)
 
 
 class IncompletedTrainingManager(models.Manager):
@@ -33,14 +33,16 @@ class IncompletedTrainingManager(models.Manager):
         """Query set generator."""
         return super(
             IncompletedTrainingManager, self).get_queryset().filter(
-                completed=False)
+            completed=False)
+
 
 class TrainingType(models.Model):
     name = models.CharField(
-        max_length=250, 
-        blank=False, 
+        max_length=250,
+        blank=False,
         default=''
     )
+    objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -103,7 +105,6 @@ class Training(models.Model):
     completed_objects = CompletedTrainingManager()
     incompleted_objects = IncompletedTrainingManager()
 
-
     def __str__(self):
         return self.title
 
@@ -116,18 +117,18 @@ class Training(models.Model):
     def training_form(self):
         form = training_update_form(self)
         return form
-    
+
 
 class Attendance(models.Model):
     male_count = models.IntegerField(
         _("Number of Males that attended the training."),
-        null=True, 
-        blank=True, 
+        null=True,
+        blank=True,
     )
     female_count = models.IntegerField(
         _("Number of Males that attended the training."),
-        null=True, 
-        blank=True, 
+        null=True,
+        blank=True,
     )
     notes = HTMLField(
         verbose_name=_('Training Outcome notes. Rich text editing is supported.'),
@@ -138,9 +139,10 @@ class Attendance(models.Model):
     training = models.ForeignKey(
         Training,
         on_delete=models.CASCADE,
-        verbose_name=_('Project name'), 
+        verbose_name=_('Project name'),
         null=True,
         blank=True
     )
+
     def __str__(self):
         return f'Males: {self.male_count}, Females: {self.female_count}'

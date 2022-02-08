@@ -46,7 +46,8 @@ class UnapprovedProjectManager(models.Manager):
         """Query set generator."""
         return super(
             UnapprovedProjectManager, self).get_queryset().filter(
-            approved=False)    
+            approved=False)
+
 
 class Representative(models.Model):
     """
@@ -129,7 +130,7 @@ class Representative(models.Model):
 class Project(models.Model):
     """
     Project definition.
-    """     
+    """
     slug = models.SlugField(
         max_length=255,
         null=True,
@@ -273,7 +274,7 @@ class Project(models.Model):
             project__slug=self.slug
         )
         return sub_projects_queryset
-        
+
     @property
     def count_sub_projects(self):
         sub_projects_count_queryset = SubProject.objects.filter(
@@ -324,7 +325,7 @@ class Project(models.Model):
             approved=True
         ).count()
         return sub_projects_queryset
-    
+
     @property
     def get_total_used_funds(self):
         """Computes total funds used related to this project."""
@@ -342,12 +343,13 @@ class Project(models.Model):
         total_project_funds = self.get_total_project_fund
         total_project_funds_utilized_percent = (self.get_total_used_funds / total_project_funds) * 100
         return round(total_project_funds_utilized_percent)
-    
+
     @property
     def logo_url(self):
         if self.image_file:
             return self.image_file.url
         return os.path.join(settings.STATIC_URL, "assets/images/logos/logo.png")
+
 
 class Feedback(models.Model):
     """

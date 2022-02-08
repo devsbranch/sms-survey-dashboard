@@ -1,0 +1,58 @@
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% load crispy_forms_tags %}
+
+<div class="table-responsive">
+	<table class="table is-hoverable documents-table" id="training-schedule-tbl">
+		<!-- Header -->
+		<thead>
+		<tr class="bg-light">
+			<th class="text-center" style="width: 25%"><span class="text-primary">Title</span></th>
+			<th class="text-center"><span class="text-primary">Intervention</span></th>
+			<th class="text-center"><span class="text-primary">Training Type</span></th>
+			<th class="text-center"><span class="text-primary">Completed</span></th>
+			<th class="text-center"><span class="text-primary">Moderator</span></th>
+			<th class="w-5 text-center"></th>
+		</tr>
+		<!-- Training Schedule Filters; rows with search inputs -->
+		<tr class="filters">
+			<th class="bg-light" scope="col"><span class="text-info ">Title</span></th>
+			<th class="bg-light" scope="col"><span class="text-info">Intervention</span></th>
+			<th class="bg-light" scope="col"><span class="text-info">Training Type</span></th>
+			<th class="bg-light" scope="col"><span class="text-info"></span></th>
+			<th class="bg-light" scope="col"></th>
+			<th class="bg-light" scope="col"></th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Training table rows -->
+		{% for training in trainings %}
+		<tr>
+			<td><p class="text-justify">{{ training.title|truncatechars:32 }}</p></td>
+			<td><p class="text-justify">{{ training.sub_project|truncatewords:6 }}</p></td>
+			<td>{{ training.training_type|truncatewords:4 }}</td>
+			<td>
+				<p class="text-justify text-info text-capitalize">
+					<span class="tag">
+					{{ training.completed|yesno:"yes,no,maybe" }}
+					</span>
+				</p>
+			</td>
+			<td>{{training.moderator|truncatechars:24}}</td>
+			<td class="actions">
+				<div class="dropdown is-right dropdown-trigger document-list-dropdown">
+					<div class="button">
+						<i class="material-icons text-info">more_horiz</i>
+					</div>
+					{% include 'includes/sub_project_training_actions.html' %}
+				</div>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>
+
+

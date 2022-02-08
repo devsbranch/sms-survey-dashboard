@@ -31,7 +31,6 @@ INSTALLED_APPS = (
     'grappelli',
 ) + INSTALLED_APPS
 
-
 INSTALLED_APPS += (
     'easyaudit',
     'rolepermissions',
@@ -47,6 +46,8 @@ INSTALLED_APPS += (
     'import_export',
     'mapwidgets',
     'report_builder',
+    'django_filters',
+    'widget_tweaks',
     'reversion'
 )
 # Defines whether to log model related events,
@@ -81,7 +82,7 @@ CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
- 
+
 # ------------------------------------------------------------------------------
 if USE_TZ:
 # http://docs.celeryproject.org/en/latest/userguide/configuration.html#std:setting-timezone
@@ -132,7 +133,7 @@ CKEDITOR_CONFIGS = {
         'uiColor': '#b7d6ec',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
-        ], 
+        ],
         'toolbar_YourCustomToolbarConfig': [
             {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
@@ -173,7 +174,7 @@ CKEDITOR_CONFIGS = {
         'mathJaxLib': '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
-            'uploadimage', # the upload image feature
+            'uploadimage',  # the upload image feature
             # your extra plugins here
             'div',
             'autolink',
@@ -196,7 +197,6 @@ CKEDITOR_CONFIGS = {
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
-    #'easy_thumbnails.processors.scale_and_crop',
     'filer.thumbnail_processors.scale_and_crop_with_subject_location',
     'easy_thumbnails.processors.filters',
 )
@@ -220,8 +220,8 @@ MESSAGE_TAGS = {
 REPORT_BUILDER_INCLUDE = [
     'tralard.beneficiary',
     'tralard.province',
-    'tralard.district', 
-    'tralard.ward', 
+    'tralard.district',
+    'tralard.ward',
     'tralard.fund',
     'tralard.disbursement',
     'tralard.expenditure',
@@ -238,7 +238,6 @@ REPORT_BUILDER_INCLUDE = [
 # Admin interface
 GRAPPELLI_ADMIN_TITLE = 'Think2044 Admin'
 GRAPPELLI_SWITCH_USER = True
-
 
 # Google map API widget
 # --------------------------------

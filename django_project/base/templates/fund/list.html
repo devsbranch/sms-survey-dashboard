@@ -13,357 +13,357 @@
 {% block content %}
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer" id="funds-list">
-  <div class="dashboard-inner">
-    <!-- Dashboard Wrapper -->
-    <div class="dashboard-wrapper">
-      <div id="main-dashboard" class="section-wrapper">
-        <!-- Dashboard content -->
-        <div id="basic-layout" class="dashboard-columns">
-          <!-- Page title -->
-          <div class="contacts-title-wrapper">
-            <div class="title-wrap">
-              <h2 class="project-title">Funds</h2>
-              <h4 class="project-tagline">
-                showing all funds for
-                <b>{{ project.name|title }}</b> subproject.
-              </h4>
-            </div>
-            <!-- Filter input -->
-            <div class="list-filter">
-              <div class="control is-hidden-phones">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Filter Contacts"
-                />
-                <div class="form-icon">
-                  <i data-feather="filter"></i>
-                </div>
-              </div>
+	<div class="dashboard-inner">
+		<!-- Dashboard Wrapper -->
+		<div class="dashboard-wrapper">
+			<div id="main-dashboard" class="section-wrapper">
+				<!-- Dashboard content -->
+				<div id="basic-layout" class="dashboard-columns">
+					<!-- Page title -->
+					<div class="contacts-title-wrapper">
+						<div class="title-wrap">
+							<h2 class="project-title">Funds</h2>
+							<h4 class="project-tagline">
+								showing all funds for
+								<b>{{ project.name|title }}</b> subproject.
+							</h4>
+						</div>
+						<!-- Filter input -->
+						<div class="list-filter">
+							<div class="control is-hidden-phones">
+								<input
+										class="input"
+										type="text"
+										placeholder="Filter Contacts"
+								/>
+								<div class="form-icon">
+									<i data-feather="filter"></i>
+								</div>
+							</div>
 
-              <a
-                class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
-                data-ripple-color=""
-                href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
-              >
-                <span style="padding-right: 6px">SubProject </span>
-                <i class="material-icons">send</i>
-              </a>
-            </div>
-          </div>
-          <div
-            class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
-          >
-            <!-- Contacts table -->
-            <table class="table contacts-table">
-              <!-- Table header -->
-              <div
-                data-title="Add new training"
-                class="add-button modal-trigger"
-                id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal"
-              >
-                <i class="material-icons">add</i>
-              </div>
-              <thead>
-                <tr>
-                  <th>
-                    <div class="b-checkbox is-secondary">
-                      <input
-                        id="checkbox-docs-all"
-                        class="styled"
-                        type="checkbox"
-                      />
-                      <label for="checkbox-docs-all"></label>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Amount(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Total Disbursement(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Balance(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Approved</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Intervention</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Funding Date</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th class="w-5">
-                    <!-- Filter dropdown -->
-                    <div
-                      class="dropdown filter-dropdown is-right dropdown-trigger"
-                    >
-                      <div class="button">
-                        <span class="material-icons">subject</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                      <div class="dropdown-menu" role="menu">
-                        <div class="dropdown-content">
-                          <div class="dropdown-item filter-title">
-                            View type
-                          </div>
-                          <a href="#" class="dropdown-item is-spaced is-active">
-                            <span><i class="fa fa-check"></i> List view</span>
-                            <i class="material-icons">view_list</i>
-                          </a>
-                          <a class="dropdown-item is-spaced">
-                            <span><i class="fa fa-check"></i> Grid view</span>
-                            <i class="material-icons">view_module</i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <!-- Table body -->
-              <tbody>
-                <!-- Table row -->
-                {% for fund in funds %}
-                <tr>
-                  <td>
-                    <div class="b-checkbox is-secondary">
-                      <input
-                        id="checkbox-contacts-1"
-                        class="styled"
-                        type="checkbox"
-                      />
-                      <label for="checkbox-contacts-1"></label>
-                    </div>
-                  </td>
-                  <td class="modifications">
+							<a
+									class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
+									data-ripple-color=""
+									href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
+							>
+								<span style="padding-right: 6px">SubProject </span>
+								<i class="material-icons">send</i>
+							</a>
+						</div>
+					</div>
+					<div
+							class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
+					>
+						<!-- Contacts table -->
+						<table class="table contacts-table">
+							<!-- Table header -->
+							<div
+									data-title="Add new training"
+									class="add-button modal-trigger"
+									id="fund-{{fund.slug}}-{{fund.project.slug}}"
+									data-modal="create-project-modal"
+							>
+								<i class="material-icons">add</i>
+							</div>
+							<thead>
+							<tr>
+								<th>
+									<div class="b-checkbox is-secondary">
+										<input
+												id="checkbox-docs-all"
+												class="styled"
+												type="checkbox"
+										/>
+										<label for="checkbox-docs-all"></label>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Amount(ZMK)</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Total Disbursement(ZMK)</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Balance(ZMK)</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Approved</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Intervention</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th>
+									<!-- Filter dropdown -->
+									<div class="dropdown filter-dropdown dropdown-trigger">
+										<div class="button">
+											<span>Funding Date</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+									</div>
+								</th>
+								<th class="w-5">
+									<!-- Filter dropdown -->
+									<div
+											class="dropdown filter-dropdown is-right dropdown-trigger"
+									>
+										<div class="button">
+											<span class="material-icons">subject</span>
+											<i class="material-icons">keyboard_arrow_down</i>
+										</div>
+										<div class="dropdown-menu" role="menu">
+											<div class="dropdown-content">
+												<div class="dropdown-item filter-title">
+													View type
+												</div>
+												<a href="#" class="dropdown-item is-spaced is-active">
+													<span><i class="fa fa-check"></i> List view</span>
+													<i class="material-icons">view_list</i>
+												</a>
+												<a class="dropdown-item is-spaced">
+													<span><i class="fa fa-check"></i> Grid view</span>
+													<i class="material-icons">view_module</i>
+												</a>
+											</div>
+										</div>
+									</div>
+								</th>
+							</tr>
+							</thead>
+							<!-- Table body -->
+							<tbody>
+							<!-- Table row -->
+							{% for fund in funds %}
+							<tr>
+								<td>
+									<div class="b-checkbox is-secondary">
+										<input
+												id="checkbox-contacts-1"
+												class="styled"
+												type="checkbox"
+										/>
+										<label for="checkbox-contacts-1"></label>
+									</div>
+								</td>
+								<td class="modifications">
                     <span class="inner">
                       <span class="project-count">
                         {{ fund.amount.amount|intcomma }}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="modifications">
+								<td class="modifications">
                     <span class="inner">
                       <span class="project-count">
                         {% if fund.get_total_disbursements is not None %}
                         {{fund.get_total_disbursements|intcomma }}
-                        <!--  -->
+	                      <!--  -->
                         {% else %} 0
-                        <!--  -->
+	                      <!--  -->
                         {% endif %}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="modifications">
+								<td class="modifications">
                     <span class="inner">
                       <span class="project-count">
                         {{fund.sub_project.project.get_total_fund_balance|intcomma}}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="modifications">
+								<td class="modifications">
                     <span class="inner">
                       <span class="project-count">
                         {% if fund.approved %} Yes {% else %} No {% endif %}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="modifications">
+								<td class="modifications">
                     <span class="inner">
                       <span class="project-count">
                         {{fund.sub_project.name}}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="projects">
+								<td class="projects">
                     <span class="inner">
                       <span class="project-count">
                         {{ fund.funding_date }}
                       </span>
                     </span>
-                  </td>
+								</td>
 
-                  <td class="actions">
-                    <div
-                      class="dropdown is-right dropdown-trigger contacts-list-dropdown"
-                    >
-                      <div class="button">
-                        <i class="material-icons">more_horiz</i>
-                      </div>
-                      <div class="dropdown-menu is-text-bigger" role="menu">
-                        <div class="dropdown-content">
-                          <a
-                            class="dropdown-item modal-trigger fund-{{fund.slug}}"
-                            data-ripple-color=""
-                            id="fund_list_modal"
-                            data-modal="w3-modal"
-                            onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{project.slug}}', '{{project.program.slug}}')"
-                          >
-                            <i class="sl sl-icon-eye"></i>
-                            <span>
+								<td class="actions">
+									<div
+											class="dropdown is-right dropdown-trigger contacts-list-dropdown"
+									>
+										<div class="button">
+											<i class="material-icons">more_horiz</i>
+										</div>
+										<div class="dropdown-menu is-text-bigger" role="menu">
+											<div class="dropdown-content">
+												<a
+														class="dropdown-item modal-trigger fund-{{fund.slug}}"
+														data-ripple-color=""
+														id="fund_list_modal"
+														data-modal="w3-modal"
+														onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{project.slug}}', '{{project.program.slug}}')"
+												>
+													<i class="sl sl-icon-eye"></i>
+													<span>
                               <span>View</span>
                               <span>View fund details</span>
                             </span>
-                          </a>
-                          <a
-                            href="#"
-                            class="dropdown-item has-icon modal-trigger fund-{{fund.project.slug}}-{{fund.slug}}"
-                            data-ripple-color=""
-                            href="#"
-                            data-modal="create-project-modal"
-                            data-slug="{{ fund.slug }}"
-                            data-amount="{{ fund.amount }}"
-                            data-project-slug="{{ fund.project.slug }}"
-                            data-program-slug="{{ fund.project.program.slug }}"
-                            data-fund-approved="{{ fund.approved }}"
-                            data-currency="{{ fund.currency }}"
-                            data-fund-date="{{ fund.funding_date }}"
-                            onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ project.name|title}} fund', `{% url 'tralard:fund-update' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}`)"
-                          >
-                            <i class="sl sl-icon-pencil"></i>
-                            <span>
+												</a>
+												<a
+														href="#"
+														class="dropdown-item has-icon modal-trigger fund-{{fund.project.slug}}-{{fund.slug}}"
+														data-ripple-color=""
+														href="#"
+														data-modal="create-project-modal"
+														data-slug="{{ fund.slug }}"
+														data-amount="{{ fund.amount }}"
+														data-project-slug="{{ fund.project.slug }}"
+														data-program-slug="{{ fund.project.program.slug }}"
+														data-fund-approved="{{ fund.approved }}"
+														data-currency="{{ fund.currency }}"
+														data-fund-date="{{ fund.funding_date }}"
+														onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ project.name|title}} fund', `{% url 'tralard:fund-update' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}`)"
+												>
+													<i class="sl sl-icon-pencil"></i>
+													<span>
                               <span>Edit</span>
                               <span>Edit fund details</span>
                             </span>
-                          </a>
-                          <div class="dropdown-divider"></div>
-                          <a href="#" class="dropdown-item">
-                            <i class="sl sl-icon-bell"></i>
-                            <span>
+												</a>
+												<div class="dropdown-divider"></div>
+												<a href="#" class="dropdown-item">
+													<i class="sl sl-icon-bell"></i>
+													<span>
                               <span>Notifications</span>
                               <span>Manage contact notifications</span>
                             </span>
-                          </a>
-                          <div class="dropdown-divider"></div>
-                          <a
-                            class="dropdown-item"
-                            onclick="return confirm('Are you sure you want to delete this project fund?')"
-                            href="{% url 'tralard:fund-delete' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}"
-                          >
-                            <i class="sl sl-icon-trash"></i>
-                            <span>
+												</a>
+												<div class="dropdown-divider"></div>
+												<a
+														class="dropdown-item"
+														onclick="return confirm('Are you sure you want to delete this project fund?')"
+														href="{% url 'tralard:fund-delete' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}"
+												>
+													<i class="sl sl-icon-trash"></i>
+													<span>
                               <span>Delete</span>
                               <span>Delete this project fund</span>
                             </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <a href="#" class="button is-hidden"
-                      ><i class="material-icons">remove_red_eye</i></a
-                    >
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {{fund.amount}}
-          </div>
-          <!--Placeholder-->
-          {% comment %}
-          <div class="flex-card is-not-supported light-bordered">
-            <img
-              src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
-              alt=""
-            />
-            <div class="has-text-centered">
-              <h3>Ouch...</h3>
-              <p>
-                Sorry, the contacts list is not supported on mobile. Please try
-                a device with a wider screen.
-              </p>
-            </div>
-          </div>
-          {% endcomment %}
-        </div>
-      </div>
-    </div>
-  </div>
+												</a>
+											</div>
+										</div>
+									</div>
+									<a href="#" class="button is-hidden"
+									><i class="material-icons">remove_red_eye</i></a
+									>
+								</td>
+							</tr>
+							{% endfor %}
+							</tbody>
+						</table>
+						{{fund.amount}}
+					</div>
+					<!--Placeholder-->
+					{% comment %}
+					<div class="flex-card is-not-supported light-bordered">
+						<img
+								src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
+								alt=""
+						/>
+						<div class="has-text-centered">
+							<h3>Ouch...</h3>
+							<p>
+								Sorry, the contacts list is not supported on mobile. Please try
+								a device with a wider screen.
+							</p>
+						</div>
+					</div>
+					{% endcomment %}
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 <!-- Create contact modal -->
 <!-- Create contact Modal -->
 <!-- Create Project Modal -->
 <div
-  id="create-project-modal"
-  class="modal create-project-modal modal-hero bs-example-modal-sm"
+		id="create-project-modal"
+		class="modal create-project-modal modal-hero bs-example-modal-sm"
 >
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="has-text-centered dark-text" id="project_fund_form">
-        Add {{ project.name|title }} Fund
-      </h2>
-      <div class="navigation-tabs layout-tabs animated-tabs">
-        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
-        <div id="project-details" class="navtab-content is-active">
-          <div class="card-body">
-            <div class="content">
-              <!-- New Project Fund form -->
-              <form
-                action="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}"
-                method="post"
-                id="project_fund_form_inputs"
-              >
-                {% csrf_token %}
-                <!--  -->
-                {% crispy form form.helper %}
-              </form>
-              <!-- /New Project Fund form -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button
-    onclick="clear_modal_form('Add {{ project.name|title }} Fund')"
-    class="modal-close is-large is-hidden"
-    aria-label="close"
-  ></button>
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="has-text-centered dark-text" id="project_fund_form">
+				Add {{ project.name|title }} Fund
+			</h2>
+			<div class="navigation-tabs layout-tabs animated-tabs">
+				<div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
+				<div id="project-details" class="navtab-content is-active">
+					<div class="card-body">
+						<div class="content">
+							<!-- New Project Fund form -->
+							<form
+									action="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}"
+									method="post"
+									id="project_fund_form_inputs"
+							>
+								{% csrf_token %}
+								<!--  -->
+								{% crispy form form.helper %}
+							</form>
+							<!-- /New Project Fund form -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button
+			onclick="clear_modal_form('Add {{ project.name|title }} Fund')"
+			class="modal-close is-large is-hidden"
+			aria-label="close"
+	></button>
 </div>
 <!-- /Invite User Modal -->
 {% include 'includes/disbursement_modal.html' %}
@@ -437,19 +437,19 @@
             <div class='disbursement-card deal-card' id="${data.fund.slug}">
               <div class='disbursement-card-header deal-card-header is-toggle'>
                 <p>Disbursement Amount:${
-                  data.disbursements[disbursement].currency
-                } ${thousand_seperator(
+            data.disbursements[disbursement].currency
+          } ${thousand_seperator(
             +data.disbursements[disbursement].amount
           )}</p>
               <p>
                 Disbursement Date: ${
-                  data.disbursements[disbursement].disbursement_date
-                }
+            data.disbursements[disbursement].disbursement_date
+          }
               </p>
               <p>
                 Total Expenditure: ${
-                  data.disbursements[disbursement].currency
-                } ${thousand_seperator(
+            data.disbursements[disbursement].currency
+          } ${thousand_seperator(
             +data.disbursements[disbursement].total_expenses
               ? +data.disbursements[disbursement].total_expenses
               : "0"
@@ -470,22 +470,22 @@
             fund_slug,
             data.disbursements[disbursement].slug
           )
-            .then(({ expenditures }) => {
+            .then(({expenditures}) => {
               console.log(expenditures);
               for (expenditure in expenditures) {
                 document.querySelector(
-                  `.disbursement-card.deal-card`
+						`.disbursement-card.deal-card`
                 ).innerHTML += `
                 <div class="disbursement-card-content deal-card-content">
                   <div class="details-placeholder d-flex ">
                     <span>Expenditure: ${
-                      expenditures[expenditure].amount_currency
-                    } ${thousand_seperator(
+                  expenditures[expenditure].amount_currency
+                } ${thousand_seperator(
                   +expenditures[expenditure].amount
-                )} </span>  
+                )} </span>
                    <span>Date: ${
-                     expenditures[expenditure].expenditure_date
-                   }</span> 
+                  expenditures[expenditure].expenditure_date
+                }</span>
                   </div>
                 </div>
                 `;

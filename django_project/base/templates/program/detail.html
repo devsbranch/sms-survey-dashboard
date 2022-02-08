@@ -10,7 +10,25 @@
 {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<!--suppress ALL -->
+<style>
+    #subproject-filters {
+        margin: 5px;
+        display: block;
+    }
+
+    /*To make the placeholder of a select one non-visible after an option is selected*/
+    option[value=""][disabled] {
+        display: none;
+    }
+
+    #projects-table {
+        display: none;
+    }
+
+</style>
+{% endblock stylesheets %}
 
 <!-- PAGE content goes HERE -->
 {% block content %}
@@ -63,10 +81,14 @@
 						<div class="navigation-tabs layout-tabs overflow-tabs animated-tabs mt-20 mb-20">
 							<div class="tabs is-toggle is-fullwidth">
 								<ul>
-									<li class="tab-link is-active" data-tab="my-teams" ><a id="projects_tab">SubProjects</a></li>
-									<li class="tab-link" data-tab="my-projects" ><a id="subprojects_tab">Interventions</a></li>
-									<li class="tab-link" data-tab="my-tasks"><a id="beneficiaries_tab">Beneficiaries</a></li>
-									<li class="tab-link" data-tab="indicators-list"><a id="indicators_tab">Indicators</a></li>
+									<li class="tab-link is-active" data-tab="my-teams"><a
+											id="projects_tab">SubProjects</a></li>
+									<li class="tab-link" data-tab="my-projects"><a
+											id="subprojects_tab">Interventions</a></li>
+									<li class="tab-link" data-tab="my-tasks"><a id="beneficiaries_tab">Beneficiaries</a>
+									</li>
+									<li class="tab-link" data-tab="indicators-list"><a
+											id="indicators_tab">Indicators</a></li>
 								</ul>
 							</div>
 
@@ -77,14 +99,15 @@
 								<div class="projects-list-wrapper">
 									<div class="list-header">
 										<div class="list-title">
-                                                <span>Showing All SubProjects Under {{ program.name|upper }}
-                                                    <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
-                                                </span>
-												<div class="add-button modal-trigger"
-													data-modal="project-form-modal">
-													<i class="material-icons" title="Create new project">add</i>
-												</div>
+                                            <span>Showing All SubProjects Under {{ program.name|upper }}
+                                                <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
+                                            </span>
+											<div class="add-button modal-trigger"
+											     data-modal="project-form-modal">
+												<i class="material-icons" title="Create new project">add</i>
+											</div>
 										</div>
+
 										<div class="list-filter">
 											<div class="control">
 												<form method="get" action="">
@@ -101,8 +124,12 @@
 											</div>
 										</div>
 									</div>
+									<!-- SubProjects Listing (Table and Grid View) -->
 									<div class="list-body" id="projects-content">
 										{% include 'includes/project/project-list.html' %}
+									</div>
+									<div class="list-body" id="projects-table">
+										{% include 'includes/project/project-table.html' %}
 									</div>
 								</div>
 							</div>
@@ -119,7 +146,7 @@
 												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
 											<div class="add-button modal-trigger"
-												data-modal="project-form-modal">
+											     data-modal="project-form-modal">
 												<i class="material-icons" title="Create new project">add</i>
 											</div>
 										</div>
@@ -139,7 +166,6 @@
 											</div>
 										</div>
 									</div>
-
 									<!-- All SubProject Listing -->
 									<div class="list-body" id="subprojects-content">
 										{% include 'includes/sub-project-list.html' %}
@@ -183,30 +209,31 @@
 
 								<!-- Beneficiary List -->
 								<div class="projects-list-wrapper">
-									
+
 									<div class="" style="display: flex; justify-content: center;">
 										<ul>
 											<div class="column is-12" style="display: flex; justify-content: center;">
 												{% for form in indicator_forms %}
-													<button type="button" class="button btn-dash primary-btn btn-dash modal-trigger m-1"data-modal="{{form.modal_id}}">{{form.modal_subheader}}</button>
+													       <button type="button" class="button btn-dash primary-btn btn-dash modal-trigger m-1"data-modal="{{form.modal_id}}">{{form.modal_subheader}}</button>
 												{% endfor %}
 											</div>
-											
+
 											{% comment %} <li>
 											</li> {% endcomment %}
 											<div class="column is-12" style="display: flex; justify-content: center;">
-												<a class="button btn-dash primary-btn btn-dash m-1" href="{% url 'tralard:preview_indicator_report' program.slug %}" target="_blank">View as PDF  <i class="sl sl-icon-docs ml-2"></i></a>
-												<button
-													id="download-indicator-report"
-													program-slug="{{program.slug}}"
-													class="button btn-dash primary-btn btn-dash has-icon m-1"
-													data-ripple-color=""
-												>
-													Download <i class="sl sl-icon-cloud-download ml-2"></i>
-												</button>
-											</div>
+												<a class="button btn-dash primary-btn btn-dash m-1"
+											   href="{% url 'tralard:preview_indicator_report' program.slug %}"
+											   target="_blank">View as PDF <i class="sl sl-icon-docs ml-2"></i></a>
+
+										<button
+												id="download-indicator-report"program-slug="{{program.slug}}"
+												class="button btn-dash primary-btn btn-dash has-icon m-1"
+												data-ripple-color=""
+										>
+											Download  <i class="sl sl-icon-cloud-download ml-2"></i>
+										</button></div>
 										</ul>
-										
+
 									</div>
 									<div class="list-body" id="indicators-content">
 										{% include 'includes/indicator-list.html' %}
@@ -234,7 +261,7 @@
 			<div class="card-body">
 				<div class="has-text-centered">
 					<div class="image">
-						<img src="{% static '/assets/images/icons/invitation.svg' %}"/>
+						<img src="{% static '/assets/images/icons/invitation.svg' %}" alt=""/>
 					</div>
 					<div class="help-text has-text-left">Send an invite link via email to add members to this team</div>
 
@@ -680,7 +707,7 @@
 			</div>
 
 			<div class="card-body">
-				
+
 				<form id="delete-indicator-form" class="form" action="" method="post">
 					{% csrf_token %}
 					<div id="warning-msg">
@@ -692,7 +719,7 @@
 					</div>
 				</form>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -703,42 +730,45 @@
 {% block javascripts %}
 
 <script>
-	let origin = location.origin;
-	const delay_by_in_ms = 700
-	const search_icon = $('#search-icon')
+  let origin = location.origin;
+  const delay_by_in_ms = 700
+  const search_icon = $('#search-icon')
 
-    function populateProjectForm(program_slug, project_slug) {
-        console.log(`Project form params; |Program=${program_slug}, Project=${project_slug}|`);
-	    const updateUrl = `${origin}/program/${program_slug}/project/${project_slug}/update`;
+  /* Pagination */
 
-	    fetch(updateUrl, {
-	      headers: {
-	        "Content-Type": "application/json",
-	        Accept: "application/json",
-	      },
-	    })
-	      .then((response) => {
-	        return response.json();
-	      })
-	      .then((payload) => {
-	        let projectData = payload.project;
-	        console.log(`populating project details for ${projectData.name}`);
 
-	        if (projectData.approved == true) {
-	          $(`#id_approved option[value="${projectData.approved}"]`).prop(
-	            "selected",
-	            true
-	          );
-	        } else if (projectData.approved == false) {
-	          $(`#id_approved option[value="${projectData.approved}"]`).val(
-	            projectData.approved
-	          );
-	        } else {
-	          $(`#id_approved option[value="${projectData.approved}"]`).prop(
-	            "selected",
-	            false
-	          );
-	        }
+  function populateProjectForm(program_slug, project_slug) {
+    console.log(`Project form params; |Program=${program_slug}, Project=${project_slug}|`);
+    const updateUrl = `${origin}/program/${program_slug}/project/${project_slug}/update`;
+
+    fetch(updateUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((payload) => {
+        let projectData = payload.project;
+        console.log(`populating project details for ${projectData.name}`);
+
+        if (projectData.approved == true) {
+          $(`#id_approved option[value="${projectData.approved}"]`).prop(
+            "selected",
+            true
+          );
+        } else if (projectData.approved == false) {
+          $(`#id_approved option[value="${projectData.approved}"]`).val(
+            projectData.approved
+          );
+        } else {
+          $(`#id_approved option[value="${projectData.approved}"]`).prop(
+            "selected",
+            false
+          );
+        }
 
         if (projectData.has_funding == true) {
           $(`#id_has_funding option[value="${projectData.has_funding}"]`).prop(
@@ -790,71 +820,78 @@
       });
   }
 
-    function deleteProjectAction(program_slug, project_slug){
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/delete`;
-        $("#delete-project-form").attr("action", url);
+  function deleteProjectAction(program_slug, project_slug) {
+    const url = `${origin}/program/${program_slug}/project/${project_slug}/delete`;
+    $("#delete-project-form").attr("action", url);
+  }
+
+  const useSearchRequestApi = (url, request_parameters, content, view) => {
+    search_icon.addClass('blink')
+    $.getJSON(url, request_parameters).done(response => {
+      // fade out the contents, then:
+      content.fadeTo('slow', 0).promise().then(() => {
+        // replace the HTML contents
+        content.html(response[view])
+        // fade-in the div with new contents
+        content.fadeTo('slow', 1)
+        // stop animating search icon
+        search_icon.removeClass('blink')
+      })
+    })
+  }
+
+  function searchProjectAction(program_slug) {
+    const programDetailUrl = `${origin}/program/${program_slug}/detail/`
+    const projects_div = $('#projects-content')
+    let user_input = $("#search-projects").val()
+    const request_parameters = {
+      q: user_input // value of user_input: the HTML element with ID user-input
     }
+    useSearchRequestApi(programDetailUrl, request_parameters, projects_div, "search_result_view")
+  }
 
-	function searchProjectAction(program_slug){
-	const programDetailUrl = `${origin}/program/${program_slug}/detail/`
-		const projects_div = $('#projects-content')
-		let user_input = $("#search-projects").val()
-		const request_parameters = {
-			q: user_input // value of user_input: the HTML element with ID user-input
-		}
-		search_icon.addClass('blink')
-		$.getJSON(programDetailUrl, request_parameters).done(response => {
-			// fade out the projects_div, then:
-			projects_div.fadeTo('slow', 0).promise().then(()=> {
-				// replace the HTML contents
-				projects_div.html(response["search_result_view"])
-				// fade-in the div with new contents
-				projects_div.fadeTo('slow', 1)
-				// stop animating search icon
-				search_icon.removeClass('blink')
-			})
-	    })
-	}
+  function searchSubprojectsAction(program_slug) {
+    const programDetailUrl = `${origin}/program/${program_slug}/detail/`
+    const subprojects_div = $('#subprojects-content')
+    let filter_input = $("#search-subprojects").val()
+    const request_parameters = {
+      subproject_query: filter_input
+    }
+    useSearchRequestApi(programDetailUrl, request_parameters, subprojects_div, "subproj_search_result")
+  }
 
-	function searchSubprojectsAction(program_slug){
-		const programDetailUrl = `${origin}/program/${program_slug}/detail/`
-		const subprojects_div = $('#subprojects-content')
-		let filter_input = $("#search-subprojects").val()
-		const request_parameters = {
-			subproject_query: filter_input
-		}
-		search_icon.addClass('blink')
-		$.getJSON(programDetailUrl, request_parameters).done(response => {
-			// fade out the projects_div, then:
-			subprojects_div.fadeTo('slow', 0).promise().then(()=> {
-				// replace the HTML contents
-				subprojects_div.html(response["subproj_search_result"])
-				// fade-in the div with new contents
-				subprojects_div.fadeTo('slow', 1)
-				// stop animating search icon
-				search_icon.removeClass('blink')
-			})
-	    })
-	}
+  function searchBeneficiariesAction(program_slug) {
+    const programDetailUrl = `${origin}/program/${program_slug}/detail/`
+    const beneficiaries_div = $('#beneficiaries-content')
+    let filter_input = $("#search-beneficiaries").val()
+    const request_parameters = {
+      beneficiaries_query: filter_input
+    }
+    useSearchRequestApi(programDetailUrl, request_parameters, beneficiaries_div, "beneficiaries_search_result")
+  }
 
-	function searchBeneficiariesAction(program_slug){
-		const programDetailUrl = `${origin}/program/${program_slug}/detail/`
-		const beneficiaries_div = $('#beneficiaries-content')
-		let filter_input = $("#search-beneficiaries").val()
-		const request_parameters = {
-			beneficiaries_query: filter_input
-		}
-		search_icon.addClass('blink')
-		$.getJSON(programDetailUrl, request_parameters).done(response => {
-			beneficiaries_div.fadeTo('slow', 0).promise().then(()=> {
-				beneficiaries_div.html(response["beneficiaries_search_result"])
-				beneficiaries_div.fadeTo('slow', 1)
-				search_icon.removeClass('blink')
-			})
-	    })
-	}
+  // toggle subproject list into a (table || grid) view
+  let mode = "grid" // subproject view default mode
+  const toggleSubProjectView = (viewType) => {
+    if (!viewType) return
+    mode = viewType
+    //blocks affected by toggle side effect
+    const subprojects_grid = document.getElementById('projects-content')
+    const subprojects_table = document.getElementById('projects-table')
+    const grid_icon = document.getElementById('grid_filter_icon')
+    const table_icon = document.getElementById('table_filter_icon')
 
-	function populateIndicatorForm(actionType, program_slug, indicator_slug='', field_name='') {
+    if (mode === "table") {
+      subprojects_grid.style.display = 'none'
+      subprojects_table.style.display = 'block'
+
+    } else if (mode === "grid") {
+      subprojects_grid.style.display = 'block'
+      subprojects_table.style.display = 'none'
+    }
+  }
+
+function populateIndicatorForm(actionType, program_slug, indicator_slug='', field_name='') {
 		const origin = location.origin;
         const baseUrl = `${origin}/program/${program_slug}/detail`
         const updateUrl = `${baseUrl}/indicator_name/${indicator_slug}/update`
@@ -896,7 +933,7 @@
         }
 
 
-		
+
 		data.unit_of_measure ? $(`#id_unit_of_measure option[value="${data.unit_of_measure}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
 		$("#indicator_target textarea[name='description']").val(data.description || '');
 		$("#indicator_target input[name='baseline_value']").val(data.baseline_value || '');
@@ -928,7 +965,7 @@
 		$("#indicator_target_value input[name='year']").val(data.year || '');
 		$("#indicator_target_value input[name='target_value']").val(data.target_value || '');
 		data.indicator_target ? $(`#id_indicator_target option[value="${data.indicator_target}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
-		
+
 		$("#indicator_target_value").attr('action', updateUrl);
 		$('#modal_subheader2').text("Update Indicator Target Value")
 		$('#form-submit-button2').text("Update")
@@ -957,7 +994,7 @@
 
 		$("#indicator_target_unit input[name='unit_of_measure']").val(data.unit_of_measure || '');
 		data.data_source ? $(`#id_data_source option[value="${data.data_source}"]`).prop('selected', true) : $(`#id_data_source option[value=""]`).prop('selected', true).text('---------');
-		
+
 		$("#indicator_target_unit").attr('action', updateUrl);
 		$('#modal_subheader3').text("Update Indicator Unit of Measure")
 		$('#form-submit-button3').text("Update")

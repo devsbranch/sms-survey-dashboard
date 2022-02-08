@@ -20,7 +20,12 @@ from django.contrib.auth.decorators import login_required
 
 from celery.result import AsyncResult
 
-from tralard.models import Indicator, IndicatorTarget, IndicatorTargetValue, IndicatorUnitOfMeasure
+from tralard.models import (
+    Indicator,
+    IndicatorTarget,
+    IndicatorTargetValue,
+    IndicatorUnitOfMeasure,
+)
 from tralard.forms import (
     IndicatorForm,
     IndicatorTargetForm,
@@ -213,7 +218,9 @@ def update_indicator_target_value(request, program_slug, indicator_target_value_
         return JsonResponse(obj_to_dict, status=200)
 
     if request.method == "POST":
-        form = IndicatorTargetValueForm(request.POST, instance=indicator_target_value_obj)
+        form = IndicatorTargetValueForm(
+            request.POST, instance=indicator_target_value_obj
+        )
         if form.is_valid():
             form.save()
             messages.success(
@@ -274,14 +281,18 @@ def create_indicator_unit_of_measure(request, program_slug):
 
 @login_required(login_url="/login/")
 def update_indicator_unit_of_measure(request, program_slug, indicator_target_unit_id):
-    indicator_unit_of_measure_obj = IndicatorUnitOfMeasure.objects.get(pk=indicator_target_unit_id)
+    indicator_unit_of_measure_obj = IndicatorUnitOfMeasure.objects.get(
+        pk=indicator_target_unit_id
+    )
     if request.is_ajax():
         obj_to_dict = model_to_dict(indicator_unit_of_measure_obj)
 
         return JsonResponse(obj_to_dict, status=200)
 
     if request.method == "POST":
-        form = IndicatorUnitOfMeasureForm(request.POST, instance=indicator_unit_of_measure_obj)
+        form = IndicatorUnitOfMeasureForm(
+            request.POST, instance=indicator_unit_of_measure_obj
+        )
         if form.is_valid():
             form.save()
             messages.success(request, "The Unit of measure was updated successfully.")
@@ -338,6 +349,7 @@ def update_indicator(request, program_slug, indicator_slug=None):
                     },
                 )
             )
+
 
 @login_required(login_url="/login/")
 def delete_indicator(request, program_slug, indicator_slug=None):

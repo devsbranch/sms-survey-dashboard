@@ -5,6 +5,13 @@ __revision__ = "$Format:%H$"
 __copyright__ = "sonlinux bei DigiProphets 2021"
 __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM CET"
 
+from django.template import TemplateDoesNotExist
+from django.template.loader import render_to_string
+
+from tralard.filters.beneficiary import BeneficiaryFilter
+from tralard.filters.funds import FundFilter
+from tralard.filters.training import TrainingFilter
+
 """
 View classes for a SubProject
 """
@@ -20,16 +27,17 @@ from django.contrib import messages
 from django.db import IntegrityError
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+from braces.views import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import (
     Http404,
-    HttpResponse, 
-    JsonResponse, 
+    HttpResponse,
+    JsonResponse,
     HttpResponseRedirect,
-) 
+)
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import (
     ListView,
@@ -48,8 +56,8 @@ from braces.views import LoginRequiredMixin
 from filer.models import Image as ImageSave
 from rolepermissions.decorators import has_role_decorator
 
-from tralard.models.training import Training
-from tralard.forms.training import TrainingForm
+from tralard.models.training import Training, TrainingType
+from tralard.forms.training import TrainingForm, TrainingFilterForm
 from tralard.forms import BeneficiaryCreateForm
 from tralard.models.fund import (
     Fund,
@@ -59,12 +67,7 @@ from tralard.models.fund import (
 
 from tralard.forms.sub_project import SubProjectForm
 
-from tralard.models import (
-    Beneficiary,
-    Project,
-    SubProject,
-    SubProjectImage
-)
+from tralard.models import Beneficiary, Project, SubProject, SubProjectImage
 from tralard.forms.fund import (
     FundForm,
     ExpenditureForm,
@@ -72,11 +75,7 @@ from tralard.forms.fund import (
     DisbursementForm,
 )
 
-from tralard.utils import (
-    delete_temp_dir,
-    save_to_temp_dir, 
-    delete_temp_file
-)
+from tralard.utils import delete_temp_dir, save_to_temp_dir, delete_temp_file
 
 logger = logging.getLogger(__name__)
 
@@ -182,6 +181,7 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
     model = Training
     form_class = TrainingForm
     template_name = "project/sub-project-training-list.html"
+    sub_project_trainings = None
 
     def get_success_url(self):
         return reverse_lazy(
@@ -193,17 +193,22 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
             },
         )
 
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = super(SubProjectTrainingListView, self).get_context_data()
         self.subproject_slug = self.kwargs.get("subproject_slug", None)
         self.sub_project_trainings = (
             Training.objects.all().filter(sub_project__slug=self.subproject_slug).all()
         )
+        training_filter = TrainingFilter(self.request.GET, queryset=self.get_queryset())
+
         context["title"] = "Sub Project Trainings"
         context["program_slug"] = self.kwargs.get("program_slug", None)
+        context["training_types"] = TrainingType.objects.values_list("name", flat=True)
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
+        context["trainings"] = self.sub_project_trainings
+        context["trainings_filter"] = training_filter
 
         self.training_paginator = Paginator(self.sub_project_trainings, 10)
         self.training_page_number = self.request.GET.get("training_page")
@@ -212,6 +217,20 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
         )
         context["trainings"] = self.training_paginator_list
         return context
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.is_ajax():
+            training_list_html = render_to_string(
+                template_name="includes/training-table.html",
+                context={"trainings": self.sub_project_trainings},
+            )
+            data_dict = {
+                "training_filter_view": training_list_html,
+            }
+            return JsonResponse(data=data_dict, safe=False)
+        else:
+            return response
 
 
 class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
@@ -302,12 +321,8 @@ def sub_project_update(request, program_slug, subproject_slug):
             custom_description = form.cleaned_data["custom_description"]
             custom_focus_area = form.cleaned_data["custom_focus_area"]
             form.save()
-
-            if custom_description:
-                subproject.description = custom_description
-            if custom_focus_area:
-                subproject.focus_area = custom_focus_area
-
+            custom_description = form.cleaned_data["custom_description"]
+            custom_focus_area = form.cleaned_data["custom_focus_area"]
             subproject.save()
 
         messages.add_message(
@@ -436,13 +451,13 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
                 raise Http404("The subproject you requested does not exist.")
         else:
             raise Http404("Sorry! We could not find your subproject!")
-    
-
 
     def get_context_data(self, **kwargs):
         sub_project = self.get_object()
         sub_proj_indicators = sub_project.indicators.all()
-        sub_proj_images = SubProjectImage.objects.filter(subproject__name=sub_project.name).order_by('-created')
+        sub_proj_images = SubProjectImage.objects.filter(
+            subproject__name=sub_project.name
+        ).order_by("-created")
 
         indicators = []
 
@@ -457,35 +472,37 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
         context["indicators"] = indicators
-        context['subproject_images'] = sub_proj_images
+        context["subproject_images"] = sub_proj_images
         return context
+
 
 def file_upload_view(request, program_slug, project_slug, subproject_slug):
     subproject_obj = SubProject.objects.get(slug=subproject_slug)
 
-    if request.method == 'POST':
-        image_files = request.FILES.getlist('file')        
+    if request.method == "POST":
+        image_files = request.FILES.getlist("file")
         for file in image_files:
             created = ImageSave(file=file)
             created.save()
-            instance = SubProjectImage(name=file.name, image=created, subproject=subproject_obj)
+            instance = SubProjectImage(
+                name=file.name, image=created, subproject=subproject_obj
+            )
             instance.save()
 
-            clean_subproject_name = subproject_obj.name.lower().replace(' ', '_').replace(',', '')
+            clean_subproject_name = (
+                subproject_obj.name.lower().replace(" ", "_").replace(",", "")
+            )
 
             img_path = save_to_temp_dir(clean_subproject_name, file)
-            
-            with open(img_path, 'rb') as src:
+
+            with open(img_path, "rb") as src:
                 image_bytes = src.read()
                 img = Image(image_bytes)
                 # print(img)
             delete_temp_file(file)
-        
-        delete_temp_dir(clean_subproject_name)        
+
+        delete_temp_dir(clean_subproject_name)
         return HttpResponse({}, content_type="applicaiton/json")
-    
-  
-    
 
 
 # noinspection PyAttributeOutsideInit
@@ -609,7 +626,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
             super(SubProjectCreateView, self).form_valid(form)
             return HttpResponseRedirect(self.get_success_url())
         except IntegrityError:
-            return ValidationError("ERROR: SubProject by this name already exists!")    
+            return ValidationError("ERROR: SubProject by this name already exists!")
 
     def get_form_kwargs(self):
         """Get keyword arguments from form.
@@ -752,8 +769,8 @@ class SubProjectBeneficiaryOrgListView(
         )
         project = Project.objects.get(slug=project_slug)
 
-        # Just get the sub project name from one beneficiary since we are filtering
-        # by a sub project.
+        # Just get the subproject name from one beneficiary since we are filtering
+        # by a subproject.
         try:
             sub_header = f"Showing all Beneficiaries under the <b>{beneficiary_objects[0].sub_project.name}</b> Sub Project."
         except IndexError:
@@ -765,11 +782,14 @@ class SubProjectBeneficiaryOrgListView(
         context["header"] = "Beneficiaries"
         context["project"] = project
         context["beneficiaries"] = organizations
+        context["beneficiary_filter"] = BeneficiaryFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
         context["sub_header"] = sub_header
         return context
 
 
-class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateView):
+class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, ListView):
     """
     Create a new Sub Project Fund
     """
@@ -778,8 +798,11 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
     form_class = FundForm
     disbursement_form_class = DisbursementForm
     expenditure_form_class = ExpenditureForm
+    context_object_name = "program"
     fund_approval_form_class = FundApprovalForm
     template_name = "project/fund-list.html"
+
+    funds = None
 
     def get_success_url(self):
         """
@@ -803,12 +826,13 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
         self.subproject_slug = self.kwargs["subproject_slug"]
 
         self.sub_project = SubProject.objects.get(slug=self.subproject_slug)
-        self.subproject_funds_qs = Fund.objects.filter(
-            sub_project__slug=self.subproject_slug
-        )
+        self.funds = Fund.objects.filter(sub_project__slug=self.subproject_slug)
 
         context["sub_project"] = self.sub_project
-        context["funds"] = self.subproject_funds_qs
+        context["funds"] = self.funds
+        context["funds_filter"] = FundFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
         context["fund_title"] = "add sub project fund"
         context["modal_display"] = "none"
         context["form"] = self.form_class
@@ -945,18 +969,20 @@ def subproject_fund_detail(
         }
         disbursements.append(serialized_disb)
     funds = Fund.objects.filter(sub_project__slug=single_subproject.slug).values()
-    subproject = {}
-    subproject["name"] = single_subproject.name
-    subproject["slug"] = single_subproject.slug
-    subproject["approved"] = single_subproject.approved
-    subproject["description"] = single_subproject.description
-    fund = {}
-    fund["amount"] = str(single_fund.amount)
-    fund["balance"] = str(single_fund.balance)
-    fund["funding_date"] = single_fund.funding_date
-    fund["created"] = single_fund.created
-    fund["approved"] = single_fund.approved
-    fund["slug"] = single_fund.slug
+    subproject = {
+        "name": single_subproject.name,
+        "slug": single_subproject.slug,
+        "approved": single_subproject.approved,
+        "description": single_subproject.description,
+    }
+    fund = {
+        "amount": str(single_fund.amount),
+        "balance": str(single_fund.balance),
+        "funding_date": single_fund.funding_date,
+        "created": single_fund.created,
+        "approved": single_fund.approved,
+        "slug": single_fund.slug,
+    }
     context["subproject"] = subproject
     context["disbursements"] = disbursements
     context["title"] = "Fund details"
@@ -1181,4 +1207,3 @@ def subproject_disbursement_expenditure_create(
             },
         )
     )
-

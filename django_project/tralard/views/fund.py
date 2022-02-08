@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
+from tralard.filters.funds import FundFilter
 from tralard.models.project import Project
 from tralard.forms.fund import FundForm, DisbursementForm
 from tralard.models.fund import (
@@ -34,12 +35,15 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
         self.project_funds_qs = Fund.objects.filter(
             sub_project__project__slug=self.project_slug
         )
-        context["project"] = self.project
-        context["funds"] = self.project_funds_qs
-        context["fund_title"] = "add project fund"
-        context["modal_display"] = "none"
-        context["form"] = self.form_class
         context["title"] = "funds"
+        context["fund_title"] = "add project fund"
+        context["funds"] = self.project_funds_qs
+        context["project"] = self.project
+        context["form"] = self.form_class
+        context["modal_display"] = "none"
+        context["funds_filter"] = FundFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
         return context
 
     def form_valid(self, form):

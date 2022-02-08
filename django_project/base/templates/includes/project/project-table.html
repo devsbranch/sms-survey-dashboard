@@ -1,0 +1,133 @@
+{% load static %}
+
+<!--suppress ALL -->
+<div class="columns is-multiline">
+	<!-- All Project Table Display -->
+	<div class="column is-6">
+		<h2 class="demo-title">Sub Porject Datatable</h2>
+		<!-- Advanced Datatable -->
+		<div class="table-wrapper">
+			<table id="subprojects-datatable" class="table is-datatable is-hoverable table-is-bordered">
+				<thead>
+				<tr>
+					<th><!-- Image pier--></th>
+					<th>Name</th>
+					<th>Approval</th>
+					<th>Funds</th>
+					<th>Status</th>
+					<th>Description</th>
+					<th>Program</th>
+					<th>Created</th>
+					<th><!-- CRUD actions pier --></th>
+				</tr>
+				</thead>
+				<tfoot>
+				<!-- Footer select one filters pier-->
+				<tr>
+					<th><!-- Image pier--></th>
+					<th>Name</th>
+					<th>Approved</th>
+					<th>Funded</th>
+					<th>Status</th>
+					<th>Description</th>
+					<th>Program</th>
+					<th>Created</th>
+					<th><i class="sl sl-icon-note text-primary"></i></th>
+				</tr>
+				</tfoot>
+				<tbody>
+				{% for project in projects %}
+				<tr>
+					<td>
+						{% if project.image_file %}
+						<div class="face">
+							<img class="datatable-avatar"
+							     src="https://via.placeholder.com/250x250"
+							     alt=""
+							     data-demo-src="{{ project.image_file.url }}">
+						</div>
+						{% endif %}
+					</td>
+					<td>{{ project.name }}</td>
+					<td><span class="tag">
+						{% if project.approved is True %}
+							<p>Yes</p>
+						{% elif project.approved is False %}
+							<p>No</p>
+						{% else %}
+							<p>Unknown</p>
+						{% endif %}
+					</span></td>
+					<td><span class="tag">
+						{% if project.has_funding is True %}
+							<p>Yes</p>
+						{% elif project.has_funding is False %}
+							<p>No</p>
+						{% else %}
+							<p>Unknown</p>
+						{% endif %}
+					</span></td>
+					<td><span class="meta">{{project.status}}</span></td>
+					<td>
+						<p><span class="post-title">
+						{{project.description|truncatewords:6 }}
+						</span></p>
+					</td>
+					<th><span class="meta">{{project.program}}</span></th>
+					<th>
+						<span>
+							<small class="date">{{project.created}}</small>
+						</span>
+					</th>
+					<th>
+						<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+							<div class="button">
+								<i class="material-icons text-success">more_vert</i>
+							</div>
+							<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+								<div class="dropdown-content">
+									<a href="{{ project.get_absolute_url }}" class="dropdown-item">
+										<i class="sl sl-icon-share-alt text-primary"></i>
+										<span>
+				                            <span class="dark-text">View project</span>
+				                            <span>View details of this project</span>
+				                        </span>
+									</a>
+									<a href="#"
+									   class="dropdown-item modal-trigger"
+									   onClick="populateProjectForm('{{ program.slug }}', '{{ project.slug }}');"
+									   data-toggle="update-project-modal">
+										<i class="sl sl-icon-note text-success"></i>
+										<span>
+				                            <span class="dark-text">Edit project</span>
+				                            <span>Update project details</span>
+				                        </span>
+									</a>
+									<a href="#"
+									   class="dropdown-item modal-trigger"
+									   onClick="deleteProjectAction('{{ program.slug }}', '{{ project.slug }}');"
+									   data-modal="delete-project-modal">
+										<i class="sl sl-icon-ban text-danger"></i>
+										<span>
+				                            <span class="dark-text">Delete</span>
+				                            <span>Remove this project</span>
+				                        </span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</th>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+			<div id="paging-first-datatable" class="pagination"></div>
+		</div>
+	</div>
+</div>
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+</script>
+{% endblock javascripts %}

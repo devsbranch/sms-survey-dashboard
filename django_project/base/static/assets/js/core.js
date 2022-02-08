@@ -545,7 +545,6 @@ $(document).ready(function(){
                         ki: '#21546d',
                         ky: '#21546d',
                         ct: '#21546d',
-                        de: '#21546d',
                         mn: '#21546d',
                         sd: '#21546d',
                         wy: '#21546d',

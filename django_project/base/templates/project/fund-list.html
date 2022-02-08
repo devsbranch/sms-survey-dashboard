@@ -2,6 +2,8 @@
 <!--  -->
 {% load crispy_forms_tags %}
 <!--  -->
+{% load widget_tweaks %}
+<!--  -->
 {% load static %}
 <!--  -->
 {% load permission_tags %}
@@ -10,474 +12,261 @@
 <!--  -->
 {% block title %} {{ title|title }} {% endblock %}
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'assets/data-tables/DataTables-1.11.4/css/dataTables.bootstrap4.min.css' %}">
+<style>
+    .dt-button {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        box-sizing: inherit;
+        cursor: pointer;
+        display: flex;
+        color: inherit;
+        text-decoration: none;
+    }
+</style>
+{% endblock stylesheets %}
 <!-- PAGE content goes HERE -->
 {% block content %}
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer" id="funds-list">
-  <div class="dashboard-inner">
-    <!-- Dashboard Wrapper -->
-    <div class="dashboard-wrapper">
-      <div id="main-dashboard" class="section-wrapper">
-        <!-- Dashboard content -->
-        <div id="basic-layout" class="dashboard-columns">
-          <!-- Page title -->
-          <div class="contacts-title-wrapper">
-            <div class="title-wrap">
-              <h2 class="project-title">Intervention Funds</h2>
-              <h4 class="project-tagline">
-                showing all <b>{{ sub_project.name|title }}</b> funds.
-              </h4>
-            </div>
-            <!-- Filter input -->
-            <div class="list-filter">
-              <div class="control is-hidden-phones">
-                <input
-                  class="input"
-                  type="text"
-                  placeholder="Filter Contacts"
-                />
-                <div class="form-icon">
-                  <i data-feather="filter"></i>
-                </div>
-              </div>
-              <a
-                class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
-                data-ripple-color=""
-                href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
-              >
-                <span style="padding-right: 6px;">Intervention</span>
-                <i class="material-icons">send</i>
-              </a>
-            </div>
-          </div>
-          <div
-            class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
-          >
-            <!-- Contacts table -->
-            <table class="table contacts-table">
-              <!-- Table header -->
-              <div
-                data-title="Add new training"
-                class="add-button modal-trigger"
-                id="fund-{{fund.slug}}-{{fund.project.slug}}"
-                data-modal="create-project-modal"
-              >
-                <i class="material-icons">add</i>
-              </div>
-              <thead>
-                <tr>
-                  <th>
-                    <div class="b-checkbox is-secondary">
-                      <input
-                        id="checkbox-docs-all"
-                        class="styled"
-                        type="checkbox"
-                      />
-                      <label for="checkbox-docs-all"></label>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Amount(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Total Disbursement(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Balance(ZMK)</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Approved</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th>
-                    <!-- Filter dropdown -->
-                    <div class="dropdown filter-dropdown dropdown-trigger">
-                      <div class="button">
-                        <span>Funding Date</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                    </div>
-                  </th>
-                  <th class="w-5">
-                    <!-- Filter dropdown -->
-                    <div
-                      class="dropdown filter-dropdown is-right dropdown-trigger"
-                    >
-                      <div class="button">
-                        <span class="material-icons">subject</span>
-                        <i class="material-icons">keyboard_arrow_down</i>
-                      </div>
-                      <div class="dropdown-menu" role="menu">
-                        <div class="dropdown-content">
-                          <div class="dropdown-item filter-title">
-                            View type
-                          </div>
-                          <a href="#" class="dropdown-item is-spaced is-active">
-                            <span><i class="fa fa-check"></i> List view</span>
-                            <i class="material-icons">view_list</i>
-                          </a>
-                          <a class="dropdown-item is-spaced">
-                            <span><i class="fa fa-check"></i> Grid view</span>
-                            <i class="material-icons">view_module</i>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
-              <!-- Table body -->
-              <tbody>
-                <!-- Table row -->
-                {% for fund in funds %}
-                <tr>
-                  <td>
-                    <div class="b-checkbox is-secondary">
-                      <input
-                        id="checkbox-contacts-1"
-                        class="styled"
-                        type="checkbox"
-                      />
-                      <label for="checkbox-contacts-1"></label>
-                    </div>
-                  </td>
-                  <td class="modifications">
-                    <span class="inner">
-                      <span class="project-count"> {{ fund.amount.amount|intcomma }} </span>
-                    </span>
-                  </td>
+	<div class="dashboard-inner">
+		<!-- Dashboard Wrapper -->
+		<div class="dashboard-wrapper">
+			<div id="main-dashboard" class="section-wrapper">
+				<!-- Dashboard content -->
+				<div id="basic-layout" class="columns is-mobile dashboard-columns">
+					<!-- Page title -->
+					<div class="column is-9 is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
+						<div class="contacts-title-wrapper">
+							<div class="title-wrap">
+								<h2 class="project-title">Intervention Funds</h2>
+								<h4 class="project-tagline">
+									showing all <b>{{ sub_project.name|title|truncatechars:35 }}</b> funds.
+								</h4>
+							</div>
+							<!-- Filter input -->
+							<div class="list-filter">
+								<div class="list-header">
+									<div class="list-title">
+										<div data-title="Add new funding"
+										     class="add-button modal-trigger"
+										     id="fund-{{fund.slug}}-{{fund.project.slug}}"
+										     data-modal="create-fund-modal">
+											<i class="material-icons">add</i>
+										</div>
+									</div>
+								</div>
+								<a class="button btn-dash primary-btn btn-dash raised has-icon"
+								   data-ripple-color=""
+								   href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}">
+									<i class="material-icons">short_text</i>
+									Back To Intervention
+								</a>
+							</div>
+						</div>
+						<div class="is-document-list" id="funds-content">
+							<div class="container">
+								<form>
+									<div class="field mb-10">
+										<div class="columns is-mobile is-fieldset">
+											<div class="column is-4 is-offset-8">
+												<div class="control" id="fund-approval">
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!-- Funds table -->
+							{% include 'includes/funding/funding-table.html' %}
+							{{fund.amount}}
+						</div>
+						<!--Placeholder-->
+						{% comment %}
+						<div class="flex-card is-not-supported light-bordered">
+							<img src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
+							     alt=""
+							/>
+							<div class="has-text-centered">
+								<h3>Ouch...</h3>
+								<p>
+									Sorry, the contacts list is not supported on mobile. Please try
+									a device with a wider screen.
+								</p>
+							</div>
+						</div>
+						{% endcomment %}
+					</div>
+					<!-- Right side menu -->
+					<div class="column is-3 is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
+						<div style="margin-top: 6em;" class="right-options">
+							<!-- Quick Actions -->
+							<a href="#">
+								<button type="button"
+								        class="button button-cta secondary-btn is-fullwidth is-bold raised">
+									Quick Actions
+								</button>
+							</a>
+							<div class="container d-flex mt-1">
+								<div class="row align-items-start mx-auto">
+									<div class="col excel-cell my-1"></div>
+									<div class="col csv-cell my-1"></div>
+								</div>
+								<div class="row align-items-start mx-auto">
+									<div class="col pdf-cell my-1"></div>
+									<div class="col print-cell my-1"></div>
+								</div>
+							</div>
+							<!-- Actions list -->
+							<div id="default-controls" class="controls">
+								<a class="control-block modal-trigger" data-modal="create-fund-modal">
+									<i class="material-icons text-primary">add</i> Add New Funding
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-cloud-upload text-primary"></i> Upload Training List
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Create Fund Modal -->
+	<div id="create-fund-modal" class="modal create-fund-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="flex-card simple-shadow">
+				<h2 class="has-text-centered dark-text" id="project_fund_form">
+					Add {{ sub_project.project.name|title }} Fund
+				</h2>
+				<div class="navigation-tabs layout-tabs animated-tabs">
+					<div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
+					<div id="project-details" class="navtab-content is-active">
+						<div class="card-body">
+							<div class="content">
+								<!-- New Project Fund form -->
+								<form action="{% url 'tralard:subproject-fund-list' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug %}"
+								      method="post"
+								      id="project_fund_form_inputs">
+									{% csrf_token %}
+									{% crispy form form.helper %}
+								</form>
+								<!-- /New Project Fund form -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button onclick="clear_modal_form('Add {{ sub_project.project.name|title }} Fund')"
+		        class="modal-close is-large is-hidden"
+		        aria-label="close"
+		></button>
+	</div>
 
-                  <td class="modifications">
-                    <span class="inner">
-                      <span class="project-count">
-                        {% if fund.get_total_disbursements is not None %}
-                        {{fund.get_total_disbursements|intcomma }}
-                        <!--  -->
-                        {% else %}  0
-                        <!--  -->
-                        {% endif %}
-                      </span>
-                    </span>
-                  </td>
+	<!-- create fund disbursement modal -->
+	<div id="add-fund-disbursement-modal"
+	     class="modal add-fund-disbursement-modal modal-hero bs-example-modal-sm">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="flex-card simple-shadow">
+				<h2 class="has-text-centered dark-text" id="fund_disbursement_form">
+					Create Fund Disbursement
+				</h2>
+				<div class="navigation-tabs layout-tabs animated-tabs">
+					<div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
+					<div id="project-details" class="navtab-content is-active">
+						<div class="card-body">
+							<div class="content">
+								<!-- New Project Fund form -->
+								<form action="" method="post" id="fund_disbursement_form_inputs">
+									{% csrf_token %}
+									<!--  -->
+									{% crispy disbursement_form disbursement_form.helper %}
+								</form>
+								<!-- /New Project Fund form -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="modal-close is-large is-hidden" aria-label="close"></button>
+	</div>
 
-                  <td class="modifications">
-                    <span class="inner">
-                      <span class="project-count">
-                        <!--  -->
-                        {{fund.sub_project.project.get_total_fund_balance|intcomma}}
-                      </span>
-                    </span>
-                  </td>
+	<!-- FUND APPROVAL MODAL -->
+	<div id="approve-subproject-fund-modal"
+	     class="modal modal-md icon-action-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="flex-card simple-shadow">
+				<div class="help-text has-text-left">
+					<h2 class="dark-text">Approve {{ sub_project.project.name|title }} Fund </h2>
+				</div>
+				<div class="card-body">
+					<form id="approve-subproject-fund-form"
+					      class="form"
+					      action=""
+					      method="POST">
+						{% csrf_token %}
+						{% crispy fund_approval_form fund_approval_form.helper %}
+					</form>
+				</div>
+			</div>
+		</div>
+		<button class="modal-close is-large is-hidden"
+		        aria-label="close">
+		</button>
+	</div>
 
-                  <td class="modifications">
-                    <span class="inner">
-                      <span class="project-count">
-                        {% if fund.approved %} Yes {% else %} No {% endif %}
-                      </span>
-                    </span>
-                  </td>
-
-                  <td class="projects">
-                    <span class="inner">
-                      <span class="project-count">
-                        {{ fund.funding_date }}
-                      </span>
-                    </span>
-                  </td>
-
-                  <td class="actions">
-                    <div
-                      class="dropdown is-right dropdown-trigger contacts-list-dropdown"
-                    >
-                      <div class="button">
-                        <i class="material-icons">more_horiz</i>
-                      </div>
-                      <div class="dropdown-menu is-text-bigger" role="menu">
-                        <div class="dropdown-content">
-                          <a
-                            class="dropdown-item modal-trigger fund-{{fund.slug}}"
-                            data-ripple-color=""
-                            id="fund_list_modal"
-                            data-modal="w3-modal"
-                            onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{sub_project.project.slug}}', '{{sub_project.project.program.slug}}', '{{sub_project.slug}}')"
-                          >
-                            <i class="sl sl-icon-eye"></i>
-                            <span>
-                              <span>View</span>
-                              <span>View fund details</span>
-                            </span>
-                          </a>
-                        <div class="dropdown-content">
-                          {% if user|has_role:'program_manager, project_manager, fund_manager' or user.is_staff or user.is_superuser %}
-                            {% if fund.approved is not True %}
-                              <a
-                                class="dropdown-item modal-trigger fund-{{fund.slug}}"
-                                data-ripple-color=""
-                                id="fund_list_modal"
-                                data-modal="approve-subproject-fund-modal"
-                                onclick="subproject_fund_approval_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}'); populate_fund_approval_form('{{fund.amount.amount}}')"
-                              >
-                                <i class="fa fa-shield"></i>
-                                <span>
-                                  <span>Approve Fund</span>
-                                  <span>Fund Approval</span>
-                                </span>
-                              </a>
-                            {% endif %}
-                          {% endif %}
-                          <a
-                            href="#"
-                            class="dropdown-item has-icon modal-trigger fund-{{fund.project.slug}}-{{fund.slug}}"
-                            data-ripple-color=""
-                            href="#"
-                            data-modal="create-project-modal"
-                            data-slug="{{ fund.slug }}"
-                            data-amount="{{ fund.amount }}"
-                            data-project-slug="{{ fund.project.slug }}"
-                            data-program-slug="{{ fund.project.program.slug }}"
-                            data-fund-approved="{{ fund.approved }}"
-                            data-currency="{{ fund.currency }}"
-                            data-fund-date="{{ fund.funding_date }}"
-                            onclick="populate_modal_form('{{fund.funding_date}}','{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
-                          >
-                            <i class="sl sl-icon-pencil"></i>
-                            <span>
-                              <span>Edit</span>
-                              <span>Edit fund details</span>
-                            </span>
-                          </a>
-                          <div class="dropdown-divider"></div>
-                          <a
-                            href="#"
-                            class="dropdown-item modal-trigger"
-                            data-modal="add-fund-disbursement-modal"
-                            onclick="add_disbursement_form_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
-                          >
-                            <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                            <span>
-                              <span>Add Disbursement</span>
-                              <span>Add Fund Disbursement</span>
-                            </span>
-                          </a>
-                          <div class="dropdown-divider"></div>
-                          <a
-                            class="dropdown-item modal-trigger"
-                            data-modal="delete-subproject-fund-modal"
-                            onclick="delete_subproject_fund('{{sub_project.project.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
-                            href="#"
-                          >
-                            <i class="sl sl-icon-trash"></i>
-                            <span>
-                              <span>Delete</span>
-                              <span>Delete this intervention fund</span>
-                            </span>
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                    <a href="#" class="button is-hidden"
-                      ><i class="material-icons">remove_red_eye</i></a
-                    >
-                  </td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            {{fund.amount}}
-          </div>
-          <!--Placeholder-->
-          {% comment %}
-          <div class="flex-card is-not-supported light-bordered">
-            <img
-              src="{% static 'assets/images/illustrations/not-mobile.svg' %}"
-              alt=""
-            />
-            <div class="has-text-centered">
-              <h3>Ouch...</h3>
-              <p>
-                Sorry, the contacts list is not supported on mobile. Please try
-                a device with a wider screen.
-              </p>
-            </div>
-          </div>
-          {% endcomment %}
-        </div>
-      </div>
-    </div>
-  </div>
+	<!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
+	<div id="delete-subproject-fund-modal"
+	     class="modal modal-md icon-action-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="flex-card simple-shadow">
+				<div class="help-text has-text-left">
+					<h2 class="dark-text">Delete Intervention Fund</h2>
+				</div>
+				<div class="card-body">
+					<form id="delete-subproject-fund-form"
+					      class="form"
+					      action=""
+					      method="post">
+						{% csrf_token %}
+						<div id="warning-msg"></div>
+						<div class="modal-footer">
+							<button type="button" class="button modal-dismiss">Cancel</button>
+							<button class="is-danger is-modal" type="submit">Confirm</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
-<!-- Create contact modal -->
-<!-- Create contact Modal -->
-<!-- Create Project Modal -->
-<div
-  id="create-project-modal"
-  class="modal create-project-modal modal-hero bs-example-modal-sm"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="has-text-centered dark-text" id="project_fund_form">
-        Add {{ sub_project.project.name|title }} Fund
-      </h2>
-      <div class="navigation-tabs layout-tabs animated-tabs">
-        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
-        <div id="project-details" class="navtab-content is-active">
-          <div class="card-body">
-            <div class="content">
-              <!-- New Project Fund form -->
-              <form
-                action="{% url 'tralard:subproject-fund-list' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug %}"
-                method="post"
-                id="project_fund_form_inputs"
-              >
-                {% csrf_token %}
-                <!--  -->
-                {% crispy form form.helper %}
-              </form>
-              <!-- /New Project Fund form -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button
-    onclick="clear_modal_form('Add {{ sub_project.project.name|title }} Fund')"
-    class="modal-close is-large is-hidden"
-    aria-label="close"
-  ></button>
-</div>
-
-<!-- create fund disbursement modal -->
-<div
-  id="add-fund-disbursement-modal"
-  class="modal add-fund-disbursement-modal modal-hero bs-example-modal-sm"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="has-text-centered dark-text" id="fund_disbursement_form">
-        Create Fund Disbursement
-      </h2>
-      <div class="navigation-tabs layout-tabs animated-tabs">
-        <div class="tabs is-toggle is-fullwidth no-margin-bottom"></div>
-        <div id="project-details" class="navtab-content is-active">
-          <div class="card-body">
-            <div class="content">
-              <!-- New Project Fund form -->
-              <form action="" method="post" id="fund_disbursement_form_inputs">
-                {% csrf_token %}
-                <!--  -->
-                {% crispy disbursement_form disbursement_form.helper %}
-              </form>
-              <!-- /New Project Fund form -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <button class="modal-close is-large is-hidden" aria-label="close"></button>
-</div>
-
-
-<!-- FUND APPROVAL MODAL -->
-<div
-  id="approve-subproject-fund-modal"
-  class="modal modal-md icon-action-modal modal-hero"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <div class="help-text has-text-left">
-        <h2 class="dark-text">Approve {{ sub_project.project.name|title }} Fund </h2>
-      </div>
-
-      <div class="card-body">
-        <form
-          id="approve-subproject-fund-form"
-          class="form"
-          action=""
-          method="POST"
-        >
-          {% csrf_token %}
-          <!--  -->
-          {% crispy fund_approval_form fund_approval_form.helper %}
-
-        </form>
-      </div>
-    </div>
-  </div>
-  <button
-    class="modal-close is-large is-hidden"
-    aria-label="close"
-  ></button>
-</div>
-
-<!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
-<div
-  id="delete-subproject-fund-modal"
-  class="modal modal-md icon-action-modal modal-hero"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <div class="help-text has-text-left">
-        <h2 class="dark-text">Delete Intervention Fund</h2>
-      </div>
-
-      <div class="card-body">
-        <form
-          id="delete-subproject-fund-form"
-          class="form"
-          action=""
-          method="post"
-        >
-          {% csrf_token %}
-          <div id="warning-msg"></div>
-
-          <div class="modal-footer">
-            <button type="button" class="button modal-dismiss">Cancel</button>
-            <button class="is-danger is-modal" type="submit">Confirm</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- /Invite User Modal -->
 {% include 'includes/disbursement_expenditure_modal.html' %}
-<!--  -->
 {% include 'includes/subproject_disbursement_modal.html' %}
-<!--  -->
 {% endblock content %}
+
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
+
+  // timestamp utility
+  const fullDate = new Date();
+  const getCurrentDate = () => {
+    let twoDigitMonth = (fullDate.getMonth() + 1) + "";
+    if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+    let twoDigitDate = fullDate.getDate() + "";
+    if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+    return `${twoDigitDate}-${twoDigitMonth}-${fullDate.getFullYear()}`
+  }
+
+
   //Toggle active disbursement cards on load
   $(document).ready(() => {
     $(".disbursement-card-content.is-active").slideToggle("fast");
@@ -539,7 +328,7 @@
       },
       success: function (data) {
         for (version in data.fund.versions) {
-          if(JSON.parse(data.fund.versions[version])[0].fields.approved_date) {
+          if (JSON.parse(data.fund.versions[version])[0].fields.approved_date) {
             document.querySelector('#subproject_fund_approval_history_list').innerHTML += `
             <div class='disbursement-card deal-card' >
               <div class='disbursement-card-header deal-card-header is-toggle' >
@@ -559,7 +348,7 @@
               </p>
             </div>
           `
-          } 
+          }
         }
         if (data.fund.approved) {
           document
@@ -585,23 +374,23 @@
             "#subproject_disbursements_list"
           ).innerHTML += `
             <div class='disbursement-card deal-card ${
-              data.disbursements[disbursement].slug
-            }' id="${data.disbursements[disbursement]?.slug}">
+            data.disbursements[disbursement].slug
+          }' id="${data.disbursements[disbursement]?.slug}">
               <div class='disbursement-card-header deal-card-header is-toggle'>
                 <p>Disbursement Amount:${
-                  data.disbursements[disbursement].currency
-                } ${thousand_seperator(
+            data.disbursements[disbursement].currency
+          } ${thousand_seperator(
             +data.disbursements[disbursement].amount
           )}</p>
               <p>
                 Disbursement Date: ${
-                  data.disbursements[disbursement].disbursement_date
-                }
+            data.disbursements[disbursement].disbursement_date
+          }
               </p>
               <p>
                 Total Expenditure: ${
-                  data.disbursements[disbursement].currency
-                } ${thousand_seperator(
+            data.disbursements[disbursement].currency
+          } ${thousand_seperator(
             +data.disbursements[disbursement].total_expenses
               ? +data.disbursements[disbursement].total_expenses
               : "0"
@@ -640,24 +429,24 @@
             fund_slug,
             data.disbursements[disbursement].slug
           )
-            .then(({ expenditures }) => {
+            .then(({expenditures}) => {
               for (expenditure in expenditures) {
                 document.querySelector(
-                  `#${expenditures[expenditure]?.disbursement_slug}`
+						`#${expenditures[expenditure]?.disbursement_slug}`
                 ).innerHTML += `
-                <div class="disbursement-card-content deal-card-content">
-                  <div class="details-placeholder d-flex justify-content-between ">
-                    <span>Expenditure: ${
-                      expenditures[expenditure].amount_currency
-                    } ${thousand_seperator(
+		                <div class="disbursement-card-content deal-card-content">
+		                  <div class="details-placeholder d-flex justify-content-between ">
+		                    <span>Expenditure: ${
+                  expenditures[expenditure].amount_currency
+                } ${thousand_seperator(
                   +expenditures[expenditure].amount
-                )} </span>  
-                   <span> Date: ${
-                     expenditures[expenditure].expenditure_date
-                   }</span> 
-                  </div>
-                </div>
-                `;
+                )} </span>
+		                   <span> Date: ${
+                  expenditures[expenditure].expenditure_date
+                }</span>
+		                  </div>
+		                </div>
+	                `;
               }
             })
             .catch((error) => {
@@ -695,7 +484,6 @@
   );
 
   // TOGGLE DISBURSEMENT EXPENDITURE LIST
-
   $("body").delegate(".disbursement-card-content", "click", function () {
     $(this).toggleClass("is-active");
     $(this)
@@ -735,7 +523,7 @@
   }
 
   // POPULATE MODAL FORM
-  function populate_modal_form(funding_date, amount, approved, project, title, url) {
+  function populate_fund_modal_form(funding_date, amount, approved, project, title, url) {
     $("#amount").val(
       amount
         .toString()
@@ -747,7 +535,9 @@
     $("#id_project").val("{{project.slug.name}}");
     $("#id_currency").val(amount.substring(0, 3));
     $("#submit-id-save").val("Update Fund");
-    $("#id_funding_date").val(new Date(funding_date).toISOString().substring(0, 10));
+    if (funding_date !== "Not Entered") {
+      $("#id_funding_date").val(new Date(funding_date).toISOString().substring(0, 10));
+    }
     $("#project_fund_form").html(`${title}`);
     document
       .querySelector("#project_fund_form_inputs")
@@ -823,5 +613,94 @@
     e.stopPropagation();
     console.log(e);
   };
+
+  /** ---------------------| Funding DataTable Management |----------------------------
+   * @author Gift Jr
+   * @description Sorting, Filtering and Document managment utility using JQuery DataTables to provide
+   *              off the shelf table operations i.e. pagination, CRUD and other configurations
+   * @since 06.02.22
+   * @see https://datatables.net/reference/api/
+   * */
+  $(document).ready(function ($) {
+    const interventionFundsTable = $('#subproject-funding-tbl').DataTable({
+      orderCellsTop: true,
+      pagingType: "full_numbers",
+      autoWidth: true,
+      responsive: true,
+      sDom: "ltipr", //hide default search
+      "aoColumns": [
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": false},
+      ],
+      dom: 'Brtip',
+      buttons: [
+        {
+          extend: 'print',
+          text: '<i class="sl sl-icon-printer text-primary"></i> Print',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'excelHtml5',
+          title: 'FundsListExcel-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-success"></i> Excel',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'pdfHtml5',
+          title: 'FundsListPDF-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-danger"></i>PDF',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'csvHtml5',
+          title: 'FundsListCsv-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-info"></i>CSV',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        }
+      ],
+      initComplete: function () {
+        let api = this.api();
+        //displace buttons to action cards
+        $(".excel-cell").append($('.buttons-excel'));
+        $(".csv-cell").append($('.buttons-csv'));
+        $(".pdf-cell").append($('.buttons-pdf'));
+        $(".print-cell").append($('.buttons-print'));
+
+        $("#fund-approval").append(
+          '<div class="input-group mb-3">' +
+          '  <div class="input-group-prepend">' +
+          '    <label class="input-group-text" for="inputGroupApproval">Approval</label>' +
+          '  </div>' +
+          '  <select class="custom-select" id="inputGroupApproval">' +
+          '    <option selected>Choose...</option>' +
+          '    <option value="yes">Approved</option>' +
+          '    <option value="no">Not Approved</option>' +
+          '  </select>' +
+          '</div>'
+        );
+        $('.custom-select').on('change', function (e) {
+          const approvalStatus = $(this).val();
+          $('.custom-select').val(approvalStatus)
+          if (approvalStatus === "") {
+            interventionFundsTable.column([3]).search(approvalStatus)
+          }
+          interventionFundsTable.column([3]).search(approvalStatus).draw();
+        })
+      }
+    })
+  })
+
 </script>
 {% endblock javascripts %}

@@ -3,18 +3,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path
 
-from tralard.views.training import (
-    training_update,
-    training_delete,
-    TrainingListView,
-    template_testing,
-)
 from tralard.views.beneficiary import (
     beneficiary_detail,
     beneficiary_update,
     beneficiary_delete,
     BeneficiaryOrgListView,
 )
+from tralard.views.dashboard import HomeTemplateView
 from tralard.views.fund import (
     fund_detail,
     update_fund,
@@ -24,6 +19,22 @@ from tralard.views.fund import (
     FundListAndCreateView,
     get_disbursement_expenditures,
 )
+from tralard.views.indicator import (
+    poll_state,
+    indicator_report,
+    create_indicator,
+    update_indicator,
+    delete_indicator,
+    create_indicator_target,
+    update_indicator_target,
+    create_indicator_target_value,
+    update_indicator_target_value,
+    create_indicator_unit_of_measure,
+    update_indicator_unit_of_measure
+)
+from tralard.views.map import MapTemplateView
+from tralard.views.profile import user_profile_update
+from tralard.views.program import ProgramDetailView, preview_indicator_document
 from tralard.views.project import (
     edit_feedback,
     project_update,
@@ -51,32 +62,14 @@ from tralard.views.sub_project import (
     subproject_fund_disbursement_create,
     subproject_disbursement_expenditure_create
 )
-from tralard.views.map import MapTemplateView
-from tralard.views.dashboard import HomeTemplateView
-from tralard.views.profile import user_profile_update
-from tralard.views.indicator import (
-    delete_indicator,
-    poll_state,
-    indicator_report,
-    create_indicator,
-    update_indicator,
-    delete_indicator,
-    create_indicator_target,
-    update_indicator_target,
-    create_indicator_target_value,
-    update_indicator_target_value,
-    create_indicator_unit_of_measure,
-    update_indicator_unit_of_measure
+from tralard.views.training import (
+    training_update,
+    training_delete,
+    TrainingListView,
 )
-from tralard.views.program import ProgramDetailView, preview_indicator_document
 
 app_name = "tralard"
 urlpatterns = [
-    path(
-        "test/",
-        template_testing,
-        name="test",
-    ),
     # -------- dashboard --------
     path(
         "",

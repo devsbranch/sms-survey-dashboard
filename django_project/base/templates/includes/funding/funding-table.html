@@ -1,0 +1,164 @@
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% load crispy_forms_tags %}
+
+{% load humanize %}
+
+{% load permission_tags %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+<style>
+    select.form-control {
+        display: inline;
+        width: 200px;
+        margin-left: 25px;
+    }
+</style>
+{% endblock stylesheets %}
+
+<div class="table-responsive">
+	<table class="table documents-table" id="subproject-funding-tbl">
+		<!-- Funds table header -->
+		<thead>
+		<tr class="bg-light">
+			<th class="text-center"><span class="text-primary">Amount</span></th>
+			<th class="text-center"><span class="text-primary">Total Disbursement</span></th>
+			<th class="text-center"><span class="text-primary">Balance</span></th>
+			<th class="text-center"><span class="text-primary">Approved</span></th>
+			<th class="text-center"><span class="text-primary">Date of Funding</span></th>
+			<th class="w-5 text-center"></th>
+		</tr>
+		</thead>
+		<tbody>
+		<!-- Funding table rows -->
+		{% for fund in funds_filter.qs %}
+		<tr>
+			<td><p class="text-justify">{{ fund.amount }}</p></td>
+			<td>
+				<p class="text-justify">
+					<span>
+						{% if fund.get_total_disbursements is not None %}
+	                        {{fund.currency}}
+	                        {{fund.get_total_disbursements|intcomma }}
+						{% else %} {{ fund.currency }} 0 {% endif %}
+					</span>
+				</p>
+			</td>
+			<td>
+				<p class="text-justify">
+					<span>
+						{{fund.currency}}
+						{{fund.sub_project.project.get_total_fund_balance|intcomma}}
+					</span>
+				</p>
+			</td>
+			<td>
+				<p class="text-justify text-capitalize">
+					<span class="tag text-primary">
+					{{ fund.approved|yesno:"yes,no,maybe" }}
+					</span>
+				</p>
+			</td>
+			<td>
+				<p class="text-justify text-capitalize">
+					<span>
+						{% if fund.funding_date is not None %}
+						    {{ fund.funding_date }}
+						{% else %}
+							Not entered
+						{% endif %}
+					</span>
+				</p>
+			</td>
+			<td class="actions">
+				<div class="dropdown is-right dropdown-trigger contacts-list-dropdown">
+					<div class="button">
+						<i class="material-icons text-info">more_horiz</i>
+					</div>
+					<div class="dropdown-menu is-text-bigger" role="menu">
+						<div class="dropdown-content">
+							<a class="dropdown-item modal-trigger fund-{{fund.slug}}"
+							   data-ripple-color=""
+							   id="fund_list_modal"
+							   data-modal="w3-modal"
+							   onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{sub_project.project.slug}}', '{{sub_project.project.program.slug}}', '{{sub_project.slug}}')"
+							>
+								<i class="sl sl-icon-eye text-primary"></i>
+								<span>
+                              <span>View</span>
+                              <span>View fund details</span>
+                            </span>
+							</a>
+							<a href="#"
+							   class="dropdown-item has-icon modal-trigger fund-{{fund.project.slug}}-{{fund.slug}}"
+							   data-ripple-color=""
+							   data-modal="create-fund-modal"
+							   data-slug="{{ fund.slug }}"
+							   data-amount="{{ fund.amount }}"
+							   data-project-slug="{{ fund.project.slug }}"
+							   data-program-slug="{{ fund.project.program.slug }}"
+							   data-fund-approved="{{ fund.approved }}"
+							   data-currency="{{ fund.currency }}"
+							   data-fund-date="{{ fund.funding_date }}"
+							   onclick="populate_fund_modal_form('{{fund.funding_date}}','{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
+							>
+								<i class="sl sl-icon-pencil text-warning"></i>
+								<span>
+                              <span>Edit</span>
+                              <span>Edit fund details</span>
+                            </span>
+							</a>
+							<a class="dropdown-item modal-trigger"
+							   data-modal="delete-subproject-fund-modal"
+							   onclick="delete_subproject_fund('{{sub_project.project.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')"
+							   href="#"
+							>
+								<i class="sl sl-icon-trash text-danger"></i>
+								<span>
+                              <span>Delete</span>
+                              <span>Delete this intervention fund</span>
+                            </span>
+							</a>
+							<div class="dropdown-divider"></div>
+							<a href="#"
+							   class="dropdown-item modal-trigger"
+							   data-modal="add-fund-disbursement-modal"
+							   onclick="add_disbursement_form_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}')">
+								<i class="fa fa-plus-circle text-success" aria-hidden="true"></i>
+								<span>
+	                              <span>Add Disbursement</span>
+	                              <span>Add Fund Disbursement</span>
+                                </span>
+							</a>
+							<a href="#">
+								<div class="dropdown-content">
+									{% if user|has_role:'program_manager, project_manager, fund_manager' or user.is_staff or user.is_superuser %}
+									{% if fund.approved is not True %}
+									<a class="dropdown-item modal-trigger fund-{{fund.slug}}"
+									   data-ripple-color=""
+									   id="fund_list_modal"
+									   data-modal="approve-subproject-fund-modal"
+									   onclick="subproject_fund_approval_action('{{sub_project.project.program.slug}}', '{{sub_project.project.slug}}', '{{sub_project.slug}}', '{{fund.slug}}'); populate_fund_approval_form('{{fund.amount.amount}}')">
+										<i class="fa fa-shield text-primary"></i>
+										<span>
+									        <span>Approve Fund</span>
+									        <span>Fund Approval</span>
+										</span>
+									</a>
+									{% endif %}
+									{% endif %}
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<a href="#" class="button is-hidden"><i class="material-icons">remove_red_eye</i></a>
+			</td>
+		</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+</div>

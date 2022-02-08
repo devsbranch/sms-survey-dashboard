@@ -1,143 +1,197 @@
 {% load static %}
 <div class="more-drop">
-    <!-- Task dropdown -->
-    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-        <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-            <div class="dropdown-content" style="position: fixed;">
-                <a onclick="document.getElementById('detail_modal').style.display='block'" class="dropdown-item view-btn{{ training.id }}">
-                    <i class="sl sl-icon-eye"></i>
-                    <span>
-                        <span>View</span>
+	<!-- Task dropdown -->
+	<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+		<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+			<div class="dropdown-content">
+				<a onclick="document.getElementById('detail_modal').style.display='block'"
+				   class="dropdown-item view-btn{{ training.id }}">
+					<i class="sl sl-icon-eye text-primary"></i>
+					<span>
+                        <span class="dark-text">View</span>
                         <span>View this training entry</span>
                     </span>
-                </a>
-                <script>
-                  var uniqueSelectorButton = document.querySelector(".view-btn{{ training.id }}");
-                  uniqueSelectorButton.addEventListener("click", () => {
-                    if("{{ training.id }}" == "{{ training.id }}"){
-                      document.getElementById("sub-project-1").innerHTML = "{{ training.sub_project }}";
-                      document.getElementById("sub-project-2").innerHTML = "{{ training.sub_project }}";
-                      
-                      document.getElementById("training-moderator-1").innerHTML = "{{ training.moderator }}";
-                      document.getElementById("training-moderator-2").innerHTML = "{{ training.moderator }}";
-                      
-                      document.getElementById("project-title").innerHTML = "{{ training.title }}";
-                      document.getElementById("training-type").innerHTML = "{{ training.training_type }}";
-                      const startDate = "{{ training.start_date }}";
-                      const endDateArray = startDate.split(" ");
-                      const endDateProcessor = () => {
-                        if(endDateArray[4] != undefined){
-                          return endDateArray[4];
-                        }else{
-                          return ""
-                        }
-                     };
-                     if(endDateArray[0] !== undefined){
-                      document.getElementById("end-month").innerHTML = endDateArray[0];
-                    }else{
-                      document.getElementById("end-month").innerHTML = "blank";
-                    }
-                    if(endDateArray[1] !== undefined){
-                      document.getElementById("end-day").innerHTML = endDateArray[1];
-                    }else{
-                      document.getElementById("end-day").innerHTML = "blank";
-                    }
-                    if(endDateArray[2] !== undefined){
-                      document.getElementById("end-year").innerHTML = endDateArray[2];
-                    }else{
-                      document.getElementById("end-year").innerHTML = "blank";
-                    }
-                    if(endDateArray[3] !== undefined){
-                      document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
-                    }else{
-                      document.getElementById("end-time").innerHTML = "blank";
-                    }
-                      
-                      const endDate = "{{ training.start_date }}";
-                      const startDateArray = endDate.split(" ");
-                      const startDateProcessor = () => {
-                        if(startDateArray[4] != undefined){
-                          return startDateArray[4];
-                        }else{
-                          return ""
-                        }
-                     };
-                      if(startDateArray[0] !== undefined){
-                        document.getElementById("start-month").innerHTML = startDateArray[0];
-                      }else{
-                        document.getElementById("start-month").innerHTML = "blank";
-                      }
-                      if(startDateArray[1] !== undefined){
-                        document.getElementById("start-day").innerHTML = startDateArray[1];
-                      }else{
-                        document.getElementById("start-day").innerHTML = "blank";
-                      }
-                      if(startDateArray[2] !== undefined){
-                        document.getElementById("start-year").innerHTML = startDateArray[2];
-                      }else{
-                        document.getElementById("start-year").innerHTML = "blank";
-                      }
-                      if(startDateArray[3] !== undefined){
-                        document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
-                      }else{
-                        document.getElementById("start-time").innerHTML = "blank";
-                      }
-                      document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
-                      if("{{ training.sub_project.project.project_representative.cell }}"){
-                        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";
-                      }else{
-                        document.getElementById("cell-number").innerHTML = "None";
-                      }
-                      if("{{ training.sub_project.project.project_representative.email }}"){
-                        document.getElementById("email-address").innerHTML = "{{ training.sub_project.project.project_representative.email }}";
-                      }else{
-                        document.getElementById("email-address").innerHTML = "None";
-                      }
-                      document.getElementById("project-image").src = "{{ training.sub_project.project.logo_url }}";
-                      var boolean = document.getElementById("boolean");
-                      if("{{ training.completed }}" == "True"){
-                        document.getElementById("prospectSwitch").checked = true;
-                      }else{
-                        document.getElementById("prospectSwitch").checked = false;
-                      }
-                    }
-                  })
-                </script>
-                  <a class="dropdown-item modal-trigger modal-trigger edit-btn{{ training.id }}" data-modal="training-update-modal">
-                      <i class="sl sl-icon-eye"></i>
-                      <span>
-                          <span>Edit</span>
-                          <span>Edit this training entry</span>
-                      </span>
-                    </a>
-                    <script>
-                     var uniqueEditSelectorButton = document.querySelector(".edit-btn{{ training.id }}");
-                       uniqueEditSelectorButton.addEventListener("click", () => {
-                          if("{{ training.slug }}" == "{{ training.slug }}"){
-                            document.getElementById("subproject-training-entry-form").innerHTML = `
+				</a>
+				<a class="dropdown-item modal-trigger modal-trigger edit-btn{{ training.id }}"
+				   data-modal="training-update-modal">
+					<i class="sl sl-icon-note text-success"></i>
+					<span>
+						<span class="dark-text">Update</span>
+						<span>Edit this training entry</span>
+					</span>
+				</a>
+				<a class="dropdown-item modal-trigger modal-trigger delete-btn{{ training.id }}"
+				   data-modal="training-delete-modal" id="{{ training.id }}" class="dropdown-item">
+					<i class="sl sl-icon-trash text-danger"></i>
+					<span>
+                        <span class="dark-text">Delete</span>
+                        <span>Delete this training entry</span>
+                    </span>
+				</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete Training Entry Modal -->
+<div id="training-delete-modal" class="modal modal-md icon-action-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<div class="help-text has-text-left">
+				<h2 class="dark-text">Delete Training</h2>
+			</div>
+
+			<div class="card-body">
+				<div class="has-text-centered">
+					<div class="image">
+						<img src="{% static 'assets/images/icons/basket.svg' %}">
+					</div>
+				</div>
+
+				<form id="training-delete-form" class="form" action="" method="post">
+					{% csrf_token %}
+					<div class="modal-footer">
+						<button type="button"
+						        onClick="handDeleteTraining('UNSET_ACTION_URL');"
+						        class="button modal-dismiss">Cancel
+						</button>
+						<button class=" is-danger is-modal" type="submit"
+						        onClick="handDeleteTraining('SET_ACTION_URL', '{{training.sub_project.project.program.slug}}', '{{training.sub_project.project.slug}}', '{{training.sub_project.slug}}', '{{training.slug}}');">
+							Confirm
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+  function handDeleteTraining(actionType, program_slug = '', project_slug = '', subproject_slug = '', training_entry_slug = '') {
+    const origin = location.origin;
+    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/training/${training_entry_slug}/delete/`
+    const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
+
+    if (actionType === "SET_ACTION_URL") {
+      $('#training-delete-form').attr('action', formActionUrl)
+    } else if (actionType === "UNSET_ACTION_URL") {
+      $('#training-delete-form').attr('action', " ")
+    }
+  }
+</script>
+
+{% block javascripts %}
+<script>
+  var uniqueSelectorButton = document.querySelector(".view-btn{{ training.id }}");
+  uniqueSelectorButton.addEventListener("click", () => {
+    if ("{{ training.id }}" == "{{ training.id }}") {
+      document.getElementById("sub-project-1").innerHTML = "{{ training.sub_project }}";
+      document.getElementById("sub-project-2").innerHTML = "{{ training.sub_project }}";
+
+      document.getElementById("training-moderator-1").innerHTML = "{{ training.moderator }}";
+      document.getElementById("training-moderator-2").innerHTML = "{{ training.moderator }}";
+
+      document.getElementById("project-title").innerHTML = "{{ training.title }}";
+      document.getElementById("training-type").innerHTML = "{{ training.training_type }}";
+      const startDate = "{{ training.start_date }}";
+      const endDateArray = startDate.split(" ");
+      const endDateProcessor = () => {
+        if (endDateArray[4] != undefined) {
+          return endDateArray[4];
+        } else {
+          return ""
+        }
+      };
+      if (endDateArray[0] !== undefined) {
+        document.getElementById("end-month").innerHTML = endDateArray[0];
+      } else {
+        document.getElementById("end-month").innerHTML = "blank";
+      }
+      if (endDateArray[1] !== undefined) {
+        document.getElementById("end-day").innerHTML = endDateArray[1];
+      } else {
+        document.getElementById("end-day").innerHTML = "blank";
+      }
+      if (endDateArray[2] !== undefined) {
+        document.getElementById("end-year").innerHTML = endDateArray[2];
+      } else {
+        document.getElementById("end-year").innerHTML = "blank";
+      }
+      if (endDateArray[3] !== undefined) {
+        document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
+      } else {
+        document.getElementById("end-time").innerHTML = "blank";
+      }
+
+      const endDate = "{{ training.start_date }}";
+      const startDateArray = endDate.split(" ");
+      const startDateProcessor = () => {
+        if (startDateArray[4] != undefined) {
+          return startDateArray[4];
+        } else {
+          return ""
+        }
+      };
+      if (startDateArray[0] !== undefined) {
+        document.getElementById("start-month").innerHTML = startDateArray[0];
+      } else {
+        document.getElementById("start-month").innerHTML = "blank";
+      }
+      if (startDateArray[1] !== undefined) {
+        document.getElementById("start-day").innerHTML = startDateArray[1];
+      } else {
+        document.getElementById("start-day").innerHTML = "blank";
+      }
+      if (startDateArray[2] !== undefined) {
+        document.getElementById("start-year").innerHTML = startDateArray[2];
+      } else {
+        document.getElementById("start-year").innerHTML = "blank";
+      }
+      if (startDateArray[3] !== undefined) {
+        document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
+      } else {
+        document.getElementById("start-time").innerHTML = "blank";
+      }
+      document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
+      if ("{{ training.sub_project.project.project_representative.cell }}") {
+        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";
+      } else {
+        document.getElementById("cell-number").innerHTML = "None";
+      }
+      if ("{{ training.sub_project.project.project_representative.email }}") {
+        document.getElementById("email-address").innerHTML = "{{ training.sub_project.project.project_representative.email }}";
+      } else {
+        document.getElementById("email-address").innerHTML = "None";
+      }
+      document.getElementById("project-image").src = "{{ training.sub_project.project.logo_url }}";
+      var boolean = document.getElementById("boolean");
+      if ("{{ training.completed }}" == "True") {
+        document.getElementById("prospectSwitch").checked = true;
+      } else {
+        document.getElementById("prospectSwitch").checked = false;
+      }
+    }
+  })
+</script>
+<script>
+  var uniqueEditSelectorButton = document.querySelector(".edit-btn{{ training.id }}");
+  uniqueEditSelectorButton.addEventListener("click", () => {
+    if ("{{ training.slug }}" == "{{ training.slug }}") {
+      document.getElementById("subproject-training-entry-form").innerHTML = `
                               <form action="{% url 'tralard:subproject-training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.sub_project.slug training.slug %} " name="sub_project_training_form" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
-                                {% load crispy_forms_tags %} 
+                                {% load crispy_forms_tags %}
                                 {% crispy training.training_form training.training_form.helper %}
                               </span>
                              `;
-                          }
-                        });
-                  </script>
-
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item modal-trigger modal-trigger delete-btn{{ training.id }}" data-modal="training-delete-modal" id="{{ training.id }}" class="dropdown-item">
-                    <i class="sl sl-icon-trash"></i>
-                    <span>
-                        <span>Delete</span>
-                        <span>Delete this training entry</span>
-                    </span>
-                   
-                    <script>
-                      var uniqueEditSelectorButton = document.querySelector(".delete-btn{{ training.id }}");
-                      uniqueEditSelectorButton.addEventListener("click", () => {
-                         if("{{ training.slug }}" == "{{ training.slug }}"){
-                           document.getElementById("training-entry-form-delete").innerHTML += `
+    }
+  });
+</script>
+<script>
+  var uniqueEditSelectorButton = document.querySelector(".delete-btn{{ training.id }}");
+  uniqueEditSelectorButton.addEventListener("click", () => {
+    if ("{{ training.slug }}" == "{{ training.slug }}") {
+      document.getElementById("training-entry-form-delete").innerHTML += `
                              <div style="align-content: center; margin-left: 12em;">
                                {% csrf_token %}
                                <div class="modal-footer" style="margin-right: 8em;">
@@ -146,58 +200,7 @@
                                 </div>
                             </div>
                             `;
-                         }
-                       });
-                    </script>
-                </a>
-            </div>
-        </div>
-    </div>                                                                
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
- <!-- Delete Training Entry Modal -->
- <div id="training-delete-modal" class="modal modal-md icon-action-modal modal-hero">
-  <div class="modal-background"></div>
-  <div class="modal-content">
-      <div class="flex-card simple-shadow">
-          <div class="help-text has-text-left">
-              <h2 class="dark-text">Delete Training</h2>
-
-          </div>
-
-          <div class="card-body">
-              <div class="has-text-centered">
-                  <div class="image">
-                      <img src="{% static 'assets/images/icons/basket.svg' %}">
-                  </div>
-              </div>
-              
-              <form id="training-delete-form" class="form" action="" method="post">
-                  {% csrf_token %}
-                  <div id="warning-msg">
-                  </div>
-
-                  <div class="modal-footer">
-                      <button type="button" onClick="handDeleteTraining('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
-                      <button class=" is-danger is-modal" type="submit" onClick="handDeleteTraining('SET_ACTION_URL', '{{training.sub_project.project.program.slug}}', '{{training.sub_project.project.slug}}', '{{training.sub_project.slug}}', '{{training.slug}}');">Confirm</button>
-                  </div>
-              </form>
-          </div>
-          
-      </div>
-  </div>
-</div>
-<script>
-  function handDeleteTraining(actionType, program_slug='', project_slug='', subproject_slug='', training_entry_slug='') {
-    const origin = location.origin;
-    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/training/${training_entry_slug}/delete/`
-    const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
-
-    if (actionType === "SET_ACTION_URL") {
-        $('#training-delete-form').attr('action', formActionUrl)
-    } else if (actionType === "UNSET_ACTION_URL") {
-        $('#training-delete-form').attr('action', " ")
     }
-}
+  });
 </script>
-<!-- / Delete Training Entry Modal -->
+{% endblock javascripts %}

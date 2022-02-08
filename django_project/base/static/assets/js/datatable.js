@@ -428,7 +428,6 @@ $(document).ready(function ($) {
                                 </div>
                             </div>
                         </div>
-
                     `
                 },
                 {
@@ -648,8 +647,6 @@ $(document).ready(function ($) {
         }, 1000);
 
     }
-
-
 
     $('.pagination li').click(function () {
         $('.pagination li.is-selected').removeClass('is-selected');

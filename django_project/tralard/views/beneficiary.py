@@ -11,7 +11,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 
-
+from tralard.filters.beneficiary import BeneficiaryFilter
 from tralard.forms import BeneficiaryCreateForm
 from tralard.models import Beneficiary, Project, Ward, SubProject
 
@@ -89,6 +89,9 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         context["header"] = "Beneficiaries"
         context["project"] = project
         context["beneficiaries"] = organizations
+        context["beneficiaries_filter"] = BeneficiaryFilter(
+            self.request.GET, queryset=self.get_queryset()
+        )
         context["sub_header"] = sub_header
         return context
 

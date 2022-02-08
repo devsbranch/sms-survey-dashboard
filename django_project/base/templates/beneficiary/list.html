@@ -1,472 +1,397 @@
 {% extends "layouts/base.html" %}
 
 {% load static %}
-{% load crispy_forms_tags %} 
-{% block title %} {{ title|title }} {% endblock %} 
+
+{% load crispy_forms_tags %}
+
+{% load widget_tweaks %}
+
+{% block title %} {{ title|title }} {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<link rel="stylesheet" href="{% static 'assets/data-tables/DataTables-1.11.4/css/dataTables.bootstrap4.min.css' %}">
+<style>
+    .dataTables_wrapper .dt-buttons {
+        float: none;
+        text-align: center;
+    }
+
+    .dt-button {
+        -webkit-tap-highlight-color: transparent;
+        -webkit-font-smoothing: antialiased;
+        text-rendering: optimizeLegibility;
+        box-sizing: inherit;
+        cursor: pointer;
+        display: flex;
+        color: inherit;
+        text-decoration: none;
+    }
+</style>
+{% endblock stylesheets %}
 
 <!-- PAGE content goes HERE -->
 {% block content %}
 
 <div id="dashboard-wrapper" class="dashboard-outer">
-    <div class="dashboard-inner">
+	<div class="dashboard-inner">
+		<!-- Dashboard Wrapper -->
+		<div class="dashboard-wrapper">
+			<div id="main-dashboard" class="section-wrapper">
+				<div id="basic-layout" class="columns is-mobile dashboard-columns">
+					<div class="column is-9 is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
+						<div class="contacts-title-wrapper">
+							<div class="title-wrap">
+								<div class="profile-heading">
+									<h2 class="project-title">{{header}}</h2>
+									<small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the
+										<b>{{project.name|title|truncatechars:24}}</b></small>
+								</div>
+							</div>
+							<!-- Filter list -->
+							<div class="list-filter">
+								<div class="list-header">
+									<div class="list-title">
+										<div data-title="Add new beneficiary"
+										     class="add-button modal-trigger"
+										     data-modal="create-beneficiary-modal">
+											<i class="material-icons">add</i>
+										</div>
+									</div>
+								</div>
+								<a class="button btn-dash primary-btn btn-dash raised has-icon"
+								   data-ripple-color=""
+								   href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
+									<i class="material-icons">short_text</i>
+									Back To Intervention
+								</a>
+							</div>
+						</div>
+						<br/>
+						<div class="is-document-list">
+							<!-- Beneficiaries table -->
+							{% include 'includes/beneficiary/beneficiary-table.html' %}
+						</div>
+					</div>
+					<!-- Right side menu -->
+					<div class="column is-3 is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
+						<div style="margin-top: 6em;" class="right-options">
+							<a href="#">
+								<button type="button"
+								        class="button button-cta secondary-btn is-fullwidth is-bold raised">
+									Quick Actions
+								</button>
+							</a>
+							<!-- members -->
+							<div class="members">
+								{% for beneficiary in beneficiaries|slice:":4" %}
 
-        <!-- Dashboard Wrapper -->
-        <div class="dashboard-wrapper">
-            <div class="contacts-title-wrapper">
-                <div class="profile-heading">
-                    <div>
-                        <h2 class="project-title">{{header}}</h2>
-                        <small class="project-tagline no-margin-bottom">Showing all Beneficiaries under the <b>{{project.name|title|truncatechars:24}}</b></small>
-                    </div>
-                    
-                </div>
-                <!-- Filter input -->
-                <div class="list-filter" style="padding-right:9em;">
-                <div class="control is-hidden-phones">
-                    <input
-                    class="input"
-                    type="text"
-                    placeholder="Filter Contacts"
-                    />
-                    <div class="form-icon">
-                    <i data-feather="filter"></i>
-                    </div>
-                </div>
+								{% if beneficiary.logo %}
+								<img src="https://via.placeholder.com/150x150"
+								     data-demo-src="{{ beneficiary.logo.url }}" data-toggle="tooltip"
+								     data-placement="top" data-title="{{ beneficiary.name }}" data-trigger="hover"
+								     alt="">
+								{% endif %}
 
-                <a
-                    class=" button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger " 
-                    data-ripple-color="" 
-                    href="{% url 'tralard:project-detail' project.program.slug project.slug %}">
-                    <span style="padding-right: 6px;">Go Back </span>
-                    <i class="material-icons">send</i>
-                </a>
-                </div>
-            </div>
+								{% endfor %}
+							</div>
+							<!-- Share -->
+							{% comment %}
+							<button type="button"
+							        class="button button-cta secondary-btn is-fullwidth is-bold raised modal-trigger"
+							        data-modal="create-beneficiary-modal">
+								Create Beneficiary
+							</button>
+							{% endcomment %}
+							<!-- Actions list -->
+							<div class="container d-flex mt-1">
+								<div class="row align-items-start mx-auto">
+									<div class="col excel-cell my-1"></div>
+									<div class="col csv-cell my-1"></div>
+								</div>
+								<div class="row align-items-start mx-auto">
+									<div class="col pdf-cell my-1"></div>
+									<div class="col print-cell my-1"></div>
+								</div>
+							</div>
+							<div id="default-controls" class="controls">
+								<a class="control-block modal-trigger" data-modal="create-beneficiary-modal">
+									<i class="material-icons text-primary">add</i>New Beneficiary
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-cloud-upload text-primary"></i>Import Beneficiaries
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-cloud-download text-primary"></i> Download Beneficiaries
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-eye text-primary"></i> Show deleted
+								</a>
+							</div>
+							<!-- Actions list -->
+							<div id="single-controls" class="controls is-hidden">
+								<a class="control-block">
+									<i class="sl sl-icon-cloud-download text-primary"></i> Download Report
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-pencil text-primary"></i> Update
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-arrow-right-circle text-primary"></i> Change Sub-Project
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-eye text-primary"></i> Delete
+								</a>
+							</div>
+							<!-- Actions list -->
+							<div id="bulk-controls" class="controls is-hidden">
+								<a class="control-block">
+									<i class="sl sl-icon-arrow-right-circle"></i> Change Sub-Project
+								</a>
+								<a class="control-block">
+									<i class="sl sl-icon-eye"></i> Delete Selected
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-            <br/>
+	<!-- Reminder Modal --><!-- Create Task Modal -->
+	<div id="create-beneficiary-modal" class="modal create-task-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content" style="width: 50% !important;">
+			<div class="flex-card simple-shadow">
+				<div class="modal-hero m-2">
+					<h2 id="beneficiary-form-title" class="has-text-centered dark-text">Create Beneficiary</h2>
+				</div>
+				<div class="navigation-tabs layout-tabs animated-tabs">
+					<div id="task-details" class="navtab-content is-active">
+						<div class="card-body" style="">
+							<div class="content">
+								<!-- New Project form -->
+								<form id="beneficiary-form"
+								      action="{% url 'tralard:beneficiary-list' project.program.slug project.slug %}"
+								      method="post" enctype="multipart/form-data">
+									{% csrf_token %}
+									{% crispy form form.helper %}
+									<div class="form-footer">
+										<button id="form-submit-button" type="submit" class="button is-modal">Create
+											Beneficiary
+										</button>
+									</div>
 
-            <div id="main-dashboard" class="section-wrapper">
-                <!-- Dashboard content -->
-                <div id="basic-layout" class="columns dashboard-columns">
+								</form>
+								<!-- /New Project form -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button class="modal-close is-large is-hidden" aria-label="close"
+		        onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');"></button>
+	</div>
 
-                    <div class="column is-9 is-hidden-mobile">
+	<div id="beneficiary-detail-modal" class="modal modal-md icon-action-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content" style="width: 75% !important;">
 
-                        <div class="is-document-list" style="overflow: unset;">
-                            <!-- Documents table -->
-                            <table class="table documents-table">
-                                <!-- Header -->
-                                <div data-title="Add new training" class="add-button modal-trigger" data-modal="create-beneficiary-modal">
-                                    <i class="material-icons">add</i>
-                                </div>
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            <div class="b-checkbox is-secondary">
-                                                <input id="checkbox-docs-all" class="styled" type="checkbox">
-                                                <label for="checkbox-docs-all"></label>
-                                            </div>
-                                        </th>
-                                        <th class="w-30">
-                                            <span>Name</span>
-                                        </th>
+			<!-- Dashboard Wrapper -->
+			<div class="dashboard-wrapper">
 
-                                        <th>
-                                            <span>Intervention</span>
-                                        </th>
+				<div id="main-dashboard" class="section-wrapper">
+					<!-- Dashboard content -->
+					<div id="basic-layout" class="dashboard-columns">
 
-                                        <th>
-                                            <span>SubProject</span>
-                                        </th>
+						<div class="contact-profile-wrap" style="margin: 20px;">
 
-                                        <th>
-                                            <span>Members</span>
-                                        </th>
+							<div class="columns contact-profile">
+								<!-- Avatar Card -->
+								<div class="column is-4">
+									<div class="flex-card is-avatar light-bordered card-overflow">
+										<div id="detail-modal-inner" class="inner">
+											<div class="contact-block">
+												<!-- Avatar -->
+												<div class="avatar-wrapper">
+													<img id="org-logo" src="https://via.placeholder.com/150x150" alt=""
+													     data-demo-src="">
+												</div>
+												<!-- Meta -->
+												<div id="org-name-card" class="contact-name"></div>
+												<div id="org-type" class="contact-company"></div>
+												<!-- Stats -->
+												<div class="stats-block">
+													<div class="stat">
+														<span>Total Beneficiaries</span>
+														<span id="total-beneficiaries">24</span>
+													</div>
+													<div class="stat">
+														<span>Females</span>
+														<span id="total-females">17</span>
+													</div>
+													<div class="stat">
+														<span>Males</span>
+														<span id="total-males">7</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 
-                                        <th>
-                                            <span>Registered</span>
-                                        </th>
+
+								<div class="column is-8">
+									<!-- Contact informations -->
+									<div class="flex-card is-contact-info light-bordered card-overflow">
+										<!-- Tabs -->
+										<div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
+											<div class="tabs">
+												<ul>
+													<li class="is-active" data-tab="tab-general"><a>General</a></li>
+													</ul>
+											</div>
+
+											<!-- General information -->
+											<div id="tab-general" class="navtab-content is-active">
+												<div class="columns">
+													<div class="column is-6">
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Email
+															</div>
+															<div id="org-email" class="info-content is-email">
+
+															</div>
+														</div>
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Phone (1)
+															</div>
+															<div id="org-phone" class="info-content">
+
+															</div>
+														</div>
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Organization Type
+															</div>
+															<div id="org-type-inner" class="info-content">
+															</div>
+														</div>
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Registered Date
+															</div>
+															<div id="org-registered-date" class="info-content">
+															</div>
+														</div>
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Location
+															</div>
+															<div id="org-location" class="info-content">
+															</div>
+														</div>
+														<!-- Info block -->
+														<div class="info-block">
+															<div class="info-label">
+																Ward
+															</div>
+															<div id="org-ward" class="info-content">
+															</div>
+														</div>
+														<div class="info-block">
+															<div class="info-label">
+																Sub-Project
+															</div>
+															<div id="org-sub-project" class="info-content">
+															</div>
+														</div>
+													</div>
+													<div class="column is-6">
+														<!-- Contact summary -->
+														<div class="info-block">
+															<div class="info-label">
+																Organization Description
+															</div>
+															<div id="org-description" class="info-content is-notes">
+
+															</div>
+
+														</div>
+													</div>
+												</div>
+
+												<hr>
+
+												<!-- Lifetime earnings -->
+												<div class="lifetime-wrapper">
+													<div class="">
+														<div class="lifetime-label">Total Beneficiaries</div>
+														<span id="total-beneficiaries-inner"></span>
+													</div>
+
+													<!-- Send email action -->
+													<a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-dismiss"
+													   data-ripple-color="" data-modal="message-contact-modal"
+													   style="color: white">
+														Close
+													</a>
+												</div>
+											</div>
 
 
-                                        <th class="w-5">
-                                            ---
-                                        </th>
+										</div>
+									</div>
+								</div>
+							</div>
 
-                                    </tr>
-                                </thead>
-                                <!-- Body -->
-                                <tbody>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-                                    <!-- Table row -->
+	<!-- Delete Beneficiary Modal --><!-- Delete Beneficiary Modal -->
+	<div id="delete-beneficiary-modal" class="modal modal-md icon-action-modal modal-hero">
+		<div class="modal-background"></div>
+		<div class="modal-content">
+			<div class="flex-card simple-shadow">
+				<div class="help-text has-text-left">
+					<h2 class="dark-text">Delete Beneficiary</h2>
 
-                                    {% comment %} name, interventions, project, total members, date joined {% endcomment %}
-                                    
-                                    {% for beneficiary in beneficiaries %}
-                                        <tr>
-                                            <td>
-                                                <div class="b-checkbox is-secondary">
-                                                    <input id="checkbox-docs-10" class="styled" type="checkbox">
-                                                    <label for="checkbox-docs-10"></label>
-                                                </div>
-                                            </td>
+				</div>
 
-                                            <!-- Row Entry for Name-->
-                                            <td class="document-preview">
-                                                <span class="inner">
-                                                    <img src="https://via.placeholder.com/150x150" alt="" {% if beneficiary.logo %} data-demo-src="{{ beneficiary.logo.url }} {% endif %}">
-                                                    <a href="#" class="is-modal modal-trigger modal-trigger" data-modal="beneficiary-detail-modal" onClick="fetchDetailModalData('{{project.program.slug}}', '{{ project.slug}}', '{{beneficiary.slug}}')">{{beneficiary.name}}</a>
-                                                </span>
-                                            </td>
+				<div class="card-body">
+					<div class="has-text-centered">
+						<div class="image">
+							<img src="{% static 'assets/images/icons/basket.svg' %}">
+						</div>
+					</div>
 
-                                            <!-- Row Entry for Sub Project-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    {{ beneficiary.sub_project.name}}
-                                                </span>
-                                            </td>
+					<form id="delete-beneficiary-form" class="form" action="" method="post">
+						{% csrf_token %}
+						<div class="modal-footer">
+							<button type="button" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');"
+							        class="button modal-dismiss">Cancel
+							</button>
+							<button class=" is-danger is-modal" type="submit">Confirm</button>
+						</div>
+					</form>
+				</div>
 
-                                            <!-- Row Entry for Project-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    {{beneficiary.sub_project.project.name}}
-                                                </span>
-                                            </td>
-
-                                            <!-- Row Entry for Members-->
-                                            <td class="members">
-                                                <span class="inner">
-                                                    {{ beneficiary.total_beneficiaries}} Members
-                                                </span>
-                                            </td>
-                                            
-                                            <!-- Row Entry for Registered-->
-                                            <td class="modifications">
-                                                <span>
-                                                    <span class="date">
-                                                       {{beneficiary.registered_date}}
-                                                    </span>
-                                                </span>
-                                            </td>
-
-                                            <td class="actions">
-                                                <div class="dropdown is-right dropdown-trigger document-list-dropdown">
-                                                    <div class="button">
-                                                        <i class="material-icons">more_horiz</i>
-                                                    </div>
-                                                
-                                                    <div class="dropdown-menu is-text-bigger" role="menu">
-                                                        <div class="dropdown-content">
-                                                            <a class="dropdown-item modal-trigger modal-trigger" data-modal="create-beneficiary-modal" onClick="handleBeneficiaryForm('POPULATE_FORM','tralard', 'livelihoods', '{{beneficiary.slug}}');">
-                                                                Update
-                                                            </a>
-                                                            <a class="dropdown-item modal-trigger" data-modal="delete-beneficiary-modal" onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{project.program.slug}}', '{{project.slug}}', '{{beneficiary.slug}}')">
-                                                                Delete
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a href="#" class="button is-hidden"><i class="material-icons">remove_red_eye</i></a>
-                                            </td>
-                                        </tr>
-                                    {% endfor %}
-
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <!-- Right side menu -->
-                    <div class="column is-3 is-hidden-mobile">
-                        <div class="right-options">
-                            <!-- members -->
-                            <div class="members">
-                                {% for beneficiary in beneficiaries|slice:":4" %}
-
-                                    {% if beneficiary.logo %}
-                                        <img src="https://via.placeholder.com/150x150"
-                                            data-demo-src="{{ beneficiary.logo.url }}" data-toggle="tooltip"
-                                            data-placement="top" data-title="{{ beneficiary.name }}" data-trigger="hover" alt="">
-                                    {% endif %}
-
-                                {% endfor %}
-                            </div>
-                            <!-- Share -->
-                            {% comment %} <button type="button" class="button button-cta secondary-btn is-fullwidth is-bold raised modal-trigger" data-modal="create-beneficiary-modal">
-                                Create Beneficiary
-                            </button> {% endcomment %}
-                            <!-- Actions list -->
-                            <div id="default-controls" class="controls">
-                                <a class="control-block">
-                                    <i class="sl sl-icon-cloud-upload"></i>Import Beneficiaries
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-cloud-download"></i> Download Beneficiaries
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-eye"></i> Show deleted
-                                </a>
-                            </div>
-                            <!-- Actions list -->
-                            <div id="single-controls" class="controls is-hidden">
-                                <a class="control-block">
-                                    <i class="sl sl-icon-cloud-download"></i> Download Report
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-pencil"></i> Update
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-arrow-right-circle"></i> Change Sub-Project
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-eye"></i> Delete
-                                </a>
-                            </div>
-                            <!-- Actions list -->
-                            <div id="bulk-controls" class="controls is-hidden">
-                                <a class="control-block">
-                                    <i class="sl sl-icon-arrow-right-circle"></i> Change Sub-Project
-                                </a>
-                                <a class="control-block">
-                                    <i class="sl sl-icon-eye"></i> Delete Selected
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    
-
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
-
-    <!-- Reminder Modal --><!-- Create Task Modal -->
-    <div id="create-beneficiary-modal" class="modal create-task-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content" style="width: 50% !important;">
-            <div class="flex-card simple-shadow">
-                <div class="modal-hero m-2">
-                    <h2 id="beneficiary-form-title" class="has-text-centered dark-text">Create Beneficiary</h2>
-                </div>
-                <div class="navigation-tabs layout-tabs animated-tabs">
-                    <div id="task-details" class="navtab-content is-active">
-                        <div class="card-body" style="">
-                            <div class="content">
-                                <!-- New Project form -->
-                                <form id="beneficiary-form" action="{% url 'tralard:beneficiary-list' project.program.slug project.slug %}" method="post" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    {% crispy form form.helper %}
-                                    <div class="form-footer">
-                                        <button id="form-submit-button" type="submit" class="button is-modal">Create Beneficiary</button>
-                                    </div>
-    
-                                </form>
-                                <!-- /New Project form -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <button  class="modal-close is-large is-hidden" aria-label="close" onClick="handleBeneficiaryForm('CLEAR_FORM', '{{project.program.slug}}', '{{project.slug}}');"></button>
-    </div>
-    
-    <div id="beneficiary-detail-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content" style="width: 75% !important;">
-        
-                <!-- Dashboard Wrapper -->
-                <div class="dashboard-wrapper">
-        
-                    <div id="main-dashboard" class="section-wrapper">
-                        <!-- Dashboard content -->
-                        <div id="basic-layout" class="dashboard-columns">
-        
-                            <div class="contact-profile-wrap" style="margin: 20px;">
-        
-                                <div class="columns contact-profile">
-                                    <!-- Avatar Card -->
-                                    <div class="column is-4">
-                                        <div class="flex-card is-avatar light-bordered card-overflow">
-                                            <div id="detail-modal-inner" class="inner">
-                                                <div class="contact-block">
-                                                    <!-- Avatar -->
-                                                    <div class="avatar-wrapper">
-                                                        <img id="org-logo" src="https://via.placeholder.com/150x150" alt="" data-demo-src="">
-                                                    </div>
-                                                    <!-- Meta -->
-                                                    <div id="org-name-card" class="contact-name"></div>
-                                                    <div id="org-type" class="contact-company"></div>
-                                                    <!-- Stats -->
-                                                    <div class="stats-block">
-                                                        <div class="stat">
-                                                            <span>Total Beneficiaries</span>
-                                                            <span id="total-beneficiaries">24</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span>Females</span>
-                                                            <span id="total-females">17</span>
-                                                        </div>
-                                                        <div class="stat">
-                                                            <span>Males</span>
-                                                            <span id="total-males">7</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-        
-        
-                                    <div class="column is-8">
-                                        <!-- Contact informations -->
-                                        <div class="flex-card is-contact-info light-bordered card-overflow">
-                                            <!-- Tabs -->
-                                            <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
-                                                <div class="tabs">
-                                                    <ul>
-                                                        <li class="is-active" data-tab="tab-general"><a>General</a></li>
-                                                    </ul>
-                                                </div>
-        
-                                                <!-- General informations -->
-                                                <div id="tab-general" class="navtab-content is-active">
-                                                    <div class="columns">
-                                                        <div class="column is-6">
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Email
-                                                                </div>
-                                                                <div id="org-email" class="info-content is-email">
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Phone (1)
-                                                                </div>
-                                                                <div id="org-phone" class="info-content">
-                                                                    
-                                                                </div>
-                                                            </div>
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Organization Type
-                                                                </div>
-                                                                <div id="org-type-inner" class="info-content">
-                                                                </div>
-                                                            </div>
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Registered Date
-                                                                </div>
-                                                                <div id="org-registered-date" class="info-content">
-                                                                </div>
-                                                            </div>
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Location
-                                                                </div>
-                                                                <div id="org-location" class="info-content">
-                                                                </div>
-                                                            </div>
-                                                            <!-- Info block -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Ward
-                                                                </div>
-                                                                <div id="org-ward" class="info-content">
-                                                                </div>
-                                                            </div>
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Sub-Project
-                                                                </div>
-                                                                <div id="org-sub-project" class="info-content">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="column is-6">
-                                                            <!-- Contact summary -->
-                                                            <div class="info-block">
-                                                                <div class="info-label">
-                                                                    Organization Description
-                                                                </div>
-                                                                <div id="org-description" class="info-content is-notes">
-                                                                    
-                                                                </div>
-                                                                
-                                                            </div>
-                                                        </div>
-                                                    </div>
-        
-                                                    <hr>
-        
-                                                    <!-- Lifetime earnings -->
-                                                    <div class="lifetime-wrapper">
-                                                        <div class="">
-                                                            <div class="lifetime-label">Total Beneficiaries</div>
-                                                            <span id="total-beneficiaries-inner"></span>
-                                                        </div>
-        
-                                                        <!-- Send email action -->
-                                                        <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-dismiss"
-                                                            data-ripple-color="" data-modal="message-contact-modal" style="color: white">
-                                                            Close
-                                                        </a>
-                                                    </div>
-                                                </div>
-        
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-        
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        </div>
-    </div>
-
-    <!-- Delete Beneficiary Modal --><!-- Delete Beneficiary Modal -->
-    <div id="delete-beneficiary-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Delete Beneficiary</h2>
-
-                </div>
-
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                    </div>
-                    
-                    <form id="delete-beneficiary-form" class="form" action="" method="post">
-                        {% csrf_token %}
-                        <div id="warning-msg">
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="button" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
-                            <button class=" is-danger is-modal" type="submit">Confirm</button>
-                        </div>
-                    </form>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+			</div>
+		</div>
+	</div>
 
 </div>
 
@@ -477,107 +402,216 @@
 {% block javascripts %}
 <script>
 
-    function fetchData (url) {
-        const formData = $.get(url)
-        return formData
+  const fullDate = new Date();
+
+  const getCurrentDate = () => {
+    let twoDigitMonth = (fullDate.getMonth() + 1) + "";
+    if (twoDigitMonth.length == 1) twoDigitMonth = "0" + twoDigitMonth;
+    let twoDigitDate = fullDate.getDate() + "";
+    if (twoDigitDate.length == 1) twoDigitDate = "0" + twoDigitDate;
+    return `${twoDigitDate}-${twoDigitMonth}-${fullDate.getFullYear()}`
+  }
+
+  function fetchData(url) {
+    const formData = $.get(url)
+    return formData
+  }
+
+  async function handleBeneficiaryForm(actionType, program_slug = '', project_slug = '', beneficiary_slug = '') {
+    let data = ''
+    const origin = location.origin;
+    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+    const createUrl = `${baseUrl}/list/`
+    const updateUrl = `${baseUrl}/${beneficiary_slug}/update/`
+
+    if (actionType === "POPULATE_FORM") {
+      let formData = await fetchData(updateUrl)
+      data = formData
+    } else if (actionType == "CLEAR_FORM") {
+      data = {}
+    }
+    let form =
+      $("#beneficiary-form input[name='name']").val(data.name);
+    data.org_type ? $(`#id_org_type option[value="${data.org_type}"]`).prop('selected', true) : $(`#id_org_type option[value=""]`).prop('selected', true).text('---------');
+    $("#beneficiary-form input[name='total_beneficiaries']").val(data.total_beneficiaries || '');
+    $("#beneficiary-form input[name='total_females']").val(data.total_females || '');
+    $("#beneficiary-form input[name='total_males']").val(data.total_males || '');
+    $("#beneficiary-form input[name='total_hhs']").val(data.total_hhs || '');
+    $("#beneficiary-form input[name='female_hhs']").val(data.female_hhs || '');
+    $("#beneficiary-form input[name='below_sixteen']").val(data.below_sixteen || '');
+    $("#beneficiary-form input[name='sixteen_to_thirty']").val(data.sixteen_to_thirty || '');
+    $("#beneficiary-form input[name='thirty_to_fourty_five']").val(data.thirty_to_fourty_five || '');
+    $("#beneficiary-form input[name='above_fourty_five']").val(data.above_fourty_five || '');
+    $("#beneficiary-form textarea[name='description']").val(data.description || '');
+    $("#beneficiary-form input[name='email']").val(data.email || '');
+    $("#beneficiary-form input[name='cell']").val(data.cell || '');
+    $("#beneficiary-form input[name='registered_date']").val(data.registered_date || '');
+    data.sub_project ? $(`#id_sub_project option[value="${data.sub_project}"]`).prop('selected', true) : $(`#id_sub_project option[value=""]`).prop('selected', true).text('---------');
+    data.ward ? $(`#id_ward option[value="${data.ward}"]`).prop('selected', true) : $(`#id_ward option[value=""]`).prop('selected', true).text('---------');
+
+    if (actionType === "POPULATE_FORM") {
+      if (data.logo) {
+        $('.custom-file').append(`<a id="current-logo-image" href="${data.logo_image_url}">Current Image: ${data.logo}</a>`)
+        $('.custom-file').append('<br/>')
+        $('.custom-file').append('<p id="clear-image-checkbox"><input type="checkbox" name="logo-clear" id="logo-clear_id" style="margin-right: 5px;"><label for="logo-clear_id">Clear</label></p>')
+      }
+      $("#beneficiary-form").attr('action', updateUrl);
+      $('#beneficiary-form-title').text("Update Beneficiary")
+      $('#form-submit-button').text("Update")
+    } else {
+      $('#current-logo-image').remove()
+      $('#clear-image-checkbox').remove()
+      $("#beneficiary-form").attr('action', createUrl);
+      $('#beneficiary-form-title').text("Create Beneficiary")
+      $('#form-submit-button').text("Create")
     }
 
-    async function handleBeneficiaryForm(actionType, program_slug='', project_slug='', beneficiary_slug='') {
-        let data = ''
-        const origin = location.origin;
-        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
-        const createUrl = `${baseUrl}/list/`
-        const updateUrl = `${baseUrl}/${beneficiary_slug}/update/`
+    $("#location-mw-overlay-latitude").attr('value', data.location[0] || "");
+    $("#location-mw-overlay-longitude").attr('value', data.location[1] || "");
+    $(".mw-coordinates-overlay").click();
+  }
 
-        if (actionType === "POPULATE_FORM") {
-            let formData = await fetchData(updateUrl)
-            data = formData
-        } else if (actionType == "CLEAR_FORM") {
-            data = {}
-        }
-        let form = 
-
-        $("#beneficiary-form input[name='name']").val(data.name);
-        data.org_type ? $(`#id_org_type option[value="${data.org_type}"]`).prop('selected', true) : $(`#id_org_type option[value=""]`).prop('selected', true).text('---------');
-        $("#beneficiary-form input[name='total_beneficiaries']").val(data.total_beneficiaries || '');
-        $("#beneficiary-form input[name='total_females']").val(data.total_females || '');
-        $("#beneficiary-form input[name='total_males']").val(data.total_males || '');
-        $("#beneficiary-form input[name='total_hhs']").val(data.total_hhs || '');
-        $("#beneficiary-form input[name='female_hhs']").val(data.female_hhs || '');
-        $("#beneficiary-form input[name='below_sixteen']").val(data.below_sixteen || '');
-        $("#beneficiary-form input[name='sixteen_to_thirty']").val(data.sixteen_to_thirty || '');
-        $("#beneficiary-form input[name='thirty_to_fourty_five']").val(data.thirty_to_fourty_five || '');
-        $("#beneficiary-form input[name='above_fourty_five']").val(data.above_fourty_five || '');
-        $("#beneficiary-form textarea[name='description']").val(data.description || '');
-        $("#beneficiary-form input[name='email']").val(data.email || '');
-        $("#beneficiary-form input[name='cell']").val(data.cell || '');
-        $("#beneficiary-form input[name='registered_date']").val(data.registered_date || '');
-        data.sub_project ? $(`#id_sub_project option[value="${data.sub_project}"]`).prop('selected', true) : $(`#id_sub_project option[value=""]`).prop('selected', true).text('---------');
-        data.ward ? $(`#id_ward option[value="${data.ward}"]`).prop('selected', true ) : $(`#id_ward option[value=""]`).prop('selected', true ).text('---------');
-        
-        if (actionType === "POPULATE_FORM") {
-            if (data.logo) {
-                $('.custom-file').append(`<a id="current-logo-image" href="${data.logo_image_url}">Current Image: ${data.logo}</a>`)
-                $('.custom-file').append('<br/>')
-                $('.custom-file').append('<p id="clear-image-checkbox"><input type="checkbox" name="logo-clear" id="logo-clear_id" style="margin-right: 5px;"><label for="logo-clear_id">Clear</label></p>')
-            }
-            $("#beneficiary-form").attr('action', updateUrl);
-            $('#beneficiary-form-title').text("Update Beneficiary")
-            $('#form-submit-button').text("Update")
-        } else {
-            $('#current-logo-image').remove()
-            $('#clear-image-checkbox').remove()
-            $("#beneficiary-form").attr('action', createUrl);
-            $('#beneficiary-form-title').text("Create Beneficiary")
-            $('#form-submit-button').text("Create")
-        }
-
-        $("#location-mw-overlay-latitude").attr('value', data.location[0] || "");
-        $("#location-mw-overlay-longitude").attr('value', data.location[1] || "");
-        $(".mw-coordinates-overlay").click();
+  async function fetchDetailModalData(program_slug, project_slug, beneficiary_slug) {
+    const origin = location.origin;
+    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+    const fetchUrl = `${baseUrl}/${beneficiary_slug}/detail/`
+    const data = await fetchData(fetchUrl)
+    $('#org-logo').attr('src', data.logo_url || "")
+    $('#org-name').text(data.name || "")
+    $('#org-name-card').text(data.name || "")
+    $('#org-type').text(data.org_type || "")
+    $('#org-type-inner').text(data.org_type || "")
+    $('#total-beneficiaries').text(data.total_beneficiaries || "")
+    $('#total-beneficiaries-inner').text(data.total_beneficiaries || "")
+    $('#total-females').text(data.total_females || "")
+    $('#total-males').text(data.total_males || "")
+    $('#org-email').text(data.email || "")
+    $('#org-phone').text(data.cell || "")
+    $('#org-registered-date').text(data.registered_date || "")
+    if (data.location) {
+      $('#org-location').text(`${data.location[0]}, ${data.location[1]}`)
+    } else {
+      $('#org-location').text("")
     }
+    $('#org-description').text(data.description || "")
+    $('#org-ward').text(data.ward || "")
+    $('#org-sub-project').text(data.sub_project || "")
+  }
 
-    async function fetchDetailModalData(program_slug, project_slug, beneficiary_slug) {
-        const origin = location.origin;
-        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
-        const fetchUrl = `${baseUrl}/${beneficiary_slug}/detail/`
+  function handleDeleteBeneficiary(actionType, program_slug = '', project_slug = '', beneficiary_slug = '') {
+    const origin = location.origin;
+    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
+    const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
 
-        const data = await fetchData(fetchUrl)
-
-        $('#org-logo').attr('src', data.logo_url || "")
-        $('#org-name').text(data.name || "")
-        $('#org-name-card').text(data.name || "")
-        $('#org-type').text(data.org_type || "")
-        $('#org-type-inner').text(data.org_type || "")
-        $('#total-beneficiaries').text(data.total_beneficiaries || "")
-        $('#total-beneficiaries-inner').text(data.total_beneficiaries || "")
-        $('#total-females').text(data.total_females || "")
-        $('#total-males').text(data.total_males || "")
-        $('#org-email').text(data.email || "")
-        $('#org-phone').text(data.cell || "")
-        $('#org-registered-date').text(data.registered_date || "")
-        if (data.location) {
-            $('#org-location').text(`${data.location[0]}, ${data.location[1]}`)
-            
-        } else {
-            $('#org-location').text("")
-        }
-        $('#org-description').text(data.description || "")
-        $('#org-ward').text(data.ward || "")
-        $('#org-sub-project').text(data.sub_project || "")
+    if (actionType === "SET_ACTION_URL") {
+      $('#delete-beneficiary-form').attr('action', formActionUrl)
+    } else if (actionType === "UNSET_ACTION_URL") {
+      $('#delete-beneficiary-form').attr('action', " ")
     }
+  }
 
-    function handleDeleteBeneficiary(actionType, program_slug='', project_slug='', beneficiary_slug='') {
-        const origin = location.origin;
-        const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/beneficiary`
-        const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
-
-        if (actionType === "SET_ACTION_URL") {
-            $('#delete-beneficiary-form').attr('action', formActionUrl)
-        } else if (actionType === "UNSET_ACTION_URL") {
-            $('#delete-beneficiary-form').attr('action', " ")
+  /** ---------------------| Beneficiary DataTable Management |----------------------------
+   * @author Gift Jr
+   * @description Sorting, Filtering and Document managment utility using JQuery DataTables to provide
+   *              off the shelf table operations i.e. pagination, CRUD and other configurations
+   * @since 06.02.22
+   * @see https://datatables.net/reference/api/
+   * */
+  $(document).ready(function ($) {
+    const beneficiaryTable = $('#beneficiary-tbl').DataTable({
+      orderCellsTop: true,
+      pagingType: "full_numbers",
+      autoWidth: true,
+      responsive: true,
+      sDom: "ltipr", //hide default search,
+      "aoColumns": [
+        {"bSortable": false},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": true},
+        {"bSortable": false},
+      ],
+      dom: 'Brtip',
+      buttons: [
+        {
+          extend: 'print',
+          text: '<i class="sl sl-icon-printer text-primary"></i> Print',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'excelHtml5',
+          title: 'BeneficiaryListExcel-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-success"></i> Excel',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'pdfHtml5',
+          title: 'BeneficiaryListPDF-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-danger"></i>PDF',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
+        },
+        {
+          extend: 'csvHtml5',
+          title: 'BeneficiaryListCsv-' + getCurrentDate(),
+          text: '<i class="sl sl-icon-doc text-info"></i>CSV',
+          exportOptions: {
+            columns: [0, 1, 2, 3, 4]
+          }
         }
-    }
+      ],
+      initComplete: function () {
+        let api = this.api();
+
+        //displace buttons to action cards
+        $(".excel-cell").append($('.buttons-excel'));
+        $(".csv-cell").append($('.buttons-csv'));
+        $(".pdf-cell").append($('.buttons-pdf'));
+        $(".print-cell").append($('.buttons-print'));
+
+        //filter only name, subproject type column
+        api.columns([1, 2]).eq(0).each(function (colIdx) {
+          const cell = $('.filters th').eq(
+            $(api.column(colIdx).header()).index()
+          );
+          const title = $(cell).text();
+          $(cell).html(
+            '<div class="mx-auto px-1">' +
+            '<input class="input is-small is-rounded"' +
+            'type="text" placeholder="Search&nbsp;' + title + '" />' +
+            '</div>'
+          );
+
+          // On every keypress in this input
+          $('input', $('.filters th').eq($(api.column(colIdx).header()).index()))
+            .off('keyup change')
+            .on('keyup change', function (e) {
+              e.stopPropagation();
+              // Get the search value
+              $(this).attr('title', $(this).val());
+              const regexr = '({search})';
+              const cursorPosition = this.selectionStart;
+              // Search the column for that value
+              api.column(colIdx).search(
+                this.value != ''
+                  ? regexr.replace('{search}', '(((' + this.value + ')))')
+                  : '',
+                this.value != '',
+                this.value == ''
+              ).draw();
+
+            })
+
+        });
+      }
+    });
+  })
 
 </script>
 {% endblock javascripts %}

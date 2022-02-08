@@ -51,10 +51,7 @@ class ApprovedFundManager(models.Manager):
     def get_queryset(self):
         return (
             super(ApprovedFundManager, self)
-            .get_queryset()
-            .filter(
-                approved=True,
-            )
+            .get_queryset().filter(approved=True)
         )
 
 
@@ -63,11 +60,15 @@ class UnapprovedFundManager(models.Manager):
 
     def get_queryset(self):
         """Query set generator."""
-        return super(UnapprovedFundManager, self).get_queryset().filter(approved=False)
+        return super(
+            UnapprovedFundManager, self).get_queryset().filter(
+            approved=False)
+
 
 class FundCountManager(models.Manager):
     """ Computes total funds spent in current year """
-    def get_total_funds_in_year(self):   
+
+    def get_total_funds_in_year(self):
         current_year = datetime.now().year
         year_labels = list(set(list()))
         year_data = list(set(list()))
@@ -75,17 +76,18 @@ class FundCountManager(models.Manager):
         for i in range(5):
             year_labels.append(current_year - i)
             year_data.append(
-                int(self.get_queryset().filter(funding_date__year__gte=current_year - i, funding_date__year__lte=current_year - i
-                ).aggregate(
+                int(self.get_queryset().filter(funding_date__year__gte=current_year - i,
+                                               funding_date__year__lte=current_year - i
+                                               ).aggregate(
                     total_funds=Sum('amount')
                 )['total_funds'] or 0)
-            )     
-   
-        
+            )
+
         return {
             'year_labels': year_labels,
-            'total_funds': year_data            
+            'total_funds': year_data
         }
+
 
 @reversion.register
 class Fund(models.Model):
@@ -193,15 +195,12 @@ class Fund(models.Model):
         Override save method to calculate the balance.
         """
         if not self.slug:
-            self.slug = unique_slugify(
-                self,
-                slugify(
-                    f"{self.sub_project.project.slug} \
+            self.slug = unique_slugify(self,
+                                       slugify(f"{self.sub_project.project.slug} \
                 fund amount \
                     {self.amount}"
-                ),
-            )
-
+                                               ),
+                                       )
         if self.amount is not None:
             total_disburesment = compute_total_amount(
                 Disbursement, self.pk, "disbursement"
@@ -216,15 +215,16 @@ class Fund(models.Model):
         """
         return reverse_lazy(
             "tralard:project-detail",
-            kwargs={
-                "program_slug": self.sub_project.project.program.slug,
-                "project_slug": self.sub_project.project.slug,
-            },
-        )
-
+                            kwargs={
+                                "program_slug": self.sub_project.project.program.slug,
+                                "project_slug": self.sub_project.project.slug,
+                            },
+                            )
     @property
     def total_disbursed_funds(self):
-        total_disbursed_funds_queryset = Disbursement.objects.filter(fund__id=self.pk)
+        total_disbursed_funds_queryset = Disbursement.objects.filter(
+            fund__id=self.pk
+        )
         return total_disbursed_funds_queryset
 
     @property
@@ -236,7 +236,7 @@ class Fund(models.Model):
 
         amount_value = related_funds_sum_qs["amount__sum"]
         return amount_value
-          
+
 @reversion.register
 class FundVersion(models.Model):
     revision = models.ForeignKey(
@@ -306,7 +306,6 @@ class FundVersion(models.Model):
     )
 
 
-
 class Disbursement(models.Model):
     """
     Project Fund disbursement definition.
@@ -360,15 +359,16 @@ class Disbursement(models.Model):
                     f"{self.fund.slug} \
                     disbursement amount \
                         {self.amount}"
-                ),
-            )
+            ),
+                                       )
         if self.amount is not None:
             self.amount = check_requested_deduction_against_balance(
-                self.fund.balance, self.amount, "Disbursement", "Fund"
+                self.fund.balance,
+                self.amount,
+                "Disbursement",
+                "Fund"
             )
-            total_disbursment = compute_total_amount(
-                Expenditure, self.pk, "expenditure"
-            )
+            total_disbursment = compute_total_amount(Expenditure, self.pk, "expenditure")
             self.balance = get_balance(self.amount, total_disbursment)
         super().save(*args, **kwargs)
 

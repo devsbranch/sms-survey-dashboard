@@ -1,0 +1,154 @@
+    <!-- Task dropdown -->
+    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+        <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+            <div class="dropdown-content" style="position: fixed;">
+                <a onclick="document.getElementById('detail_modal').style.display='block'" class="dropdown-item view-btn{{ training.id }}">
+                    <i class="sl sl-icon-eye text-primary"></i>
+                    <span>
+                        <span>View</span>
+                        <span>View this training entry</span>
+                    </span>
+                </a>
+                <script>
+                    const uniqueSelectorButton = document.querySelector(".view-btn{{ training.id }}");
+                    uniqueSelectorButton.addEventListener("click", () => {
+                    if("{{ training.id }}" == "{{ training.id }}"){
+                      document.getElementById("sub-project-1").innerHTML = "{{ training.sub_project }}";
+                      document.getElementById("sub-project-2").innerHTML = "{{ training.sub_project }}";
+                      
+                      document.getElementById("training-moderator-1").innerHTML = "{{ training.moderator }}";
+                      document.getElementById("training-moderator-2").innerHTML = "{{ training.moderator }}";
+                      
+                      document.getElementById("project-title").innerHTML = "{{ training.title }}";
+                      document.getElementById("training-type").innerHTML = "{{ training.training_type }}";
+                      const startDate = "{{ training.start_date }}";
+                      const endDateArray = startDate.split(" ");
+                      const endDateProcessor = () => {
+                        if(endDateArray[4] != undefined){
+                          return endDateArray[4];
+                        }else{
+                          return ""
+                        }
+                     };
+                     if(endDateArray[0] !== undefined){
+                      document.getElementById("end-month").innerHTML = endDateArray[0];
+                    }else{
+                      document.getElementById("end-month").innerHTML = "blank";
+                    }
+                    if(endDateArray[1] !== undefined){
+                      document.getElementById("end-day").innerHTML = endDateArray[1];
+                    }else{
+                      document.getElementById("end-day").innerHTML = "blank";
+                    }
+                    if(endDateArray[2] !== undefined){
+                      document.getElementById("end-year").innerHTML = endDateArray[2];
+                    }else{
+                      document.getElementById("end-year").innerHTML = "blank";
+                    }
+                    if(endDateArray[3] !== undefined){
+                      document.getElementById("end-time").innerHTML = endDateArray[3] + endDateProcessor();
+                    }else{
+                      document.getElementById("end-time").innerHTML = "blank";
+                    }
+                      
+                      const endDate = "{{ training.start_date }}";
+                      const startDateArray = endDate.split(" ");
+                      const startDateProcessor = () => {
+                        if(startDateArray[4] != undefined){
+                          return startDateArray[4];
+                        }else{
+                          return ""
+                        }
+                     };
+                     
+                      if(startDateArray[0] !== undefined){
+                        document.getElementById("start-month").innerHTML = startDateArray[0];
+                      }else{
+                        document.getElementById("start-month").innerHTML = "blank";
+                      }
+                      if(startDateArray[1] !== undefined){
+                        document.getElementById("start-day").innerHTML = startDateArray[1];
+                      }else{
+                        document.getElementById("start-day").innerHTML = "blank";
+                      }
+                      if(startDateArray[2] !== undefined){
+                        document.getElementById("start-year").innerHTML = startDateArray[2];
+                      }else{
+                        document.getElementById("start-year").innerHTML = "blank";
+                      }
+                      if(startDateArray[3] !== undefined){
+                        document.getElementById("start-time").innerHTML = startDateArray[3] + startDateProcessor();
+                      }else{
+                        document.getElementById("start-time").innerHTML = "blank";
+                      }
+
+                      
+                      document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
+                      if("{{ training.sub_project.project.project_representative.cell }}"){
+                        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";
+                      }else{
+                        document.getElementById("cell-number").innerHTML = "None";
+                      }
+                      if("{{ training.sub_project.project.project_representative.email }}"){
+                        document.getElementById("email-address").innerHTML = "{{ training.sub_project.project.project_representative.email }}";
+                      }else{
+                        document.getElementById("email-address").innerHTML = "None";
+                      }
+                        document.getElementById("project-image").src = "{{ training.sub_project.project.logo_url }}";
+                      var boolean = document.getElementById("boolean");
+                      if("{{ training.completed }}" == "True"){
+                        document.getElementById("prospectSwitch").checked = true;
+                      }else{
+                        document.getElementById("prospectSwitch").checked = false;
+                      }
+                    }
+                  })
+                </script>
+                <a class="dropdown-item modal-trigger modal-trigger edit-btn2{{ training.id }}" data-modal="training-update-modal">
+                    <i class="sl sl-icon-pencil text-secondary"></i>
+                    <span>
+                        <span>Edit</span>
+                        <span>Edit this training entry</span>
+                    </span>
+                </a>
+                <script>
+                  var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ training.id }}");
+                    uniqueEditSelectorButton.addEventListener("click", () => {
+                       if("{{ training.slug }}" == "{{ training.slug }}"){
+                         document.getElementById("training-entry-form").innerHTML = `
+                           <form action="{% url 'tralard:training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.slug %}" name="sub_project_training_form" method="post" enctype="multipart/form-data">
+                             {% csrf_token %}
+                             {% load crispy_forms_tags %}
+                             {% crispy training.training_form training.training_form.helper %}
+                           </span>
+                          `;
+                       }
+                     });
+               </script>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item modal-trigger modal-trigger delete-btn{{ training.id }}" data-modal="training-delete-modal" id="{{ training.id }}" class="dropdown-item">
+                    <i class="sl sl-icon-trash text-danger"></i>
+                    <span>
+                        <span>Delete</span>
+                        <span>Delete this training entry</span>
+                    </span>
+                    <script>
+                      var uniqueEditSelectorButton = document.querySelector(".delete-btn{{ training.id }}");
+                      uniqueEditSelectorButton.addEventListener("click", () => {
+                         if("{{ training.slug }}" == "{{ training.slug }}"){
+                           document.getElementById("training-entry-form-delete").innerHTML += `
+                             <div style="align-content: center; margin-left: 12em;">
+                               {% csrf_token %}
+                              <div class="modal-footer" style="margin-right: 8em;">
+                                <a href="" class="btn btn-danger modal-dismiss">Cancel</a>
+                                <a style="" href="{% url 'tralard:training-delete' training.sub_project.project.program.slug training.sub_project.project.slug training.slug %}" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
+                              </div>
+                              </div>
+                            `;
+                         }
+                       });
+                    </script>
+                </a>
+            </div>
+        </div>
+    </div>                                                                

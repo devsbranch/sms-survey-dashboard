@@ -18,9 +18,10 @@ django-tinymce4-lite==1.8.0
 django-ckeditor==6.0.0
 django-crispy-forms==1.9.2
 easy-thumbnails
+django-filer==2.1.1
+django-filter==21.1
 Pillow==8.4.0
 requests==2.25.1
-django-filer==2.1.1
 django-select2==7.9.0
 django-imagekit==4.1.0
 django-grappelli==2.13.4
@@ -29,6 +30,7 @@ django-import-export==2.7.1
 django-report-builder==6.4.2
 django-rest-registration==0.7.0
 django-infinite-scroll-pagination==1.2.0
+django-widget-tweaks==1.4.11
 django-reversion==4.0.2
 # support special characters
 
