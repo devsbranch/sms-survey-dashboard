@@ -245,7 +245,7 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
                         yearly_target_values_dict
                     )
                 indicator_data["targets"].append(target_dict)
-        indicators_list.append(indicator_data)
+            indicators_list.append(indicator_data)
 
         context["title"] = "Program Detail"
         context["project_form"] = ProjectForm
