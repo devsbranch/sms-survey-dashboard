@@ -746,7 +746,7 @@ class SubProjectBeneficiaryOrgListView(
             kwargs={
                 "program_slug": self.kwargs.get("program_slug", None),
                 "project_slug": self.kwargs.get("project_slug", None),
-                "sub_project": self.kwargs.get("sub_project", None),
+                "subproject_slug": self.kwargs.get("subproject_slug"),
             },
         )
 
@@ -781,6 +781,7 @@ class SubProjectBeneficiaryOrgListView(
         organizations = paginator.page(page)
         context["header"] = "Beneficiaries"
         context["project"] = project
+        context["subproject_slug"] = subproject_slug
         context["beneficiaries"] = organizations
         context["beneficiary_filter"] = BeneficiaryFilter(
             self.request.GET, queryset=self.get_queryset()

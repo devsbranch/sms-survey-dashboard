@@ -9,8 +9,6 @@ from crispy_forms.bootstrap import FormActions
 from django_select2.forms import ModelSelect2Widget
 from crispy_forms.layout import (
     Layout,
-    Fieldset,
-    HTML,
     Submit,
     Row,
     Column,

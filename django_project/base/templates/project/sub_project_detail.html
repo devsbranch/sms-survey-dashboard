@@ -286,31 +286,32 @@
                           </div>
                           <!-- Info block -->
                           <div class="info-block">
-                            <div class="info-label">Phone (1)</div>
+                            <div class="info-label">Phone</div>
                             <div class="info-content">
                               {{ sub_project.representative.cell }}
                             </div>
                           </div>
                           <!-- Info block -->
                           <div class="info-block">
-                            <div class="info-label">District</div>
+                            <div class="info-label">Size</div>
                             <div class="info-content">
-                              {{ sub_project.representative.district }}
+                              {{ sub_project.size }} Hectors
                             </div>
                           </div>
                           <!-- Info block -->
                           <div class="info-block">
-                            <div class="info-label">Gender</div>
+                            <div class="info-label">Status</div>
                             <div class="info-content">
-                              {{ sub_project.representative.gender }}
+                              {{ sub_project.status }}
                             </div>
                           </div>
                           <!-- Info block -->
                           <div class="info-block">
                             <div class="info-label">Location</div>
                             <div class="info-content">
-                              {{ sub_project.representative.district }},
-                              {{sub_project.representative.province }}
+                              {{ sub_project.ward.district.province.name }},
+                              {{ sub_project.ward.district.name }} District,
+                              {{sub_project.ward.name }}
                             </div>
                           </div>
                         </div>
@@ -323,20 +324,49 @@
                             </div>
                             <!-- Switch -->
                             <div class="field is-prospect">
-                              <input
-                                id="prospectSwitch"
-                                type="checkbox"
-                                name="prospectSwitch"
-                                class="switch is-secondary"
-                                checked
-                              />
-                              <label for="prospectSwitch"
-                                ><span
-                                  >This intervention is a approved</span
-                                ></label
-                              >
+                                {% if sub_project.status == "Completed" %}
+                                <input
+                                  id="prospectSwitch"
+                                  type="checkbox"
+                                  name="prospectSwitch"
+                                  class="switch is-secondary"
+                                  checked
+                                />
+                                <label for="prospectSwitch"
+                                  ><span
+                                    >This subproject is Completed</span
+                                  ></label
+                                >
+                              {% elif sub_project.status == "Identified" %}
+                                  <input
+                                    id="prospectSwitch"
+                                    type="checkbox"
+                                    name="prospectSwitch"
+                                    class="switch is-secondary"
+                                    unchecked
+                                  />
+                                  <label for="prospectSwitch"
+                                    ><span
+                                      >This subproject has been Identified</span
+                                    ></label
+                                  >
+
+                                {% else %}
+                                  <input
+                                    id="prospectSwitch"
+                                    type="checkbox"
+                                    name="prospectSwitch"
+                                    class="switch is-secondary"
+                                    unchecked
+                                  />
+                                  <label for="prospectSwitch"
+                                    ><span
+                                      >This subproject is still in Progress</span
+                                    ></label
+                                  >
+                                  {% endif %}
+                                </div>
                             </div>
-                          </div>
                         </div>
                       </div>
 

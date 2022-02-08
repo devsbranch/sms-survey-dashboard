@@ -173,16 +173,26 @@
 							<div class="content">
 								<!-- New Project form -->
 								<form id="beneficiary-form"
-								      action="{% url 'tralard:beneficiary-list' project.program.slug project.slug %}"
+								      action="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject_slug %}"
 								      method="post" enctype="multipart/form-data">
 									{% csrf_token %}
 									{% crispy form form.helper %}
 									<div class="form-footer">
-										<button id="form-submit-button" type="submit" class="button is-modal">Create
-											Beneficiary
+										<button id="form-submit-button" type="submit" class="button is-modal">
+											Create Beneficiary
 										</button>
 									</div>
-
+									<style>
+										.left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single {
+											width: 690px;
+											height: 100%;
+										  }
+										.select2-results__options {
+											background-color: white;
+											width: 690px;
+											height: 100%;
+										}
+									</style>
 								</form>
 								<!-- /New Project form -->
 							</div>
@@ -510,13 +520,6 @@
     }
   }
 
-  /** ---------------------| Beneficiary DataTable Management |----------------------------
-   * @author Gift Jr
-   * @description Sorting, Filtering and Document managment utility using JQuery DataTables to provide
-   *              off the shelf table operations i.e. pagination, CRUD and other configurations
-   * @since 06.02.22
-   * @see https://datatables.net/reference/api/
-   * */
   $(document).ready(function ($) {
     const beneficiaryTable = $('#beneficiary-tbl').DataTable({
       orderCellsTop: true,

@@ -1,15 +1,14 @@
-from django.forms import ModelForm, widgets
 from django import forms
+from django.forms import ModelForm, widgets
 
 from crispy_forms.helper import FormHelper
+from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import (
     Layout,
-    HTML,
     Submit,
     Row,
     Column,
 )
-from crispy_forms.bootstrap import FormActions
 
 from tralard.models.fund import Fund, Disbursement, Expenditure
 
@@ -71,7 +70,6 @@ class FundForm(ModelForm):
                 ),
                 Column("currency", css_class="form-group col-md-12 mb-0"),
                 Column("funding_date", css_class="form-group col-md-12 mb-0"),
-                Column("sub_project", css_class="form-group col-md-12 mb-0"),
                 Column("approval_status", css_class="form-group col-md-12 mb-0"),
                 Column(
                     "approval_status_comment", css_class="form-group col-md-12 mb-0"

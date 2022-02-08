@@ -1,28 +1,83 @@
-from mapwidgets.widgets import GooglePointFieldWidget
+
+from django import forms
+from django.forms import ModelForm, widgets
+from django.utils.translation import gettext_lazy as _
+
 from crispy_forms.helper import FormHelper
-from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import (
     Layout,
     Fieldset,
-    HTML,
     Row,
     Column,
 )
 
-from django import forms
-from django.forms import ModelForm, widgets
+from django_select2.forms import ModelSelect2Widget
+from mapwidgets.widgets import GooglePointFieldWidget
 
+from tralard.models.ward import Ward
+from tralard.models.province import Province
+from tralard.models.district import District
 from tralard.models.beneficiary import Beneficiary
 
 
 class BeneficiaryCreateForm(ModelForm):
+
+    province = forms.ModelChoiceField(
+        queryset=Province.objects.all(),
+        label=_("Province"),
+        required=False,
+        widget=ModelSelect2Widget(
+            attrs={
+                'class': 'form-control mb-0 col-md-12',
+                'data-placeholder': '--- Select a province ---',
+                'data-minimum-input-length': 0,
+                },
+            model=Province,
+            search_fields=['name__icontains'],
+        ),
+    )
+
+    district = forms.ModelChoiceField(
+        queryset=District.objects.all(),
+        label=_("District"),
+        required=False,
+        widget=ModelSelect2Widget(
+            attrs={
+                "cols": 15,
+                'class': 'form-control',
+                'data-placeholder': '--- select a related district ---',
+                'data-minimum-input-length': 0,
+                },
+            model=District,
+            search_fields=['name__icontains'],
+            dependent_fields={'province': 'province'},
+        ),
+    )
+    
+    ward = forms.ModelChoiceField(
+        queryset=Ward.objects.all(),
+        label=_("Ward"),
+        required=False,
+        widget=ModelSelect2Widget(
+            attrs={
+                'class': 'form-control mb-0 col-md-12',
+                'data-placeholder': '--- Select a related ward ---',
+                'data-minimum-input-length': 0,
+                },
+            model=Ward,
+            search_fields=['name__icontains'],
+            dependent_fields={'district': 'district'},
+        ),
+    )
+
     class Meta:
 
         model = Beneficiary
         exclude = [
             "created",  
             "slug", 
-            "location"
+            "location",
+            "sub_project"
         ]
         widgets = {
             "location": GooglePointFieldWidget,
@@ -75,8 +130,9 @@ class BeneficiaryCreateForm(ModelForm):
                     Column(
                         "thirty_to_fourty_five", css_class="form-group col-md-6 mb-0"
                     ),
-                    Column("above_fourty_five", css_class="form-group col-md-6 mb-0"),
-                    Column("sub_project", css_class="form-group col-md-6 mb-0"),
+                    Column("above_fourty_five", css_class="form-group col-md-12 mb-0"),
+                    Column("province", css_class="form-group col-md-12 mb-0"),
+                    Column("district", css_class="form-group col-md-12 mb-0"),
                     Column("ward", css_class="form-group col-md-12 mb-0"),
                     css_class="form-row",
                 ),

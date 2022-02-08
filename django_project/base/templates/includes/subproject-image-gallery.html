@@ -38,7 +38,7 @@
 <!-- Images -->
 <div id="links" class="links" style="display:absolute; position:fixed; top:85vh; z-index: -1; left:6.5vw; height:100%; overflow: auto;">
     {% for img in subproject_images %}
-        <a href="{{ img.image.url }}" title="Photo">
+        <a href="{{ img.image.url }}" title={{ img.name }}>
             <img src="{% thumbnail img.image 250x250 crop %}" width="155" alt="Photo" />
         </a>
     {% endfor %}

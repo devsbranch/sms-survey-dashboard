@@ -411,7 +411,7 @@
         "pk": 37,
         "fields": {
             "name": "Chambeshi",
-            "province": 23,
+            "province": 19,
             "created": "2021-01-13",
             "slug": "chambeshi",
             "location": "POINT(-12.63247 28.05367)"

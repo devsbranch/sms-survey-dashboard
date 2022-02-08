@@ -1,4 +1,4 @@
-PROJECT_ID := ppcr
+PROJECT_ID := think2044
 
 SHELL := /bin/bash
 
@@ -21,7 +21,6 @@ build:
 	@echo "Building in production mode"
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) build --no-cache uwsgi 
-	@docker-compose -p $(PROJECT_ID) build --no-cache worker 
 	@# docker-compose -p $(PROJECT_ID) up -d uwsgi
 
 web:
