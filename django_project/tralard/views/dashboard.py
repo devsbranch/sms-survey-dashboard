@@ -76,6 +76,7 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context["total_funds_in_year"] = Fund.count_objects.get_total_funds_in_year()[
             "total_funds"
         ]
+        context['interentions_in_prov'] = SubProject.custom_objects.get_projects_in_district_json()['data']
 
         return context
 

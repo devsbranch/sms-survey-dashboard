@@ -4,10 +4,12 @@
   $(document).ready(function () {
     var prov_labels = "{{prov_labels}}";
     var subs_in_prov = "{{subs_in_prov}}";
+    var projects_in_prov = "{{ interentions_in_prov }}";
 
     var prov = prov_labels.replace(/&quot;/g, '"');
     var parsed_list = JSON.parse(prov);
     var parsed_data = JSON.parse(subs_in_prov);
+    var parsed_data2 = JSON.parse(projects_in_prov);
 
     console.log(parsed_list.length);
     console.log(parsed_data.length);
@@ -17,11 +19,10 @@
         type: "bar",
         data: {
           labels: parsed_list,
-          datasets: [
-            {
-              label: "Total Interventions",
-              data: parsed_data,
-              backgroundColor: [
+          datasets: [{
+            type:'bar',
+            label: "Subprojects in Province",
+            backgroundColor: [
                 "#3e95cd",
                 "#8e5ea2",
                 "#3cba9f",
@@ -33,8 +34,16 @@
                 "#e8c3b9",
                 "#c45850",
               ],
-            },
-          ],
+            data: parsed_data,
+          }, {
+            type:'line',
+            label: "Interventions in Province",
+            backgroundColor: ["rgba(203, 195, 227)"],            
+            borderColor: "rgba(127, 0, 255,0.9)",
+            pointBackgroundColor: "#fff",
+            pointBorderColor: "rgba(127, 0, 255,1)",
+            data: parsed_data2,
+          }],
         },
         options: {
           responsive: true,
@@ -46,9 +55,10 @@
               {
                 scaleLabel: {
                   display: true,
-                  labelString: "Number of Interventions",
+                  labelString: "Total Count",
                 },
                 ticks: {
+                  beginAtZero: true,
                   userCallback(label, index, labels) {
                     // only show if whole number
                     if (Math.floor(label) === label) {
@@ -63,6 +73,8 @@
       });
     }
   });
+
+
 </script>
 
 {%endblock scripts%} {%block content%} {% comment %}
@@ -70,18 +82,18 @@
   {% endcomment %}
   <div class="flex-card">
     <div class="card-heading is-bordered has-icon">
-      <h3>Interventions By Province</h3>
+      <h3>Overview By Province</h3>
     </div>
     <div class="card-body">
       <div class="row mb-20">
         <div class="col-auto m-b-10">
           <h3 class="mb-1 demo-title">{{ total_approved_subprojects|safe }}</h3>
 
-          <h2 class="border-title">Approved</h2>
+          <h2 class="border-title">Approved Subprojects</h2>
         </div>
         <div class="col-auto m-b-10">
           <h3 class="mb-1 demo-title">{{ total_funded_subprojects|safe }}</h3>
-          <h2 class="border-title">Funded</h2>
+          <h2 class="border-title">Funded Subprojects</h2>
         </div>
       </div>
       <canvas id="cjs" width="800" height="450"></canvas>

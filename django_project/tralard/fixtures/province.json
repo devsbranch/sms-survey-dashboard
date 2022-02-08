@@ -88,14 +88,5 @@
             "created": "2021-01-13",
             "slug": "central-province"
         }
-    },
-    {
-        "model": "tralard.province",
-        "pk": 23,
-        "fields": {
-            "name": "North-Estern Province",
-            "created": "2021-01-13",
-            "slug": "north-estern-province"
-        }
     }
 ]

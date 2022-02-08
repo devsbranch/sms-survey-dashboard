@@ -36,52 +36,12 @@
 
 {%block content%}
 <!-- Widget -->
-<div id="doughnut-card" class="dash-card" style>
-  <div class="card-heading has-icon no-margin">
+<div class="flex-card light-bordered light-raised mt-20">
+  <div class="card-heading no-margin">
     <span>Beneficiary By Category</span>
-
-    <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-      <div class="button">
-        <i class="material-icons">more_vert</i>
-      </div>
-      <div class="dropdown-menu is-text-bigger" role="menu">
-        <div class="dropdown-content">
-          <a class="dropdown-item">
-            <i class="sl sl-icon-refresh"></i>
-            <span>
-              <span>Reload</span>
-              <span>Reload widget data</span>
-            </span>
-          </a>
-          <a href="#" class="dropdown-item">
-            <i class="sl sl-icon-pencil"></i>
-            <span>
-              <span>Settings</span>
-              <span>Edit widget settings</span>
-            </span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="sl sl-icon-bell"></i>
-            <span>
-              <span>Notifications</span>
-              <span>Notify me of changes</span>
-            </span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item">
-            <i class="sl sl-icon-trash"></i>
-            <span>
-              <span>Delete</span>
-              <span>Delete this widget</span>
-            </span>
-          </a>
-        </div>
-      </div>
-    </div>
   </div>
-  <div class="chart-container">
-    <canvas id="myChart" width="200" height="90"></canvas>
+  <div>
+    <canvas id="myChart" width="200" height="100"></canvas>
   </div>
 </div>
 {%endblock content%}
