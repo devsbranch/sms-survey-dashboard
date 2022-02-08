@@ -46,6 +46,7 @@ INSTALLED_APPS += (
     'import_export',
     'mapwidgets',
     'report_builder',
+    'django_select2',
     'django_filters',
     'widget_tweaks',
     'reversion'
@@ -267,3 +268,20 @@ REST_REGISTRATION = {
 
 # Redirect to login page if user is not authorized
 ROLEPERMISSIONS_REDIRECT_TO_LOGIN = True
+
+# Select2 configuration
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+        "LOCATION": "unique-snowflake",
+    },
+    "select2": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("CELERY_BROKER_URL"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
+
+SELECT2_CACHE_BACKEND = "select2"

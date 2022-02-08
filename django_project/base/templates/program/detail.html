@@ -10,6 +10,8 @@
 {% endblock %}
 
 <!-- Specific CSS goes HERE -->
+{% block stylesheets %} 
+	{{ search_form.media.css }}
 {% block stylesheets %}
 <!--suppress ALL -->
 <style>
@@ -40,17 +42,78 @@
 {% include 'includes/indicator-forms.html' %}
 
 <!-- Main dashboard container -->
-<div id="dashboard-wrapper" class="dashboard-outer">
-	<div class="dashboard-inner">
+<!-- <div class="projects-wrapper"> -->
+	<div class="profile-heading" style="margin-left: 8em; margin-top: 6em;">
+		{% if program.logo %}
+		<img src="https://via.placeholder.com/250x250" alt=""
+			 data-demo-src="{{ program.logo.url }}"
+		/>
+		{% elif not program.logo and program.name|lower == 'ppcr' %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/ppcr.png' %}">
+		{% elif not program.logo and program.name|lower == 'tralard' %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/tralard.png' %}">
+		{% else %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/logos/logo.png' %}">
+		{% endif %}
+		<div>
+			<h2 class="project-title">Project Name: {{ program.name|upper }}</h2>
+			<h4 class="project-tagline no-margin-bottom">project landing page</h4>
+		</div>
+	</div>
+<div id="dashboard-wrapper" class="dashboard-outer" style="display: flex;">
+		<form action="" class="left" id="search-form123" style="margin-top: 15.5em; padding-right: 0px;" method="get">
+			{{ search_form.province }}<br /> 
+			{{ search_form.district }}<br />
+			{{ search_form.ward }}<br />
+			<div style="display: flex; word-spacing: 12px;">
+				<input type="submit" value="Search" class="btn btn-outline-secondary" style="background: #21546d; color: white; padding-left: 2.5em; padding-right: 2.5em; margin-right: 0.25em;" /> <a style="background: #21546d; color: white; margin-left: 0.25em; margin-top: 0px; padding-left: 2.5em; padding-right: 2.5em;" href="{% url 'tralard:program-detail' program_slug %}" class="btn btn-outline-secondary">reset</a>
+			</div>
+		</form>
+	<style>
+		.left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single {
+			float: left;
+			width: 230px;
+			height: 100%;
+		  }
+		.select2-selection--single {
+			margin-bottom: 12px;
+		 }
+		.select2-search--dropdown {
+			width: 240px;
+			margin-left: -8px;
+			margin-top: -18px;
+		}
+		.select2-selection__arrow b {
+			visibility: hidden;
+			margin-left: -8em;
+		}
 
+		.select2-results__options {
+			background-color: white;
+			float: left;
+			width: 230px;
+			height: 100%;
+		}
+	</style>
+	<div id="dashboard-wrapper" class="dashboard-outer">
+		
 		<!-- Dashboard Wrapper -->
 		<div class="dashboard-wrapper">
 
 			<div id="main-dashboard" class="section-wrapper">
 				<!-- Dashboard content -->
-				<div id="basic-layout" class="dashboard-columns">
+				<div id="basic-layout"  class="dashboard-columns">
 
-					<div class="projects-wrapper">
+					<!-- <div class="projects-wrapper">
 						<div class="profile-heading">
 							{% if program.logo %}
 							<img src="https://via.placeholder.com/250x250" alt=""
@@ -76,56 +139,71 @@
 								<h2 class="project-title">Project Name: {{ program.name|upper }}</h2>
 								<h4 class="project-tagline no-margin-bottom">project landing page</h4>
 							</div>
-						</div>
-
+						</div> -->
+						
 						<div class="navigation-tabs layout-tabs overflow-tabs animated-tabs mt-20 mb-20">
-							<div class="tabs is-toggle is-fullwidth">
+							<div  class="tabs is-toggle is-fullwidth">
 								<ul>
-									<li class="tab-link is-active" data-tab="my-teams"><a
-											id="projects_tab">SubProjects</a></li>
-									<li class="tab-link" data-tab="my-projects"><a
-											id="subprojects_tab">Interventions</a></li>
-									<li class="tab-link" data-tab="my-tasks"><a id="beneficiaries_tab">Beneficiaries</a>
+									<li class="tab-link is-active" data-tab="my-teams" >
+										<a id="projects_tab">SubProjects</a>
 									</li>
-									<li class="tab-link" data-tab="indicators-list"><a
-											id="indicators_tab">Indicators</a></li>
+									<li class="tab-link"  data-tab="my-projects" >
+										<a id="subprojects_tab">Interventions</a>
+									</li>
+									<li class="tab-link"  data-tab="my-tasks">
+										<a id="beneficiaries_tab">Beneficiaries</a>
+									</li>
+									<li class="tab-link"  data-tab="indicators-list">
+										<a id="indicators_tab">Indicators</a>
+									</li>
 								</ul>
 							</div>
-
 							<!-- All Projects Display -->
+							<script>
+								document.getElementById("first-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("second-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("third-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("fourth-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+							</script>
 							<div id="my-teams" class="navtab-content is-active">
-
 								<!-- Projects Group -->
 								<div class="projects-list-wrapper">
 									<div class="list-header">
+										
 										<div class="list-title">
-                                            <span>Showing All SubProjects Under {{ program.name|upper }}
-                                                <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
-                                            </span>
-											<div class="add-button modal-trigger"
-											     data-modal="project-form-modal">
-												<i class="material-icons" title="Create new project">add</i>
+                                                <span> Showing All SubProjects Under {{ program.name|upper }}
+                                                    <h4 class="project-tagline no-margin-bottom">total count: {{ total_projects }}</h4>
+                                                </span> 
+												<div class="add-button modal-trigger"
+													data-modal="project-form-modal">
+													<i class="material-icons" title="Create new project">add</i>
+												</div>
+											</div>
+											<div class="list-filter">
+												<div class="control">
+													<form method="get" action="">
+														<input class="input"
+														id="search-projects"
+														name="search-projects"
+														onkeyup="searchProjectAction('{{ program.slug }}');"
+														type="text"
+														placeholder="Filter Projects">
+														<div class="form-icon">
+															<i id="search-icon" data-feather="filter"></i>
+														</div>
+													</form>
+												</div>
 											</div>
 										</div>
-
-										<div class="list-filter">
-											<div class="control">
-												<form method="get" action="">
-													<input class="input"
-													       id="search-projects"
-													       name="search-projects"
-													       onkeyup="searchProjectAction('{{ program.slug }}');"
-													       type="text"
-													       placeholder="Filter Projects">
-													<div class="form-icon">
-														<i id="search-icon" data-feather="filter"></i>
-													</div>
-												</form>
-											</div>
-										</div>
-									</div>
-									<!-- SubProjects Listing (Table and Grid View) -->
-									<div class="list-body" id="projects-content">
+										<div class="list-body" id="projects-content">
 										{% include 'includes/project/project-list.html' %}
 									</div>
 									<div class="list-body" id="projects-table">
@@ -133,41 +211,41 @@
 									</div>
 								</div>
 							</div>
-
 							<!-- Projects + Subproject Wrapper -->
 							<div id="my-projects" class="navtab-content">
-
+								
 								<!-- SubProjects content -->
-								<div class="projects-list-wrapper">
+								<div class="projects-list-wrapper" >
 									<!-- SubProjects Group -->
 									<div class="list-header">
 										<div class="list-title">
-                                            <span>Showing All Interventions Under {{ program.name|upper }}
+											<span>Showing All Interventions Under {{ program.name|upper }}
 												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
 											<div class="add-button modal-trigger"
-											     data-modal="project-form-modal">
-												<i class="material-icons" title="Create new project">add</i>
-											</div>
-										</div>
-										<div class="list-filter">
-											<div class="control">
-												<form method="get" action="">
-													<input class="input"
-													       id="search-subprojects"
-													       name="search-projects"
-													       onkeyup="searchSubprojectsAction('{{ program.slug }}');"
-													       type="text"
-													       placeholder="Filter Subrojects"/>
-													<div class="form-icon">
-														<i id="search-icon" data-feather="filter"></i>
-													</div>
-												</form>
-											</div>
+											data-modal="project-form-modal">
+											<i class="material-icons" title="Create new project">add</i>
 										</div>
 									</div>
-									<!-- All SubProject Listing -->
-									<div class="list-body" id="subprojects-content">
+									<div class="list-filter">
+										<div class="control">
+											<form method="get" action="">
+												<input class="input"
+												id="search-subprojects"
+												name="search-projects"
+												onkeyup="searchSubprojectsAction('{{ program.slug }}');"
+												type="text"
+												placeholder="Filter Subrojects"/>
+												<div class="form-icon">
+													<i id="search-icon" data-feather="filter"></i>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								
+								<!-- All SubProject Listing -->
+								<div class="list-body" id="subprojects-content">
 										{% include 'includes/sub-project-list.html' %}
 									</div>
 								</div>
@@ -176,7 +254,7 @@
 							<div id="my-tasks" class="navtab-content">
 
 								<!-- Beneficiary List -->
-								<div class="projects-list-wrapper">
+								<div style="" class="projects-list-wrapper">
 									<div class="list-header">
 										<div class="list-title">
 											<span>Showing All Beneficiaries Under {{ program.name|upper }} </span>
@@ -295,7 +373,7 @@
 		<div class="flex-card simple-shadow">
 			<h2 class="has-text-centered dark-text">New SubProject</h2>
 			<div class="navigation-tabs layout-tabs animated-tabs">
-				<div class="tabs is-toggle is-fullwidth no-margin-bottom">
+				<div class="tabs is-toggle is-fullwidth no-margin-bottom" style="position:fixed;">
 					<ul>
 						<li class="tab-link is-active" data-tab="project-details"><a>Details</a></li>
 						<li class="tab-link" data-tab="project-members"><a>Members</a></li>
@@ -728,7 +806,7 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
+{{ search_form.media.js }}
 <script>
   let origin = location.origin;
   const delay_by_in_ms = 700

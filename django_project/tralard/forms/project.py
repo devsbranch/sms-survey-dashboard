@@ -1,10 +1,12 @@
-import crispy_forms
+
 from django import forms
-
 from django.forms import ModelForm, widgets
+from django.utils.translation import gettext_lazy as _
 
+import crispy_forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
+from django_select2.forms import ModelSelect2Widget
 from crispy_forms.layout import (
     Layout,
     Fieldset,
@@ -14,7 +16,59 @@ from crispy_forms.layout import (
     Column,
 )
 
+from tralard.models.ward import Ward
+from tralard.models.province import Province
+from tralard.models.district import District
 from tralard.models.project import Feedback, Project
+
+class SearchForm(forms.Form):
+    
+    province = forms.ModelChoiceField(
+        queryset=Province.objects.all(),
+        label=_("Province"),
+        required=True,
+        widget=ModelSelect2Widget(
+            attrs={
+                'class': 'form-control mb-0 col-md-3',
+                'data-placeholder': '--- Click to select a province ---',
+                'data-minimum-input-length': 0,
+                },
+            model=Province,
+            search_fields=['name__icontains'],
+        ),
+    )
+
+    district = forms.ModelChoiceField(
+        queryset=District.objects.all(),
+        label=_("District"),
+        required=True,
+        widget=ModelSelect2Widget(
+            attrs={
+                'class': 'form-control mb-0 col-md-3',
+                'data-placeholder': '--- Click to select a district ---',
+                'data-minimum-input-length': 0,
+                },
+            model=District,
+            search_fields=['name__icontains'],
+            dependent_fields={'province': 'province'},
+        ),
+    )
+    
+    ward = forms.ModelChoiceField(
+        queryset=Ward.objects.all(),
+        label=_("Ward"),
+        required=True,
+        widget=ModelSelect2Widget(
+            attrs={
+                'class': 'form-control mb-0 col-md-3',
+                'data-placeholder': '--- Click to select a ward ---',
+                'data-minimum-input-length': 0,
+                },
+            model=Ward,
+            search_fields=['name__icontains'],
+            dependent_fields={'district': 'district'},
+        ),
+    )
 
 
 class ProjectForm(ModelForm):

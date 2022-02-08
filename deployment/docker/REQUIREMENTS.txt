@@ -18,10 +18,11 @@ django-tinymce4-lite==1.8.0
 django-ckeditor==6.0.0
 django-crispy-forms==1.9.2
 easy-thumbnails
-django-filer==2.1.1
 django-filter==21.1
 Pillow==8.4.0
 requests==2.25.1
+django-filer==2.1.1
+django-redis==5.0.0  # https://github.com/jazzband/django-redi
 django-select2==7.9.0
 django-imagekit==4.1.0
 django-grappelli==2.13.4

@@ -67,6 +67,10 @@ from tralard.views.training import (
     training_delete,
     TrainingListView,
 )
+from tralard.views.program import (
+    ProgramDetailView, 
+    preview_indicator_document,
+)
 
 app_name = "tralard"
 urlpatterns = [

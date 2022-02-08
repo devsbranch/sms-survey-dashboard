@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from tralard.models.program import Program
 from tralard.models.project import Project, Feedback
 from tralard.forms.sub_project import SubProjectForm
-from tralard.forms.project import FeedbackForm, ProjectForm
 from tralard.models.sub_project import SubProject, Indicator
+from tralard.forms.project import FeedbackForm, ProjectForm
 
 
 @login_required(login_url="/login/")
@@ -196,7 +196,6 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["sub_project_list"] = self.sub_projects_qs
         context["total_sub_projects"] = self.sub_project_count
-
         return context
 
     def form_valid(self, form):

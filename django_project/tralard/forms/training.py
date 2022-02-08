@@ -1,9 +1,10 @@
 import crispy_forms
 from django.contrib.gis import forms
-
 from django.forms import ModelForm, widgets
+from django.utils.translation import gettext_lazy as _
 
 from crispy_forms.helper import FormHelper
+from crispy_forms.bootstrap import FormActions
 from crispy_forms.layout import (
     Layout,
     HTML,
@@ -11,7 +12,6 @@ from crispy_forms.layout import (
     Row,
     Column,
 )
-from crispy_forms.bootstrap import FormActions
 
 from tralard.models.training import Training
 
@@ -20,8 +20,8 @@ TRAINING_COMPLELTE_CHOICES = [
     ('No', 'No'),
     ('Unkown', 'Unkown'),
 ]
-
-
+ 
+   
 class TrainingForm(ModelForm):
     custom_completed = forms.ChoiceField(
         label="completed",

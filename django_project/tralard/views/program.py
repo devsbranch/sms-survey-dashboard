@@ -3,27 +3,27 @@ import os
 from datetime import datetime
 
 from django.conf import settings
+from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.http import JsonResponse
+from django.views.generic import ListView
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.core.paginator import Paginator
-from django.http import JsonResponse
-from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.urls import reverse_lazy
-from django.views.generic import ListView
 
+from tralard.models.program import Program
+from tralard.models.project import Project
+from tralard.models.beneficiary import Beneficiary
+from tralard.models.sub_project import Indicator, SubProject
+from tralard.forms.project import SearchForm, ProjectForm
 from tralard.forms import (
     ProjectForm,
+    IndicatorForm,
     IndicatorTargetForm,
     IndicatorTargetValueForm,
     IndicatorUnitOfMeasureForm,
-    IndicatorForm,
 )
-from tralard.models.beneficiary import Beneficiary
-from tralard.models.program import Program
-from tralard.models.project import Project
-from tralard.models.sub_project import Indicator, SubProject
-
 
 class ProgramDetailView(LoginRequiredMixin, ListView):
     model = Project
@@ -112,7 +112,46 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
             self.beneficiaries = Beneficiary.objects.filter(
                 sub_project__project__program__slug=self.program_object.slug
             )
-
+        self.total_subproject_count = SubProject.objects.all().count()
+        self.total_beneficiary_count = Beneficiary.objects.all().count()
+        self.total_project_count = Project.objects.filter(
+            program=self.program_object
+        ).count()
+        
+        try:
+            self.project_list = []
+            self.subproject_list = []
+            self.beneficiary_list = []
+            self.district_id = int(self.request.GET.get("district"))
+            self.ward_id = int(self.request.GET.get("ward"))
+            
+            self.sub_projects = SubProject.objects.filter(
+                project__program__slug=self.program_slug,
+                ward__district__id=self.district_id,
+            )
+            
+            for sub_project in self.sub_projects:
+                self.project_list.append(
+                    sub_project.project
+                )
+                self.beneficiary  = Beneficiary.objects.filter(
+                    sub_project__project__program__slug=self.program_slug,
+                    ward__district__id=subproject.ward.district.id,
+                )
+                self.beneficiary_list.append(
+                    self.beneficiary
+                )
+            self.projects = self.project_list
+            self.total_project_count = len(self.project_list)
+            
+            self.subprojects = self.sub_projects
+            self.total_subproject_count = self.subprojects.count()
+            
+            self.beneficiaries = self.beneficiary_list
+            self.total_beneficiary_count = len(self.beneficiary_list)
+        except:
+            pass
+        
         self.subproject_paginator = Paginator(self.subprojects, 9)
         self.subproject_page_number = self.request.GET.get("subproject_page")
         self.subproject_paginator_list = self.subproject_paginator.get_page(
@@ -129,6 +168,10 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
             self.project_page_number
         )
 
+        self.subproject_indicator_list = SubProject.objects.filter(
+             project__program__slug=self.program_object.slug
+            )
+            
         indicator_forms = [
             {
                 "modal_id": "indicator_form",
@@ -163,8 +206,9 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
         indicators_list = []
         current_year = datetime.now().year
         indicators = Indicator.objects.filter(
-            subproject_indicators__in=self.subprojects
+            subproject_indicators__in=self.subproject_indicator_list
         ).distinct()
+            
         for indicator in indicators:
             indicator_data = {
                 "name": indicator.name,
@@ -205,17 +249,16 @@ class ProgramDetailView(LoginRequiredMixin, ListView):
 
         context["title"] = "Program Detail"
         context["project_form"] = ProjectForm
+        context["search_form"] = SearchForm
         context["projects"] = self.project_paginator_list
         context["program"] = self.program_object
         context["program_slug"] = self.program_slug
         context["sub_project_list"] = self.subproject_paginator_list
         context["sub_project_page_number"] = self.subproject_page_number
         context["beneficiary_list"] = self.beneficiary_paginator_list
-        context["total_projects"] = Project.objects.filter(
-            program=self.program_object
-        ).count()
-        context["total_sub_projects"] = SubProject.objects.all().count()
-        context["total_beneficiary_count"] = Beneficiary.objects.all().count()
+        context["total_projects"] = self.total_project_count
+        context["total_sub_projects"] = self.total_subproject_count
+        context["total_beneficiary_count"] = self.total_beneficiary_count
         context["indicators"] = indicators_list
         context["indicator_forms"] = indicator_forms
         return context

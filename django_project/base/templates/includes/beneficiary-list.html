@@ -37,17 +37,14 @@
 						</div>
 						<div class="more-drop">
 							<!-- Beneficiary dropdown -->
-							<a id="main-beneficiary-redirector123{{beneficiary.slug}}"
-							>
-								<span class="member-count"
-								      data-toggle="tooltip"
-								      data-placement="top"
-								      data-title="beneficiary list"
-								      data-trigger="hover"
-								      data-original-title="">
-									<i class="sl sl-icon-arrow-right"></i>
-								</span>
-							</a>
+							{% if beneficiary.sub_project.project.slug %}
+								<a href="{% url 'tralard:beneficiary-list' program_slug beneficiary.sub_project.project.slug %}" id="main-beneficiary-redirector123{{beneficiary.slug}}">
+									<span class="member-count" data-toggle="tooltip" data-placement="top" data-title="Click to go to main list" data-trigger="hover" data-original-title="">
+										<i class="sl sl-icon-arrow-right"></i>
+									</span>
+								</a>
+							{% else %}
+							{% endif %}
 						</div>
 					</div>
 				</div>

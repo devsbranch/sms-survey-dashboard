@@ -32,6 +32,7 @@ api_docs_urlpatterns = [
 urlpatterns = [
 
     # must be before admin entry
+    path("select2/", include("django_select2.urls")),
     path('grappelli/', include('grappelli.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include("authentication.urls")), # Auth routes - login / register

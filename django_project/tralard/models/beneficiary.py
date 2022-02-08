@@ -72,7 +72,6 @@ class Beneficiary(AbstractOrganizationBeneficiary):
         "tralard.subproject",
         on_delete=models.CASCADE,
     )
-    
     objects = models.Manager()
     custom_objects = BeneficiaryManager()
 

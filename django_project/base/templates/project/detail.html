@@ -49,10 +49,8 @@
     <!-- Main dashboard container -->
     <div id="dashboard-wrapper" class="dashboard-outer">
         <div class="dashboard-inner">
-    
             <!-- Dashboard Wrapper -->
             <div class="dashboard-wrapper">
-    
                 <div id="main-dashboard" class="section-wrapper">
                     <!-- Dashboard content -->
                     <div id="crm-deal" class="dashboard-columns">
@@ -73,7 +71,7 @@
                             />
                             {% endif %}
                             <div class="inner-wrap">
-                                <h3 class="deal-title">{{ project.name|title }}</h3>
+                                <h3 class="deal-title" style="padding-left: 12px;">{{ project.name|title }}</h3>
                                 <div class="title-meta">
                                     <a href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
                                         <div class="meta">
@@ -380,7 +378,7 @@
                                                                                                                                                                                                                           
                                                                         <div style="display: flex; justify-content: space-between;"> 
                                                                             <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}">
-                                                                                <h3>{{ subproject.name }}</h3>
+                                                                                <h3>{{ subproject.name }} </h3>
                                                                             </a> 
                                                                             {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
                                                                          <div
@@ -728,8 +726,8 @@ function deleteSubproject(program_slug, project_slug, sub_project_slug, subproje
     }
 
 </script>
-
 <script>
+
     function populateFeedbackForm(program_slug, project_slug, feedback_slug, project_name) {
         let origin = location.origin;
         const url = `${origin}/program/${program_slug}/project/${project_slug}/detail/${feedback_slug}/`
