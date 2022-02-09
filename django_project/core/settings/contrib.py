@@ -202,12 +202,9 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters',
 )
 
-# TINYMCE_DEFAULT_CONFIG = {
-#     # 'theme': "simple", # default value
-#     # 'relative_urls': False, # default value
-#     'width': '100',
-#     'height': 100
-# }
+SERIALIZATION_MODULES = {
+    "geojson": "django.contrib.gis.serializers.geojson", 
+ }
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',

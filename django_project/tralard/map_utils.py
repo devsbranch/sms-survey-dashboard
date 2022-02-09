@@ -3,6 +3,8 @@ import pandas as pd
 import altair as alt
 from folium import plugins
 
+from django.core.serializers import serialize
+
 from tralard.models.ward import Ward
 from tralard.constants import MAP_LAYER_CHOICES
 from tralard.models.sub_project import SubProject
@@ -18,14 +20,29 @@ def prepare_marker_data():
 
     return data
 
+def model_to_geojson():
+    data = []
+    ward_qs = Ward.objects.all()
+    for ward in ward_qs:
+        if ward.location is not None:
+            data.append(ward)
+    
+    geojson_data = serialize(
+        'geojson', 
+        data,
+        geometry_field='point',
+        fields=('name',)
+    )
+
+    return geojson_data
 
 def circle_marker(ward_name, lat, lng, source):
     chart = alt.Chart(source).mark_bar().encode(x="subprojects", y="Beneficiary Count")
     visual_graph = chart.to_json()
     marker = folium.CircleMarker(
         location=[lat, lng],
-        radius=10,
-        color="darkgreen",
+        radius=8,
+        color="darkred",
         fill=True,
         fill_color="lightblue",
         fillOpacity=1.0,
@@ -59,18 +76,22 @@ def build_map_context():
     mini_map = plugins.MiniMap(toggle_display=True)
     marker_cluster = plugins.MarkerCluster().add_to(map)
 
+    style_one = lambda x: {'fillColor': '#ffdc30'}
+    geojson_obj = folium.GeoJson(
+        model_to_geojson(), 
+        style_function=style_one
+        ).add_to(map)
+
     # Search widget
     search = plugins.Search(
-        marker_cluster,
-        geom_type="Point",
-        search_label=None,
-        search_zoom=None,
+        geojson_obj,
+        search_zoom=20,
         position="topleft",
-        placeholder="Search district",
+        placeholder="Search Wards",
         collapsed=False,
     )
     search.add_to(map)
-
+    
     # Draw tools
     draw = plugins.Draw(export=True)
     locate = plugins.LocateControl(auto_start=False)
