@@ -4,22 +4,23 @@ import altair as alt
 from folium import plugins
 
 from tralard.models.ward import Ward
-from tralard.models.district import District
 from tralard.constants import MAP_LAYER_CHOICES
+from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
 
 def prepare_marker_data():
-    districts = District.objects.all()
+    wards = Ward.objects.all()
     data = {}
-    for district_data in districts:
-        data[district_data] = [district_data.location.x, district_data.location.y]
+    for ward_data in wards:
+        if ward_data.location is not None:
+            data[ward_data] = [ward_data.location.x, ward_data.location.y]
 
     return data
 
 
-def circle_marker(district_name, lat, lng, source):
-    chart = alt.Chart(source).mark_bar().encode(x="Wards", y="Beneficiary Count")
+def circle_marker(ward_name, lat, lng, source):
+    chart = alt.Chart(source).mark_bar().encode(x="subprojects", y="Beneficiary Count")
     visual_graph = chart.to_json()
     marker = folium.CircleMarker(
         location=[lat, lng],
@@ -29,7 +30,7 @@ def circle_marker(district_name, lat, lng, source):
         fill_color="lightblue",
         fillOpacity=1.0,
         opacity=0.5,
-        tooltip=district_name,
+        tooltip=ward_name,
         popup=folium.Popup(max_width=500).add_child(
             folium.VegaLite(visual_graph, height=300)
         ),
@@ -78,29 +79,33 @@ def build_map_context():
     map.add_child(mini_map)
     plugins.Fullscreen(position="topright").add_to(map)
 
-    districts = prepare_marker_data()
+    wards = prepare_marker_data()
 
-    start_coords = []
-    ward_names = []
+    subproject_names = []
     beneficiary_count = []
-    for district, lat_lng in districts.items():
-        start_coords.append((lat_lng[0], lat_lng[1]))
-
-        for ward in Ward.objects.filter(district__name=district.name):
+    for ward, lat_lng in wards.items():
+        subprojects = SubProject.objects.filter(
+            ward__slug=ward.slug
+        )
+        for subproject in  subprojects:
             beneficiary_counter = Beneficiary.objects.filter(
-                ward__name=ward.name
-            ).count()
+                    ward__slug=ward.slug,
+                    sub_project__slug=subproject.slug
+                ).count()
             beneficiary_count.append(beneficiary_counter)
-            ward_names.append(ward.name.capitalize())
+            subproject_names.append(subproject.name.capitalize())
 
         source = pd.DataFrame(
-            {"Wards": ward_names, "Beneficiary Count": beneficiary_count}
+            {
+                "subprojects": subproject_names, 
+                "Beneficiary Count": beneficiary_count
+            }
         )
 
-        district_name_verbose = (
-            f"{district.name.capitalize()} District - {district.province.name}"
+        ward_name_verbose = (
+            f"{ward.name} Ward <br/>{ward.district.name.capitalize()} District <br/>{ward.district.province.name}"
         )
-        marker = circle_marker(district_name_verbose, lat_lng[0], lat_lng[1], source)
+        marker = circle_marker(ward_name_verbose, lat_lng[0], lat_lng[1], source)
         marker.add_to(marker_cluster)
 
     folium.LayerControl().add_to(map)
