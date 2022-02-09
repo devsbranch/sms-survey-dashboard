@@ -3,7 +3,7 @@
 <!-- Blueimp -->
 <!-- The Gallery as lightbox dialog, should be a document body child element -->
 
-<div class="contacts-title-wrapper" style="display:absolute; position:fixed; z-index: -1; top:80vh;  left:6.5vw;"><h2 class="contacts-title">Gallery</h2></div>
+<div class="contacts-title-wrapper" style="display:absolute; position:fixed; z-index: -1; top:85vh;  left:6.5vw;"><h2 class="contacts-title">Gallery</h2></div>
 <p></p>
 <div
   id="blueimp-gallery"
@@ -36,14 +36,17 @@
 </div>
 
 <!-- Images -->
-<div id="links" class="links">
+
+<div id="links" class="links"  style="height:50vh;">
+  <div id="image-gallery-container" style="display:absolute; position:fixed; top:87vh; left:6.5vw;">
+
     {% for img in subproject_images %}
+    <a  href="{{ img.image.url }}" title="Photo">
+      <img src="{% thumbnail img.image 250x250 crop %}" width="155" alt="Photo" />
+    </a>
 
-        <a  href="{{ img.image.url }}" title="Photo">
-
-            <img src="{% thumbnail img.image 250x250 crop %}" width="155" alt="Photo" />
-        </a>
     {% endfor %}
+  </div>
 </div>
 
 

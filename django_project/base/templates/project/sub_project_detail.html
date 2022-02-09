@@ -161,9 +161,9 @@
                 <!-- Calls -->
                 <div id="tab-calls" class="navtab-content">
                   <!-- Logged call -->
-                  <div class="single-toggle-wrapper mt-2" style="z-index:999;">
-                    <div class="toggle-wrap" style="background: white">
-                      <span class="trigger">
+                  <div class="single-toggle-wrapper mt-2" id="indicator-trigger-container" >
+                    <div  class="toggle-wrap" style="background: white">
+                      <span id="indicator-trigger" class="trigger">
                         <a
                           ><p style="font-size: 14px">
                             Indicators
@@ -415,9 +415,8 @@
         </div>
         
 
-        <div style="height:50vh;">
-          {% include 'includes/subproject-image-gallery.html' %}
-        </div>
+        {% include 'includes/subproject-image-gallery.html' %}
+
         
       </div>
     </div>
@@ -567,6 +566,14 @@
 {% block javascripts %}
 
 <script>
+  $("#indicator-trigger").on('mouseover', (e) => {
+    document.querySelector('#indicator-trigger-container').style.zIndex = 99999
+    document.querySelector('#image-gallery-container').style.zIndex = -1
+  })
+</script>
+
+
+<script>
 
   Dropzone.autoDiscover = false;
 
@@ -585,5 +592,6 @@
   })
   
 </script>
+
 
 {% endblock javascripts %}
