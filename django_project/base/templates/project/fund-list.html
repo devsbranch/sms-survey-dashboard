@@ -620,6 +620,7 @@
    *              off the shelf table operations i.e. pagination, CRUD and other configurations
    * @since 06.02.22
    * @see https://datatables.net/reference/api/
+   * @see http://live.datatables.net/yipolina/8/edit
    * */
   $(document).ready(function ($) {
     const interventionFundsTable = $('#subproject-funding-tbl').DataTable({
@@ -684,7 +685,7 @@
           '    <label class="input-group-text" for="inputGroupApproval">Approval</label>' +
           '  </div>' +
           '  <select class="custom-select" id="inputGroupApproval">' +
-          '    <option value="reset" selected>Choose...</option>' +
+          '    <option value="" selected>All...</option>' +
           '    <option value="yes">Approved</option>' +
           '    <option value="no">Not Approved</option>' +
           '  </select>' +
@@ -692,9 +693,11 @@
         );
         $('.custom-select').on('change', function (e) {
           const approvalStatus = $(this).val();
+          console.log(`Select approval status > ${approvalStatus}`)
           $('.custom-select').val(approvalStatus)
-          if (approvalStatus === "reset") {
-            interventionFundsTable.column([3]).search("")
+          if (approvalStatus === "") {
+            $('.custom-select').val('');
+            interventionFundsTable.search('').columns().search('')
           }
           interventionFundsTable.column([3]).search(approvalStatus).draw();
         })

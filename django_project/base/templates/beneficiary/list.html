@@ -173,7 +173,7 @@
 							<div class="content">
 								<!-- New Project form -->
 								<form id="beneficiary-form"
-								      action="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject_slug %}"
+								      action="{% url 'tralard:subproject-beneficiary' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject_slug %}"
 								      method="post" enctype="multipart/form-data">
 									{% csrf_token %}
 									{% crispy form form.helper %}

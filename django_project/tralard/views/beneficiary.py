@@ -56,7 +56,6 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
 
     def form_valid(self, form):
         form.save()
-
         messages.success(self.request, "The Beneficiary was created successfully.")
         return redirect(
             reverse_lazy(

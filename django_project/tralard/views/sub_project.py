@@ -5,7 +5,6 @@ __revision__ = "$Format:%H$"
 __copyright__ = "sonlinux bei DigiProphets 2021"
 __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM CET"
 
-from django.template import TemplateDoesNotExist
 from django.template.loader import render_to_string
 
 from tralard.filters.beneficiary import BeneficiaryFilter
@@ -15,19 +14,12 @@ from tralard.filters.training import TrainingFilter
 """
 View classes for a SubProject
 """
-from email.mime import image
-from email.policy import default
 import logging
-from os import name
 
 from django.db.models import Q
 from django.contrib import messages
-from django.conf import settings
-from django.contrib import messages
 from django.db import IntegrityError
-from django.http import HttpResponse
 from django.urls import reverse_lazy
-from braces.views import LoginRequiredMixin
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
@@ -50,14 +42,13 @@ from django.views.generic import (
 import reversion
 from exif import Image
 from reversion.models import Version
-from celery.result import AsyncResult
 from reversion.views import RevisionMixin
 from braces.views import LoginRequiredMixin
 from filer.models import Image as ImageSave
 from rolepermissions.decorators import has_role_decorator
 
 from tralard.models.training import Training, TrainingType
-from tralard.forms.training import TrainingForm, TrainingFilterForm
+from tralard.forms.training import TrainingForm
 from tralard.forms import BeneficiaryCreateForm
 from tralard.models.fund import (
     Fund,
@@ -283,7 +274,7 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
 
 @login_required(login_url="/login/")
 def sub_project_training_update(
-    request, program_slug, project_slug, subproject_slug, training_entry_slug
+        request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
@@ -340,7 +331,7 @@ def sub_project_update(request, program_slug, subproject_slug):
 
 @login_required(login_url="/login/")
 def sub_project_training_delete(
-    request, program_slug, project_slug, subproject_slug, training_entry_slug
+        request, program_slug, project_slug, subproject_slug, training_entry_slug
 ):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
@@ -689,9 +680,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
             return qs.filter(
                 Q(project=project)
                 & (
-                    Q(project__project_funders=self.request.user)
-                    | Q(project__project_managers=self.request.user)
-                    | Q(project__project_representatives=self.request.user)
+                        Q(project__project_funders=self.request.user)
+                        | Q(project__project_managers=self.request.user)
+                        | Q(project__project_representatives=self.request.user)
                 )
             )
 
@@ -754,8 +745,25 @@ class SubProjectBeneficiaryOrgListView(
         response = super().form_invalid(form)
         for field in form:
             for error in field.errors:
-                messages.error(self.request, error)
+                messages.error(self.request, "Failure occured trying to save beneficiary form due to: " + error)
         return response
+
+    def form_valid(self, form):
+        sub_project = SubProject.objects.get(slug=self.kwargs["subproject_slug"])
+        form.instance.sub_project = sub_project
+        form.instance.ward = sub_project.ward
+        form.save()
+        messages.success(self.request, " Successfully added beneficiary!")
+        return redirect(
+            reverse_lazy(
+                "tralard:subproject-beneficiary",
+                kwargs={
+                    "program_slug": self.kwargs.get("program_slug", None),
+                    "project_slug": self.kwargs.get("project_slug", None),
+                    "subproject_slug": self.kwargs.get("subproject_slug"),
+                },
+            )
+        )
 
     def get_context_data(self, **kwargs):
         context = super(SubProjectBeneficiaryOrgListView, self).get_context_data(
@@ -790,7 +798,7 @@ class SubProjectBeneficiaryOrgListView(
         return context
 
 
-class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, ListView):
+class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateView):
     """
     Create a new Sub Project Fund
     """
@@ -944,7 +952,7 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
 
 
 def subproject_fund_detail(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Display a single fund
@@ -1003,7 +1011,7 @@ def subproject_fund_detail(
 
 @login_required
 def update_sub_project_fund(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Update a single subproject fund.
@@ -1057,7 +1065,7 @@ def update_sub_project_fund(
 
 @login_required(login_url="/login/")
 def subproject_fund_delete(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Delete a single subproject fund.
@@ -1095,7 +1103,7 @@ def subproject_fund_delete(
 
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
-    request, program_slug, project_slug, subproject_slug, fund_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug
 ):
     """
     Create a single subproject fund disbursement.
@@ -1147,7 +1155,7 @@ def subproject_fund_disbursement_create(
 
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(
-    request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
+        request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
 ):
     """
     Create a single subproject fund disbursement expenditure.
