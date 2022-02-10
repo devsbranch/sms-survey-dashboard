@@ -487,17 +487,17 @@
                                                     {% csrf_token %}
                                                     {% crispy form form.helper %}
                                                 </div>
-                                                <style>
-                                                    .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--multiple {
-                                                        width: 830px;
-                                                        height: 100%;
+                                                    <style>
+                                                      .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single, .select2-selection--multiple {
+                                                          width: 830px;
+                                                          height: 100%;
+                                                        }
+                                                      .select2-results__options {
+                                                          background-color: white;
+                                                          width: 830px;
+                                                          height: 100%;
                                                       }
-                                                    .select2-results__options {
-                                                        background-color: white;
-                                                        width: 830px;
-                                                        height: 100%;
-                                                    }
-                                                </style>
+                                                  </style>
                                                 <button type="submit" class="button is-modal primary-btn">Create SubProject</button>
                                             </form>
                                         </div>
