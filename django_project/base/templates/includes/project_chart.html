@@ -4,7 +4,7 @@
   $(document).ready(function () {
     var prov_labels = "{{prov_labels}}";
     var subs_in_prov = "{{subs_in_prov}}";
-    var projects_in_prov = "{{ interentions_in_prov }}";
+    var projects_in_prov = "{{ subcomponents_in_prov }}";
 
     var prov = prov_labels.replace(/&quot;/g, '"');
     var parsed_list = JSON.parse(prov);
@@ -37,7 +37,7 @@
             data: parsed_data,
           }, {
             type:'line',
-            label: "Interventions in Province",
+            label: "SubProjects in Province",
             backgroundColor: ["rgba(203, 195, 227)"],            
             borderColor: "rgba(127, 0, 255,0.9)",
             pointBackgroundColor: "#fff",

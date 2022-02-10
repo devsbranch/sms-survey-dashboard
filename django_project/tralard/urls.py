@@ -34,15 +34,14 @@ from tralard.views.indicator import (
 )
 from tralard.views.map import MapTemplateView
 from tralard.views.profile import user_profile_update
-from tralard.views.program import ProgramDetailView, preview_indicator_document
-from tralard.views.project import (
+from tralard.views.subcomponent import (
     edit_feedback,
-    project_update,
-    project_create,
-    project_delete,
+    subcomponent_update,
+    subcomponent_create,
+    subcomponent_delete,
     create_feedback,
     delete_feedback,
-    ProjectDetailView,
+    SubComponentDetailView,
     delete_sub_project,
     update_sub_project,
 )
@@ -67,8 +66,8 @@ from tralard.views.training import (
     training_delete,
     TrainingListView,
 )
-from tralard.views.program import (
-    ProgramDetailView, 
+from tralard.views.project import (
+    ProjectDetailView, 
     preview_indicator_document,
 )
 
@@ -87,12 +86,12 @@ urlpatterns = [
     ),
     # -------- Indicator report download --------
     path(
-        "report/<slug:program_slug>/indicators_report/preview_report/",
+        "report/<slug:project_slug>/indicators_report/preview_report/",
         preview_indicator_document,
         name="preview_indicator_report",
     ),
     path(
-        "report/<slug:program_slug>/indicators_report/",
+        "report/<slug:project_slug>/indicators_report/",
         indicator_report,
         name="indicators_report_download",
     ),
@@ -101,54 +100,54 @@ urlpatterns = [
         poll_state,
         name="poll_state",
     ),
-    # -------- Program -----------
+    # -------- Project -----------
     path(
-        "program/<slug:program_slug>/detail/",
-        ProgramDetailView.as_view(),
-        name="program-detail",
+        "project/<slug:project_slug>/detail/",
+        ProjectDetailView.as_view(),
+        name="project-detail",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_name",
+        "project/<slug:project_slug>/detail/indicator_name",
         create_indicator,
         name="indicator-name",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_name/<slug:indicator_slug>/update",
+        "project/<slug:project_slug>/detail/indicator_name/<slug:indicator_slug>/update",
         update_indicator,
         name="indicator-name-update",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_name/<slug:indicator_slug>/delete",
+        "project/<slug:project_slug>/detail/indicator_name/<slug:indicator_slug>/delete",
         delete_indicator,
         name="indicator-name-delete",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target",
+        "project/<slug:project_slug>/detail/indicator_target",
         create_indicator_target,
         name="indicator-target",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target/<int:target_id>/update",
+        "project/<slug:project_slug>/detail/indicator_target/<int:target_id>/update",
         update_indicator_target,
         name="indicator-target-update",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target_value",
+        "project/<slug:project_slug>/detail/indicator_target_value",
         create_indicator_target_value,
         name="indicator-target-value",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target_value/<int:indicator_target_value_id>/update",
+        "project/<slug:project_slug>/detail/indicator_target_value/<int:indicator_target_value_id>/update",
         update_indicator_target_value,
         name="indicator-target-value-update",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target_unit",
+        "project/<slug:project_slug>/detail/indicator_target_unit",
         create_indicator_unit_of_measure,
         name="indicator-target-unit",
     ),
     path(
-        "program/<slug:program_slug>/detail/indicator_target_unit/<int:indicator_target_unit_id>/update",
+        "project/<slug:project_slug>/detail/indicator_target_unit/<int:indicator_target_unit_id>/update",
         update_indicator_unit_of_measure,
         name="indicator-target-unit-update",
     ),
@@ -160,189 +159,189 @@ urlpatterns = [
     ),
     # -------- project paths --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/detail/",
-        ProjectDetailView.as_view(),
-        name="project-detail",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/detail/",
+        SubComponentDetailView.as_view(),
+        name="subcomponent-detail",
     ),
-    path("program/<slug:program_slug>/project/", project_create, name="project"),
+    path("project/<slug:project_slug>/subcomponent/", subcomponent_create, name="subcomponent"),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/update",
-        project_update,
-        name="project-update",
-    ),
-    path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/delete",
-        project_delete,
-        name="project-delete",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/update",
+        subcomponent_update,
+        name="subcomponent-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/sub_project/<slug:sub_project_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/delete",
+        subcomponent_delete,
+        name="subcomponent-delete",
+    ),
+    path(
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/sub_project/<slug:sub_project_slug>/delete/",
         delete_sub_project,
         name="sub-project-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/sub_project/<slug:sub_project_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/sub_project/<slug:sub_project_slug>/update/",
         update_sub_project,
         name="sub-project-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/feedback/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/feedback/",
         create_feedback,
         name="feedback",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/detail/<slug:feedback_slug>/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/detail/<slug:feedback_slug>/",
         edit_feedback,
         name="update-feedback",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/delete/<slug:feedback_slug>/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/delete/<slug:feedback_slug>/",
         delete_feedback,
         name="delete-feedback",
     ),
-    # -------- project fund --------
+    # -------- subcomponent fund --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/fund/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/fund/",
         FundListAndCreateView.as_view(),
         name="fund-list",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/funds/<slug:fund_slug>",
         update_fund,
         name="fund-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/detail/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/fund/<slug:fund_slug>/detail/",
         fund_detail,
         name="fund-detail",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/fund/<slug:fund_slug>/delete/",
         fund_delete,
         name="fund-delete",
     ),
     # -------- disbursement --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/delete/",
         delete_disbursement,
         name="disbursement-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/funds/<slug:fund_slug>/disbursements/<slug:disbursement_slug>/update/",
         update_disbursement,
         name="disbursement-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/expenditure/",
         get_disbursement_expenditures,
         name="disbursement-expenditure",
     ),
-    # -------- project beneficiary --------
+    # -------- subcomponent beneficiary --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/list/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/list/",
         BeneficiaryOrgListView.as_view(),
         name="beneficiary-list",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/update/",
         beneficiary_update,
         name="beneficiary-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/delete/",
         beneficiary_delete,
         name="beneficiary-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
         beneficiary_detail,
         name="beneficiary-detail",
     ),
     # -------- sub project beneficiary --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/beneficiary/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/beneficiary/",
         SubProjectBeneficiaryOrgListView.as_view(),
         name="subproject-beneficiary",
     ),
     # -------- training ------------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/training/list/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/training/list/",
         TrainingListView.as_view(),
         name="training-list",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/training/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/training/<slug:training_entry_slug>/training/delete/",
         training_delete,
         name="training-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/training/<slug:training_entry_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/training/<slug:training_entry_slug>/update/",
         training_update,
         name="training-update",
     ),
     # -------- SubProject --------
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/",
         SubProjectDetailView.as_view(),
         name="subproject-manage",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/upload/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/upload/",
         file_upload_view,
         name="subproject-file-upload",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/list/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/training/list/",
         SubProjectTrainingListView.as_view(),
         name="subproject-training",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/delete/",
         sub_project_training_delete,
         name="subproject-training-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/training/<slug:training_entry_slug>/update/",
         sub_project_training_update,
         name="subproject-training-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/",
         SubProjectFundListAndCreateView.as_view(),
         name="subproject-fund-list",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/detail/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/detail/",
         subproject_fund_detail,
         name="subproject-fund-detail",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/",
         update_sub_project_fund,
         name="subproject-fund-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/delete/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/delete/",
         subproject_fund_delete,
         name="subproject-fund-delete",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/",
         subproject_fund_disbursement_create,
         name="subproject-fund-disbursement-create",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/disbursement/<slug:disbursement_slug>/",
         subproject_disbursement_expenditure_create,
         name="subproject-fund-disbursement-expenditure-create",
     ),
     path(
-        "program/<slug:program_slug>/subproject/<slug:subproject_slug>/update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>update/",
         sub_project_update,
         name="subproject-update",
     ),
     path(
-        "program/<slug:program_slug>/project/<slug:project_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/approve/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/approve/",
         fund_approval_view,
         name="subproject-fund-approval"
     )

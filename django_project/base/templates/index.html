@@ -34,9 +34,9 @@
                                     <i class="material-icons primary">account_balance_wallet</i>
                                 </div>
                                 <div class="tile-content">
-                                    <h3>SubProjects</h3>
+                                    <h3>SubComponents</h3>
                                     <p>
-                                        <span>{{ project_count }}</span>
+                                        <span>{{ subcomponent_count }}</span>
                                         <span>Total count</span>
                                     </p>
                                 </div>
@@ -53,7 +53,7 @@
                                 <div class="tile-content">
                                     <h3>Funds</h3>
                                     <p>
-                                        <span>ZMK {{ total_project_funds|intcomma }}</span>
+                                        <span>ZMK {{ total_subproject_funds|intcomma }}</span>
                                         <span>total funds</span>
 
                                     </p>
@@ -70,7 +70,7 @@
                                     <i class="material-icons secondary">work</i>
                                 </div>
                                 <div class="tile-content">
-                                    <h3>Interventions</h3>
+                                    <h3>SubProjects</h3>
                                     <p>
                                         <span>{{ subproject_count }}</span>
                                         <span>Total count</span>
@@ -135,23 +135,23 @@
                             <div class="members-card">
                                 <h3 class="card-heading">All Projects</h3>
                                 <ul class="user-list">
-
-                                    {% for program in program_list %}
+                                    text here{{projects_list}}
+                                    {% for project in project_list %}
                                         <li>
                                             
-                                            {% if program.approved %}
-                                                    {% if program.logo %}
+                                            {% if project.approved %}
+                                                    {% if project.logo %}
                                                         <div class="user-list-avatar">
                                                             <img src="https://via.placeholder.com/250x250" alt=""
-                                                                data-demo-src="{{ program.logo.url }}">
+                                                                data-demo-src="{{ project.logo.url }}">
                                                         </div>
                                                     {% else %}
-                                                            {% if program.name|lower == "ppcr" %}
+                                                            {% if project.name|lower == "ppcr" %}
                                                                 <div class="user-list-avatar">
                                                                     <img src="https://via.placeholder.com/250x250" alt=""
                                                                         data-demo-src="{% static 'assets/images/ppcr.png'%}">
                                                                 </div>
-                                                            {% elif program.name|lower == "tralard" %}
+                                                            {% elif project.name|lower == "tralard" %}
                                                                 <div class="user-list-avatar">
                                                                     <img src="https://via.placeholder.com/250x250" alt=""
                                                                         data-demo-src="{% static 'assets/images/tralard.png'%}">
@@ -160,27 +160,27 @@
 
                                                     {% endif %}
 
-                                                <a class="program-detail-redirector" href="{% url 'tralard:program-detail' program_slug=program.slug %}">
+                                                <a class="program-detail-redirector" href="{% url 'tralard:project-detail' project_slug=project.slug %}">
                                                     <div class="user-list-info">
-                                                        <div class="name">{{ program.name }}</div>
+                                                        <div class="name">{{ project.name }}</div>
                                                         <div class="position">Approved:  Yes</div>
                                                     </div>
                                                 </a>
                                                 <div class="user-list-status is-online"></div>
 
                                             {% else %}
-                                                    {% if program.logo %}
+                                                    {% if project.logo %}
                                                         <div class="user-list-avatar">
                                                             <img src="https://via.placeholder.com/250x250" alt=""
-                                                                data-demo-src="{{ program.logo.url }}">
+                                                                data-demo-src="{{ project.logo.url }}">
                                                         </div>
                                                     {% else %}
-                                                            {% if program.name|lower == "ppcr" %}
+                                                            {% if project.name|lower == "ppcr" %}
                                                                 <div class="user-list-avatar">
                                                                     <img src="https://via.placeholder.com/250x250" alt=""
                                                                         data-demo-src="{% static 'assets/images/ppcr.png'%}">
                                                                 </div>
-                                                            {% elif program.name|lower == "tralard" %}
+                                                            {% elif project.name|lower == "tralard" %}
                                                                 <div class="user-list-avatar">
                                                                     <img src="https://via.placeholder.com/250x250" alt=""
                                                                         data-demo-src="{% static 'assets/images/tralard.png'%}">
@@ -189,9 +189,9 @@
 
                                                     {% endif %}
                                     
-                                                <a class="program-detail-redirector" href="{% url 'tralard:program-detail' program.slug %}">
+                                                <a class="program-detail-redirector" href="{% url 'tralard:project-detail' project.slug %}">
                                                     <div class="user-list-info">
-                                                        <div class="name">{{ program.name }}</div>
+                                                        <div class="name">{{ project.name }}</div>
                                                         <div class="position">Approved:  Pending ...</div>
                                                     </div>
                                                 </a>
@@ -218,7 +218,7 @@
                             <!-- Projects table widget -->
                             <div class="table-widget">
                                 <h3 class="card-heading is-bordered has-icon">
-                                    <span>Intervention Overview</span>
+                                    <span>SubComponents</span>
                                     <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
                                         <div class="button">
                                             <i class="material-icons">more_vert</i>
@@ -269,35 +269,34 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for project in projects %}
+                                        {% for subcomponent in subcomponents %}
                                         <tr>
-                                            
-                                            <td><a href="{% url 'tralard:project-detail' project.program.slug project.slug %}">{{ project.name }}</a></td>
-                                            <td><span class="tag rounded is-light" style="padding-top: 5px;">{{ project.count_sub_projects }} </span></td>
-                                            <td> <span class="tag rounded is-info" style="padding-top: 5px;">{{ project.count_beneficiaries }}</span></td>
-                                            <td> <span class="tag rounded is-success" style="padding-top: 5px;">{{ project.count_approved_sub_projects }}</span></td>
-                                            <td> <span class="tag squared is-secondary" style="padding-top: 5px;">{{ project.get_total_project_fund|intcomma }}</span></td>
+                                            <td><a href="{% url 'tralard:subcomponent-detail' subcomponent.project.slug subcomponent.slug %}">{{ subcomponent.name }}</a></td>
+                                            <td><span class="tag rounded is-light" style="padding-top: 5px;">{{ subcomponent.count_sub_projects }} </span></td>
+                                            <td> <span class="tag rounded is-info" style="padding-top: 5px;">{{ subcomponent.count_beneficiaries }}</span></td>
+                                            <td> <span class="tag rounded is-success" style="padding-top: 5px;">{{ subcomponent.count_approved_sub_projects }}</span></td>
+                                            <td> <span class="tag squared is-secondary" style="padding-top: 5px;">{{ subcomponent.get_total_sub_project_fund|intcomma }}</span></td>
                                             
                                         </tr>
                                         {% endfor %}
                                     </tbody>
                                 </table>
                                 <hr style="margin-top: -1.5em;"/>
-                                {% if projects.paginator.num_pages != 1 %}
+                                {% if subcomponents.paginator.num_pages != 1 %}
                                     <div class="pagination align-center" style="align-content: center; margin-right: 3em;">
                                         <hr />
                                         <span style="font-size: x-medium;" class="step-links">
-                                            {% if projects.has_previous %}
+                                            {% if subcomponents.has_previous %}
                                             <a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #b7c5cd; border-color: #21546d; font:200;" href="?project_page_number=1">&laquo;&laquo; first</a>
-                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.previous_page_number }}" data-title="previous page">&laquo;</a>
+                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ subcomponents.previous_page_number }}" data-title="previous page">&laquo;</a>
                                             {% endif %}
                                             
                                             <span class="current" style="color: #21546d;">
-                                                {{ projects.number }} of {{ projects.paginator.num_pages }}.
+                                                {{ subcomponents.number }} of {{ subcomponents.paginator.num_pages }}.
                                             </span>
-                                            {% if projects.has_next %}
-                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.next_page_number }}" data-title="next page">&raquo;</a>
-                                            <a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #b7c5cd; border-color: #21546d; font:200;" href="?project_page_number={{ projects.paginator.num_pages }}">last &raquo;&raquo;</a>
+                                            {% if subcomponents.has_next %}
+                                            <a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9bb1bd; border-color: #21546d; font:200;" href="?project_page_number={{ subcomponents.next_page_number }}" data-title="next page">&raquo;</a>
+                                            <a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #b7c5cd; border-color: #21546d; font:200;" href="?project_page_number={{ subcomponents.paginator.num_pages }}">last &raquo;&raquo;</a>
                                             {% endif %}
                                         </span>
                                     </div>
@@ -312,7 +311,7 @@
                         </div>
                         
                         
-                        {% include 'includes/interventions_chart.html' %}
+                        {% include 'includes/subprojects_chart.html' %}
                         
                     </div>
                     {% comment %} end dashboard widgets begin  {% endcomment %}

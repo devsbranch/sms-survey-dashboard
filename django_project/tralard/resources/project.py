@@ -1,6 +1,6 @@
 # coding=utf-8
 """
-Project model resource class definitions for tralard app.
+Program model resource class definitions for tralard app.
 """
 
 from import_export import resources
@@ -18,15 +18,7 @@ class ProjectResource(resources.ModelResource):
             "id",
             "name",
             "approved",
-            "has_funding",
-            "status",
-            "description",
-            "program",
+            "started",
             "project_representative",
-            "project_managers",
-            "project_funders",
-            "training_managers",
-            "certification_managers",
-            "precis",
-            "focus_area",
+            "description",
         )

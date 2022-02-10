@@ -73,9 +73,9 @@
 									</div>
 								</div>
 								<a class="button btn-dash primary-btn btn-dash raised has-icon" data-ripple-color=""
-								   href="{% url 'tralard:project-detail' program_slug project_slug %}">
+								   href="{% url 'tralard:subcomponent-detail' project_slug subcomponent_slug %}">
 									<i class="material-icons">short_text</i>
-									Back to Intervention
+									Back to SubProject
 								</a>
 							</div>
 						</div>
@@ -214,7 +214,7 @@
         $(".pdf-cell").append($('.buttons-pdf'));
         $(".print-cell").append($('.buttons-print'));
 
-        //filter only title, intervention and training type columns
+        //filter only title, subproject and training type columns
         api.columns([0, 1, 2]).eq(0).each(function (colIdx) {
           // Set the header cell to contain the input element
           const cell = $('.filters th').eq(

@@ -41,12 +41,12 @@
                     <a href="#"
                        class="is-modal modal-trigger modal-trigger"
                        data-modal="beneficiary-detail-modal"
-                       onClick="fetchDetailModalData('{{project.program.slug}}', '{{ project.slug}}', '{{beneficiary.slug}}')">
+                       onClick="fetchDetailModalData('{{subcomponent.project.slug}}', '{{ subcomponent.slug}}', '{{beneficiary.slug}}')">
 	                    {{beneficiary.name}}
                     </a>
                 </span>
 			</td>
-			<!-- Row Entry for intervention-->
+			<!-- Row Entry for subproject-->
 			<td class="members">
 				<span class="inner">
 					{{ beneficiary.sub_project.name}}
@@ -81,7 +81,7 @@
 									</a>
 									<a class="dropdown-item modal-trigger"
 									   data-modal="delete-beneficiary-modal"
-									   onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{project.program.slug}}', '{{project.slug}}', '{{beneficiary.slug}}')">
+									   onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{subcomponent.project.slug}}', '{{subcomponent.slug}}', '{{beneficiary.slug}}')">
 										<i class="sl sl-icon-trash text-danger"></i>
 										<span>
 					                        <span class="dark-text">Delete</span>

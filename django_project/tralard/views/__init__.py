@@ -2,7 +2,7 @@
 from tralard.views.map import *  # noqa
 from tralard.views.fund import *  # noqa
 from tralard.views.project import *  # noqa
-from tralard.views.program import *  # noqa
+from tralard.views.subcomponent import *  # noqa
 from tralard.views.profile import *  # noqa
 from tralard.views.training import *  # noqa
 from tralard.views.dashboard import *  # noqa

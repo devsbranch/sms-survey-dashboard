@@ -10,7 +10,7 @@
     <div class="modal-content" style="width:720px; !important;">
         <div class="flex-card simple-shadow" style="overflow-y: auto;">
             <div class="help-text has-text-left">
-                <h2 class="dark-text">Project Update</h2>
+                <h2 class="dark-text">SubComponent Update</h2>
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
@@ -18,7 +18,7 @@
                         <img src="{% static 'assets/images/icons/project-management.svg' %}">
                     </div>
                     <div class="m-3">
-                        <span class="m-2">Edit {{ project.name|title }} project.</span>
+                        <span class="m-2">Edit {{ subcomponent.name|title }} subcomponent.</span>
                     </div>
                 </div>
                 <form id="edit-project-form"
@@ -27,7 +27,7 @@
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="m-4 column is-multiline">
-                        {% crispy project_form project_form.helper %}
+                        {% crispy subcomponent_form subcomponent_form.helper %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="button modal-dismiss">

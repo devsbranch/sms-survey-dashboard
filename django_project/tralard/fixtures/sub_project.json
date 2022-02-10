@@ -8,13 +8,15 @@
             "size_description": "Total Land Area: 2.5Ha, 1 14mx4m Goat House, 1x3mx1.5 Diptank, 0.5Ha Garden, 1ha Pasture Field ",
             "ward": 1,
             "representative": 1,
-            "project": 1,
+            "subcomponent": 1,
             "approved": true,
-            "description": "Integrated goat rearing and vegetable gardening. 2 male and 40 female goats to be procured. The project will incorporate pasture production to provide supplementary feed to the goats.",
+            "description": "Integrated goat rearing and vegetable gardening. 2 male and 40 female goats to be procured. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Goat Rearing and Gardening.",
             "created": "2021-01-13",
             "slug": "twasechela-goat-rearing-and-gardening",
-            "indicators": [2]
+            "indicators": [
+                2
+            ]
         }
     },
     {
@@ -26,13 +28,15 @@
             "size_description": "Total Land Area: 12Ha, 1 20m x 4m Poultry Hse. 150 Chickens, 1 Expelling Shed, 5Ha Crop Fields ",
             "ward": 1,
             "representative": 2,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
             "description": "Establishment of a smallscale vegetable oil production plant integrated with poultry production and gardening",
             "focus_area": "Poultry and Gardening.",
             "created": "2021-01-13",
             "slug": "fichilisya-vegetable-oil-production-poultry-and-gardening",
-            "indicators": [3]
+            "indicators": [
+                3
+            ]
         }
     },
     {
@@ -44,13 +48,15 @@
             "size_description": "",
             "ward": 3,
             "representative": 1,
-            "project": 1,
+            "subcomponent": 1,
             "approved": true,
-            "description": "Integrated goat rearing and vegetable gardening. 2 male and 50 female goats to be procured. The project will incorporate pasture production to provide supplementary feed to the goats.",
+            "description": "Integrated goat rearing and vegetable gardening. 2 male and 50 female goats to be procured. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Poultry and Gaardening.",
             "created": "2021-01-13",
             "slug": "tutulane-goat-rearing-and-gardening",
-            "indicators": [2]
+            "indicators": [
+                2
+            ]
         }
     },
     {
@@ -62,13 +68,15 @@
             "size_description": "2 fish ponds, 1 poultry house and 0.5Ha Garden",
             "ward": 3,
             "representative": 2,
-            "project": 1,
+            "subcomponent": 1,
             "approved": true,
             "description": "Integration of aquaculture, livestock and crop production",
             "focus_area": "Poultry & Garden Project",
             "created": "2021-01-13",
-            "slug": "chilanga-fish-harvest-winter-crop-farming-poultry-garden-project",
-            "indicators": [2]
+            "slug": "chilanga-fish-harvest-winter-crop-farming-poultry-garden-subcomponent",
+            "indicators": [
+                2
+            ]
         }
     },
     {
@@ -80,13 +88,15 @@
             "size_description": "1 goat house, 32 goats, 1 Ha pasture field, 1 store room.",
             "ward": 2,
             "representative": 2,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "Integrated goat rearing and vegetable gardening. The project will incorporate pasture production to provide supplementary feed to the goats.",
+            "description": "Integrated goat rearing and vegetable gardening. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Goat Rearing",
             "created": "2021-01-13",
             "slug": "wuyakwelelo-goat-rearing-and-vegetable-gardening",
-            "indicators": [11]
+            "indicators": [
+                11
+            ]
         }
     },
     {
@@ -97,13 +107,15 @@
             "size": 0.518,
             "size_description": "bulking center \u2013 338.1m2, ablution block \u2013 67.4m2 & residential area \u2013 113.18m2",
             "ward": 2,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "The project involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
+            "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
             "focus_area": "Infrastructure",
             "created": "2021-01-13",
             "slug": "salamo-bulking-center",
-            "indicators": [8]
+            "indicators": [
+                8
+            ]
         }
     },
     {
@@ -114,13 +126,15 @@
             "size": 0.518,
             "size_description": "Bulking center \u2013 338.1m2, ablution block \u2013 67.4m2 & residential area \u2013 113.18m2",
             "ward": 2,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "The project involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
+            "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
             "slug": "chiundaponde-bulking-center",
-            "indicators": [8]
+            "indicators": [
+                8
+            ]
         }
     },
     {
@@ -131,13 +145,15 @@
             "size": 0.587,
             "size_description": "Construction of bulking center \u2013 388.1m2 Construction of ablution block \u2013 73.4m2 Construction of residential area \u2013 126.98m2",
             "ward": 5,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "The project involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
+            "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
             "slug": "katangalika-bulking-center",
-            "indicators": [8]
+            "indicators": [
+                8
+            ]
         }
     },
     {
@@ -148,13 +164,15 @@
             "size": 0.567,
             "size_description": "Construction of bulking center \u2013 338.1m2 Construction of ablution block \u2013 67.4m2 Construction of residential area \u2013 113.18m2",
             "ward": 6,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "The project involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
+            "description": "The subcomponent involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
             "slug": "chibale-bulking-center",
-            "indicators": [8]
+            "indicators": [
+                8
+            ]
         }
     },
     {
@@ -163,15 +181,17 @@
         "fields": {
             "name": "Kabulamwiko Bulking Centre",
             "size": 0.588,
-            "size_description": "The project will cover a total area of 588.43m2",
+            "size_description": "The subcomponent will cover a total area of 588.43m2",
             "ward": 1,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
-            "description": "The project involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a groundnuts, beans and finger millet storage facility.",
+            "description": "The subcomponent involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a groundnuts, beans and finger millet storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
             "slug": "kabulamwiko-bulking-centre",
-            "indicators": [8]
+            "indicators": [
+                8
+            ]
         }
     },
     {
@@ -180,15 +200,17 @@
         "fields": {
             "name": "Dytech Honey Processing Project",
             "size": 0.545,
-            "size_description": "The project will cover a total area of 545.43m2",
+            "size_description": "The subcomponent will cover a total area of 545.43m2",
             "ward": 14,
-            "project": 3,
+            "subcomponent": 3,
             "approved": true,
             "description": "Establishment of a honey processing plant that offtake comb honey from beekeepers in Kanchibiya and Lavushimanda",
             "focus_area": "Infratructure",
             "created": "2021-08-13",
-            "slug": "dytech-honey-processing-project",
-            "indicators": [5]
+            "slug": "dytech-honey-processing-subcomponent",
+            "indicators": [
+                5
+            ]
         }
     },
     {
@@ -199,13 +221,15 @@
             "size": 867,
             "size_description": "867 ha",
             "ward": 18,
-            "project": 2,
+            "subcomponent": 2,
             "approved": true,
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2020-08-13",
-            "slug": "lumika-project",
-            "indicators": [4]
+            "slug": "lumika-subcomponent",
+            "indicators": [
+                4
+            ]
         }
     },
     {
@@ -215,13 +239,15 @@
             "name": "Sambolye",
             "size": 2100,
             "size_description": "2100 ha",
-            "project": 2,
+            "subcomponent": 2,
             "approved": true,
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-07-19",
-            "slug": "sambolye-project",
-            "indicators": [1]
+            "slug": "sambolye-subcomponent",
+            "indicators": [
+                1
+            ]
         }
     },
     {
@@ -232,13 +258,15 @@
             "size": 2100,
             "size_description": "2100 ha",
             "ward": 18,
-            "project": 2,
+            "subcomponent": 2,
             "approved": true,
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kalwalwa-project",
-            "indicators": [4]
+            "slug": "kalwalwa-subcomponent",
+            "indicators": [
+                4
+            ]
         }
     },
     {
@@ -249,13 +277,15 @@
             "size": 2500,
             "size_description": "2500 ha",
             "ward": 18,
-            "project": 2,
+            "subcomponent": 2,
             "approved": true,
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kabembe-project",
-            "indicators": [4]
+            "slug": "kabembe-subcomponent",
+            "indicators": [
+                4
+            ]
         }
     },
     {
@@ -266,13 +296,15 @@
             "size": 2100,
             "size_description": "2100 ha",
             "ward": 21,
-            "project": 2,
+            "subcomponent": 2,
             "approved": true,
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kanyembo-project",
-            "indicators": [4]
+            "slug": "kanyembo-subcomponent",
+            "indicators": [
+                4
+            ]
         }
     }
 ]

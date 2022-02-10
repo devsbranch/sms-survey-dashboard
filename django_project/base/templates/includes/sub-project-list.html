@@ -6,7 +6,7 @@
 	<div class="column is-4">
 		<div class="flex-card light-bordered light-shadow project-card card-overflow">
 			<div class="header">
-				<a href="{% url 'tralard:subproject-manage' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug %}">
+				<a href="{% url 'tralard:subproject-manage' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug %}">
 					<h4 class="no-margin-bottom">
 						{{ sub_project.name|title }}
 					</h4>
@@ -30,9 +30,9 @@
 									uniqueEditSelectorButton.addEventListener("click", () => {
 										if("{{ sub_project.slug }}" == "{{ sub_project.slug }}"){
 											document.getElementById("form123").innerHTML = `{% csrf_token %}`;
-											document.getElementById("form123").action = `{% url 'tralard:subproject-update' sub_project.project.program.slug sub_project.slug %}`;
+											document.getElementById("form123").action = `{% url 'tralard:subproject-update' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug %}`;
 											document.getElementById("form123").innerHTML += `{% load crispy_forms_tags %}`;
-											document.getElementById("form123").innerHTML += `{{ sub_project.sub_project_update_form|crispy }}`;
+											document.getElementById("form123").innerHTML += `{{ sub_project.sub_subcomponent_update_form|crispy }}`;
 											document.getElementById("form123").innerHTML += `<button type="submit" class="btn" style="color: white; background: #21546d;">Update</button> <a id="delete123" href="" class="btn btn-danger">Cancel</a> `;
 											document.getElementById("id_custom_description").innerText = `{{ sub_project.description }}`;
 											document.getElementById("id_custom_focus_area").innerText = `{{ sub_project.focus_area }}`;
@@ -61,7 +61,7 @@
 				{% endif %}
 			</div>
 
-			<div class="team-info">total intervention fund utilization</div>
+			<div class="team-info">total subproject fund utilization</div>
 			<div class="progress-block">
 				<progress class="progress is-xs is-green"
 				          value="{{ sub_project.fund_utilization_percent }}"

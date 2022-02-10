@@ -87,7 +87,7 @@
 								<!-- Row Entry for Sub Project-->
 								<td width="10%" class="members">
 									<span class="inner">
-										<a href="#" class="modal-trigger" data-modal="indicator_form" onClick="populateIndicatorForm('POPULATE_FORM', '{{program.slug}}', '{{indicator.slug}}', '{{indicator.name}}')">
+										<a href="#" class="modal-trigger" data-modal="indicator_form" onClick="populateIndicatorForm('POPULATE_FORM', '{{project.slug}}', '{{indicator.slug}}', '{{indicator.name}}')">
 											<span class="no-margin-bottom">
 												{{ indicator.name}}
 											</span>
@@ -131,14 +131,14 @@
 											</div>
 										</div> {% endcomment %}
 
-										<a href="#" class="modal-trigger" data-modal="indicator_target_form" onClick="populateIndicatorTargetForm('POPULATE_FORM', '{{program.slug}}', '{{target.id}}')">
+										<a href="#" class="modal-trigger" data-modal="indicator_target_form" onClick="populateIndicatorTargetForm('POPULATE_FORM', '{{project.slug}}', '{{target.id}}')">
 											<div class="table_row m-1">
 												<p class="task-due-date m-1">
 													&#10148; {{target.description}} 
 												</p>
 											</div>
 										</a>
-										<a href="#" class="modal-trigger" data-modal="indicator_target_unit_form" onClick="populateIndicatorUnitOfMeasureForm('POPULATE_FORM', '{{program.slug}}', '{{target.unit_of_measure_id}}')">
+										<a href="#" class="modal-trigger" data-modal="indicator_target_unit_form" onClick="populateIndicatorUnitOfMeasureForm('POPULATE_FORM', '{{project.slug}}', '{{target.unit_of_measure_id}}')">
 											<p><b>{{target.unit_of_measure}}</b></p>
 											<hr class="m-1" width="80%">
 										</a>
@@ -168,7 +168,7 @@
 									{% for target in indicator.targets%}
 										{% if target.yearly_target_values.0 %}
 											<div>
-												<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{program.slug}}', '{{target.yearly_target_values.0.year_1.id}}')">
+												<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{project.slug}}', '{{target.yearly_target_values.0.year_1.id}}')">
 													<p class="task-due-date m-1">
 														Target &#10148; {{target.yearly_target_values.0.year_1.target_value}} 
 													</p>
@@ -188,7 +188,7 @@
 								<td class"modifications" style="line-height: 6em;">
 									{% for target in indicator.targets%}
 										{% if target.yearly_target_values.1 %}
-											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{program.slug}}', '{{target.yearly_target_values.1.year_2.id}}')">
+											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{project.slug}}', '{{target.yearly_target_values.1.year_2.id}}')">
 												<p class="task-due-date m-1">
 													Target &#10148; {{target.yearly_target_values.1.year_2.target_value}} 
 												</p>
@@ -208,7 +208,7 @@
 								<td class="modifications" style="line-height: 6em;">
 									{% for target in indicator.targets%}
 										{% if target.yearly_target_values.2 %}
-											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{program.slug}}', '{{target.yearly_target_values.2.year_3.id}}')">
+											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{project.slug}}', '{{target.yearly_target_values.2.year_3.id}}')">
 												<p class="task-due-date m-1">
 													Target &#10148; {{target.yearly_target_values.2.year_3.target_value}} 
 												</p>
@@ -227,7 +227,7 @@
 								<td class="modifications" style="line-height: 6em;">
 									{% for target in indicator.targets%}
 										{% if target.yearly_target_values.3 %}
-											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{program.slug}}', '{{target.yearly_target_values.3.year_4.id}}')">
+											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{project.slug}}', '{{target.yearly_target_values.3.year_4.id}}')">
 				
 												<p class="task-due-date m-1">
 													Target &#10148; {{target.yearly_target_values.3.year_4.target_value}} 
@@ -248,7 +248,7 @@
 								<td class="modifications" style="line-height: 6em;">
 									{% for target in indicator.targets%}
 										{% if target.yearly_target_values.4 %}
-											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{program.slug}}', '{{target.yearly_target_values.4.year_5.id}}')">
+											<a href="#" class="modal-trigger" data-modal="indicator_target_value_form" onClick="populateIndicatorTargetValueForm('POPULATE_FORM', '{{project.slug}}', '{{target.yearly_target_values.4.year_5.id}}')">
 												<p class="task-due-date m-1">
 													Target &#10148; {{target.yearly_target_values.4.year_5.target_value}} 
 												</p>
@@ -279,14 +279,14 @@
 										</div>
 										<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
 											<div class="dropdown-content">
-												<a href="#" class="dropdown-item modal-trigger" data-modal="indicator_form" onClick="populateIndicatorForm('POPULATE_FORM', '{{program.slug}}', '{{indicator.slug}}', '{{indicator.name}}')">
+												<a href="#" class="dropdown-item modal-trigger" data-modal="indicator_form" onClick="populateIndicatorForm('POPULATE_FORM', '{{project.slug}}', '{{indicator.slug}}', '{{indicator.name}}')">
 													<i class="sl sl-icon-eye"></i>
 													<span>
 														<span>Edit</span>
 														<span>Edit Indicator</span>
 													</span>
 												</a>
-												<a class="dropdown-item modal-trigger" data-modal="delete-indicator-modal" onClick="handleDeleteIndicator('SET_ACTION_URL', '{{program.slug}}', '{{indicator.slug}}')">
+												<a class="dropdown-item modal-trigger" data-modal="delete-indicator-modal" onClick="handleDeleteIndicator('SET_ACTION_URL', '{{project.slug}}', '{{indicator.slug}}')">
 													<i class="sl sl-icon-pencil"></i>
 													<span>
 														<span>Delete</span>

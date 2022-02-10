@@ -17,7 +17,7 @@ from crispy_forms.layout import (
 from tralard.models.ward import Ward
 from tralard.models.province import Province
 from tralard.models.district import District
-from tralard.models.project import Feedback, Project
+from tralard.models.subcomponent import Feedback, SubComponent
 
 class SearchForm(forms.Form):
     
@@ -69,7 +69,7 @@ class SearchForm(forms.Form):
     )
 
 
-class ProjectForm(ModelForm):
+class SubComponentForm(ModelForm):
     custom_precis = forms.CharField(
         label="Precise summary",
         widget=forms.Textarea(
@@ -82,25 +82,25 @@ class ProjectForm(ModelForm):
     )
 
     class Meta:
-        model = Project
+        model = SubComponent
         exclude = ["slug", "created"]
         widgets = {
             'name': widgets.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'the name given to the project'
+                    'placeholder': 'the name given to the subcomponent'
                 }
             ),
             'focus_area': widgets.TextInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': 'project focus area'
+                    'placeholder': 'subcomponent focus area'
                 }
             ),
             'description': widgets.Textarea(
                 attrs={
                     'class': 'form-control',
-                    "placeholder": "write project description here",
+                    "placeholder": "write subcomponent description here",
                     "rows": 1,
                     "cols": 2,
                 }
@@ -109,8 +109,7 @@ class ProjectForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for fieldname in ["image_file", "approved", "has_funding", "project_representative", "project_managers",
-                          "project_funders", "training_managers", "certification_managers", "focus_area"]:
+        for fieldname in ["image_file", "approved", "has_funding", "representative", "focus_area"]:
             self.fields[fieldname].help_text = None
 
         self.helper = FormHelper()
@@ -120,12 +119,8 @@ class ProjectForm(ModelForm):
             Row(
                 Column("name", css_class="form-group col-md-6 mb-0"),
                 Column("image_file", css_class="form-group col-md-6 mb-0"),
-                Column("program", css_class="form-group col-md-6 mb-0"),
-                Column("project_representative", css_class="form-group col-md-6 mb-0"),
-                Column("project_managers", css_class="form-group col-md-6 mb-0"),
-                Column("project_funders", css_class="form-group col-md-6 mb-0"),
-                Column("training_managers", css_class="form-group col-md-6 mb-0"),
-                Column("certification_managers", css_class="form-group col-md-6 mb-0"),
+                Column("project", css_class="form-group col-md-6 mb-0"),
+                Column("representative", css_class="form-group col-md-6 mb-0"),
                 Column("approved", css_class="form-group col-md-6 mb-0"),
                 Column("has_funding", css_class="form-group col-md-6 mb-0"),
                 Column("custom_precis", css_class="form-group col-md-6 mb-0"),
@@ -139,7 +134,7 @@ class ProjectForm(ModelForm):
         )
 
     def save(self, commit=True):
-        instance = super(ProjectForm, self).save(commit=False)
+        instance = super(SubComponentForm, self).save(commit=False)
         custom_precis = self.cleaned_data["custom_precis"]
         instance.precis = custom_precis
         instance.save()
@@ -155,7 +150,7 @@ class FeedbackForm(ModelForm):
 
     class Meta:
         model = Feedback
-        exclude = ["created", "description", "project", "slug"]
+        exclude = ["created", "description", "subcomponent", "slug"]
         widgets = {
             'date': widgets.DateInput(format=('%m/%d/%Y'), attrs={'class': 'form-control', 'type': 'date'}),
         }
@@ -169,7 +164,7 @@ class FeedbackForm(ModelForm):
             Row(
                 Column("title", css_class="form-group col-md-12 mb-0"),
                 Column("date", css_class="form-group col-md-12 mb-0"),
-                Column("project", css_class="form-group col-md-12 mb-0"),
+                Column("subcomponent", css_class="form-group col-md-12 mb-0"),
                 Column("moderator", css_class="form-group col-md-12 mb-0"),
                 Column("custom_description", css_class="form-group col-md-12 mb-0 "),
                 css_class="form-row has-text-left",
@@ -184,10 +179,10 @@ class FeedbackForm(ModelForm):
         return instance
 
 
-class ProjectFilterForm(crispy_forms.helper.FormHelper):
+class SubComponentFilterForm(crispy_forms.helper.FormHelper):
     form_method = 'GET'
     layout = Layout(
         "name",
-        "program",
+        "subcomponent",
         Submit("submit", "Apply Filter", css_class="btn-primary"),
     )

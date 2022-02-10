@@ -377,7 +377,7 @@ class IndicatorReportBuild(SimpleDocTemplate):
         iter_count = 0
 
         current_year = datetime.now().year
-
+        print(self.indicators)
         for indicator_obj in self.indicators:
             indicator_targets = indicator_obj.indicatortarget_set.all()
             targets_count = indicator_targets.count()

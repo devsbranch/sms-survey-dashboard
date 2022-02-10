@@ -19,6 +19,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='training',
             name='sub_project',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tralard.SubProject', verbose_name='Intervention'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tralard.SubProject', verbose_name='SubProject'),
         ),
     ]

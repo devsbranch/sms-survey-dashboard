@@ -2,7 +2,7 @@
 from tralard.resources.ward import *  # noqa
 from tralard.resources.fund import *  # noqa
 from tralard.resources.project import *  # noqa
-from tralard.resources.program import *  # noqa
+from tralard.resources.subcomponent import *  # noqa
 from tralard.resources.district import *  # noqa
 from tralard.resources.province import *  # noqa
 from tralard.resources.training import *  # noqa

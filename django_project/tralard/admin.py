@@ -16,8 +16,8 @@ from tralard.models import (
     Ward,
     Fund,
     Photo,
-    Program,
     Project,
+    SubComponent,
     District,
     FollowUp,
     Province,
@@ -38,8 +38,8 @@ from tralard.models import (
 from tralard.resources import (
     FundResource,
     WardResource,
-    ProgramResource,
     ProjectResource,
+    SubComponentResource,
     TrainingResource,
     ProvinceResource,
     DistrictResource,
@@ -258,19 +258,19 @@ class WardAdmin(ImportExportActionModelAdmin):
     search_fields = ['name']
 
 
-class ProgramAdmin(ImportExportActionModelAdmin):
-    resource_class = ProgramResource
+class ProjectAdmin(ImportExportActionModelAdmin):
+    resource_class = ProjectResource
     empty_value_display = "-empty-"
     list_display = [
         "name",
         "approved",
         "started",
-        "program_representative",
+        "project_representative",
     ]
     list_filter = (
         "name",
         "approved",
-        "program_representative",
+        "project_representative",
     )
     search_fields = [
         "name",
@@ -278,24 +278,22 @@ class ProgramAdmin(ImportExportActionModelAdmin):
     ]
 
 
-class ProjectAdmin(ImportExportActionModelAdmin):
-    resource_class = ProjectResource
+class SubComponentAdmin(ImportExportActionModelAdmin):
+    resource_class = SubComponentResource
     empty_value_display = "-empty-"
     list_display = [
         "name",
         "approved",
         "has_funding",
         "status",
-        "program",
-        "project_representative",
+        "project",
     ]
     list_filter = (
         "name",
         "approved",
         "has_funding",
         "status",
-        "program",
-        "project_representative",
+        "project",
     )
     search_fields = [
         "name",
@@ -313,7 +311,7 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
         "size",
         "ward",
         "status",
-        "project",
+        "subcomponent",
         "approved",
         "representative",
     ]
@@ -322,7 +320,7 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
         "size",
         "ward",
         "status",
-        "project",
+        "subcomponent",
         "approved",
         "representative",
     )
@@ -482,8 +480,8 @@ admin.site.register(Attendance)
 admin.site.register(Ward, WardAdmin)
 admin.site.register(Fund, FundAdmin)
 admin.site.register(Photo, PhotoAdmin)
-admin.site.register(Program, ProgramAdmin)
 admin.site.register(Project, ProjectAdmin)
+admin.site.register(SubComponent, SubComponentAdmin)
 admin.site.register(Training, TrainingAdmin)
 admin.site.register(District, DistrictAdmin)
 admin.site.register(Province, ProvinceAdmin)

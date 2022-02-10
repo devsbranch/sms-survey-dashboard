@@ -1,0 +1,45 @@
+[
+    {
+        "model": "tralard.SubComponent",
+        "pk": 1,
+        "fields": {
+            "name": "Livelihoods",
+            "approved": true,
+            "has_funding": true,
+            "description": "This project is about improving Livelihoods of the people.",
+            "focus_area": "The focus of this project is in Livelihoods.",
+            "project": 1,
+            "created": "2021-01-13",
+            "slug": "livelihoods"
+        }
+    },
+    {
+        "model": "tralard.SubComponent",
+        "pk": 2,
+        "fields": {
+            "name": "Natural Forest Regeneration",
+            "approved": true,
+            "has_funding": true,
+            "description": "This Project is about regenerating natural forests.",
+            "focus_area": "Focus on natural forest regeneration.",
+            "project": 1,
+            "created": "2021-01-13",
+            "slug": "natural-forest-regeneration"
+        }
+    },
+    {
+        "model": "tralard.SubComponent",
+        "pk": 3,
+        "fields": {
+            "name": "Infrastructures",
+            "approved": true,
+            "has_funding": false,
+            "description": "This project is about Infrastructure.",
+            "precis": "",
+            "focus_area": "Infrastructure Development.",
+            "project": 1,
+            "created": "2021-01-13",
+            "slug": "infrastructures"
+        }
+    }
+]

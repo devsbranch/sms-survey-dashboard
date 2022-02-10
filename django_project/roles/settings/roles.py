@@ -8,17 +8,17 @@ from rolepermissions.roles import AbstractUserRole
 
 class ReportManager(AbstractUserRole):
     available_permissions = {
-        "can_view_project_report": True,
-        "can_edit_project_report": True,
-        "can_export_project_report": True,
+        "can_view_subcomponent_report": True,
+        "can_edit_subcomponent_report": True,
+        "can_export_subcomponent_report": True,
     }
 
 
 class DataAnalyst(AbstractUserRole):
     available_permissions = {
-        "can_view_project_data": True,
-        "can_edit_project_data": True,
-        "can_delete_project_data": True,
+        "can_view_subcomponent_data": True,
+        "can_edit_subcomponent_data": True,
+        "can_delete_subcomponent_data": True,
     }
 
 
@@ -26,21 +26,21 @@ class User(AbstractUserRole):
     available_permissions = {}
 
 
-class ProgramManager(AbstractUserRole):
-    role_name = "program_manager"
-    available_permissions = {
-        "can_create_program":True,
-    }
-
-
 class ProjectManager(AbstractUserRole):
     role_name = "project_manager"
     available_permissions = {
-        "can_create_project": True,
-        "can_view_project": True,
-        "can_edit_project": True,
-        "can_delete_project": True,
-        "can_assign_project_supervisor": True,
+        "can_create_project":True,
+    }
+
+
+class SubComponentManager(AbstractUserRole):
+    role_name = "subcomponent_manager"
+    available_permissions = {
+        "can_create_subcomponent": True,
+        "can_view_subcomponent": True,
+        "can_edit_subcomponent": True,
+        "can_delete_subcomponent": True,
+        "can_assign_subcomponent_supervisor": True,
         "can_edit_funding_data": True,
     }
 
@@ -52,14 +52,14 @@ class Funder(AbstractUserRole):
         "can_edit_funding_data": True,
         "can_delete_funding_data": True,
         "can_view_funding_data": True,
-        "can_assign_project_manager": True,
+        "can_assign_subcomponent_manager": True,
     }
 
 
-class ProjectSupervisor(AbstractUserRole):
+class SubComponentSupervisor(AbstractUserRole):
     available_permissions = {
-        "can_view_project_beneficiary": True,
-        "can_edit_project_beneficiary": True,
+        "can_view_subcomponent_beneficiary": True,
+        "can_edit_subcomponent_beneficiary": True,
     }
 
 
@@ -73,8 +73,8 @@ class BenficiarySubProjectRepresentative(AbstractUserRole):
 class TrainingManager(AbstractUserRole):
     role_name = "training_manager"
     available_permissions = {
-        "can_view_project_training": True,
-        "can_edit_training_project": True,
+        "can_view_subcomponent_training": True,
+        "can_edit_training_subcomponent": True,
         "can_view_training_sub_project": True,
         "can_edit_training_sub_project": True,
     }
@@ -83,7 +83,7 @@ class TrainingManager(AbstractUserRole):
 class CertificationManager(AbstractUserRole):
     role_name = "certification_manager"
     available_permissions = {
-        "can_view_project": True,
-        "can_edit_project": True,
-        "can_delete_project": True,
+        "can_view_subcomponent": True,
+        "can_edit_subcomponent": True,
+        "can_delete_subcomponent": True,
     }

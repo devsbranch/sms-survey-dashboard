@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <form id="{{form.action_url}}"
                         method="post"
-                        action="{% url 'tralard:program-detail' program.slug %}{{form.action_url}}"
+                        action="{% url 'tralard:project-detail' project.slug %}{{form.action_url}}"
                         enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="m-4 column is-multiline">
@@ -30,13 +30,13 @@
                                 type="button" 
                                 class="button modal-dismiss"
                                 {% if forloop.counter == 1 %} 
-                                    onClick="populateIndicatorForm('CLEAR_FORM', '{{program.slug}}')" 
+                                    onClick="populateIndicatorForm('CLEAR_FORM', '{{project.slug}}')" 
                                 {% elif forloop.counter == 2 %}
-                                    onClick="populateIndicatorTargetForm('CLEAR_FORM', '{{program.slug}}')"
+                                    onClick="populateIndicatorTargetForm('CLEAR_FORM', '{{project.slug}}')"
                                 {% elif forloop.counter == 3 %}
-                                    onClick="populateIndicatorTargetValueForm('CLEAR_FORM', '{{program.slug}}')"
+                                    onClick="populateIndicatorTargetValueForm('CLEAR_FORM', '{{project.slug}}')"
                                 {% elif forloop.counter == 4 %}
-                                    onClick="populateIndicatorUnitOfMeasureForm('CLEAR_FORM', '{{program.slug}}')"
+                                    onClick="populateIndicatorUnitOfMeasureForm('CLEAR_FORM', '{{project.slug}}')"
                                 {% endif %}>
                                 Cancel
                             </button>

@@ -21,8 +21,8 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         return reverse_lazy(
             "tralard:training-list",
             kwargs={
-                "program_slug": self.kwargs.get("program_slug", None),
                 "project_slug": self.kwargs.get("project_slug", None),
+                "subcomponent_slug": self.kwargs.get("subcomponent_slug", None),
             },
         )
 
@@ -31,8 +31,8 @@ class TrainingListView(LoginRequiredMixin, CreateView):
         self.trainings = Training.objects.all()
         context["title"] = "Training"
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
-        context["program_slug"] = self.kwargs.get("program_slug", None)
         context["project_slug"] = self.kwargs.get("project_slug", None)
+        context["subcomponent_slug"] = self.kwargs.get("subcomponent_slug", None)
         training_filter = TrainingFilter(self.request.GET, queryset=self.get_queryset())
 
         self.training_paginator = Paginator(self.trainings, 10)
@@ -49,22 +49,22 @@ class TrainingListView(LoginRequiredMixin, CreateView):
 
 
 @login_required(login_url="/login/")
-def training_delete(request, program_slug, project_slug, training_entry_slug):
+def training_delete(request, project_slug, subcomponent_slug, training_entry_slug):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
     return redirect(
         reverse_lazy(
             "tralard:training-list",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
             },
         )
     )
 
 
 @login_required(login_url="/login/")
-def training_update(request, program_slug, project_slug, training_entry_slug):
+def training_update(request, project_slug, subcomponent_slug, training_entry_slug):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
     if request.method == "POST":
@@ -75,8 +75,8 @@ def training_update(request, program_slug, project_slug, training_entry_slug):
                 reverse_lazy(
                     "tralard:training-list",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                     },
                 )
             )
@@ -84,8 +84,8 @@ def training_update(request, program_slug, project_slug, training_entry_slug):
             reverse_lazy(
                 "tralard:training-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                 },
             )
         )

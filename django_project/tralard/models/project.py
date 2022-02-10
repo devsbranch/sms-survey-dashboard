@@ -2,26 +2,14 @@
 """
 Project model definitions for tralard app.
 """
-import os
 import logging
 
 from django.db import models
-from django.db.models import Sum
-from django.conf import settings
-from django.urls import reverse_lazy
 from django.utils.text import slugify
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
-from tralard.models.fund import Fund
 from tralard.utils import unique_slugify
-# (TODO:Alison) take the get_related_sub_project method to utilities or model managers.
-# not very safe (circular import issue candidate) 
-# except that we are referencing to project under subproject via string reference 
-# and not by imoprt - so its safe this way
-from tralard.models.sub_project import SubProject
-from tralard.models.beneficiary import Beneficiary
-from tralard.constants import PROJECT_STATUS_CHOICES
 
 from tinymce import HTMLField
 
@@ -29,107 +17,9 @@ User = get_user_model()
 logger = logging.getLogger(__name__)
 
 
-class ApprovedProjectManager(models.Manager):
-    """Custom manager that shows aproved projects."""
-
-    def get_queryset(self):
-        return super(
-            ApprovedProjectManager, self
-        ).get_queryset().filter(
-            approved=True, )
-
-
-class UnapprovedProjectManager(models.Manager):
-    """Custom project manager that shows only unapproved records."""
-
-    def get_queryset(self):
-        """Query set generator."""
-        return super(
-            UnapprovedProjectManager, self).get_queryset().filter(
-            approved=False)
-
-
-class Representative(models.Model):
-    """
-    Project Representative.
-    """
-    GENDER_CHOICES = (
-        ("Male", _("Male")),
-        ("Female", _("Female")),
-        ("Transgender", _("Transgender")),
-        ("Other", _("Other"))
-    )
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    first_name = models.CharField(
-        _("First Name"),
-        max_length=200,
-    )
-    last_name = models.CharField(
-        _("Last Name"),
-        max_length=200,
-        null=False
-    )
-    birthdate = models.DateField(
-        _("Birth Date"),
-        auto_now_add=False,
-        null=True,
-        blank=True
-    )
-    gender = models.CharField(
-        _("Gender"),
-        max_length=50,
-        choices=GENDER_CHOICES,
-        null=True,
-        blank=True
-    )
-    email = models.EmailField(
-        _("Email"),
-        null=True,
-        blank=True
-    )
-    cell = models.CharField(
-        _("Cell"),
-        max_length=50,
-        null=True,
-        blank=True
-    )
-    ward = models.ForeignKey(
-        'tralard.ward',
-        default='',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    address = HTMLField(
-        help_text=_(
-            'Address details and other information necesarry.'),
-        blank=True,
-        null=True
-    )
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slugify(self, slugify(f"{self.first_name} {self.last_name}"))
-        super().save(*args, **kwargs)
-
-
 class Project(models.Model):
     """
-    Project definition.
+    Project Definition i.e PPCR, TRALARD etc.
     """
     slug = models.SlugField(
         max_length=255,
@@ -137,90 +27,33 @@ class Project(models.Model):
         blank=True
     )
     name = models.CharField(
-        help_text=_('Name of this project.'),
-        max_length=255,
+        _("Project Name"),
+        max_length=200,
         unique=True
     )
     approved = models.BooleanField(
         help_text=_('Whether this project has been approved yet.'),
         default=False,
-        null=True
-    )
-    has_funding = models.BooleanField(
-        help_text=_('Whether this project has an active funding.'),
-        default=False,
-        null=True
-    )
-    status = models.CharField(
-        _("Project Status"),
-        max_length=50,
-        choices=PROJECT_STATUS_CHOICES,
         null=True,
-        blank=True,
+        blank=True
     )
-    description = models.CharField(
-        help_text=_('A short description for the project'),
-        max_length=500,
-        blank=True,
-        null=True
-    )
-    program = models.ForeignKey(
-        'tralard.program',
-        default='',
-        on_delete=models.CASCADE,
+    started = models.DateField(
+        _("project Start Date"),
+        auto_now_add=False,
+        null=True,
+        blank=True
     )
     project_representative = models.ForeignKey(
         User,
+        related_name='project_representatives',
         help_text=_(
-            'Project representative. '
-            'This name will be used on trainings and any other references. '),
+            'project representative. '
+            'This name will be used on projects and any other references. '),
         on_delete=models.SET_NULL,
         blank=True,
         null=True  # This is needed to populate existing database.
     )
-    project_managers = models.ManyToManyField(
-        User,  # import django default user model for now
-        related_name='project_managers',
-        blank=True,
-        # null=True, null has no effect on ManyToManyField.
-        help_text=_(
-            'Managers of this project. '
-            'They will be allowed to approve sub-projects in the '
-            'fund distribution queue.'),
-    )
-    project_funders = models.ManyToManyField(
-        User,  # same here lets just hook into the default django User model for now
-        related_name='funders',
-        verbose_name='Project Funders',
-        blank=True,
-        # null=True, null has no effect on ManyToManyField.
-        help_text=_(
-            'Fund Managers of the project . '
-            'These could either be funders or fundd managers, \
-                will be allowed to approve sub-project supervisors and sub-project fund managers.'
-        ),
-
-    )
-    training_managers = models.ManyToManyField(
-        User,
-        related_name='training_managers',
-        blank=True,
-        # null=True, null has no effect on ManyToManyField.
-        help_text=_(
-            'Managers of all trainings in this project. '
-            'They will be allowed to create or remove training schedules.')
-    )
-    certification_managers = models.ManyToManyField(
-        User,
-        related_name='certification_managers',
-        blank=True,
-        # null=True, null has no effect on ManyToManyField.
-        help_text=_(
-            'Managers of the certifications in this project. '
-            'They will receive email notification about projects and have'
-            ' the same permissions as project owner.')
-    )
-    image_file = models.ImageField(
+    logo = models.ImageField(
         help_text=_(
             'A banner image for this project. Most browsers support dragging '
             'the image directly on to the "Choose File" button above. The '
@@ -228,175 +61,20 @@ class Project(models.Model):
         upload_to='images/projects',
         blank=True
     )
-    precis = HTMLField(
+    description = HTMLField(
         help_text=_(
             'A detailed summary of the project. Rich text edditing is supported.'),
         blank=True,
         null=True
     )
 
-    focus_area = HTMLField(
-        help_text=_(
-            'Please describe the focus areas of the project.'
-            '(if any). Rich text editing is supported'),
-        blank=True,
-        null=True
-    )
-
-    objects = models.Manager()
-    approved_objects = ApprovedProjectManager()
-    unapproved_objects = UnapprovedProjectManager()
-    created = models.DateTimeField(auto_now_add=True)
-
     def __str__(self):
         return self.name.title()
+
+    # def get_absolute_url(self):
+    #     return reverse_lazy('tralard:project-detail', kwargs={'project_slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = unique_slugify(self, slugify(self.name))
-        super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        """Return URL to project detail page
-        :return: URL
-        :rtype: str
-        """
-        return reverse_lazy('tralard:project-detail',
-                    kwargs={
-                        'program_slug': self.program.slug,
-                        'project_slug': self.slug
-                    }
-                )
-
-    @property
-    def get_related_sub_projects(self):
-        sub_projects_queryset = SubProject.objects.filter(
-            project__slug=self.slug
-        )
-        return sub_projects_queryset
-
-    @property
-    def count_sub_projects(self):
-        sub_projects_count_queryset = SubProject.objects.filter(
-            project__slug=self.slug
-        ).count()
-        return sub_projects_count_queryset
-
-    @property
-    def get_total_sub_project_fund(self):
-        total_sub_project_fund = Fund.objects.filter(
-            sub_project__project__slug=self.slug
-        ).aggregate(Sum('amount'))
-        amount_value = total_sub_project_fund["amount__sum"]
-        return amount_value
-
-    @property
-    def count_beneficiaries(self):
-        beneficiary_count_queryset = Beneficiary.objects.filter(
-            sub_project__project__slug=self.slug
-        ).count()
-        return beneficiary_count_queryset
-
-    @property
-    def get_total_project_fund(self):
-        """Computes total funds related to this project."""
-        related_funds_sum_qs = Fund.objects.filter(
-            sub_project__project__slug=self.slug
-        ).aggregate(Sum('amount'))
-
-        amount_value = related_funds_sum_qs['amount__sum']
-        return amount_value
-
-    @property
-    def get_total_fund_balance(self):
-        """Computes total funds balance related to this project."""
-        related_funds_balance_sum_qs = Fund.objects.filter(
-            sub_project__project__slug=self.slug
-        ).aggregate(Sum('balance'))
-
-        amount_value = related_funds_balance_sum_qs['balance__sum']
-        return amount_value
-
-    @property
-    def count_approved_sub_projects(self):
-        """Returns approved sub-projects of this project."""
-        sub_projects_queryset = SubProject.objects.filter(
-            project__slug=self.slug,
-            approved=True
-        ).count()
-        return sub_projects_queryset
-
-    @property
-    def get_total_used_funds(self):
-        """Computes total funds used related to this project."""
-        total_project_funds = self.get_total_project_fund
-        total_project_funds_balance = self.get_total_fund_balance
-        try:
-            total_project_funds_used = total_project_funds - total_project_funds_balance
-        except:
-            total_project_funds_used = 0
-        return total_project_funds_used
-
-    @property
-    def get_total_used_funds_percent(self):
-        """Computes total funds utilized as a percent related to this project."""
-        total_project_funds = self.get_total_project_fund
-        total_project_funds_utilized_percent = (self.get_total_used_funds / total_project_funds) * 100
-        return round(total_project_funds_utilized_percent)
-
-    @property
-    def logo_url(self):
-        if self.image_file:
-            return self.image_file.url
-        return os.path.join(settings.STATIC_URL, "assets/images/logos/logo.png")
-
-
-class Feedback(models.Model):
-    """
-    Project Feedback.
-    """
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    title = models.CharField(
-        _("Title"),
-        max_length=200,
-    )
-    date = models.DateField(
-        _("Create Date"),
-        auto_now_add=False,
-        null=True,
-        blank=True
-    )
-    project = models.ForeignKey(
-        Project,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    moderator = models.ForeignKey(
-        User,
-        related_name='feedback_moderator',
-        help_text=_(
-            'Feedback Moderator. '
-            'This name will be used on project feedback and any other references. '),
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True
-    )
-    description = models.TextField(
-        _("Description"),
-        null=True,
-        blank=True
-    )
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.title} project: {self.project.name}"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slugify(self, slugify(self.title))
         super().save(*args, **kwargs)

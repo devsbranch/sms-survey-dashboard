@@ -2,15 +2,15 @@
 
 {% load crispy_forms_tags %}
 
-<!-- Delete project Modal --><!-- delete-project-modal -->
+<!-- Create project Modal --><!-- create-project-modal -->
 <div class="modal icon-action-modal modal-hero"
-     id="delete-project-modal"
-     aria-labelledby="delete-project">
+     id="project-form-modal"
+     aria-labelledby="create-project">
     <div class="modal-background modal-dismiss"></div>
-    <div class="modal-content">
-        <div class="flex-card simple-shadow">
-            <div class="help-text has-text-left bg-warning">
-                <h2 class="dark-text">Delete Project</h2>
+    <div class="modal-content" style="width:800px; !important;">
+        <div class="flex-card simple-shadow" style="overflow-y: auto;">
+            <div class="help-text has-text-left">
+                <h2 class="dark-text">New Project</h2>
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
@@ -18,21 +18,21 @@
                         <img src="{% static 'assets/images/icons/project-management.svg' %}">
                     </div>
                     <div class="m-3">
-                        <span class="m-2">Deleting {{ project.name }}  project</span>
+                        <span class="m-2">Create a new subcomponent</span>
                     </div>
                 </div>
-                <form id="delete-project-form"
+                <form id="project-form"
                       method="post"
-                      action="">
+                      action="{% url 'tralard:subcomponent' project.slug %}"
+                      enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div id="warning-msg">
-                        <p>Are you sure want to delete this project?</p>
+                    <div class="m-4 column is-multiline">
+                        {% crispy subcomponent_form subcomponent_form.helper %}
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="button modal-dismiss">
                             Cancel
                         </button>
-                        <button class=" is-danger is-modal" type="submit">Confirm</button>
                     </div>
                 </form>
             </div>

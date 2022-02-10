@@ -51,20 +51,20 @@ from tralard.forms import (
     FundApprovalForm,
     DisbursementForm,
     ProgressStatusForm,
-    BeneficiaryCreateForm
+    BeneficiaryCreateForm,
     
 )
 from tralard.models import (
     Fund,
     Photo,
-    Project, 
     Training, 
     SubProject, 
     FundVersion,
     Beneficiary, 
     Disbursement,
     TrainingType,
-    ProgressStatus
+    SubComponent,
+    ProgressStatus,
 )
 from tralard.utils import (
     delete_temp_dir, 
@@ -168,28 +168,28 @@ class JSONSubProjectListView(SubProjectMixin, JSONResponseMixin, ListView):
     def get_queryset(self):
         """Get the queryset for this view.
 
-        :returns: A queryset which to show all versions of project.
+        :returns: A queryset which to show all versions of subcomponent.
         :rtype: QuerySet
         :raises: Http404
         """
-        project_slug = self.kwargs["project_slug"]
-        project = get_object_or_404(Project, slug=project_slug)
-        qs = SubProject.objects.all().filter(project=project)
+        subcomponent_slug = self.kwargs["subcomponent_slug"]
+        subcomponent = get_object_or_404(SubComponent, slug=subcomponent_slug)
+        qs = SubProject.objects.all().filter(subcomponent=subcomponent)
         return qs
 
 
 class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
     model = Training
     form_class = TrainingForm
-    template_name = "project/sub-project-training-list.html"
+    template_name = "subcomponent/sub-project-training-list.html"
     sub_project_trainings = None
 
     def get_success_url(self):
         return reverse_lazy(
             "tralard:subproject-training",
             kwargs={
-                "program_slug": self.kwargs.get("program_slug", None),
                 "project_slug": self.kwargs.get("project_slug", None),
+                "subcomponent_slug": self.kwargs.get("subcomponent_slug", None),
                 "subproject_slug": self.kwargs.get("subproject_slug", None),
             },
         )
@@ -203,9 +203,9 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
         training_filter = TrainingFilter(self.request.GET, queryset=self.get_queryset())
 
         context["title"] = "Sub Project Trainings"
-        context["program_slug"] = self.kwargs.get("program_slug", None)
-        context["training_types"] = TrainingType.objects.values_list("name", flat=True)
         context["project_slug"] = self.kwargs.get("project_slug", None)
+        context["training_types"] = TrainingType.objects.values_list("name", flat=True)
+        context["subcomponent_slug"] = self.kwargs.get("subcomponent_slug", None)
         context["subproject_slug"] = self.kwargs.get("subproject_slug", None)
         context["total_beneficiaries"] = Beneficiary.objects.all().count()
         context["trainings"] = self.sub_project_trainings
@@ -242,16 +242,16 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
-            program_slug = self.kwargs.get("program_slug", None)
             project_slug = self.kwargs.get("project_slug", None)
+            subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
             subproject_slug = self.kwargs.get("subproject_slug", None)
 
             return redirect(
                 reverse_lazy(
                     "tralard:subproject-training",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                         "subproject_slug": subproject_slug,
                     },
                 )
@@ -266,16 +266,16 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
     def form_valid(self, form):
         if form.is_valid():
             form.save()
-            program_slug = self.kwargs.get("program_slug", None)
             project_slug = self.kwargs.get("project_slug", None)
+            subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
             subproject_slug = self.kwargs.get("subproject_slug", None)
 
             return redirect(
                 reverse_lazy(
                     "tralard:subproject-training",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                         "subproject_slug": subproject_slug,
                     },
                 )
@@ -284,7 +284,7 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
 
 @login_required(login_url="/login/")
 def sub_project_training_update(
-        request, program_slug, project_slug, subproject_slug, training_entry_slug
+    request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
 ):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
@@ -296,8 +296,8 @@ def sub_project_training_update(
                 reverse_lazy(
                     "tralard:subproject-training",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                         "subproject_slug": subproject_slug,
                     },
                 )
@@ -306,15 +306,15 @@ def sub_project_training_update(
             reverse_lazy(
                 "tralard:subproject-training",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                 },
             )
         )
 
 
 @login_required(login_url="/login/")
-def sub_project_update(request, program_slug, subproject_slug):
+def sub_project_update(request, project_slug, subcomponent_slug, subproject_slug):
     subproject = SubProject.objects.get(slug=subproject_slug)
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
@@ -327,13 +327,13 @@ def sub_project_update(request, program_slug, subproject_slug):
             subproject.save()
 
         messages.add_message(
-            request, messages.SUCCESS, "Intervention updated successfully!"
+            request, messages.SUCCESS, "SubProject updated successfully!"
         )
         return redirect(
             reverse_lazy(
-                "tralard:program-detail",
+                "tralard:project-detail",
                 kwargs={
-                    "program_slug": program_slug,
+                    "project_slug": project_slug,
                 },
             )
         )
@@ -341,7 +341,7 @@ def sub_project_update(request, program_slug, subproject_slug):
 
 @login_required(login_url="/login/")
 def sub_project_training_delete(
-        request, program_slug, project_slug, subproject_slug, training_entry_slug
+    request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
 ):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
@@ -349,8 +349,8 @@ def sub_project_training_delete(
         reverse_lazy(
             "tralard:subproject-training",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": subproject_slug,
             },
         )
@@ -375,11 +375,11 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         """
         context = super(SubProjectListView, self).get_context_data(**kwargs)
         context["num_sub_projects"] = context["sub_projects"].count()
-        project_slug = self.kwargs.get("project_slug", None)
+        subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
         context["form"] = SubProjectForm
-        context["project_slug"] = project_slug
-        if project_slug:
-            context["the_project"] = Project.objects.get(slug=project_slug)
+        context["subcomponent_slug"] = subcomponent_slug
+        if subcomponent_slug:
+            context["the_subcomponent"] = SubComponent.objects.get(slug=subcomponent_slug)
         return context
 
     def get_queryset(self, queryset=None):
@@ -392,24 +392,24 @@ class SubProjectListView(LoginRequiredMixin, SubProjectMixin, ListView):
         :raises: Http404
         """
         if queryset is None:
-            project_slug = self.kwargs.get("project_slug", None)
-            if project_slug:
+            subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+            if subcomponent_slug:
                 try:
-                    project = Project.objects.get(slug=project_slug)
-                except Project.DoesNotExist:
+                    subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
+                except SubComponent.DoesNotExist:
                     raise Http404(
-                        "Sorry! The project you are requesting a subproject for "
+                        "Sorry! The subcomponent you are requesting a subproject for "
                         "could not be found or you do not have permission to "
                         "view the subproject. Try logging in as a staff member "
                         "if you wish to view it."
                     )
                 queryset = (
-                    SubProject.objects.all().filter(project=project).order_by("name")
+                    SubProject.objects.all().filter(subcomponent=subcomponent).order_by("name")
                 )
                 return queryset
             else:
                 raise Http404(
-                    "Sorry! We could not find the project for your subproject!"
+                    "Sorry! We could not find the subcomponent for your subproject!"
                 )
         else:
             return queryset
@@ -419,7 +419,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
     """Detail view for SubProject."""
 
     context_object_name = "sub_project"
-    template_name = "project/sub_project_detail.html"
+    template_name = "subcomponent/sub_project_detail.html"
 
     def get_object(self, queryset=None):
         """Get the object for this view.
@@ -430,23 +430,23 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         :param queryset: A query set
         :type queryset: QuerySet
 
-        :returns: Queryset which is filtered to only show a project
+        :returns: Queryset which is filtered to only show a subcomponent
         :rtype: QuerySet
         :raises: Http404
         """
         if queryset is None:
             queryset = self.get_queryset()
-        project_slug = self.kwargs.get("project_slug", None)
+        subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
         sub_project_slug = self.kwargs.get("subproject_slug", None)
-        if project_slug:
+        if subcomponent_slug:
             try:
-                project = Project.objects.get(slug=project_slug)
-            except Project.DoesNotExist:
+                subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
+            except SubComponent.DoesNotExist:
                 raise Http404(
-                    "The project you requested a subcateogrty for does not exist."
+                    "The subcomponent you requested a subcateogrty for does not exist."
                 )
             try:
-                obj = queryset.get(project=project, slug=sub_project_slug)
+                obj = queryset.get(subcomponent=subcomponent, slug=sub_project_slug)
                 return obj
             except SubProject.DoesNotExist:
                 raise Http404("The subproject you requested does not exist.")
@@ -486,8 +486,9 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         context['progress_status_form'] = ProgressStatusForm
         return context
 
+
 @login_required
-def file_upload_view(request, program_slug, project_slug, subproject_slug):
+def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
     subproject_obj = SubProject.objects.get(slug=subproject_slug)
 
     if request.method == "POST":
@@ -539,7 +540,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
     template_name = "tralard/sub_project_delete.html"
 
     def get(self, request, *args, **kwargs):
-        """Get the project_slug from the URL and define the Project
+        """Get the subcomponent_slug from the URL and define the Project
 
         :param request: HTTP request object
         :type request: HttpRequest
@@ -553,12 +554,12 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_slug = self.kwargs.get("project_slug", None)
-        self.project = Project.objects.get(slug=self.project_slug)
+        self.subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
         return super(SubProjectDeleteView, self).get(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        """Post the project_slug from the URL and define the Project
+        """Post the subcomponent_slug from the URL and define the Project
 
         :param request: HTTP request object
         :type request: HttpRequest
@@ -572,8 +573,8 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :returns: Unaltered request object
         :rtype: HttpResponse
         """
-        self.project_slug = self.kwargs.get("project_slug", None)
-        self.project = Project.objects.get(slug=self.project_slug)
+        self.subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
         return super(SubProjectDeleteView, self).post(request, *args, **kwargs)
 
     def get_success_url(self):
@@ -586,7 +587,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         :rtype: HttpResponse
         """
         return reverse_lazy(
-            "subproject-list", kwargs={"project_slug": self.object.project.slug}
+            "subproject-list", kwargs={"subcomponent_slug": self.object.subcomponent.slug}
         )
 
     def get_queryset(self):
@@ -602,7 +603,7 @@ class SubProjectDeleteView(LoginRequiredMixin, SubProjectMixin, DeleteView):
         """
         if not self.request.user.is_authenticated:
             raise Http404
-        qs = SubProject.objects.filter(project=self.project)
+        qs = SubProject.objects.filter(subcomponent=self.subcomponent)
         return qs
 
 
@@ -617,13 +618,13 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         """Define the redirect URL
 
          After successful creation of the object, the User will be redirected
-         to the unapproved SubProject list page for the object's parent Project
+         to the unapproved SubProject list page for the object's parent SubComponent
 
         :returns: URL
         :rtype: HttpResponse
         """
         return reverse_lazy(
-            "tralard:subproject-list", kwargs={"project_slug": self.object.project.slug}
+            "tralard:subproject-list", kwargs={"subcomponent_slug": self.object.subcomponent.slug}
         )
 
     def get_context_data(self, **kwargs):
@@ -636,7 +637,7 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         :rtype: dict
         """
         context = super(SubProjectCreateView, self).get_context_data(**kwargs)
-        context["categories"] = self.get_queryset().filter(project=self.project)
+        context["categories"] = self.get_queryset().filter(subcomponent=self.subcomponent)
         return context
 
     def form_valid(self, form):
@@ -661,9 +662,9 @@ class SubProjectCreateView(LoginRequiredMixin, SubProjectMixin, CreateView):
         :rtype: dict
         """
         kwargs = super(SubProjectCreateView, self).get_form_kwargs()
-        self.project_slug = self.kwargs.get("project_slug", None)
-        self.project = Project.objects.get(slug=self.project_slug)
-        kwargs.update({"project": self.project})
+        self.subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
+        kwargs.update({"subcomponent": self.subcomponent})
         return kwargs
 
 
@@ -681,9 +682,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: dict
         """
         kwargs = super(SubProjectUpdateView, self).get_form_kwargs()
-        self.project_slug = self.kwargs.get("project_slug", None)
-        self.project = Project.objects.get(slug=self.project_slug)
-        kwargs.update({"project": self.project})
+        self.subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
+        kwargs.update({"subcomponent": self.subcomponent})
         return kwargs
 
     def get_context_data(self, **kwargs):
@@ -696,28 +697,28 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         :rtype: dict
         """
         context = super(SubProjectUpdateView, self).get_context_data(**kwargs)
-        context["categories"] = self.get_queryset().filter(project=self.project)
+        context["categories"] = self.get_queryset().filter(subcomponent=self.subcomponent)
         return context
 
     def get_queryset(self):
         """Get the queryset for this view.
 
-        :returns: A queryset which is filtered to show all projects which
-        user created (staff gets all projects)
+        :returns: A queryset which is filtered to show all subcomponents which
+        user created (staff gets all subcomponents)
         :rtype: QuerySet
         """
-        project_slug = self.kwargs.get("project_slug", None)
-        project = Project.objects.get(slug=project_slug)
+        subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
+        subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
         qs = SubProject.objects.all()
         if self.request.user.is_staff:
             return qs
         else:
             return qs.filter(
-                Q(project=project)
+                Q(subcomponent=subcomponent)
                 & (
-                        Q(project__project_funders=self.request.user)
-                        | Q(project__project_managers=self.request.user)
-                        | Q(project__project_representatives=self.request.user)
+                    Q(subcomponent__subcomponent_funders=self.request.user)
+                    | Q(subcomponent__subcomponent_managers=self.request.user)
+                    | Q(subcomponent__subcomponent_representatives=self.request.user)
                 )
             )
 
@@ -725,13 +726,13 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
         """Define the redirect URL
 
         After successful update of the object, the User will be redirected
-        to the SubProject list page for the object's parent Project
+        to the SubProject list page for the object's parent SubComponent
 
         :returns: URL
         :rtype: HttpResponse
         """
         return reverse_lazy(
-            "tralard:subproject-list", kwargs={"project_slug": self.object.project.slug}
+            "tralard:subproject-list", kwargs={"subcomponent_slug": self.object.subcomponent.slug}
         )
 
     def form_valid(self, form):
@@ -770,8 +771,8 @@ class SubProjectBeneficiaryOrgListView(
         return reverse_lazy(
             "tralard:subproject-manage",
             kwargs={
-                "program_slug": self.kwargs.get("program_slug", None),
                 "project_slug": self.kwargs.get("project_slug", None),
+                "subcomponent_slug": self.kwargs.get("subcomponent_slug", None),
                 "subproject_slug": self.kwargs.get("subproject_slug"),
             },
         )
@@ -793,8 +794,8 @@ class SubProjectBeneficiaryOrgListView(
             reverse_lazy(
                 "tralard:subproject-beneficiary",
                 kwargs={
-                    "program_slug": self.kwargs.get("program_slug", None),
                     "project_slug": self.kwargs.get("project_slug", None),
+                    "subcomponent_slug": self.kwargs.get("subcomponent_slug", None),
                     "subproject_slug": self.kwargs.get("subproject_slug"),
                 },
             )
@@ -806,11 +807,11 @@ class SubProjectBeneficiaryOrgListView(
         )
 
         subproject_slug = self.kwargs.get("subproject_slug", None)
-        project_slug = self.kwargs.get("project_slug", None)
+        subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
         beneficiary_objects = Beneficiary.objects.filter(
             sub_project__slug=subproject_slug
         )
-        project = Project.objects.get(slug=project_slug)
+        subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
 
         # Just get the subproject name from one beneficiary since we are filtering
         # by a subproject.
@@ -823,7 +824,7 @@ class SubProjectBeneficiaryOrgListView(
         paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
         organizations = paginator.page(page)
         context["header"] = "Beneficiaries"
-        context["project"] = project
+        context["subcomponent"] = subcomponent
         context["subproject_slug"] = subproject_slug
         context["beneficiaries"] = organizations
         context["beneficiary_filter"] = BeneficiaryFilter(
@@ -842,22 +843,22 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
     form_class = FundForm
     disbursement_form_class = DisbursementForm
     expenditure_form_class = ExpenditureForm
-    context_object_name = "program"
+    context_object_name = "project"
     fund_approval_form_class = FundApprovalForm
-    template_name = "project/fund-list.html"
+    template_name = "subcomponent/fund-list.html"
 
     funds = None
 
     def get_success_url(self):
         """
         After successful creation of the object, the User will be redirected
-        to the SubProject list page for the object's parent Project
+        to the SubProject list page for the object's parent SubComponent
         """
         return reverse_lazy(
             "tralard:subproject-fund-list",
             kwargs={
-                "program_slug": self.object.sub_project.project.program.slug,
-                "project_slug": self.object.sub_project.project.slug,
+                "project_slug": self.object.sub_project.subcomponent.project.slug,
+                "subcomponent_slug": self.object.sub_project.subcomponent.slug,
                 "subproject_slug": self.object.sub_project.slug,
             },
         )
@@ -866,7 +867,7 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
         context = super(SubProjectFundListAndCreateView, self).get_context_data(
             **kwargs
         )
-        self.program_slug = self.kwargs["program_slug"]
+        self.project_slug = self.kwargs["project_slug"]
         self.subproject_slug = self.kwargs["subproject_slug"]
 
         self.sub_project = SubProject.objects.get(slug=self.subproject_slug)
@@ -917,8 +918,8 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
             return self.form_invalid(form)
 
 
-@has_role_decorator(["program_manager", "project_manager", "fund_manager"])
-def fund_approval_view(request, program_slug, project_slug, subproject_slug, fund_slug):
+@has_role_decorator(["project_manager", "subcomponent_manager", "fund_manager"])
+def fund_approval_view(request, project_slug, subcomponent_slug, subproject_slug, fund_slug):
     """
     Approve or reject a fund request
     """
@@ -932,8 +933,8 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
             reverse_lazy(
                 "tralard:subproject-fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "subproject_slug": subproject_slug,
                 },
             )
@@ -955,8 +956,8 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
                         reverse_lazy(
                             "tralard:subproject-fund-list",
                             kwargs={
-                                "program_slug": program_slug,
                                 "project_slug": project_slug,
+                                "subcomponent_slug": subcomponent_slug,
                                 "subproject_slug": subproject_slug,
                             },
                         )
@@ -967,8 +968,8 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
                     reverse_lazy(
                         "tralard:subproject-fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                             "subproject_slug": subproject_slug,
                         },
                     )
@@ -978,8 +979,8 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
         reverse_lazy(
             "tralard:subproject-fund-list",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": subproject_slug,
             },
         )
@@ -987,7 +988,7 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
   
 @login_required
 def subproject_fund_detail(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Display a single fund
@@ -1045,7 +1046,7 @@ def subproject_fund_detail(
 
 @login_required
 def update_sub_project_fund(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Update a single subproject fund.
@@ -1067,8 +1068,8 @@ def update_sub_project_fund(
                         reverse_lazy(
                             "tralard:subproject-fund-list",
                             kwargs={
-                                "program_slug": program_slug,
                                 "project_slug": project_slug,
+                                "subcomponent_slug": subcomponent_slug,
                                 "subproject_slug": subproject_slug,
                             },
                         )
@@ -1079,8 +1080,8 @@ def update_sub_project_fund(
             reverse_lazy(
                 "tralard:subproject-fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "subproject_slug": subproject_slug,
                 },
             )
@@ -1089,8 +1090,8 @@ def update_sub_project_fund(
         reverse_lazy(
             "tralard:subproject-fund-list",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": subproject_slug,
             },
         )
@@ -1098,7 +1099,7 @@ def update_sub_project_fund(
 
 @login_required(login_url="/login/")
 def subproject_fund_delete(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Delete a single subproject fund.
@@ -1114,8 +1115,8 @@ def subproject_fund_delete(
                 reverse_lazy(
                     "tralard:subproject-fund-list",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                         "subproject_slug": subproject_slug,
                     },
                 )
@@ -1126,8 +1127,8 @@ def subproject_fund_delete(
             reverse_lazy(
                 "tralard:subproject-fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "subproject_slug": subproject_slug,
                 },
             )
@@ -1135,7 +1136,7 @@ def subproject_fund_delete(
 
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
-        request, program_slug, project_slug, subproject_slug, fund_slug
+    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Create a single subproject fund disbursement.
@@ -1155,8 +1156,8 @@ def subproject_fund_disbursement_create(
                     reverse_lazy(
                         "tralard:subproject-fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                             "subproject_slug": subproject_slug,
                         },
                     )
@@ -1167,8 +1168,8 @@ def subproject_fund_disbursement_create(
             reverse_lazy(
                 "tralard:subproject-fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "subproject_slug": subproject_slug,
                 },
             )
@@ -1177,8 +1178,8 @@ def subproject_fund_disbursement_create(
         reverse_lazy(
             "tralard:subproject-fund-list",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": subproject_slug,
             },
         )
@@ -1186,7 +1187,7 @@ def subproject_fund_disbursement_create(
 
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(
-        request, program_slug, project_slug, subproject_slug, fund_slug, disbursement_slug
+    request, project_slug, subcomponent_slug, subproject_slug, fund_slug, disbursement_slug
 ):
     """
     Create a single subproject fund disbursement expenditure.
@@ -1201,8 +1202,8 @@ def subproject_disbursement_expenditure_create(
             reverse_lazy(
                 "tralard:subproject-fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "subproject_slug": subproject_slug,
                 },
             )
@@ -1218,8 +1219,8 @@ def subproject_disbursement_expenditure_create(
                     reverse_lazy(
                         "tralard:subproject-fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                             "subproject_slug": subproject_slug,
                         },
                     )
@@ -1230,8 +1231,8 @@ def subproject_disbursement_expenditure_create(
                     reverse_lazy(
                         "tralard:subproject-fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                             "subproject_slug": subproject_slug,
                         },
                     )
@@ -1241,8 +1242,8 @@ def subproject_disbursement_expenditure_create(
         reverse_lazy(
             "tralard:subproject-fund-list",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": subproject_slug,
             },
         )

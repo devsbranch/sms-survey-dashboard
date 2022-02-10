@@ -6,7 +6,7 @@
     <div class="modal-content" style="width: 50% !important;">
         <div class="flex-card simple-shadow" style="overflow-y: auto;">
             <div class="help-text has-text-left">
-                <h2 class="dark-text">Update Intervention</h2>
+                <h2 class="dark-text">Update SubProject</h2>
                 </div>
                 <div class="card-body">
                     <div class="has-text-centered">
@@ -14,17 +14,17 @@
                             <img src="{% static 'assets/images/icons/basket.svg' %}">
                         </div>
                         <div class="m-3">
-                            <span class="m-2">Edit Intervention Here</span>
+                            <span class="m-2">Edit SubProject Here</span>
                         </div>
                     </div>
                     <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <div id="intervention-update123" class="m-4 column is-multiline">
+                        <div id="subproject-update123" class="m-4 column is-multiline">
                             
                         </div>
                         <div class="modal-footer">
                             <button type="button"  class="button modal-dismiss"></a>Cancel</button>
-                            <button type="submit" class="button is-modal">Update Intervention</button>
+                            <button type="submit" class="button is-modal">Update SubProject</button>
                         </div>
                         
                     </form>

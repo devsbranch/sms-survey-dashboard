@@ -15,26 +15,26 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='subproject',
             name='description',
-            field=models.TextField(blank=True, help_text='A detailed summary of the Intervention. Rich text edditing is supported.', max_length=2000, null=True),
+            field=models.TextField(blank=True, help_text='A detailed summary of the SubProject. Rich text edditing is supported.', max_length=2000, null=True),
         ),
         migrations.AlterField(
             model_name='subproject',
             name='focus_area',
-            field=models.TextField(blank=True, help_text='Please describe the focus areas of the Intervention.(if any). Rich text editing is supported', max_length=10000, null=True),
+            field=models.TextField(blank=True, help_text='Please describe the focus areas of the SubProject.(if any). Rich text editing is supported', max_length=10000, null=True),
         ),
         migrations.AlterField(
             model_name='subproject',
             name='managers',
-            field=models.ManyToManyField(blank=True, help_text='Managers of all trainings and project activities in this Sub project. They will be allowed to create or delete Intervention data.', related_name='subproject_managers', to=settings.AUTH_USER_MODEL),
+            field=models.ManyToManyField(blank=True, help_text='Managers of all trainings and project activities in this Sub project. They will be allowed to create or delete SubProject data.', related_name='subproject_managers', to=settings.AUTH_USER_MODEL),
         ),
         migrations.AlterField(
             model_name='subproject',
             name='name',
-            field=models.CharField(help_text='Name of this Intervention.', max_length=255, unique=True),
+            field=models.CharField(help_text='Name of this SubProject.', max_length=255, unique=True),
         ),
         migrations.AlterField(
             model_name='subproject',
             name='ward',
-            field=models.ForeignKey(blank=True, help_text='The ward in which this Intervention has been implemented.', null=True, on_delete=django.db.models.deletion.CASCADE, to='tralard.Ward'),
+            field=models.ForeignKey(blank=True, help_text='The ward in which this SubProject has been implemented.', null=True, on_delete=django.db.models.deletion.CASCADE, to='tralard.Ward'),
         ),
     ]

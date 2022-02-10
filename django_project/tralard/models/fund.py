@@ -188,7 +188,7 @@ class Fund(models.Model):
         verbose_name_plural = _("Funds")
 
     def __str__(self):
-        return f"Amount: {self.amount}, SubProject: {self.sub_project}, Program: {self.sub_project.project.program.name}."
+        return f"Amount: {self.amount}, SubProject: {self.sub_project}, Project: {self.sub_project.subcomponent.project.name}."
 
     def save(self, *args, **kwargs):
         """
@@ -196,7 +196,7 @@ class Fund(models.Model):
         """
         if not self.slug:
             self.slug = unique_slugify(self,
-                                       slugify(f"{self.sub_project.project.slug} \
+                                       slugify(f"{self.sub_project.subcomponent.slug} \
                 fund amount \
                     {self.amount}"
                                                ),
@@ -214,10 +214,10 @@ class Fund(models.Model):
         :rtype: str
         """
         return reverse_lazy(
-            "tralard:project-detail",
+            "tralard:subcomponent-detail",
                             kwargs={
-                                "program_slug": self.sub_project.project.program.slug,
-                                "project_slug": self.sub_project.project.slug,
+                                "project_slug": self.sub_project.subcomponent.project.slug,
+                                "subcomponent_slug": self.sub_project.subcomponent.slug,
                             },
                             )
     @property
@@ -346,7 +346,7 @@ class Disbursement(models.Model):
         verbose_name_plural = _("Disbursed Funds")
 
     def __str__(self):
-        return f"Amount: {self.amount}, Fund: {self.fund}. Project: {self.fund.sub_project.project.name}"
+        return f"Amount: {self.amount}, Fund: {self.fund}. SubComponent: {self.fund.sub_project.subcomponent.name}"
 
     def save(self, *args, **kwargs):
         """
@@ -427,7 +427,7 @@ class Expenditure(models.Model):
         verbose_name_plural = _("Expenditures")
 
     def __str__(self):
-        return f"Amount {self.amount}, Disbursement {self.disbursment}. Project: {self.disbursment.fund.sub_project.project.name}"
+        return f"Amount {self.amount}, Disbursement {self.disbursment}. SubComponent: {self.disbursment.fund.sub_project.subcomponent.name}"
 
     def save(self, *args, **kwargs):
         if not self.slug:

@@ -16,7 +16,7 @@
 					<th>Funds</th>
 					<th>Status</th>
 					<th>Description</th>
-					<th>Program</th>
+					<th>Project</th>
 					<th>Created</th>
 					<th><!-- CRUD actions pier --></th>
 				</tr>
@@ -30,53 +30,53 @@
 					<th>Funded</th>
 					<th>Status</th>
 					<th>Description</th>
-					<th>Program</th>
+					<th>Project</th>
 					<th>Created</th>
 					<th><i class="sl sl-icon-note text-primary"></i></th>
 				</tr>
 				</tfoot>
 				<tbody>
-				{% for project in projects %}
+				{% for subcomponent in subcomponents %}
 				<tr>
 					<td>
-						{% if project.image_file %}
+						{% if subcomponent.image_file %}
 						<div class="face">
 							<img class="datatable-avatar"
 							     src="https://via.placeholder.com/250x250"
 							     alt=""
-							     data-demo-src="{{ project.image_file.url }}">
+							     data-demo-src="{{ subcomponent.image_file.url }}">
 						</div>
 						{% endif %}
 					</td>
-					<td>{{ project.name }}</td>
+					<td>{{ subcomponent.name }}</td>
 					<td><span class="tag">
-						{% if project.approved is True %}
+						{% if subcomponent.approved is True %}
 							<p>Yes</p>
-						{% elif project.approved is False %}
+						{% elif subcomponent.approved is False %}
 							<p>No</p>
 						{% else %}
 							<p>Unknown</p>
 						{% endif %}
 					</span></td>
 					<td><span class="tag">
-						{% if project.has_funding is True %}
+						{% if subcomponent.has_funding is True %}
 							<p>Yes</p>
-						{% elif project.has_funding is False %}
+						{% elif subcomponent.has_funding is False %}
 							<p>No</p>
 						{% else %}
 							<p>Unknown</p>
 						{% endif %}
 					</span></td>
-					<td><span class="meta">{{project.status}}</span></td>
+					<td><span class="meta">{{subcomponent.status}}</span></td>
 					<td>
 						<p><span class="post-title">
-						{{project.description|truncatewords:6 }}
+						{{subcomponent.description|truncatewords:6 }}
 						</span></p>
 					</td>
-					<th><span class="meta">{{project.program}}</span></th>
+					<th><span class="meta">{{subcomponent.project}}</span></th>
 					<th>
 						<span>
-							<small class="date">{{project.created}}</small>
+							<small class="date">{{subcomponent.created}}</small>
 						</span>
 					</th>
 					<th>
@@ -86,31 +86,31 @@
 							</div>
 							<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
 								<div class="dropdown-content">
-									<a href="{{ project.get_absolute_url }}" class="dropdown-item">
+									<a href="{{ subcomponent.get_absolute_url }}" class="dropdown-item">
 										<i class="sl sl-icon-share-alt text-primary"></i>
 										<span>
-				                            <span class="dark-text">View project</span>
-				                            <span>View details of this project</span>
+				                            <span class="dark-text">View subcomponent</span>
+				                            <span>View details of this subcomponent</span>
 				                        </span>
 									</a>
 									<a href="#"
 									   class="dropdown-item modal-trigger"
-									   onClick="populateProjectForm('{{ program.slug }}', '{{ project.slug }}');"
+									   onClick="populateSubComponentForm('{{ project.slug }}', '{{ subcomponent.slug }}');"
 									   data-toggle="update-project-modal">
 										<i class="sl sl-icon-note text-success"></i>
 										<span>
-				                            <span class="dark-text">Edit project</span>
-				                            <span>Update project details</span>
+				                            <span class="dark-text">Edit subcomponent</span>
+				                            <span>Update subcomponent details</span>
 				                        </span>
 									</a>
 									<a href="#"
 									   class="dropdown-item modal-trigger"
-									   onClick="deleteProjectAction('{{ program.slug }}', '{{ project.slug }}');"
+									   onClick="deleteSubComponentAction('{{ project.slug }}', '{{ subcomponent.slug }}');"
 									   data-modal="delete-project-modal">
 										<i class="sl sl-icon-ban text-danger"></i>
 										<span>
 				                            <span class="dark-text">Delete</span>
-				                            <span>Remove this project</span>
+				                            <span>Remove this subcomponent</span>
 				                        </span>
 									</a>
 								</div>

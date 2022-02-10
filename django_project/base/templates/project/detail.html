@@ -1,760 +1,1093 @@
 {% extends "layouts/base.html" %}
-{% load static %}
 {% load humanize %}
-{% load crispy_forms_tags %}
+{% load static %}
 {% load permission_tags %}
 
-{% block title %} {{ title|title }} {% endblock %} 
+{% block title %}
+
+{{ title|title }}
+
+{% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %} 
+	{{ search_form.media.css }}
+{% endblock stylesheets %}
+<!--suppress ALL -->
+<style>
+    #subproject-filters {
+        margin: 5px;
+        display: block;
+    }
+
+    /*To make the placeholder of a select one non-visible after an option is selected*/
+    option[value=""][disabled] {
+        display: none;
+    }
+
+    #projects-table {
+        display: none;
+    }
+
+</style>
 
 <!-- PAGE content goes HERE -->
 {% block content %}
-       <!-- Edit SubProject Modal -->
-        <div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
-            <div class="modal-background"></div>
-            <div class="modal-content" style="width: 50% !important;">
-                <div class="flex-card simple-shadow" style="overflow-y: auto;">
-                    <div class="help-text has-text-left">
-                        <h2 class="dark-text">Update Intervention</h2>
-                        </div>
-                        <div class="card-body">
-                            <div class="has-text-centered">
-                                <div class="image">
-                                    <img src="{% static 'assets/images/icons/basket.svg' %}">
-                                </div>
-                                <div class="m-3">
-                                    <span class="m-2">Edit Intervention Here</span>
-                                </div>
-                            </div>
-                            <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
-                                <div id="intervention-update123" class="m-4 column is-multiline">
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button"  class="button modal-dismiss"></a>Cancel</button>
-                                    <button type="submit" class="button is-modal">Update Intervention</button>
-                                </div>
-                                
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
-            </div>
-        <!-- Edit SubProject Modal -->
+{% include 'includes/subcomponent/subcomponent-create-modal.html' %}
+{% include 'includes/subcomponent/subcomponent-update-modal.html' %}
+{% include 'includes/subcomponent/subcomponent-delete-modal.html' %}
+{% include 'includes/subcomponent/sub-project-update-modal.html' %}
+{% include 'includes/subcomponent/sub-project-delete-modal.html' %}
+{% include 'includes/indicator-forms.html' %}
 
-    <!-- Main dashboard container -->
-    <div id="dashboard-wrapper" class="dashboard-outer">
-        <div class="dashboard-inner">
-            <!-- Dashboard Wrapper -->
-            <div class="dashboard-wrapper">
-                <div id="main-dashboard" class="section-wrapper">
-                    <!-- Dashboard content -->
-                    <div id="crm-deal" class="dashboard-columns">
-    
-                        <!-- Page title -->
-                        <div class="deal-title-wrapper is-mobile">
-                            {% if project.image_file %}
-                            <img 
-                                class="deal-image" 
-                                src="https://via.placeholder.com/50x50" 
-                                alt=""
-                                data-demo-src="{{ project.image_file.url }}"
-                            />
-                            {% else %}
-                            <img
-                              src="https://via.placeholder.com/50x50"
-                              alt="Default profile photo"
-                            />
-                            {% endif %}
-                            <div class="inner-wrap">
-                                <h3 class="deal-title" style="padding-left: 12px;">{{ project.name|title }}</h3>
-                                <div class="title-meta">
-                                    <a href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
-                                        <div class="meta">
-                                            <i class="material-icons">person</i>
-                                            <span>{{ project.count_beneficiaries }} Beneficiaries</span>
-                                        </div>
-                                    </a>
-                                    <div class="meta">
-                                        <i class="material-icons">domain</i>
-                                        <span>{{ project.count_sub_projects }} total sub-projects</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Filter input -->
-                            <div class="actions">
-                                {% if user|has_role:'program_manager, project_manager,' or user.is_staff or user.is_superuser %}
+<!-- Main dashboard container -->
+<!-- <div class="projects-wrapper"> -->
+	<div class="profile-heading" style="margin-left: 8em; margin-top: 6em;">
+		{% if project.logo %}
+		<img src="https://via.placeholder.com/250x250" alt=""
+			 data-demo-src="{{ project.logo.url }}"
+		/>
+		{% elif not project.logo and project.name|lower == 'ppcr' %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/ppcr.png' %}">
+		{% elif not project.logo and project.name|lower == 'tralard' %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/tralard.png' %}">
+		{% else %}
+		<img
+				src="https://via.placeholder.com/250x250"
+				alt=""
+				data-demo-src="{% static '/assets/images/logos/logo.png' %}">
+		{% endif %}
+		<div>
+			<h2 class="project-title">Project Name: {{ project.name|upper }}</h2>
+			<h4 class="project-tagline no-margin-bottom">project landing page</h4>
+		</div>
+	</div>
+<div id="dashboard-wrapper" class="dashboard-outer" style="display: flex;">
+		<form action="" class="left" id="search-form123" style="margin-top: 15.5em; padding-right: 0px;" method="get">
+			{{ search_form.province }}<br /> 
+			{{ search_form.district }}<br />
+			{{ search_form.ward }}<br />
+			<div style="display: flex; word-spacing: 12px;">
+				<input type="submit" value="Search" class="btn btn-outline-secondary" style="background: #21546d; color: white; padding-left: 2.5em; padding-right: 2.5em; margin-right: 0.25em;" /> <a style="background: #21546d; color: white; margin-left: 0.25em; margin-top: 0px; padding-left: 2.5em; padding-right: 2.5em;" href="{% url 'tralard:project-detail' project_slug %}" class="btn btn-outline-secondary">reset</a>
+			</div>
+		</form>
+	<style>
+		.left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single {
+			float: left;
+			width: 230px;
+			height: 100%;
+		  }
+		.select2-selection--single {
+			margin-bottom: 12px;
+		 }
+		.select2-search--dropdown {
+			width: 240px;
+			margin-left: -8px;
+			margin-top: -18px;
+		}
+		.select2-selection__arrow b {
+			visibility: hidden;
+			margin-left: -8em;
+		}
 
-                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:beneficiary-list' program_slug=project.program.slug project_slug=project.slug %}">
-                                    Beneficiaries
-                                </a>
-                                {% endif %}
-                                {% if user|has_role:'program_manager, project_manager, training_manager' or user.is_staff or user.is_superuser %}
-                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:training-list' program_slug=project.program.slug project_slug=project.slug %}">
-                                    Training Schedules
-                                </a>
-                                {% endif %}
-                                {% if user|has_role:'program_manager, project_manager, funder' or user.is_staff or user.is_superuser %}
-                                <a class="button btn-dash primary-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}">
-                                    Fund Overview
-                                </a>
-                                {% endif %}
-                                <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:program-detail' program_slug=project.program.slug %}">
-                                    Project Details
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Stage -->
-                        <div class="stage-wrapper">
-                            <div class="stage-inner">
-                                <progress class="progress is-small" value="35" max="100">35%</progress>
-                            </div>
-                            <div class="stages">
-                                <div class="stage is-done">
-                                    <span><i class="sl sl-icon-check"></i>Approved: {% if project.approved%} Yes {% else %} Pending ... {% endif %}</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Has Active Funding: {% if project.has_funding %} Yes {% else %} No {% endif %}</span>
-                                </div>
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Updadted on: {{ project.created|date:'l'}}, {{ project.created }}</span>
-                                </div>
-                                {% comment %} <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>Negociation</span>
-                                </div> {% endcomment %}
-                                <div class="stage">
-                                    <span><i class="sl sl-icon-check"></i>End</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Deal meta -->
-                        <div class="deal-meta">
-                            <div class="deal-price">
-                                <span>ZMK {{ project.get_total_project_fund|intcomma }}</span>
-                                <span>balance: ZMK {{ project.get_total_fund_balance|intcomma }}, used: ZMK {{ project.get_total_used_funds|intcomma }}</span>
-                            {% comment %} <span 
-                                class="project-pies">{{ project.get_total_used_funds_percent }}/100
-                            </span>  {% endcomment %}
-                            {% comment %} <span class="percent">
-                                {{ project.get_total_used_funds_percent }}
-                            <span>%
-                            </span><span>used</span></span> {% endcomment %}
+		.select2-results__options {
+			background-color: white;
+			float: left;
+			width: 230px;
+			height: 100%;
+		}
+	</style>
+	<div id="dashboard-wrapper" class="dashboard-outer">
+		
+		<!-- Dashboard Wrapper -->
+		<div class="dashboard-wrapper">
 
-                                {% comment %} <span>{{ project.get_total_used_funds_percent }} {% endcomment %}
-                            </div>
-                            
+			<div id="main-dashboard" class="section-wrapper">
+				<!-- Dashboard content -->
+				<div id="basic-layout"  class="dashboard-columns">
 
-                            <!-- Deal owner -->
-                            {% comment %} <div class="deal-owner">
-                                <!-- Menu -->
-                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-                                    <div class="column is-4">
-                                        <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
-                                            data-placement="top" title="Gauge chart" data-trigger="hover"
-                                            data-content="Gauge charts are a very visual way to display some data progress. It is percentage based.">
-                                            <div id="billboard-gaugeChart"></div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>                        
-                            </div> {% endcomment %}
+					<!-- <div class="projects-wrapper">
+						<div class="profile-heading">
+							{% if project.logo %}
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{{ project.logo.url }}"
+							/>
+							{% elif not project.logo and project.name|lower == 'ppcr' %}
+							<img
+									src="https://via.placeholder.com/250x250"
+									alt=""
+									data-demo-src="{% static '/assets/images/ppcr.png' %}">
+							{% elif not project.logo and project.name|lower == 'tralard' %}
+							<img
+									src="https://via.placeholder.com/250x250"
+									alt=""
+									data-demo-src="{% static '/assets/images/tralard.png' %}">
+							{% else %}
+							<img
+									src="https://via.placeholder.com/250x250"
+									alt=""
+									data-demo-src="{% static '/assets/images/logos/logo.png' %}">
+							{% endif %}
+							<div>
+								<h2 class="project-title">Project Name: {{ project.name|upper }}</h2>
+								<h4 class="project-tagline no-margin-bottom">project landing page</h4>
+							</div>
+						</div> -->
+						
+						<div class="navigation-tabs layout-tabs overflow-tabs animated-tabs mt-20 mb-20">
+							<div  class="tabs is-toggle is-fullwidth">
+								<ul>
+									<li class="tab-link is-active" data-tab="my-teams" >
+										<a id="projects_tab">SubComponents</a>
+									</li>
+									<li class="tab-link"  data-tab="my-projects" >
+										<a id="subprojects_tab">SubProjects</a>
+									</li>
+									<li class="tab-link"  data-tab="my-tasks">
+										<a id="beneficiaries_tab">Beneficiaries</a>
+									</li>
+									<li class="tab-link"  data-tab="indicators-list">
+										<a id="indicators_tab">Indicators</a>
+									</li>
+								</ul>
+							</div>
+							<!-- All Projects Display -->
+							<script>
+								document.getElementById("first-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("second-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("third-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+								document.getElementById("fourth-tab123").addEventListener("click", ()=>{
+									document.getElementById("search-form123").hidden = false;
+								})
+							</script>
+							<div id="my-teams" class="navtab-content is-active">
+								<!-- Projects Group -->
+								<div class="projects-list-wrapper">
+									<div class="list-header">
+										
+										<div class="list-title">
+                                                <span> Showing All SubComponents Under {{ project.name|upper }}
+                                                    <h4 class="project-tagline no-margin-bottom">total count: {{ total_subcomponents }}</h4>
+                                                </span> 
+												<div class="add-button modal-trigger"
+													data-modal="project-form-modal">
+													<i class="material-icons" title="Create new project">add</i>
+												</div>
+											</div>
+											<div class="list-filter">
+												<div class="control">
+													<form method="get" action="">
+														<input class="input"
+														id="search-projects"
+														name="search-projects"
+														onkeyup="searchSubComponentAction('{{ project.slug }}');"
+														type="text"
+														placeholder="Filter Projects">
+														<div class="form-icon">
+															<i id="search-icon" data-feather="filter"></i>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+										<div class="list-body" id="projects-content">
+										{% include 'includes/subcomponent/subcomponent-list.html' %}
+									</div>
+								</div>
+							</div>
+							<!-- Projects + Subproject Wrapper -->
+							<div id="my-projects" class="navtab-content">
+								
+								<!-- SubProjects content -->
+								<div class="projects-list-wrapper" >
+									<!-- SubProjects Group -->
+									<div class="list-header">
+										<div class="list-title">
+											<span>Showing All SubProjects Under {{ project.name|upper }}
+												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
+                                            </span>
+											<div class="add-button modal-trigger"
+											data-modal="project-form-modal">
+											<i class="material-icons" title="Create new project">add</i>
+										</div>
+									</div>
+									<div class="list-filter">
+										<div class="control">
+											<form method="get" action="">
+												<input class="input"
+												id="search-subprojects"
+												name="search-projects"
+												onkeyup="searchSubprojectsAction('{{ project.slug }}');"
+												type="text"
+												placeholder="Filter Subrojects"/>
+												<div class="form-icon">
+													<i id="search-icon" data-feather="filter"></i>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+								
+								<!-- All SubProject Listing -->
+								<div class="list-body" id="subprojects-content">
+										{% include 'includes/sub-project-list.html' %}
+									</div>
+								</div>
+							</div>
+							<!-- Beneficiary List -->
+							<div id="my-tasks" class="navtab-content">
 
-                            <!-- Deal owner -->
-                            <div class="deal-owner">
-                                <img class="light-bordered light-raised" data-toggle="popover"
-                                    data-placement="top" title="Gauge chart" data-trigger="hover"
-                                    data-content="Gauge charts are a very visual way to display some data progress. It is percentage based."
-                                    src="https://via.placeholder.com/150x150" alt=""
-                                    data-demo-src="{% static 'assets/images/logos/logo.png' %}">
-                                    <div class="owner-meta">
-                                    <span>Data Actions</span>
-                                    <span>Reports and more</span>
-                                </div>
-                                <!-- Menu -->
-                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-                                    <div class="button">
-                                        <i class="material-icons">keyboard_arrow_down</i>
-                                    </div>
-                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-                                        <div class="dropdown-content">
-                                            <a href="#" class="dropdown-item">
-                                                <i class="sl sl-icon-arrow-down-circle"></i>
-                                                <span>
-                                                    <span>Annual</span>
-                                                    <span>Download SubProject Annual Report</span>
-                                                </span>
-                                            </a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item">
-                                                <i class="sl sl-icon-people"></i>
-                                                <span>
-                                                    <span>Beneficiary</span>
-                                                    <span>Download Statistics Report</span>
-                                                </span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>                        
-                            </div>
-                        </div>
-                        <!-- Deal content -->
-                        <div class="columns deal-content">
-                            <!-- Left side -->
-                            <div class="column is-4">
-                                <!-- Deal details -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle">
-                                        <h3>Details</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content">
-                                        <div class="details-placeholder">
-                                            <span>{{ project.description|safe }}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Deal contact -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle is-active">
-                                        <h3>Contact</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content is-active">
-                                        <!-- Deal contact -->
-                                        <div class="deal-contact">
-                                            <img src="https://via.placeholder.com/150x150" alt=""
-                                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
-                                            <div class="contact-meta">
-                                                <span>{{ project.project_representative.first_name|title }} {{ project.project_representative.last_name|title }}</span>
-                                                <span>gender: {{ project.representative.gender }}</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-briefcase"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Province</span>
-                                                <span>{{ project.ward.district.province.name }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-briefcase"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>District</span>
-                                                <span>{{ project.ward.district.name }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-briefcase"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Ward</span>
-                                                <span>{{ project.ward.name}}</span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-phone"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Phone</span>
-                                                <span><a>{{ project.cell }}</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-envelope-open"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Email</span>
-                                                <span><a>{{ project.email }}</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- program details organization -->
-                                <div class="deal-card">
-                                    <div class="deal-card-header is-toggle is-active">
-                                        <h3>Project</h3>
-                                        <div class="toggle-icon">
-                                            <i class="material-icons">keyboard_arrow_right</i>
-                                        </div>
-                                    </div>
-                                    <div class="deal-card-content is-active">
-                                        <!-- Deal contact -->
-                                        <div class="deal-contact">
-                                            {% if project.program.logo %}
-                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                    data-demo-src="{{ project.program.logo.url }}">
-                                            {% endif %}
-                                            <div class="contact-meta">
-                                                <span>{{ project.program.name }}</span>
-                                                <span>started on: {{ project.program.started }}</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-phone"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Phone</span>
-                                                <span><a>{{ project.program.program_representative.cell }}</a></span>
-                                            </div>
-                                        </div>
-                                        <!-- Info block -->
-                                        <div class="info-block top-spaced">
-                                            <div class="block-icon">
-                                                <i class="sl sl-icon-envelope-open"></i>
-                                            </div>
-                                            <div class="block-meta">
-                                                <span>Email</span>
-                                                <span><a>{{ project.program.program_representative.email }}</a></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Right side -->
-                            <div class="column is-8">
-                                <!-- Action card -->
-                                <div class="flex-card action-card card-overflow">
-                                    <!-- Header -->
-                                    <div class="action-card-header">
-                                        <!-- Write note action -->
-                                        <div class="action is-active" data-action="write-note">
-                                            <i class="sl sl-icon-doc"></i>
-                                            <span>All {{ project.name|title }} Related Interventions</span>
-                                            <div class="arrow-down"></div>
-                                        </div>
-                                        <!-- Schedule event action -->
-                                        {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
-                                        <div class="action" data-action="schedule-event">
-                                            <i class="sl sl-icon-clock"></i>
-                                            <span>Create a New Intervention</span>
-                                            <div class="arrow-down"></div>
-                                        </div>                                   
-                                         {% endif %}
-                                        <!-- Upload files action -->
-                                        <div class="action" data-action="upload-files">
-                                            <i class="sl sl-icon-paper-clip"></i>
-                                            <span>Citizen's Feedback</span>
-                                            <div class="arrow-down"></div>
-                                        </div>
-                                    </div>
-                                    <!-- SubProject Listing -->
-                                    <div class="action-card-body">
-                                        <!-- subproject list note -->
-                                        <div id="write-note" class="action-wrap">
+								<!-- Beneficiary List -->
+								<div style="" class="projects-list-wrapper">
+									<div class="list-header">
+										<div class="list-title">
+											<span>Showing All Beneficiaries Under {{ project.name|upper }} </span>
+										</div>
+										<div class="list-filter">
+											<div class="control">
+												<form method="get" action="">
+													<input class="input"
+													       id="search-beneficiaries"
+													       name="search-beneficiaries"
+													       onkeyup="searchBeneficiariesAction('{{ project.slug }}');"
+													       type="text"
+													       placeholder="Filter Beneficiaries"/>
+													<div class="form-icon">
+														<i data-feather="filter"></i>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="list-body" id="beneficiaries-content">
+										{% include 'includes/beneficiary-list.html' %}
+									</div>
+								</div>
 
-                                            {% for subproject in sub_project_list %}
+							</div>
 
-                                                <!-- Timeline section -->
-                                                <div class="deal-timeline">
-                                                    <ul>
-                                                        <li>
-                                                            <div class="timeline-icon">
-                                                                <i class="material-icons">people</i>
-                                                            </div>
-                                                            <div class="timeline-item">
-                                                                <div class="item-body">
-                                                                    <div class="item-body">
-                                                                                                                                                                                                                          
-                                                                        <div style="display: flex; justify-content: space-between;"> 
-                                                                            <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}">
-                                                                                <h3>{{ subproject.name }} </h3>
-                                                                            </a> 
-                                                                            {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
-                                                                         <div
-                                                                            class="
-                                                                              dropdown
-                                                                              is-right
-                                                                              dropdown-trigger
-                                                                              styled-dropdown
-                                                                              is-round
-                                                                            "
-                                                                          >
-                                                                            <div class="button">
-                                                                              <i class="material-icons">more_vert</i>
-                                                                            </div>
-                                                                            <div
-                                                                              class="dropdown-menu is-text-bigger has-text-left"
-                                                                              role="menu"
-                                                                            >
-                                                                              <div class="dropdown-content">
-                                                                                <div class="dropdown-divider"></div>
-                                                                                
-                                                                                <a href="{% url 'tralard:subproject-manage' program_slug=project.program.slug project_slug=project.slug subproject_slug=subproject.slug %}" class="dropdown-item">
-                                                                                    <i class="sl sl-icon-equalizer"></i>
-                                                                                    <span>
-                                                                                        <span>Manage</span>
-                                                                                        <span>Go to subproject Management</span>
-                                                                                    </span>
-                                                                                </a>
-                                                                              
-                                                                                {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
-                                                                                <a
-                                                                                id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
-                                                                                  class="dropdown-item modal-trigger"
-                                                                                >
-                                                                                  <i class="sl sl-icon-pencil"></i>
-                                                                                  <span>
-                                                                                    <span>Update</span>
-                                                                                    <span>Edit subproject</span>
-                                                                                  </span>
-                                                                                </a>
-                                                                        
-                                                                                <script>
-                                                                                    var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
-                                                                                      uniqueEditSelectorButton.addEventListener("click", () => {    
-                                                                                         if("{{ subproject.slug }}" == "{{ subproject.slug }}"){
-                                                                                            document.getElementById("intervention-update123").innerHTML = `{% csrf_token %}`;
-                                                                                            document.getElementById("update-subproject-form").action = `{% url 'tralard:subproject-update' subproject.project.program.slug subproject.slug %}`;
-                                                                                            document.getElementById("intervention-update123").innerHTML += `{% load crispy_forms_tags %}`;
-                                                                                            document.getElementById("intervention-update123").innerHTML += `{{ subproject.sub_project_update_form|crispy }}`;
-                                                                                            document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
-                                                                                            document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
-                                                                                         }
-                                                                                       });
-                                                                                 </script>
+							<!-- Indicators List -->
+							<div id="indicators-list" class="navtab-content">
 
-                                                                                {% endif %}
-                                                                                <div class="dropdown-divider"></div>
-                                                                                {%if user|can:'can_delete_project'%}
-                                                                                <a
-                                                                                id="delete-button"
-                                                                                onClick="deleteSubproject('{{ program_slug }}', '{{ project_slug }}', '{{ subproject.slug }}', '{{ subproject.name }}');"
-                                                                                  href="#"
-                                                                                  data-modal="delete-subproject-modal"
-                                                                                  class="dropdown-item modal-trigger" 
-                                                                                >
-                                                                                  <i class="sl sl-icon-trash"></i>
-                                                                                  <span>
-                                                                                    <span>Delete </span>
-                                                                                    <span>Delete Subproject</span>
-                                                                                  </span>
-                                                                                </a>
-                                                                                {% endif %}
-                                                                              </div>
-                                                                            </div>
-                                                                          </div>
-                                                                          {% endif %}
-                                                                        </div>
-                                                                       </div>
-                                                                    <div class="meta-list">
-                                                                        <div class="meta-list-item">
-                                                                            <i class="material-icons">person</i>
-                                                                            <span>{{ subproject.count_beneficiaries }} Beneficiaries</span>
-                                                                        </div>
-                                                                        <div class="meta-list-item">
-                                                                            <i class="material-icons">domain</i>
-                                                                            <span>Related indicators {{ subproject.count_indicators }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="meta-list">
-                                                                        <div class="meta-list-item">
-                                                                            <span class="is-thin">
-                                                                                Created on: {{ subproject.created }} 
-                                                                                | supervisor: {{ subproject.supervisor.first_name|title }} {{ subproject.supervisor.last_name|title }} 
-                                                                                | project: {{ subproject.project.name }} 
-                                                                                | is approved: {% if subproject.approved %} Yes {% else %} Pending ... {% endif %}
-                                                                            </span>
-                                                                        </div>
-                                                                    </div>
-                                                                    
-                                                                </div>
-                                                                <div class="item-footer">
-                                                                    <p>{{ subproject.description|truncatechars:97 }}</p>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                                <br/>
-                                            {% endfor %}
+								<!-- Beneficiary List -->
+								<div class="projects-list-wrapper">
 
-                                            {% comment %} <div class="control">
-                                                <textarea class="textarea" rows="1"
-                                                    placeholder="Click here to write a Note ..."></textarea>
-                                            </div> {% endcomment %}
-                                        </div>
+									<div class="" style="display: flex; justify-content: center;">
+										<ul>
+											<div class="column is-12" style="display: flex; justify-content: center;">
+												{% for form in indicator_forms %}
+													       <button type="button" class="button btn-dash primary-btn btn-dash modal-trigger m-1"data-modal="{{form.modal_id}}">{{form.modal_subheader}}</button>
+												{% endfor %}
+											</div>
 
-                                        <!-- Create SubProject -->
-                                        <div id="schedule-event" class="action-wrap is-hidden">
-                                            <!-- Form -->
-                                            <form class="event-form" action="{% url 'tralard:project-detail' program_slug project_slug %}" method="post" enctype="multipart/form-data">
-                                                <div class="columns is-multiline">
-                                                    {% csrf_token %}
-                                                    {% crispy form form.helper %}
-                                                </div>
-                                                <style>
-                                                    .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single, .select2-selection--multiple {
-                                                        width: 830px;
-                                                        height: 100%;
-                                                      }
-                                                    .select2-results__options {
-                                                        background-color: white;
-                                                        width: 830px;
-                                                        height: 100%;
-                                                    }
-                                                </style>
-                                                <button type="submit" class="button is-modal primary-btn">Create Intervention</button>
-                                            </form>
-                                        </div>
-   
-                                        <div id="upload-files" class="action-wrap is-hidden">
-                                             {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
-                                             <div class="columns is-multiline m-3" style="display: flex; justify-content: end; align-items: center;" data-modal="create-feedback-modal">
-                                                 <div class="add-button modal-trigger" data-modal="create-feedback-modal">
-                                                    <i class="material-icons">add</i>
-                                                </div>
-                                            </div>
-                                            {% endif %}
-                                                <div class="deal-timeline">
-                                                    <ul>
-                                                        {% for feedback in citizen_feedback_list %}
+											{% comment %} <li>
+											</li> {% endcomment %}
+											<div class="column is-12" style="display: flex; justify-content: center;">
+												<a class="button btn-dash primary-btn btn-dash m-1"
+											   href="{% url 'tralard:preview_indicator_report' project.slug %}"
+											   target="_blank">View as PDF <i class="sl sl-icon-docs ml-2"></i></a>
 
-                                                        <li>
-                                                            <div class="timeline-icon">
-                                                                <i class="sl sl-icon-doc"></i>
-                                                            </div>
-                                                            <div class="timeline-item is-note">
-                                                                
-                                                                <div class="item-body">
-                                                                    {% if user|has_role:'program_manager, project_manager' or user.is_staff or user.is_superuser %}
-                                                                    <div style="display: flex; justify-content: end; align-items: center;">
-                                                                        <a id="edit-button" onClick="populateFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}');" href="#" class="tag squared is-secondary m-1 modal-trigger" data-modal="edit-feedback-modal"style="text-decoration: none !important;" >Edit</a>
-                                                                        <a id="delete-button" onClick="deleteFeedbackForm('{{ program_slug }}', '{{ project_slug }}', '{{feedback.slug}}', '{{project.name|title}}');" href="#" class="tag squared is-danger m-1 modal-trigger" data-modal="delete-feedback-modal" style="text-decoration: none !important;">Delete</a>
-                                                                    </div>
-                                                                    {% endif %}
-                                                                    <h3>{{ feedback.title|title }}</h3>
-                                                                    <p class="note-text">
-                                                                        {{ feedback.description|truncatechars:100 }}
-                                                                    </p>
-                                                                    <div class="meta-list">
-                                                                        <div class="meta-list-item">
-                                                                            {% if feedback.project.program.logo %}
-                                                                                <img src="https://via.placeholder.com/150x150" alt=""
-                                                                                    data-demo-src="{{ feedback.project.program.logo.url }}">
-                                                                            {% endif %}
-                                                                            <span class="is-thin">{{ feedback.date|date:'l' }}, {{ feedback.date }}</span>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        {% endfor %}
-                                                    </ul>
-                                                </div>
-                                                <br />
-                                            
-                                            <br/>
-                                        </div>
-                                    </div>
-                                </div>                                
-                            </div>
-                        </div>    
-                    </div>                    
-                </div>                
-            </div>            
-        </div>                              
-    </div>
+										<button
+												id="download-indicator-report" project-slug="{{project.slug}}"
+												class="button btn-dash primary-btn btn-dash has-icon m-1"
+												data-ripple-color=""
+										>
+											Download  <i class="sl sl-icon-cloud-download ml-2"></i>
+										</button></div>
+										</ul>
 
+									</div>
+									<div class="list-body" id="indicators-content">
+										{% include 'includes/indicator-list.html' %}
+									</div>
+								</div>
 
+							</div>
+							<!-- Indicators List end -->
 
-     <!-- Delete SubProject Modal --><!-- Delete SubProject Modal -->
-     <div id="delete-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Delete SubProject</h2>
+						</div>
+					</div>
 
-                </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                    </div>
+<!-- Invite User Modal -->
+<div id="invite-user-modal" class="modal modal-md invite-user-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="dark-text">Invite Users</h2>
+			<div class="card-body">
+				<div class="has-text-centered">
+					<div class="image">
+						<img src="{% static '/assets/images/icons/invitation.svg' %}" alt=""/>
+					</div>
+					<div class="help-text has-text-left">Send an invite link via email to add members to this team</div>
 
-                    <form id="delete-subproject-form" class="form" action="" method="post">
-                        {% csrf_token %}
-                        <div id="warning-msg">
-                        </div>
+					<div class="field">
+						<div class="control has-icons-left">
+							<input class="input is-medium" type="text" placeholder="Recipient email address"/>
+							<span class="icon is-left">
+                                    <i class="fa fa-envelope"></i>
+                                </span>
+						</div>
+					</div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="button modal-dismiss" >Cancel</button>
-                            <button class=" is-danger is-modal" type="submit">Confirm</button>
-                        </div>
-                    </form>
-                </div>
+					<div class="add-more">
+						<i class="material-icons">add</i>
+						<span>Add another</span>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="button is-modal">Invite Users</button>
+			</div>
+		</div>
+	</div>
+	<button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- /Invite User Modal -->
+<!-- Create Project Modal -->
+<div id="create-project-modal" class="modal create-project-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="has-text-centered dark-text">New SubProject</h2>
+			<div class="navigation-tabs layout-tabs animated-tabs">
+				<div class="tabs is-toggle is-fullwidth no-margin-bottom" style="position:fixed;">
+					<ul>
+						<li class="tab-link is-active" data-tab="project-details"><a>Details</a></li>
+						<li class="tab-link" data-tab="project-members"><a>Members</a></li>
+					</ul>
+				</div>
 
-            </div>
-        </div>
-    </div>
+				<div id="project-details" class="navtab-content is-active">
+					<div class="card-body">
+						<div class="content">
+							<!-- New Project form -->
+							<form>
 
-    <!-- Create Feedback Modal --><!-- Create Feedback Modal -->
-    <div id="create-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Leave Feedback</h2>
+								<div class="field mb-10">
+									<label class="label dark-text">Project Dates</label>
+									<div class="columns is-vcentered is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Start date*</div>
+										</div>
+										<div class="column is-9">
+											<div class="control has-icons-right">
+												<input data-toggle="datepicker" type="text" class="input is-medium"
+												       placeholder="Start Date"
+												/><span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+											</div>
+										</div>
+									</div>
+									<div class="columns is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">End Date*</div>
+										</div>
+										<div class="column is-9">
+											<div class="control has-icons-right">
+												<input data-toggle="datepicker" type="text" class="input is-medium"
+												       placeholder="End Date"/>
+												<span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+											</div>
+										</div>
+									</div>
+								</div>
 
-                </div>
+								<div class="field mb-10">
+									<label class="label dark-text">Project Meta</label>
+									<div class="columns is-vcentered is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Project Name*</div>
+										</div>
+										<div class="column is-9">
+											<input type="text" class="input is-medium"/>
+										</div>
+									</div>
+									<div class="columns is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Description*</div>
+										</div>
+										<div class="column is-9">
+											<textarea class="textarea" rows="4"></textarea>
+										</div>
+									</div>
+								</div>
 
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                        <div class="m-3">
-                            <span class="m-2">Leave feedback for the {{project.name|title}} project.</span>
-                        </div>
-                    </div>
-                    
-                    <form id="feedback-form" action="{% url 'tralard:feedback' program_slug project_slug %}" method="post">{% csrf_token %}
-        
-                        <div class="m-4 column is-multiline">
-                            
-                            {% crispy feedback_form feedback_form.helper %}
-                        </div>
+								<div class="form-footer">
+									<button type="submit" class="button is-modal">Create Project</button>
+								</div>
 
-                        <div class="modal-footer has-text-left">
-                            <button type="button" class="button modal-dismiss">Cancel</button>
-                            <button type="submit" class="button is-modal">Leave Feedback</button>
-                        </div>
-                                                    
-                    </form>
-                </div>
-                
-            </div>
-        </div>
-        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
-    </div>
+							</form>
+							<!-- /New Project form -->
+						</div>
+					</div>
+				</div>
 
-    <!-- Edit Feedback Modal --><!-- Edit Feedback Modal -->
-    <div id="edit-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Leave Feedback</h2>
-                </div>
+				<div id="project-members" class="navtab-content">
 
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                        <div class="m-3">
-                            <span class="m-2">Leave feedback for the {{project.name|title}} project.</span>
-                        </div>
-                    </div>
-                    
-                    <form id="update-feedback-form" action="" method="post">{% csrf_token %}
-        
-                        <div class="m-4 column is-multiline">
-                            
-                            {% crispy feedback_form feedback_form.helper %}
-                        </div>
+					<div class="project-members">
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static '/assets/images/avatars/ray.jpg' %}"
+							/></div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}"
+							/></div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}"/>
+						</div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}"/>
+						</div>
+					</div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="button modal-dismiss">Cancel</button>
-                            <button type="submit" class="button is-modal">Update Feedback</button>
-                        </div>
-                                                    
-                    </form>
-                </div>
-                
-            </div>
-        </div>
-        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
-    </div>
-    
-    <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
-    <div id="delete-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="flex-card simple-shadow">
-                <div class="help-text has-text-left">
-                    <h2 class="dark-text">Delete Feedback</h2>
+					<div class="modal-filter">
+						<div class="control">
+							<input class="input is-medium is-rounded" type="text" placeholder="Filter Members"/>
+							<span class="material-icons">filter_list</span>
+						</div>
+					</div>
 
-                </div>
+					<div class="card-body">
+						<div class="members-select">
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/eric.png' %}"/>
+								<span>Eric Daniels</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user1" class="styled" type="checkbox" checked/>
+									<label for="user1"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}"
+								/><span>Anthony Briggs</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user2" class="styled" type="checkbox" checked/>
+									<label for="user2"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/janet.jpg' %}"
+								/><span>Jenna De Camp</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user3" class="styled" type="checkbox" checked/>
+									<label for="user3"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}"/>
+								<span>Rolf Van Buren</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user4" class="styled" type="checkbox"/>
+									<label for="user4"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}"/>
+								<span>Magda Hilden</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user5" class="styled" type="checkbox"/>
+									<label for="user5"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}"
+								/><span>Alex Sheller</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user6" class="styled" type="checkbox"/>
+									<label for="user6"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/jane.jpg' %}"
+								/><span>Katarina Vosniak</span>
+								<div class="b-checkbox is-secondary">
+									<input id="user7" class="styled" type="checkbox"/>
+									<label for="user7"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-                <div class="card-body">
-                    <div class="has-text-centered">
-                        <div class="image">
-                            <img src="{% static 'assets/images/icons/basket.svg' %}">
-                        </div>
-                    </div>
-                    
-                    <form id="delete-feedback-form" class="form" action="" method="post">
-                        {% csrf_token %}
-                        <div id="warning-msg">
-                        </div>
+		</div>
+	</div>
+	<button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- Reminder Modal -->
+<!-- Create Task Modal -->
+<div id="create-task-modal" class="modal create-task-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="has-text-centered dark-text">New Task</h2>
+			<div class="navigation-tabs layout-tabs animated-tabs">
+				<div class="tabs is-toggle is-fullwidth no-margin-bottom">
+					<ul>
+						<li class="tab-link is-active" data-tab="task-details"><a>Details</a></li>
+						<li class="tab-link" data-tab="task-members"><a>Members</a></li>
+					</ul>
+				</div>
 
-                        <div class="modal-footer">
-                            <button type="button" class="button modal-dismiss">Cancel</button>
-                            <button class=" is-danger is-modal" type="submit">Confirm</button>
-                        </div>
-                    </form>
-                </div>
-                
-            </div>
-        </div>
-    </div>
+				<div id="task-details" class="navtab-content is-active">
+					<div class="card-body">
+						<div class="content">
+							<!-- New Project form -->
+							<form>
+
+								<div class="field mb-10">
+									<label class="label dark-text">Due Date</label>
+									<div class="columns is-vcentered is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Start date*</div>
+										</div>
+										<div class="column is-9">
+											<div class="control has-icons-right">
+												<input data-toggle="datepicker" type="text" class="input is-medium"
+												       placeholder="Start Date"
+												/><span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+											</div>
+										</div>
+									</div>
+									<div class="columns is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">End Date*</div>
+										</div>
+										<div class="column is-9">
+											<div class="control has-icons-right">
+												<input data-toggle="datepicker" type="text" class="input is-medium"
+												       placeholder="End Date"/>
+												<span class="icon is-right is-medium">
+                                                        <i class="im im-icon-Calendar-4"></i>
+                                                    </span>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="field mb-10">
+									<label class="label dark-text">Task Meta</label>
+									<div class="columns is-vcentered is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Task Title*</div>
+										</div>
+										<div class="column is-9">
+											<input type="text" class="input is-medium"/>
+										</div>
+									</div>
+									<div class="columns is-fieldset">
+										<div class="column is-3">
+											<div class="field-label">Description*</div>
+										</div>
+										<div class="column is-9">
+											<textarea class="textarea" rows="4"></textarea>
+										</div>
+									</div>
+								</div>
+
+								<div class="form-footer">
+									<button type="submit" class="button is-modal">Create Task</button>
+								</div>
+							</form>
+							<!-- /New Project form -->
+						</div>
+					</div>
+				</div>
+
+				<div id="task-members" class="navtab-content">
+
+					<div class="task-members">
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}"
+							/></div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/helen.jpg' %}"
+							/></div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/elie.jpg' %}"/>
+						</div>
+						<div class="face">
+							<img src="https://via.placeholder.com/250x250" alt=""
+							     data-demo-src="{% static 'assets/images/avatars/ben.jpg' %}"/>
+						</div>
+					</div>
+
+					<div class="modal-filter">
+						<div class="control">
+							<input class="input is-medium is-rounded" type="text" placeholder="Filter Members"/>
+							<span class="material-icons">filter_list</span>
+						</div>
+					</div>
+
+					<div class="card-body">
+						<div class="members-select">
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/eric.png' %}"
+								/><span>Eric Daniels</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user1" class="styled" type="checkbox" checked
+									/><label for="task-user1"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/anthony.jpg' %}"
+								/><span>Anthony Briggs</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user2" class="styled" type="checkbox" checked
+									/><label for="task-user2"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/janet.jpg' %}"
+								/><span>Jenna De Camp</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user3" class="styled" type="checkbox" checked
+									/><label for="task-user3"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/aaron.jpg' %}"/>
+								<span>Rolf Van Buren</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user4" class="styled" type="checkbox"/>
+									<label for="task-user4"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/marge.jpg' %}"
+								/><span>Magda Hilden</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user5" class="styled" type="checkbox"/>
+									<label for="task-user5"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/alex.jpg' %}"
+								/><span>Alex Sheller</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user6" class="styled" type="checkbox"/>
+									<label for="task-user6"></label>
+								</div>
+							</div>
+							<div class="member-row">
+								<img src="https://via.placeholder.com/250x250" alt=""
+								     data-demo-src="{% static 'assets/images/avatars/jane.jpg' %}"/>
+								<span>Katarina Vosniak</span>
+								<div class="b-checkbox is-secondary">
+									<input id="task-user7" class="styled" type="checkbox"/>
+									<label for="task-user7"></label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<button class="modal-close is-large is-hidden" aria-label="close"></button>
+</div>
+<!-- Create task Modal -->
+<!-- Create Team Modal -->
+<div id="create-team-modal" class="modal modal-md icon-action-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="dark-text">New Team</h2>
+			<div class="card-body">
+				<div class="has-text-centered">
+					<div class="image">
+						<img src="{% static 'assets/images/icons/basket.svg' %}"/>
+					</div>
+					<div class="help-text has-text-left">Create a New Team to use in your projects</div>
+
+					<div class="field">
+						<div class="control has-icons-left">
+							<input class="input is-medium" type="text" placeholder="Team Name"/>
+							<span class="icon is-left">
+                                    <i class="fa fa-users"></i>
+                                </span>
+						</div>
+					</div>
+
+					<div class="columns is-fieldset">
+						<div class="column">
+                            <textarea class="textarea" rows="3"
+                                      placeholder="What will this team be in charge of ?"></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button class="button modal-dismiss">Cancel</button>
+				<button type="submit" class="button is-modal">Create Team</button>
+			</div>
+		</div>
+	</div>
+	<button class="modal-close is-large" aria-label="close"></button>
+</div>
+
+ <!-- Delete Beneficiary Modal --><!-- Delete Beneficiary Modal -->
+<div id="delete-indicator-modal" class="modal modal-md icon-action-modal modal-hero">
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<div class="help-text has-text-left">
+				<h2 class="dark-text">Delete Indicator</h2>
+
+			</div>
+
+			<div class="card-body">
+
+				<form id="delete-indicator-form" class="form" action="" method="post">
+					{% csrf_token %}
+					<div id="warning-msg">
+					</div>
+
+					<div class="modal-footer">
+						<button type="button" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="button modal-dismiss">Cancel</button>
+						<button class=" is-danger is-modal" type="submit">Confirm</button>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>
+
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+{{ search_form.media.js }}
 <script>
-function deleteSubproject(program_slug, project_slug, sub_project_slug, subproject_name) {
-        let origin = location.origin;
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/sub_project/${sub_project_slug}/delete/`
-        $("#delete-subproject-form #warning-msg").html(`<h3>Are you sure you want to delete <i>"${subproject_name}"</i> project</h3>`)
-        $("#delete-subproject-form").attr('action', url);
+  let origin = location.origin;
+  const delay_by_in_ms = 700
+  const search_icon = $('#search-icon')
+
+  /* Pagination */
+
+
+  function populateSubComponentForm(project_slug, subcomponent_slug) {
+    const updateUrl = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/update`;
+
+    fetch(updateUrl, {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((payload) => {
+        let subcomponentData = payload.subcomponent;
+
+        if (subcomponentData.approved == true) {
+          $(`#id_approved option[value="${subcomponentData.approved}"]`).prop(
+            "selected",
+            true
+          );
+        } else if (subcomponentData.approved == false) {
+          $(`#id_approved option[value="${subcomponentData.approved}"]`).val(
+            subcomponentData.approved
+          );
+        } else {
+          $(`#id_approved option[value="${subcomponentData.approved}"]`).prop(
+            "selected",
+            false
+          );
+        }
+
+        if (subcomponentData.has_funding == true) {
+          $(`#id_has_funding option[value="${subcomponentData.has_funding}"]`).prop(
+            "selected",
+            true
+          );
+        } else if (subcomponentData.has_funding == false) {
+          $(`#id_has_funding option[value="${subcomponentData.has_funding}"]`).val(
+            subcomponentData.has_funding
+          );
+        } else {
+          $(`#id_has_funding option[value="${subcomponentData.has_funding}"]`).prop(
+            "selected",
+            false
+          );
+        }
+
+        $("#edit-project-form input[name='name']").val(subcomponentData.name);
+        $("#edit-project-form textarea[name='description']").val(
+          subcomponentData.description
+        );
+        $("#edit-project-form select[name='project']").val(subcomponentData.project);
+        $("#edit-project-form select[name='project_representative']").val(
+          subcomponentData.subcomponent_representative
+        );
+        $("#edit-project-form select[name='project_managers']").val(
+          subcomponentData.subcomponent_managers
+        );
+        $("#edit-project-form select[name='training_managers']").val(
+          subcomponentData.training_managers
+        );
+        $("#edit-project-form select[name='certification_managers']").val(
+          projectData.certification_managers
+        );
+        $("#edit-project-form textarea[name='custom_precis']").val(
+          subcomponentData.precis
+        );
+        $("#edit-project-form input[name='focus_area']").val(
+          subcomponentData.focus_area
+        );
+        $("#edit-project-form input[name='image_file']").val(
+          subcomponentData.image_url
+        );
+        $("#edit-project-form").attr("action", updateUrl);
+      })
+      .catch(function (err) {
+        console.error(err.message);
+        console.log(`Error populating project form due to: ${err}`);
+      });
+  }
+
+  function deleteSubComponentAction(project_slug, subcomponent_slug) {
+    const url = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/delete`;
+    $("#delete-project-form").attr("action", url);
+  }
+
+  const useSearchRequestApi = (url, request_parameters, content, view) => {
+    search_icon.addClass('blink')
+    $.getJSON(url, request_parameters).done(response => {
+      // fade out the contents, then:
+      content.fadeTo('slow', 0).promise().then(() => {
+        // replace the HTML contents
+        content.html(response[view])
+        // fade-in the div with new contents
+        content.fadeTo('slow', 1)
+        // stop animating search icon
+        search_icon.removeClass('blink')
+      })
+    })
+  }
+
+  function searchSubComponentAction(project_slug) {
+    const projectDetailUrl = `${origin}/project/${project_slug}/detail/`
+    const subcomponents_div = $('#projects-content')
+    let user_input = $("#search-projects").val()
+    const request_parameters = {
+      q: user_input // value of user_input: the HTML element with ID user-input
+    }
+    useSearchRequestApi(projectDetailUrl, request_parameters, subcomponents_div, "search_result_view")
+  }
+
+  function searchSubprojectsAction(project_slug) {
+    const projectDetailUrl = `${origin}/project/${project_slug}/detail/`
+    const subprojects_div = $('#subprojects-content')
+    let filter_input = $("#search-subprojects").val()
+    const request_parameters = {
+      subproject_query: filter_input
+    }
+    useSearchRequestApi(projectDetailUrl, request_parameters, subprojects_div, "subproj_search_result")
+  }
+
+  function searchBeneficiariesAction(project_slug) {
+    const projectDetailUrl = `${origin}/project/${project_slug}/detail/`
+    const beneficiaries_div = $('#beneficiaries-content')
+    let filter_input = $("#search-beneficiaries").val()
+    const request_parameters = {
+      beneficiaries_query: filter_input
+    }
+    useSearchRequestApi(projectDetailUrl, request_parameters, beneficiaries_div, "beneficiaries_search_result")
+  }
+
+  // toggle subproject list into a (table || grid) view
+  let mode = "grid" // subproject view default mode
+  const toggleSubProjectView = (viewType) => {
+    if (!viewType) return
+    mode = viewType
+    //blocks affected by toggle side effect
+    const subprojects_grid = document.getElementById('projects-content')
+    const subprojects_table = document.getElementById('projects-table')
+    const grid_icon = document.getElementById('grid_filter_icon')
+    const table_icon = document.getElementById('table_filter_icon')
+
+    if (mode === "table") {
+      subprojects_grid.style.display = 'none'
+      subprojects_table.style.display = 'block'
+
+    } else if (mode === "grid") {
+      subprojects_grid.style.display = 'block'
+      subprojects_table.style.display = 'none'
+    }
+  }
+
+function populateIndicatorForm(actionType, project_slug, indicator_slug='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/project/${project_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_name/${indicator_slug}/update`
+        const createUrl = `${baseUrl}/indicator_name`
+
+
+		if (actionType === "POPULATE_FORM") {
+			$("#indicator_name input[name='name']").val(field_name);
+
+			$("#indicator_name").attr('action', updateUrl);
+			// $('#modal_header').text("Indicator Name")
+			$('#modal_subheader0').text("Update Indicator Name")
+			$('#form-submit-button0').text("Update")
+		} else {
+			$("#indicator_name input[name='name']").val('');
+            $("#indicator_name").attr('action', createUrl);
+            $('#modal_subheader0').text("Create Indicator Name")
+            $('#form-submit-button0').text("Create")
+		}
     }
 
-</script>
-<script>
-
-    function populateFeedbackForm(program_slug, project_slug, feedback_slug, project_name) {
-        let origin = location.origin;
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/detail/${feedback_slug}/`
-        $.get(url, function( { data } ) {
-            $("#update-feedback-form input[name='title']").val(data.title);
-            $("#update-feedback-form input[name='date']").val(data.date);
-            $(`#id_moderator option[value="${data.moderator}"]`).prop('selected', true);
-            $("#update-feedback-form textarea[name='custom_description']").val(data.description);
-            $("#update-feedback-form").attr('action', url);
-        });
+	function fetchData (url) {
+        const formData = $.get(url)
+        return formData
     }
 
-    function deleteFeedbackForm(program_slug, project_slug, feedback_slug, project_name) {
-        let origin = location.origin;
-        const url = `${origin}/program/${program_slug}/project/${project_slug}/delete/${feedback_slug}/`
-        $("#delete-feedback-form #warning-msg").html(`<h3>Are you sure you want to delete this feedback for the <i>"${project_name}"</i> project</h3>`)
-        $("#delete-feedback-form").attr('action', url);
+	async function populateIndicatorTargetForm(actionType, project_slug, indicator_target_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/project/${project_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target/${indicator_target_id}/update`
+        const createUrl = `${baseUrl}/indicator_target`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+			console.log(data)
+        }
+
+
+
+		data.unit_of_measure ? $(`#id_unit_of_measure option[value="${data.unit_of_measure}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
+		$("#indicator_target textarea[name='description']").val(data.description || '');
+		$("#indicator_target input[name='baseline_value']").val(data.baseline_value || '');
+		$("#indicator_target").attr('action', updateUrl);
+		data.indicator ? $(`#id_indicator option[value="${data.indicator}"]`).prop('selected', true) : $(`#id_indicator option[value=""]`).prop('selected', true).text('---------');
+		$('#modal_subheader1').text("Update Indicator Target")
+		$('#form-submit-button1').text("Update")
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target").attr('action', createUrl);
+			$('#modal_subheader1').text("Create Indicator Target")
+			$('#form-submit-button1').text("Create")
+		}
+    }
+
+
+	async function populateIndicatorTargetValueForm(actionType, project_slug, indicator_target_value_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/project/${project_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target_value/${indicator_target_value_id}/update`
+        const createUrl = `${baseUrl}/indicator_target_value`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+        }
+
+		$("#indicator_target_value input[name='year']").val(data.year || '');
+		$("#indicator_target_value input[name='target_value']").val(data.target_value || '');
+		data.indicator_target ? $(`#id_indicator_target option[value="${data.indicator_target}"]`).prop('selected', true) : $(`#id_unit_of_measure option[value=""]`).prop('selected', true).text('---------');
+
+		$("#indicator_target_value").attr('action', updateUrl);
+		$('#modal_subheader2').text("Update Indicator Target Value")
+		$('#form-submit-button2').text("Update")
+
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target_value").attr('action', createUrl);
+			$('#modal_subheader2').text("Create Indicator Target Value")
+			$('#form-submit-button2').text("Create")
+		}
+    }
+
+
+	async function populateIndicatorUnitOfMeasureForm(actionType, project_slug, indicator_target_unit_id='', field_name='') {
+		const origin = location.origin;
+        const baseUrl = `${origin}/project/${project_slug}/detail`
+        const updateUrl = `${baseUrl}/indicator_target_unit/${indicator_target_unit_id}/update`
+        const createUrl = `${baseUrl}/indicator_target_unit`
+
+		 if (actionType === "POPULATE_FORM") {
+            let formData = await fetchData(updateUrl)
+            data = formData
+        } else if (actionType == "CLEAR_FORM") {
+            data = {}
+        }
+
+
+		$("#indicator_target_unit input[name='unit_of_measure']").val(data.unit_of_measure || '');
+		data.data_source ? $(`#id_data_source option[value="${data.data_source}"]`).prop('selected', true) : $(`#id_data_source option[value=""]`).prop('selected', true).text('---------');
+
+		$("#indicator_target_unit").attr('action', updateUrl);
+		$('#modal_subheader3').text("Update Indicator Unit of Measure")
+		$('#form-submit-button3').text("Update")
+
+		if (actionType === "CLEAR_FORM") {
+			$("#indicator_target_unit").attr('action', createUrl);
+			$('#modal_subheader3').text("Create Indicator Indicator Unit of Measure")
+			$('#form-submit-button3').text("Create")
+		}
+    }
+
+	function handleDeleteIndicator(actionType, project_slug='', indicator_slug='') {
+        const origin = location.origin;
+        const baseUrl = `${origin}/project/${project_slug}/detail`
+        const formActionUrl = `${baseUrl}/indicator_name/${indicator_slug}/delete`
+
+        if (actionType === "SET_ACTION_URL") {
+            $('#delete-indicator-form').attr('action', formActionUrl)
+        } else if (actionType === "UNSET_ACTION_URL") {
+            $('#delete-indicator-form').attr('action', " ")
+        }
     }
 </script>
 {% endblock javascripts %}

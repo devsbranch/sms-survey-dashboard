@@ -5,7 +5,7 @@
         "fields": {
             "title": "Natual Forest Regeration Project feedback",
             "date": "2022-01-13",
-            "project": 2,
+            "subcomponent": 2,
             "description": "This is a great project for the community.",
             "created": "2021-01-13"
         }
@@ -16,7 +16,7 @@
         "fields": {
             "title": "Livehoods Project feedback",
             "date": "2022-01-13",
-            "project": 1,
+            "subcomponent": 1,
             "description": "This is a great project for the community. It has improved the livelihoods of people.",
             "created": "2021-01-13"
         }

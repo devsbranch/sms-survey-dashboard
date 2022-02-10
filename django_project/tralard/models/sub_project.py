@@ -32,7 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class SubProjectManager(models.Manager):
-    """ Custom manager that aggregates interventions and subprojects provincial overview. """
+    """ Custom manager that aggregates subcomponents and subprojects provincial overview. """
 
     def get_sub_projects_district_json(self):    
         """ Queryset to aggregate suprojects in each province """            
@@ -53,11 +53,11 @@ class SubProjectManager(models.Manager):
             "data" : sub_projects_count_json
         }
 
-    def get_projects_in_district_json(self):    
-        """ Queryset to aggregate interventions in each province """            
+    def get_subcomponents_in_district_json(self):    
+        """ Queryset to aggregate subcomponents in each province """            
         province_labels = []
-        interventions_count = []
-        intervention_names = []
+        subcomponents_count = []
+        subcomponent_names = []
 
         #  Get Sub projects in province
         for province in Province.objects.all():
@@ -65,22 +65,22 @@ class SubProjectManager(models.Manager):
             province_labels.append(province.name)
 
             for subproject in total_subs:
-                intervention_names.append(subproject.project.name)
+                subcomponent_names.append(subproject.subcomponent.name)
 
-            unique_intervention_names = list(set(intervention_names))
-            interventions_count.append(len(unique_intervention_names))
+            unique_subproject_names = list(set(subcomponent_names))
+            subcomponents_count.append(len(unique_subproject_names))
 
 
         province_labels_json = json.dumps(province_labels)
-        interventions_count_json = json.dumps(interventions_count)
+        subcomponents_count_json = json.dumps(subcomponents_count)
 
         return {
             "labels": province_labels_json,
-            "data" : interventions_count_json,
+            "data" : subcomponents_count_json,
         }     
 
 class CountProjects(models.Manager):
-    """ Custom manager that aggregates interventions in each province. """
+    """ Custom manager that aggregates subcomponents in each province. """
     
  
 class Indicator(models.Model):
@@ -216,7 +216,7 @@ class SubProject(models.Model):
         blank=True
     )
     name = models.CharField(
-        help_text=_("Name of this Intervention."),
+        help_text=_("Name of this SubProject."),
         max_length=255,
         unique=True
     )
@@ -235,7 +235,7 @@ class SubProject(models.Model):
     ) 
     ward = models.ForeignKey(
         Ward,
-        help_text=_('The ward in which this Intervention has been implemented.'),
+        help_text=_('The ward in which this SubProject has been implemented.'),
         on_delete=models.CASCADE,
         null=True,
         blank=True,
@@ -250,14 +250,14 @@ class SubProject(models.Model):
         blank=True,
         null=True,  # This is needed to populate existing database.
     )
-    project = models.ForeignKey(
-        "tralard.Project",
+    subcomponent = models.ForeignKey(
+        "tralard.SubComponent",
         default="",
         on_delete=models.CASCADE,
     )
     indicators = models.ManyToManyField(
         Indicator,
-        related_name="subproject_indicators",
+        related_name="indicator_related_subprojects",
         blank=True,
         # null=True, null has no effect on ManyToManyField.
     )
@@ -268,7 +268,7 @@ class SubProject(models.Model):
         # null=True, null has no effect on ManyToManyField.
         help_text=_(
             "Managers of all trainings and project activities in this Sub project. "
-            "They will be allowed to create or delete Intervention data."
+            "They will be allowed to create or delete SubProject data."
         ),
     )
     approved = models.BooleanField(
@@ -292,12 +292,12 @@ class SubProject(models.Model):
             'the image directly on to the "Choose File" button above. The '
             "ideal size for your image is 512 x 512 pixels."
         ),
-        upload_to="images/projects",
+        upload_to="images/subcomponents",
         blank=True,
     )
     description = models.TextField(
         help_text=_(
-            "A detailed summary of the Intervention. Rich text edditing is supported."
+            "A detailed summary of the SubProject. Rich text edditing is supported."
         ),
         max_length=2000,
         blank=True,
@@ -305,7 +305,7 @@ class SubProject(models.Model):
     )
     focus_area = models.TextField(
         help_text=_(
-            "Please describe the focus areas of the Intervention."
+            "Please describe the focus areas of the SubProject."
             "(if any). Rich text editing is supported"
         ),
         max_length=10000,
@@ -327,11 +327,11 @@ class SubProject(models.Model):
 
     @property
     def get_related_project(self):
-        return self.project.name
+        return self.subcomponent.name
 
     @property
     def fund_utilization_percent(self):
-        project_id = self.project.id
+        subcomponent_id = self.subcomponent.id
         funds_amount_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
             Sum("amount")
         )
@@ -365,14 +365,14 @@ class SubProject(models.Model):
 
     @property
     def count_indicators(self):
-        subproject_indicators = Indicator.objects.filter(
-            subproject_indicators__slug=self.slug
+        indicator_related_subprojects = Indicator.objects.filter(
+            indicator_related_subprojects__slug=self.slug
         ).count()
-        return subproject_indicators
+        return indicator_related_subprojects
 
     @property
     def get_total_sub_project_fund(self):
-        """Computes total funds related to this Intervention."""
+        """Computes total funds related to this SubProject."""
         related_funds_sum_qs = Fund.objects.filter(
             sub_project__slug=self.slug
         ).aggregate(Sum("amount"))
@@ -382,7 +382,7 @@ class SubProject(models.Model):
 
     @property
     def sub_project_update_form(self):
-        """Assigns a form to Intervention after create."""
+        """Assigns a form to SubProject after create."""
         form = sub_project_update_form(self)
         return form
 
@@ -410,7 +410,7 @@ class Photo(models.Model):
 
     @property
     def sub_project_create_form():
-        """Assigns a form to Intervention after create."""
+        """Assigns a form to SubProject after create."""
         form = sub_project_create_form()
         return "Hello form"
 

@@ -36,10 +36,10 @@ from tralard.tasks import build_indicator_report
 
 
 @login_required(login_url="/login/")
-def indicator_report(request, program_slug):
+def indicator_report(request, project_slug):
     if request.is_ajax():
         try:
-            task = build_indicator_report.delay(program_slug)
+            task = build_indicator_report.delay(project_slug)
 
             if isinstance(task, AsyncResult):
                 return JsonResponse({"task_id": task.task_id})
@@ -79,7 +79,7 @@ def poll_state(request, task_id):
 
 
 @login_required(login_url="/login/")
-def create_indicator(request, program_slug):
+def create_indicator(request, project_slug):
     if request.method == "POST":
         form = IndicatorForm(request.POST)
         if form.is_valid():
@@ -87,9 +87,9 @@ def create_indicator(request, program_slug):
             messages.success(request, "The Indicator was created successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -100,16 +100,16 @@ def create_indicator(request, program_slug):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def create_indicator_target(request, program_slug):
+def create_indicator_target(request, project_slug):
     if request.method == "POST":
         form = IndicatorTargetForm(request.POST)
         if form.is_valid():
@@ -117,9 +117,9 @@ def create_indicator_target(request, program_slug):
             messages.success(request, "The Indicator Target was created successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -130,16 +130,16 @@ def create_indicator_target(request, program_slug):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def update_indicator_target(request, program_slug, target_id):
+def update_indicator_target(request, project_slug, target_id):
     indicator_target_obj = get_object_or_404(IndicatorTarget, pk=target_id)
     if request.is_ajax():
         obj_to_dict = model_to_dict(indicator_target_obj)
@@ -153,9 +153,9 @@ def update_indicator_target(request, program_slug, target_id):
             messages.success(request, "The Indicator Target was updated successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -166,16 +166,16 @@ def update_indicator_target(request, program_slug, target_id):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def create_indicator_target_value(request, program_slug):
+def create_indicator_target_value(request, project_slug):
 
     if request.method == "POST":
         form = IndicatorTargetValueForm(request.POST)
@@ -186,9 +186,9 @@ def create_indicator_target_value(request, program_slug):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -199,16 +199,16 @@ def create_indicator_target_value(request, program_slug):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def update_indicator_target_value(request, program_slug, indicator_target_value_id):
+def update_indicator_target_value(request, project_slug, indicator_target_value_id):
     indicator_target_value_obj = get_object_or_404(
         IndicatorTargetValue, pk=indicator_target_value_id
     )
@@ -228,9 +228,9 @@ def update_indicator_target_value(request, program_slug, indicator_target_value_
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -241,16 +241,16 @@ def update_indicator_target_value(request, program_slug, indicator_target_value_
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def create_indicator_unit_of_measure(request, program_slug):
+def create_indicator_unit_of_measure(request, project_slug):
     if request.method == "POST":
         form = IndicatorUnitOfMeasureForm(request.POST)
         if form.is_valid():
@@ -258,9 +258,9 @@ def create_indicator_unit_of_measure(request, program_slug):
             messages.success(request, "The Unit of measure was created successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -271,16 +271,16 @@ def create_indicator_unit_of_measure(request, program_slug):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def update_indicator_unit_of_measure(request, program_slug, indicator_target_unit_id):
+def update_indicator_unit_of_measure(request, project_slug, indicator_target_unit_id):
     indicator_unit_of_measure_obj = IndicatorUnitOfMeasure.objects.get(
         pk=indicator_target_unit_id
     )
@@ -298,9 +298,9 @@ def update_indicator_unit_of_measure(request, program_slug, indicator_target_uni
             messages.success(request, "The Unit of measure was updated successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -311,16 +311,16 @@ def update_indicator_unit_of_measure(request, program_slug, indicator_target_uni
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def update_indicator(request, program_slug, indicator_slug=None):
+def update_indicator(request, project_slug, indicator_slug=None):
     if request.method == "POST":
         indicator_obj = Indicator.objects.get(slug=indicator_slug)
         form = IndicatorForm(request.POST, instance=indicator_obj)
@@ -330,9 +330,9 @@ def update_indicator(request, program_slug, indicator_slug=None):
             messages.success(request, "The Indicator was updated successfully.")
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
@@ -343,16 +343,16 @@ def update_indicator(request, program_slug, indicator_slug=None):
             )
             return redirect(
                 reverse_lazy(
-                    "tralard:program-detail",
+                    "tralard:project-detail",
                     kwargs={
-                        "program_slug": program_slug,
+                        "project_slug": project_slug,
                     },
                 )
             )
 
 
 @login_required(login_url="/login/")
-def delete_indicator(request, program_slug, indicator_slug=None):
+def delete_indicator(request, project_slug, indicator_slug=None):
     if request.method == "POST":
         indicator_obj = get_object_or_404(Indicator, slug=indicator_slug)
         indicator_obj.delete()
@@ -360,9 +360,9 @@ def delete_indicator(request, program_slug, indicator_slug=None):
         messages.success(request, "The Indicator was deleted successfully.")
         return redirect(
             reverse_lazy(
-                "tralard:program-detail",
+                "tralard:project-detail",
                 kwargs={
-                    "program_slug": program_slug,
+                    "project_slug": project_slug,
                 },
             )
         )

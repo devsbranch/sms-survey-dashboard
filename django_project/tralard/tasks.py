@@ -9,10 +9,10 @@ from tralard.utils import IndicatorReportBuild
 
 
 @celery_app.task()
-def build_indicator_report(program_slug):
+def build_indicator_report(project_slug):
     from tralard.models import Indicator
 
-    indicators = Indicator.objects.filter(subproject_indicators__project__program__slug=program_slug)
+    indicators = Indicator.objects.filter(indicator_related_subprojects__subcomponent__project__slug=project_slug)
 
     temporary_dir = f"{settings.MEDIA_ROOT}/temp/reports"
 

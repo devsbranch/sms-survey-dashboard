@@ -1,0 +1,89 @@
+{% load static %}
+
+<div class="columns is-multiline">
+	<!-- All Project Grid Display -->
+	{% for subcomponent in subcomponents %}
+	<!-- Project card -->
+	<div class="column is-4">
+		<div class="flex-card light-bordered light-shadow team-card card-overflow">
+			<div class="header">
+				<a href="{{ subcomponent.get_absolute_url }}">
+					<h4 class="no-margin-bottom">{{ subcomponent.name|title }}</h4>
+				</a>
+				<!-- Project card dropdown -->
+				<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+					<div class="button">
+						<i class="material-icons">more_vert</i>
+					</div>
+					<div class="dropdown-menu is-text-bigger has-text-left"
+					     role="menu">
+						<div class="dropdown-content">
+							<a href="{{ subcomponent.get_absolute_url }}"
+							   class="dropdown-item">
+								<i class="sl sl-icon-share-alt text-primary"></i>
+								<span>
+									<span class="dark-text">View subcomponent</span>
+                                    <span>View details of this subcomponent</span>
+								</span>
+							</a>
+							<a href="#"
+							   class="dropdown-item modal-trigger"
+							   onClick="populateSubComponentForm('{{ project.slug }}', '{{ subcomponent.slug }}');"
+							   data-modal="update-project-modal"
+							>
+								<i class="sl sl-icon-note text-success"></i>
+								<span>
+                                    <span class="dark-text">Edit subcomponent</span>
+									<span>Update subcomponent details</span>
+								</span>
+							</a>
+							<a href="#"
+							   class="dropdown-item modal-trigger"
+							   onClick="deleteSubComponentAction('{{ project.slug }}', '{{ subcomponent.slug }}');"
+							   data-modal="delete-project-modal"
+							>
+								<i class="sl sl-icon-ban text-danger"></i>
+								<span>
+                                    <span class="dark-text">Delete</span>
+									<span>Remove this subcomponent</span>
+								</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="team-info">
+				{{ subcomponent.count_sub_projects }} SubProjects,
+				{{ subcomponent.count_beneficiaries }} Beneficiaries
+			</div>
+			<div class="project-members">
+				{% if subcomponent.image_file %}
+					<div class="face">
+						<img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{{ subcomponent.image_file.url }}">
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% if subcomponents.paginator.num_pages != 1 %}
+<div class="pagination align-center" style="align-content: center;">
+	<hr />
+	<span style="font-size: x-medium;" class="step-links">
+		{% if subcomponents.has_previous %}
+		<a  style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: black; background: #9da5a9; border-color: #21546d; font:200;" href="?subcomponent_page=1">&laquo;&laquo; first</a>
+		<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?subcomponent_page={{ subcomponents.previous_page_number }}" data-title="previous page">&laquo;</a>
+		{% endif %}
+		
+		<span class="current" style="color: #21546d;">
+			{{ subcomponents.number }} of {{ subcomponents.paginator.num_pages }}.
+		</span>
+		{% if subcomponents.has_next %}
+		<a style="padding: .2em; border-radius: 50px; padding-right: 0.3em; padding-left: 0.3em; color: white; background: #9da5a9; border-color: #21546d; font:200;" href="?subcomponent_page={{ subcomponents.next_page_number }}" data-title="next page">&raquo;</a>
+		<a style="padding: .2em; border-radius: 5px; padding-right: 0.3em; padding-left: 0.3em; color: black; background: #9da5a9; border-color: #21546d; font:200;" href="?subcomponent_page={{ subcomponents.paginator.num_pages }}">last &raquo;&raquo;</a>
+		{% endif %}
+	</span>
+</div>
+{% else %}
+{% endif %}

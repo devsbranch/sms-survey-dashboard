@@ -60,7 +60,7 @@
                 <a
                   class="button btn-dash primary-btn btn-dash raised has-icon"
                   data-ripple-color=""
-                  href="{% url 'tralard:subproject-fund-list' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
+                  href="{% url 'tralard:subproject-fund-list' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
                 >
                   <i class="material-icons">short_text</i>
                   Funding
@@ -69,7 +69,7 @@
                 <a
                   class="button btn-dash primary-btn btn-dash raised has-icon"
                   data-ripple-color=""
-                  href="{% url 'tralard:subproject-training' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug  %}"
+                  href="{% url 'tralard:subproject-training' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
                 >
                   <i class="material-icons">short_text</i>
                   Training
@@ -78,7 +78,7 @@
                 <a
                   class="button btn-dash primary-btn btn-dash raised has-icon"
                   data-ripple-color=""
-                  href="{% url 'tralard:subproject-beneficiary' sub_project.project.program.slug sub_project.project.slug sub_project.slug%}"
+                  href="{% url 'tralard:subproject-beneficiary' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug%}"
                 >
                   <i class="material-icons">short_text</i>
                   Beneficiaries
@@ -87,7 +87,7 @@
                 <a
                   class="button btn-dash primary-btn btn-dash raised has-icon"
                   data-ripple-color=""
-                  href="{% url 'tralard:project-detail' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug %}"
+                  href="{% url 'tralard:subcomponent-detail' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug %}"
                 >
                   <i class="material-icons">short_text</i>
                   SubProject

@@ -101,7 +101,7 @@
 							   data-fund-approved="{{ fund.approved }}"
 							   data-currency="{{ fund.currency }}"
 							   data-fund-date="{{ fund.funding_date }}"
-							   onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' program_slug=sub_project.project.program.slug project_slug=sub_project.project.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
+							   onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ sub_project.project.name|title}} fund', `{% url 'tralard:subproject-fund-update' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug fund_slug=fund.slug %}`)"
 							>
 								<i class="sl sl-icon-pencil text-warning"></i>
 								<span>

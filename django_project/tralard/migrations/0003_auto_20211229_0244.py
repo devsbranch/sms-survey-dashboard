@@ -84,7 +84,7 @@ class Migration(migrations.Migration):
                 ('image_file', models.ImageField(blank=True, help_text='A banner image for this Sub Project. Most browsers support dragging the image directly on to the "Choose File" button above. The ideal size for your image is 512 x 512 pixels.', upload_to='images/projects')),
                 ('approved', models.BooleanField(blank=True, default=False, help_text='Whether this project has been approved yet.', null=True)),
                 ('focus_area', models.TextField(blank=True, help_text='Please describe the focus areas of the project.(if any). Rich text editing is supported', max_length=10000, null=True)),
-                ('indicators', models.ManyToManyField(blank=True, related_name='subproject_indicators', to='tralard.Indicator')),
+                ('indicators', models.ManyToManyField(blank=True, related_name='indicator_related_subprojects', to='tralard.Indicator')),
                 ('project', models.ForeignKey(blank=True, default='', null=True, on_delete=django.db.models.deletion.SET_DEFAULT, to='tralard.project')),
                 ('supervisor', models.ForeignKey(blank=True, help_text='Sub Project Supervisor. This name will be used on trainings and any other references. ', null=True, on_delete=django.db.models.deletion.SET_NULL, to='tralard.representative')),
                 ('training_moderators', models.ManyToManyField(blank=True, help_text='Managers of all trainings in this Sub project. They will be allowed to create or remove training schedules.', related_name='training_moderators', to='tralard.Representative')),

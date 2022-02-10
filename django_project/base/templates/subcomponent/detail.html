@@ -1,0 +1,744 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load permission_tags %}
+
+{% block title %} {{ title|title }} {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+<!-- PAGE content goes HERE -->
+{% block content %}
+       <!-- Edit SubProject Modal -->
+        <div id="edit-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
+            <div class="modal-background"></div>
+            <div class="modal-content" style="width: 50% !important;">
+                <div class="flex-card simple-shadow" style="overflow-y: auto;">
+                    <div class="help-text has-text-left">
+                        <h2 class="dark-text">Update SubProject</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="has-text-centered">
+                                <div class="image">
+                                    <img src="{% static 'assets/images/icons/basket.svg' %}">
+                                </div>
+                                <div class="m-3">
+                                    <span class="m-2">Edit SubProject Here</span>
+                                </div>
+                            </div>
+                            <form id="update-subproject-form" action="" method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div id="subproject-update123" class="m-4 column is-multiline">
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button"  class="button modal-dismiss"></a>Cancel</button>
+                                    <button type="submit" class="button is-modal">Update SubProject</button>
+                                </div>
+                                
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+            </div>
+        <!-- Edit SubProject Modal -->
+
+    <!-- Main dashboard container -->
+    <div id="dashboard-wrapper" class="dashboard-outer">
+        <div class="dashboard-inner">
+            <!-- Dashboard Wrapper -->
+            <div class="dashboard-wrapper">
+                <div id="main-dashboard" class="section-wrapper">
+                    <!-- Dashboard content -->
+                    <div id="crm-deal" class="dashboard-columns">
+    
+                        <!-- Page title -->
+                        <div class="deal-title-wrapper is-mobile">
+                            {% if subcomponent.image_file %}
+                            <img 
+                                class="deal-image" 
+                                src="https://via.placeholder.com/50x50" 
+                                alt=""
+                                data-demo-src="{{ subcomponent.image_file.url }}"
+                            />
+                            {% else %}
+                            <img
+                              src="https://via.placeholder.com/50x50"
+                              alt="Default profile photo"
+                            />
+                            {% endif %}
+                            <div class="inner-wrap">
+                                <h3 class="deal-title" style="padding-left: 12px;">{{ subcomponent.name|title }}</h3>
+                                <div class="title-meta">
+                                    <a href="{% url 'tralard:beneficiary-list' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug %}">
+                                        <div class="meta">
+                                            <i class="material-icons">person</i>
+                                            <span>{{ subcomponent.count_beneficiaries }} Beneficiaries</span>
+                                        </div>
+                                    </a>
+                                    <div class="meta">
+                                        <i class="material-icons">domain</i>
+                                        <span>{{ subcomponent.count_sub_projects }} total sub-projects</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Filter input -->
+                            <div class="actions">
+                                <a class="button btn-dash grey-btn btn-dash raised" data-ripple-color="" href="{% url 'tralard:project-detail' project_slug=subcomponent.project.slug %}">
+                                    SubComponent Details
+                                </a>
+                            </div>
+                        </div>
+                        <!-- Stage -->
+                        <div class="stage-wrapper">
+                            <div class="stage-inner">
+                                <progress class="progress is-small" value="35" max="100">35%</progress>
+                            </div>
+                            <div class="stages">
+                                <div class="stage is-done">
+                                    <span><i class="sl sl-icon-check"></i>Approved: {% if subcomponent.approved%} Yes {% else %} Pending ... {% endif %}</span>
+                                </div>
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Has Active Funding: {% if subcomponent.has_funding %} Yes {% else %} No {% endif %}</span>
+                                </div>
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Updadted on: {{ subcomponent.created|date:'l'}}, {{ subcomponent.created }}</span>
+                                </div>
+                                {% comment %} <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>Negociation</span>
+                                </div> {% endcomment %}
+                                <div class="stage">
+                                    <span><i class="sl sl-icon-check"></i>End</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Deal meta -->
+                        <div class="deal-meta">
+                            <div class="deal-price">
+                                <span>ZMK {{ subcomponent.get_total_subcomponent_fund|intcomma }}</span>
+                                <span>balance: ZMK {{ subcomponent.get_total_fund_balance|intcomma }}, used: ZMK {{ subcomponent.get_total_used_funds|intcomma }}</span>
+                            {% comment %} <span 
+                                class="subcomponent-pies">{{ subcomponent.get_total_used_funds_percent }}/100
+                            </span>  {% endcomment %}
+                            {% comment %} <span class="percent">
+                                {{ subcomponent.get_total_used_funds_percent }}
+                            <span>%
+                            </span><span>used</span></span> {% endcomment %}
+
+                                {% comment %} <span>{{ subcomponent.get_total_used_funds_percent }} {% endcomment %}
+                            </div>
+                            
+
+                            <!-- Deal owner -->
+                            {% comment %} <div class="deal-owner">
+                                <!-- Menu -->
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                    <div class="column is-4">
+                                        <div class="flex-card light-bordered light-raised padding-20" data-toggle="popover"
+                                            data-placement="top" title="Gauge chart" data-trigger="hover"
+                                            data-content="Gauge charts are a very visual way to display some data progress. It is percentage based.">
+                                            <div id="billboard-gaugeChart"></div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>                        
+                            </div> {% endcomment %}
+
+                            <!-- Deal owner -->
+                            <div class="deal-owner">
+                                <img class="light-bordered light-raised" data-toggle="popover"
+                                    data-placement="top" title="Gauge chart" data-trigger="hover"
+                                    data-content="Gauge charts are a very visual way to display some data progress. It is percentage based."
+                                    src="https://via.placeholder.com/150x150" alt=""
+                                    data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                    <div class="owner-meta">
+                                    <span>Data Actions</span>
+                                    <span>Reports and more</span>
+                                </div>
+                                <!-- Menu -->
+                                <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                                    <div class="button">
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </div>
+                                    <div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+                                        <div class="dropdown-content">
+                                            <a href="#" class="dropdown-item">
+                                                <i class="sl sl-icon-arrow-down-circle"></i>
+                                                <span>
+                                                    <span>Annual</span>
+                                                    <span>Download SubProject Annual Report</span>
+                                                </span>
+                                            </a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item">
+                                                <i class="sl sl-icon-people"></i>
+                                                <span>
+                                                    <span>Beneficiary</span>
+                                                    <span>Download Statistics Report</span>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>                        
+                            </div>
+                        </div>
+                        <!-- Deal content -->
+                        <div class="columns deal-content">
+                            <!-- Left side -->
+                            <div class="column is-4">
+                                <!-- Deal details -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle">
+                                        <h3>Details</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content">
+                                        <div class="details-placeholder">
+                                            <span>{{ subcomponent.description|safe }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Deal contact -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>Contact</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content is-active">
+                                        <!-- Deal contact -->
+                                        <div class="deal-contact">
+                                            <img src="https://via.placeholder.com/150x150" alt=""
+                                                data-demo-src="{% static 'assets/images/logos/logo.png' %}">
+                                            <div class="contact-meta">
+                                                <span>{{ subcomponent.representative.first_name|title }} {{ subcomponent.representative.last_name|title }}</span>
+                                                <span>gender: {{ subcomponent.representative.gender }}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Province</span>
+                                                <span>{{ subcomponent.ward.district.province.name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>District</span>
+                                                <span>{{ subcomponent.ward.district.name }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-briefcase"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Ward</span>
+                                                <span>{{ subcomponent.ward.name}}</span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-phone"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Phone</span>
+                                                <span><a>{{ subcomponent.cell }}</a></span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Email</span>
+                                                <span><a>{{ subcomponent.email }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- program details organization -->
+                                <div class="deal-card">
+                                    <div class="deal-card-header is-toggle is-active">
+                                        <h3>SubComponent</h3>
+                                        <div class="toggle-icon">
+                                            <i class="material-icons">keyboard_arrow_right</i>
+                                        </div>
+                                    </div>
+                                    <div class="deal-card-content is-active">
+                                        <!-- Deal contact -->
+                                        <div class="deal-contact">
+                                            {% if subcomponent.project.logo %}
+                                                <img src="https://via.placeholder.com/150x150" alt=""
+                                                    data-demo-src="{{ subcomponent.project.logo.url }}">
+                                            {% endif %}
+                                            <div class="contact-meta">
+                                                <span>{{ subcomponent.project.name }}</span>
+                                                <span>started on: {{ subcomponent.project.started }}</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-phone"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Phone</span>
+                                                <span><a>{{ subcomponent.project.project_representative.cell }}</a></span>
+                                            </div>
+                                        </div>
+                                        <!-- Info block -->
+                                        <div class="info-block top-spaced">
+                                            <div class="block-icon">
+                                                <i class="sl sl-icon-envelope-open"></i>
+                                            </div>
+                                            <div class="block-meta">
+                                                <span>Email</span>
+                                                <span><a>{{ subcomponent.project.project_representative.email }}</a></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Right side -->
+                            <div class="column is-8">
+                                <!-- Action card -->
+                                <div class="flex-card action-card card-overflow">
+                                    <!-- Header -->
+                                    <div class="action-card-header">
+                                        <!-- Write note action -->
+                                        <div class="action is-active" data-action="write-note">
+                                            <i class="sl sl-icon-doc"></i>
+                                            <span>All {{ subcomponent.name|title }} Related SubProjects</span>
+                                            <div class="arrow-down"></div>
+                                        </div>
+                                        <!-- Schedule event action -->
+                                        {% if user|has_role:'project_manager, subcomponent_manager' or user.is_staff or user.is_superuser %}
+                                        <div class="action" data-action="schedule-event">
+                                            <i class="sl sl-icon-clock"></i>
+                                            <span>Create a New SubProject</span>
+                                            <div class="arrow-down"></div>
+                                        </div>                                   
+                                         {% endif %}
+                                        <!-- Upload files action -->
+                                        <div class="action" data-action="upload-files">
+                                            <i class="sl sl-icon-paper-clip"></i>
+                                            <span>Citizen's Feedback</span>
+                                            <div class="arrow-down"></div>
+                                        </div>
+                                    </div>
+                                    <!-- SubProject Listing -->
+                                    <div class="action-card-body">
+                                        <!-- subproject list note -->
+                                        <div id="write-note" class="action-wrap">
+
+                                            {% for subproject in sub_project_list %}
+
+                                                <!-- Timeline section -->
+                                                <div class="deal-timeline">
+                                                    <ul>
+                                                        <li>
+                                                            <div class="timeline-icon">
+                                                                <i class="material-icons">people</i>
+                                                            </div>
+                                                            <div class="timeline-item">
+                                                                <div class="item-body">
+                                                                    <div class="item-body">
+                                                                                                                                                                                                                          
+                                                                        <div style="display: flex; justify-content: space-between;"> 
+                                                                            <a href="{% url 'tralard:subproject-manage' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug subproject_slug=subproject.slug %}">
+                                                                                <h3>{{ subproject.name }} </h3>
+                                                                            </a> 
+                                                                            {% if user|has_role:'project_manager, project_manager' or user.is_staff or user.is_superuser %}
+                                                                         <div
+                                                                            class="
+                                                                              dropdown
+                                                                              is-right
+                                                                              dropdown-trigger
+                                                                              styled-dropdown
+                                                                              is-round
+                                                                            "
+                                                                          >
+                                                                            <div class="button">
+                                                                              <i class="material-icons">more_vert</i>
+                                                                            </div>
+                                                                            <div
+                                                                              class="dropdown-menu is-text-bigger has-text-left"
+                                                                              role="menu"
+                                                                            >
+                                                                              <div class="dropdown-content">
+                                                                                <div class="dropdown-divider"></div>
+                                                                                
+                                                                                <a href="{% url 'tralard:subproject-manage' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug subproject_slug=subproject.slug %}" class="dropdown-item">
+                                                                                    <i class="sl sl-icon-equalizer"></i>
+                                                                                    <span>
+                                                                                        <span>Manage</span>
+                                                                                        <span>Go to subproject Management</span>
+                                                                                    </span>
+                                                                                </a>
+                                                                              
+                                                                                {% if user|has_role:'project_manager, project_manager' or user.is_staff or user.is_superuser %}
+                                                                                <a
+                                                                                id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
+                                                                                  class="dropdown-item modal-trigger"
+                                                                                >
+                                                                                  <i class="sl sl-icon-pencil"></i>
+                                                                                  <span>
+                                                                                    <span>Update</span>
+                                                                                    <span>Edit subproject</span>
+                                                                                  </span>
+                                                                                </a>
+                                                                        
+                                                                                <script>
+                                                                                    var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
+                                                                                      uniqueEditSelectorButton.addEventListener("click", () => {    
+                                                                                         if("{{ subproject.slug }}" == "{{ subproject.slug }}"){
+                                                                                            document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
+                                                                                            document.getElementById("update-subproject-form").action = `{% url 'tralard:subproject-update' subproject.subcomponent.project.slug subproject.subcomponent.slug subproject.slug %}`;
+                                                                                            document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
+                                                                                            document.getElementById("subproject-update123").innerHTML += `{{ subproject.sub_project_update_form|crispy }}`;
+                                                                                            document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
+                                                                                            document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
+                                                                                         }
+                                                                                       });
+                                                                                 </script>
+
+                                                                                {% endif %}
+                                                                                <div class="dropdown-divider"></div>
+                                                                                {%if user|can:'can_delete_project'%}
+                                                                                <a
+                                                                                id="delete-button"
+                                                                                onClick="deleteSubproject('{{ project_slug }}', '{{ subcomponent_slug }}', '{{ subproject.slug }}', '{{ subproject.name }}');"
+                                                                                  href="#"
+                                                                                  data-modal="delete-subproject-modal"
+                                                                                  class="dropdown-item modal-trigger" 
+                                                                                >
+                                                                                  <i class="sl sl-icon-trash"></i>
+                                                                                  <span>
+                                                                                    <span>Delete </span>
+                                                                                    <span>Delete Subproject</span>
+                                                                                  </span>
+                                                                                </a>
+                                                                                {% endif %}
+                                                                              </div>
+                                                                            </div>
+                                                                          </div>
+                                                                          {% endif %}
+                                                                        </div>
+                                                                       </div>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            <i class="material-icons">person</i>
+                                                                            <span>{{ subproject.count_beneficiaries }} Beneficiaries</span>
+                                                                        </div>
+                                                                        <div class="meta-list-item">
+                                                                            <i class="material-icons">domain</i>
+                                                                            <span>Related indicators {{ subproject.count_indicators }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            <span class="is-thin">
+                                                                                Created on: {{ subproject.created }} 
+                                                                                | supervisor: {{ subproject.supervisor.first_name|title }} {{ subproject.supervisor.last_name|title }} 
+                                                                                | subcomponent: {{ subproject.subcomponent.name }} 
+                                                                                | is approved: {% if subproject.approved %} Yes {% else %} Pending ... {% endif %}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                </div>
+                                                                <div class="item-footer">
+                                                                    <p>{{ subproject.description|truncatechars:97 }}</p>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <br/>
+                                            {% endfor %}
+
+                                            {% comment %} <div class="control">
+                                                <textarea class="textarea" rows="1"
+                                                    placeholder="Click here to write a Note ..."></textarea>
+                                            </div> {% endcomment %}
+                                        </div>
+
+                                        <!-- Create SubProject -->
+                                        <div id="schedule-event" class="action-wrap is-hidden">
+                                            <!-- Form -->
+                                            <form class="event-form" action="{% url 'tralard:subcomponent-detail' project_slug subcomponent_slug %}" method="post" enctype="multipart/form-data">
+                                                <div class="columns is-multiline">
+                                                    {% csrf_token %}
+                                                    {% crispy form form.helper %}
+                                                </div>
+                                                <style>
+                                                    .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--multiple {
+                                                        width: 830px;
+                                                        height: 100%;
+                                                      }
+                                                    .select2-results__options {
+                                                        background-color: white;
+                                                        width: 830px;
+                                                        height: 100%;
+                                                    }
+                                                </style>
+                                                <button type="submit" class="button is-modal primary-btn">Create SubProject</button>
+                                            </form>
+                                        </div>
+   
+                                        <div id="upload-files" class="action-wrap is-hidden">
+                                             {% if user|has_role:'project_manager, project_manager' or user.is_staff or user.is_superuser %}
+                                             <div class="columns is-multiline m-3" style="display: flex; justify-content: end; align-items: center;" data-modal="create-feedback-modal">
+                                                 <div class="add-button modal-trigger" data-modal="create-feedback-modal">
+                                                    <i class="material-icons">add</i>
+                                                </div>
+                                            </div>
+                                            {% endif %}
+                                                <div class="deal-timeline">
+                                                    <ul>
+                                                        {% for feedback in citizen_feedback_list %}
+
+                                                        <li>
+                                                            <div class="timeline-icon">
+                                                                <i class="sl sl-icon-doc"></i>
+                                                            </div>
+                                                            <div class="timeline-item is-note">
+                                                                
+                                                                <div class="item-body">
+                                                                    {% if user|has_role:'project_manager, project_manager' or user.is_staff or user.is_superuser %}
+                                                                    <div style="display: flex; justify-content: end; align-items: center;">
+                                                                        <a id="edit-button" onClick="populateFeedbackForm('{{ project_slug }}', '{{ subcomponent_slug }}', '{{feedback.slug}}');" href="#" class="tag squared is-secondary m-1 modal-trigger" data-modal="edit-feedback-modal"style="text-decoration: none !important;" >Edit</a>
+                                                                        <a id="delete-button" onClick="deleteFeedbackForm('{{ project_slug }}', '{{ subcomponent_slug }}', '{{feedback.slug}}', '{{subcomponent.name|title}}');" href="#" class="tag squared is-danger m-1 modal-trigger" data-modal="delete-feedback-modal" style="text-decoration: none !important;">Delete</a>
+                                                                    </div>
+                                                                    {% endif %}
+                                                                    <h3>{{ feedback.title|title }}</h3>
+                                                                    <p class="note-text">
+                                                                        {{ feedback.description|truncatechars:100 }}
+                                                                    </p>
+                                                                    <div class="meta-list">
+                                                                        <div class="meta-list-item">
+                                                                            {% if feedback.subcomponent.project.logo %}
+                                                                                <img src="https://via.placeholder.com/150x150" alt=""
+                                                                                    data-demo-src="{{ feedback.subcomponent.project.logo.url }}">
+                                                                            {% endif %}
+                                                                            <span class="is-thin">{{ feedback.date|date:'l' }}, {{ feedback.date }}</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                </div>
+                                                <br />
+                                            
+                                            <br/>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>    
+                    </div>                    
+                </div>                
+            </div>            
+        </div>                              
+    </div>
+
+
+
+     <!-- Delete SubProject Modal --><!-- Delete SubProject Modal -->
+     <div id="delete-subproject-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Delete SubProject</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                    </div>
+
+                    <form id="delete-subproject-form" class="form" action="" method="post">
+                        {% csrf_token %}
+                        <div id="warning-msg">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="button modal-dismiss" >Cancel</button>
+                            <button class=" is-danger is-modal" type="submit">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Create Feedback Modal --><!-- Create Feedback Modal -->
+    <div id="create-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Leave Feedback</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                        <div class="m-3">
+                            <span class="m-2">Leave feedback for the {{subcomponent.name|title}} project.</span>
+                        </div>
+                    </div>
+                    
+                    <form id="feedback-form" action="{% url 'tralard:feedback' project_slug subcomponent_slug %}" method="post">{% csrf_token %}
+        
+                        <div class="m-4 column is-multiline">
+                            
+                            {% crispy feedback_form feedback_form.helper %}
+                        </div>
+
+                        <div class="modal-footer has-text-left">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button type="submit" class="button is-modal">Leave Feedback</button>
+                        </div>
+                                                    
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+    </div>
+
+    <!-- Edit Feedback Modal --><!-- Edit Feedback Modal -->
+    <div id="edit-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Leave Feedback</h2>
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                        <div class="m-3">
+                            <span class="m-2">Leave feedback for the {{subcomponent.name|title}} project.</span>
+                        </div>
+                    </div>
+                    
+                    <form id="update-feedback-form" action="" method="post">{% csrf_token %}
+        
+                        <div class="m-4 column is-multiline">
+                            
+                            {% crispy feedback_form feedback_form.helper %}
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button type="submit" class="button is-modal">Update Feedback</button>
+                        </div>
+                                                    
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+        {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+    </div>
+    
+    <!-- Delete Feedback Modal --><!-- Delete Feedback Modal -->
+    <div id="delete-feedback-modal" class="modal modal-md icon-action-modal modal-hero">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <div class="flex-card simple-shadow">
+                <div class="help-text has-text-left">
+                    <h2 class="dark-text">Delete Feedback</h2>
+
+                </div>
+
+                <div class="card-body">
+                    <div class="has-text-centered">
+                        <div class="image">
+                            <img src="{% static 'assets/images/icons/basket.svg' %}">
+                        </div>
+                    </div>
+                    
+                    <form id="delete-feedback-form" class="form" action="" method="post">
+                        {% csrf_token %}
+                        <div id="warning-msg">
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="button modal-dismiss">Cancel</button>
+                            <button class=" is-danger is-modal" type="submit">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+function deleteSubproject(project_slug, subcomponent_slug, sub_project_slug, subproject_name) {
+        let origin = location.origin;
+        const url = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/sub_project/${sub_project_slug}/delete/`
+        $("#delete-subproject-form #warning-msg").html(`<h3>Are you sure you want to delete <i>"${subproject_name}"</i> project</h3>`)
+        $("#delete-subproject-form").attr('action', url);
+    }
+
+</script>
+<script>
+
+    function populateFeedbackForm(project_slug, subcomponent_slug, feedback_slug, project_name) {
+        let origin = location.origin;
+        const url = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/detail/${feedback_slug}/`
+        $.get(url, function( { data } ) {
+            $("#update-feedback-form input[name='title']").val(data.title);
+            $("#update-feedback-form input[name='date']").val(data.date);
+            $(`#id_moderator option[value="${data.moderator}"]`).prop('selected', true);
+            $("#update-feedback-form textarea[name='custom_description']").val(data.description);
+            $("#update-feedback-form").attr('action', url);
+        });
+    }
+
+    function deleteFeedbackForm(project_slug, subcomponent_slug, feedback_slug, project_name) {
+        let origin = location.origin;
+        const url = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/delete/${feedback_slug}/`
+        $("#delete-feedback-form #warning-msg").html(`<h3>Are you sure you want to delete this feedback for the <i>"${project_name}"</i> project</h3>`)
+        $("#delete-feedback-form").attr('action', url);
+    }
+</script>
+{% endblock javascripts %}

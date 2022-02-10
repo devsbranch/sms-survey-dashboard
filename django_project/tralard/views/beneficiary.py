@@ -13,7 +13,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 
 from tralard.filters.beneficiary import BeneficiaryFilter
 from tralard.forms import BeneficiaryCreateForm
-from tralard.models import Beneficiary, Project, Ward, SubProject
+from tralard.models import Beneficiary, SubComponent, Ward, SubProject
 
 
 class PaginatorMixin(Paginator):
@@ -42,8 +42,8 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
         return reverse_lazy(
             "tralard:beneficiary-list",
             kwargs={
-                "program_slug": self.kwargs.get("program_slug", None),
                 "project_slug": self.kwargs.get("project_slug", None),
+                "subcomponent_slug": self.kwargs.get("subcomponent_slug", None),
             },
         )
 
@@ -61,8 +61,8 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
             reverse_lazy(
                 "tralard:subproject-beneficiary",
                 kwargs={
-                    "program_slug": form.instance.sub_project.project.program.slug,
-                    "project_slug": form.instance.sub_project.project.slug,
+                    "project_slug": form.instance.sub_project.subcomponent.project.slug,
+                    "subcomponent_slug": form.instance.sub_project.subcomponent.slug,
                     "subproject_slug": form.instance.sub_project.slug,
                 },
             )
@@ -71,22 +71,22 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
     def get_context_data(self, **kwargs):
         context = super(BeneficiaryOrgListView, self).get_context_data(**kwargs)
 
-        project_slug = self.kwargs.get("project_slug", None)
+        subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
         beneficiary_objects = Beneficiary.objects.filter(
-            sub_project__project__slug=project_slug
+            sub_project__subcomponent__slug=subcomponent_slug
         )
-        project = Project.objects.get(slug=project_slug)
+        subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
         page = self.request.GET.get("page", 1)
         paginator = self.paginator_class(beneficiary_objects, self.paginate_by)
         organizations = paginator.page(page)
 
         try:
-            sub_header = f"Showing all Beneficiaries under the <b>{project.name[:24]}</b> project."
+            sub_header = f"Showing all Beneficiaries under the <b>{subcomponent.name[:24]}</b> subcomponent."
         except IndexError:
-            sub_header = "There are currently no Beneficiaries under this Project."
+            sub_header = "There are currently no Beneficiaries under this SubComponent."
 
         context["header"] = "Beneficiaries"
-        context["project"] = project
+        context["subcomponent"] = subcomponent
         context["beneficiaries"] = organizations
         context["beneficiaries_filter"] = BeneficiaryFilter(
             self.request.GET, queryset=self.get_queryset()
@@ -96,7 +96,7 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
 
 
 @login_required(login_url="/login/")
-def beneficiary_detail(request, program_slug, project_slug, beneficiary_slug):
+def beneficiary_detail(request, project_slug, subcomponent_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
 
     obj_to_dict = model_to_dict(beneficiary_obj)
@@ -126,7 +126,7 @@ def beneficiary_detail(request, program_slug, project_slug, beneficiary_slug):
 
 
 @login_required(login_url="/login/")
-def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
+def beneficiary_update(request, project_slug, subcomponent_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
 
     form = BeneficiaryCreateForm(instance=beneficiary_obj)
@@ -141,7 +141,7 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
         pass
 
     try:
-        model_as_dict["location"] = model_as_dict["location"].coords
+        model_as_dict["location"] = model_as_dict.location.coords
     except AttributeError:
         pass
 
@@ -162,8 +162,8 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
                 reverse_lazy(
                     "tralard:subproject-beneficiary",
                     kwargs={
-                        "program_slug": program_slug,
                         "project_slug": project_slug,
+                        "subcomponent_slug": subcomponent_slug,
                         "subproject_slug": beneficiary_obj.sub_project.slug,
                     },
                 )
@@ -178,7 +178,7 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
         return redirect(
             reverse_lazy(
                 "tralard:beneficiary-list",
-                kwargs={"program_slug": program_slug, "project_slug": project_slug},
+                kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
             )
         )
 
@@ -186,7 +186,7 @@ def beneficiary_update(request, program_slug, project_slug, beneficiary_slug):
 
 
 @login_required(login_url="/login/")
-def beneficiary_delete(request, program_slug, project_slug, beneficiary_slug):
+def beneficiary_delete(request, project_slug, subcomponent_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
 
     beneficiary_obj.delete()
@@ -196,8 +196,8 @@ def beneficiary_delete(request, program_slug, project_slug, beneficiary_slug):
         reverse_lazy(
             "tralard:subproject-beneficiary",
             kwargs={
-                "program_slug": program_slug,
                 "project_slug": project_slug,
+                "subcomponent_slug": subcomponent_slug,
                 "subproject_slug": beneficiary_obj.sub_project.slug,
             },
         )

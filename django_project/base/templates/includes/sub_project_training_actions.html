@@ -57,7 +57,7 @@
 						        class="button modal-dismiss">Cancel
 						</button>
 						<button class=" is-danger is-modal" type="submit"
-						        onClick="handDeleteTraining('SET_ACTION_URL', '{{training.sub_project.project.program.slug}}', '{{training.sub_project.project.slug}}', '{{training.sub_project.slug}}', '{{training.slug}}');">
+						        onClick="handDeleteTraining('SET_ACTION_URL', '{{training.sub_project.subcomponent.project.slug}}', '{{training.sub_project.subcomponent.slug}}', '{{training.sub_project.slug}}', '{{training.slug}}');">
 							Confirm
 						</button>
 					</div>
@@ -67,11 +67,14 @@
 	</div>
 </div>
 <script>
-  function handDeleteTraining(actionType, program_slug = '', project_slug = '', subproject_slug = '', training_entry_slug = '') {
+  function handDeleteTraining(actionType, project_slug = '', subcomponent_slug = '', subproject_slug = '', training_entry_slug = '') {
     const origin = location.origin;
-    const baseUrl = `${origin}/program/${program_slug}/project/${project_slug}/subproject/${subproject_slug}/training/${training_entry_slug}/delete/`
+    const baseUrl = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/subproject/${subproject_slug}/training/${training_entry_slug}/delete/`
     const formActionUrl = `${baseUrl}/${beneficiary_slug}/delete/`
-
+    console.log(
+      "Action Type", actionType,
+      
+    )
     if (actionType === "SET_ACTION_URL") {
       $('#training-delete-form').attr('action', formActionUrl)
     } else if (actionType === "UNSET_ACTION_URL") {
@@ -153,17 +156,17 @@
         document.getElementById("start-time").innerHTML = "blank";
       }
       document.getElementById("training-notes").innerHTML = "{{ training.notes }}";
-      if ("{{ training.sub_project.project.project_representative.cell }}") {
-        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.project.project_representative.cell }}";
+      if ("{{ training.sub_project.subcomponent.subcomponent_representative.cell }}") {
+        document.getElementById("cell-number").innerHTML = "{{ training.sub_project.subcomponent.subcomponent_representative.cell }}";
       } else {
         document.getElementById("cell-number").innerHTML = "None";
       }
-      if ("{{ training.sub_project.project.project_representative.email }}") {
-        document.getElementById("email-address").innerHTML = "{{ training.sub_project.project.project_representative.email }}";
+      if ("{{ training.sub_project.subcomponent.subcomponent_representative.email }}") {
+        document.getElementById("email-address").innerHTML = "{{ training.sub_project.subcomponent.subcomponent_representative.email }}";
       } else {
         document.getElementById("email-address").innerHTML = "None";
       }
-      document.getElementById("project-image").src = "{{ training.sub_project.project.logo_url }}";
+      document.getElementById("project-image").src = "{{ training.sub_project.subcomponent.logo_url }}";
       var boolean = document.getElementById("boolean");
       if ("{{ training.completed }}" == "True") {
         document.getElementById("prospectSwitch").checked = true;
@@ -178,7 +181,7 @@
   uniqueEditSelectorButton.addEventListener("click", () => {
     if ("{{ training.slug }}" == "{{ training.slug }}") {
       document.getElementById("subproject-training-entry-form").innerHTML = `
-                              <form action="{% url 'tralard:subproject-training-update' training.sub_project.project.program.slug training.sub_project.project.slug training.sub_project.slug training.slug %} " name="sub_project_training_form" method="post" enctype="multipart/form-data">
+                              <form action="{% url 'tralard:subproject-training-update' training.sub_project.subcomponent.project.slug training.sub_project.subcomponent.slug training.sub_project.slug training.slug %} " name="sub_project_training_form" method="post" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 {% load crispy_forms_tags %}
                                 {% crispy training.training_form training.training_form.helper %}
@@ -196,7 +199,7 @@
                                {% csrf_token %}
                                <div class="modal-footer" style="margin-right: 8em;">
                                   <a href="" style="" onClick="handleDeleteBeneficiary('UNSET_ACTION_URL');" class="btn btn-danger modal-dismiss">Cancel</a>
-                                  <a style="" href="{% url 'tralard:subproject-training-delete' training.sub_project.project.program.slug training.sub_project.project.slug training.sub_project.slug training.slug %}" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
+                                  <a style="" href="{% url 'tralard:subproject-training-delete' training.sub_project.subcomponent.project.slug training.sub_project.subcomponent.slug training.sub_project.slug training.slug %}" class="btn btn-primary is-danger is-modal" name="confirmed" type="submit">Confirm</a>
                                 </div>
                             </div>
                             `;

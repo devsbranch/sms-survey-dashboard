@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 from tralard.filters.funds import FundFilter
-from tralard.models.project import Project
+from tralard.models.subcomponent import SubComponent
 from tralard.forms.fund import FundForm, DisbursementForm
 from tralard.models.fund import (
     Disbursement,
@@ -19,7 +19,7 @@ from tralard.models.fund import (
 
 class FundListAndCreateView(LoginRequiredMixin, CreateView):
     """
-    Create a new Project Fund
+    Create a new SubComponent Fund
     """
 
     model = Fund
@@ -28,17 +28,17 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(FundListAndCreateView, self).get_context_data(**kwargs)
-        self.program_slug = self.kwargs["program_slug"]
         self.project_slug = self.kwargs["project_slug"]
+        self.subcomponent_slug = self.kwargs["subcomponent_slug"]
 
-        self.project = Project.objects.get(slug=self.project_slug)
-        self.project_funds_qs = Fund.objects.filter(
-            sub_project__project__slug=self.project_slug
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
+        self.subcomponent_funds_qs = Fund.objects.filter(
+            sub_project__subcomponent__slug=self.subcomponent_slug
         )
         context["title"] = "funds"
-        context["fund_title"] = "add project fund"
-        context["funds"] = self.project_funds_qs
-        context["project"] = self.project
+        context["fund_title"] = "add subcomponent fund"
+        context["funds"] = self.subcomponent_funds_qs
+        context["subcomponent"] = self.subcomponent
         context["form"] = self.form_class
         context["modal_display"] = "none"
         context["funds_filter"] = FundFilter(
@@ -51,13 +51,13 @@ class FundListAndCreateView(LoginRequiredMixin, CreateView):
         return super(FundListAndCreateView, self).form_valid(form)
 
 
-def fund_detail(request, program_slug, project_slug, fund_slug):
+def fund_detail(request, project_slug, subcomponent_slug, fund_slug):
     """
     Display a single fund
     """
     context = {}
     single_fund = Fund.objects.get(slug=fund_slug)
-    single_project = Project.objects.get(slug=project_slug)
+    single_subcomponent = SubComponent.objects.get(slug=subcomponent_slug)
     disbursements_qs = Disbursement.objects.filter(fund__slug=fund_slug)
     disbursements = []
     for disb in disbursements_qs:
@@ -71,20 +71,20 @@ def fund_detail(request, program_slug, project_slug, fund_slug):
             "slug": disb.slug,
         }
         disbursements.append(serialized_disb)
-    funds = Fund.objects.filter(sub_project__project__slug=single_project.slug).values()
-    project = {}
-    project["name"] = single_project.name
-    project["slug"] = single_project.slug
-    project["approved"] = single_project.approved
-    project["has_funding"] = single_project.has_funding
-    project["description"] = single_project.description
+    funds = Fund.objects.filter(sub_project__subcomponent__slug=single_subcomponent.slug).values()
+    subcomponent = {}
+    subcomponent["name"] = single_subcomponent.name
+    subcomponent["slug"] = single_subcomponent.slug
+    subcomponent["approved"] = single_subcomponent.approved
+    subcomponent["has_funding"] = single_subcomponent.has_funding
+    subcomponent["description"] = single_subcomponent.description
     fund = {}
     fund["amount"] = str(single_fund.amount)
     fund["balance"] = str(single_fund.balance)
     fund["funding_date"] = single_fund.funding_date
     fund["created"] = single_fund.created
     fund["slug"] = single_fund.slug
-    context["project"] = project
+    context["subcomponent"] = subcomponent
     context["disbursements"] = disbursements
     context["title"] = "Fund details"
     context["funds"] = funds
@@ -96,7 +96,7 @@ def fund_detail(request, program_slug, project_slug, fund_slug):
             "disbursements": list(disbursements),
             "funds": list(funds),
             "fund": fund,
-            "project": project,
+            "subcomponent": subcomponent,
         }
     )
 
@@ -113,20 +113,20 @@ class FundDetailView(LoginRequiredMixin, DetailView):
 
 
 @login_required(login_url="/login/")
-def fund_delete(request, program_slug, project_slug, fund_slug):
+def fund_delete(request, project_slug, subcomponent_slug, fund_slug):
     fund = Fund.objects.get(slug=fund_slug)
     fund.delete()
     messages.success(request, "Fund deleted successfully")
     return redirect(
         reverse_lazy(
             "tralard:fund-list",
-            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+            kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
         )
     )
 
 
 @login_required
-def update_fund(request, program_slug, project_slug, fund_slug):
+def update_fund(request, project_slug, subcomponent_slug, fund_slug):
     form = FundForm()
 
     fund_obj = Fund.objects.get(slug=fund_slug)
@@ -141,8 +141,8 @@ def update_fund(request, program_slug, project_slug, fund_slug):
                     reverse_lazy(
                         "tralard:fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                         },
                     )
                 )
@@ -151,13 +151,13 @@ def update_fund(request, program_slug, project_slug, fund_slug):
         return redirect(
             reverse_lazy(
                 "tralard:fund-list",
-                kwargs={"program_slug": program_slug, "project_slug": project_slug},
+                kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
             )
         )
     return redirect(
         reverse_lazy(
             "tralard:fund-list",
-            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+            kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
         )
     )
 
@@ -182,7 +182,7 @@ class DisbursementListAndCreateView(LoginRequiredMixin, CreateView):
 
 @login_required(login_url="/login/")
 def delete_disbursement(
-    request, program_slug, project_slug, fund_slug, disbursement_slug
+    request, project_slug, subcomponent_slug, fund_slug, disbursement_slug
 ):
     disbursement = Disbursement.objects.get(slug=disbursement_slug)
     if disbursement is None:
@@ -191,8 +191,8 @@ def delete_disbursement(
             reverse_lazy(
                 "tralard:fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "fund_slug": fund_slug,
                 },
             )
@@ -204,8 +204,8 @@ def delete_disbursement(
             reverse_lazy(
                 "tralard:fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "fund_slug": fund_slug,
                 },
             )
@@ -214,7 +214,7 @@ def delete_disbursement(
 
 @login_required(login_url="/login/")
 def update_disbursement(
-    request, program_slug, project_slug, fund_slug, disbursement_slug
+    request, project_slug, subcomponent_slug, fund_slug, disbursement_slug
 ):
     form = DisbursementForm()
 
@@ -229,8 +229,8 @@ def update_disbursement(
                     reverse_lazy(
                         "tralard:fund-list",
                         kwargs={
-                            "program_slug": program_slug,
                             "project_slug": project_slug,
+                            "subcomponent_slug": subcomponent_slug,
                             "fund_slug": fund_slug,
                         },
                     )
@@ -241,8 +241,8 @@ def update_disbursement(
             reverse_lazy(
                 "tralard:fund-list",
                 kwargs={
-                    "program_slug": program_slug,
                     "project_slug": project_slug,
+                    "subcomponent_slug": subcomponent_slug,
                     "fund_slug": fund_slug,
                 },
             )
@@ -251,7 +251,7 @@ def update_disbursement(
 
 @login_required(login_url="/login/")
 def get_disbursement_expenditures(
-    request, program_slug, project_slug, fund_slug, disbursement_slug
+    request, project_slug, subcomponent_slug, fund_slug, disbursement_slug
 ):
     expenditures_qs = Expenditure.objects.filter(disbursment__slug=disbursement_slug)
     expenditures = []

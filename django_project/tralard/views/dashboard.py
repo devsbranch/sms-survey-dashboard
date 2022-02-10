@@ -6,8 +6,8 @@ from django.core.paginator import Paginator
 
 from tralard.models.fund import Fund
 from tralard.models.profile import Profile
+from tralard.models.subcomponent import SubComponent
 from tralard.models.project import Project
-from tralard.models.program import Program
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
 
@@ -22,19 +22,19 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
             self.current_user_profile = Profile.objects.get(user=self.request.user)
         except:
             self.current_user_profile = None
-        self.total_project_funds = Fund.objects.all().aggregate(Sum("amount"))
-        self.cleaned_total_project_funds = self.total_project_funds["amount__sum"]
-        self.projects = Project.objects.all()
-        self.project_paginator = Paginator(self.projects, 5)
-        self.project_page_number = self.request.GET.get("project_page_number", "")
-        self.project_paginator_list = self.project_paginator.get_page(
-            self.project_page_number
+        self.total_subproject_funds = Fund.objects.all().aggregate(Sum("amount")) # subprojects
+        self.cleaned_total_subproject_funds = self.total_subproject_funds["amount__sum"] # subprojects
+        self.subcomponents = SubComponent.objects.all()
+        self.subcomponent_paginator = Paginator(self.subcomponents, 5)
+        self.subcomponent_page_number = self.request.GET.get("subcomponent_page_number", "")
+        self.subcomponent_paginator_list = self.subcomponent_paginator.get_page(
+            self.subcomponent_page_number
         )
 
-        context["title"] = "Program: Tralard"
-        context["program_list"] = Program.objects.all().order_by("-started")[:5]
-        context["project_count"] = Project.objects.all().count()
-        context["total_project_funds"] = self.cleaned_total_project_funds
+        context["title"] = "Project: Tralard"
+        context["project_list"] = Project.objects.all().order_by("-started")[:5]
+        context["subcomponent_count"] = SubComponent.objects.all().count()
+        context["total_subproject_funds"] = self.cleaned_total_subproject_funds # subproject
         context["subproject_count"] = SubProject.objects.all().count()
         context["beneficiary_count"] = Beneficiary.objects.all().count()
         context["beneficiary_count_male"] = Beneficiary.custom_objects.get_total_males()
@@ -57,11 +57,11 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
             SubProject.objects.all().filter(fund=True).count()
         )
 
-        context["total_approved_projects"] = (
-            Project.objects.all().filter(approved=True).count()
+        context["total_approved_projects"] = ( # approved 
+            SubComponent.objects.all().filter(approved=True).count()
         )
         context["total_funded_projects"] = (
-            Project.objects.all().filter(has_funding=True).count()
+            SubComponent.objects.all().filter(has_funding=True).count()
         )
         context[
             "prov_labels"
@@ -69,24 +69,24 @@ class HomeTemplateView(LoginRequiredMixin, TemplateView):
         context[
             "subs_in_prov"
         ] = SubProject.custom_objects.get_sub_projects_district_json()["data"]
-        context["projects"] = self.project_paginator_list
+        context["subcomponents"] = self.subcomponent_paginator_list
         context["funds_in_year_label"] = Fund.count_objects.get_total_funds_in_year()[
             "year_labels"
         ]
         context["total_funds_in_year"] = Fund.count_objects.get_total_funds_in_year()[
             "total_funds"
         ]
-        context['interentions_in_prov'] = SubProject.custom_objects.get_projects_in_district_json()['data']
+        context['subcomponents_in_prov'] = SubProject.custom_objects.get_subcomponents_in_district_json()['data']
 
         return context
 
 
-class ProjectListView(LoginRequiredMixin, TemplateView):
+class SubComponentListView(LoginRequiredMixin, TemplateView):
     template_name = "tralard/dashboard-crm-deal.html"
 
     def get_context_data(self):
-        context = super(ProjectListView, self).get_context_data()
-        context["title"] = "Projects"
+        context = super(SubComponentListView, self).get_context_data()
+        context["title"] = "SubComponents"
         return context
 
 

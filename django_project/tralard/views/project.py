@@ -1,96 +1,57 @@
 # -*- coding: utf-8 -*-
-from django.contrib import messages
+import os
+from datetime import datetime
+
+from django.conf import settings
+from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.http.response import JsonResponse
-from django.forms.models import model_to_dict
-from django.views.generic import TemplateView, ListView
-from django.shortcuts import redirect, get_object_or_404
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import JsonResponse
+from django.views.generic import ListView
+from django.core.paginator import Paginator
+from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from tralard.models.program import Program
-from tralard.models.project import Project, Feedback
-from tralard.forms.sub_project import SubProjectForm
-from tralard.models.sub_project import SubProject, Indicator
-from tralard.forms.project import FeedbackForm, ProjectForm
-
-
-@login_required(login_url="/login/")
-def project_create(request, program_slug):
-    project_slug = None
-    if request.method == "POST":
-        form = ProjectForm(request.POST)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            form.save()
-            messages.success(request, "The project was created successfully!")
-            project_slug = instance.slug
-            return redirect(
-                reverse_lazy(
-                    "tralard:project-detail",
-                    kwargs={"program_slug": program_slug, "project_slug": project_slug},
-                )
-            )
-        return redirect(
-            reverse_lazy(
-                "tralard:program-detail",
-                kwargs={"program_slug": program_slug, "project_slug": project_slug},
-            )
-        )
-
-
-@login_required(login_url="/login/")
-def project_update(request, program_slug, project_slug):
-    project_form = ProjectForm()
-    project_object = Project.objects.get(slug=project_slug)
-    project_obj_to_dict = model_to_dict(project_object)
-
-    try:
-        project_obj_to_dict["image_file"] = project_object.image_file.name
-        project_obj_to_dict["image_url"] = project_object.image_file.url
-    except ValueError:
-        pass
-
-    if request.method == "POST":
-        project_form = ProjectForm(
-            request.POST, request.FILES or None, instance=project_object
-        )
-        if project_form.is_valid():
-            instance = project_form.save(commit=False)
-            instance.save()
-        messages.success(request, "Project was updated successfully!")
-        return redirect(
-            reverse_lazy(
-                "tralard:project-detail",
-                kwargs={"program_slug": program_slug, "project_slug": project_slug},
-            )
-        )
-    else:
-        project_form = get_object_or_404(Project, slug=project_slug)
-    data = {"project": project_obj_to_dict}
-    return JsonResponse(data)
-
-
-@login_required(login_url="/login/")
-def project_delete(request, program_slug, project_slug):
-    try:
-        project_object = Project.objects.get(slug=project_slug)
-        project_object.delete()
-        messages.success(request, "Project was deleted successfully!")
-    except Project.DoesNotExist:
-        pass
-
-    return redirect(
-        reverse_lazy("tralard:program-detail", kwargs={"program_slug": program_slug})
-    )
-
+from tralard.models.project import Project
+from tralard.models.subcomponent import SubComponent
+from tralard.models.beneficiary import Beneficiary
+from tralard.models.sub_project import Indicator, SubProject
+from tralard.forms.subcomponent import SearchForm, SubComponentForm
+from tralard.forms import (
+    IndicatorForm,
+    IndicatorTargetForm,
+    IndicatorTargetValueForm,
+    IndicatorUnitOfMeasureForm,
+)
 
 class ProjectDetailView(LoginRequiredMixin, ListView):
-    model = SubProject
+    model = SubComponent
+    form_class = SubComponentForm
     context_object_name = "project"
     template_name = "project/detail.html"
-    form_class = SubProjectForm
+
+    # Used to modify queryset and in context
+    search_query = None
+    subcomponents = None
+    subprojects = None
+    beneficiaries = None
+
+    def get_success_url(self):
+        """Define the redirect URL
+
+        After successful deletion  of the object, the User will be redirected
+        to the SubProject list page for the object's parent SubComponent
+
+        :returns: URL
+        rtype: HttpResponse
+        """
+        return reverse_lazy(
+            "tralard:project-detail",
+            kwargs={
+                "project_slug": self.object.project.slug,
+                "subcomponent_slug": self.object.slug,
+            },
+        )
 
     def get_form_kwargs(self):
         """Get keyword arguments from form.
@@ -98,234 +59,258 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
         :returns keyword argument from the form
         :rtype: dict
         """
-        kwargs = super(Project, self).get_form_kwargs()
-        self.program_slug = self.kwargs.get("program_slug", None)
+        kwargs = super(ProjectDetailView, self).get_form_kwargs()
         self.project_slug = self.kwargs.get("project_slug", None)
+        self.subcomponent_slug = self.kwargs.get("subcomponent_slug", None)
 
-        self.program = Program.objects.get(slug=self.program_slug)
         self.project = Project.objects.get(slug=self.project_slug)
+        self.subcomponent = SubComponent.objects.get(slug=self.subcomponent_slug)
 
         kwargs.update(
             {
                 "user": self.request.user,
-                "program": self.program,
-                "project": self.project,
+                "project_slug": self.project,
+                "subcomponent_slug": self.subcomponent,
             }
         )
-
         return kwargs
-
-    def get_success_url(self):
-        """Define the redirect URL
-
-        After successful deletion  of the object, the User will be redirected
-        to the SubProject list page for the object's parent Project
-
-        :returns: URL
-        :rtype: HttpResponse
-        """
-        return reverse_lazy(
-            "tralard:project-detail",
-            kwargs={
-                "program_slug": self.object.program.slug,
-                "project_slug": self.object.slug,
-            },
-        )
-
-    def post(self, request, *args, **kwargs):
-        form = SubProjectForm(self.request.POST, self.request.FILES or None)
-        if form.is_valid():
-            project_slug = self.kwargs.get("project_slug", None)
-            project = Project.objects.get(slug=project_slug)
-            form.instance.project = project
-
-            form.save()
-            messages.success(request, "SubProject was successfully added!")
-
-            return redirect(
-                reverse_lazy(
-                    "tralard:subproject-manage",
-                    kwargs={
-                        "program_slug": form.instance.project.program.slug,
-                        "project_slug": form.instance.project.slug,
-                        "subproject_slug": form.instance.slug,
-                    },
-                )
-            )
-        messages.error(
-            request,
-            "An error occurred when creating the Sub Project. Ensure the data in form fields is correct.",
-        )
-        for field in form:
-            for error in field.errors:
-                messages.error(self.request, error)
-        return redirect(
-            reverse_lazy(
-                "tralard:project-detail",
-                kwargs={
-                    "program_slug": self.kwargs.get("program_slug", None),
-                    "project_slug": self.kwargs.get("project_slug", None),
-                },
-            )
-        )
 
     def get_context_data(self):
         context = super(ProjectDetailView, self).get_context_data()
         context["title"] = "Project Detail"
 
-        self.project_slug = self.kwargs.get("project_slug", None)
-        self.project = Project.objects.get(slug=self.project_slug)
+        self.project_slug = self.kwargs["project_slug"]
+        self.project_object = Project.objects.get(slug=self.project_slug)
+        self.search_query = self.request.GET.get("q")
+        self.subproject_search_query = self.request.GET.get("subproject_query")
+        self.beneficiary_search_query = self.request.GET.get("beneficiaries_query")
 
-        self.sub_projects_qs = SubProject.objects.filter(
-            project__slug=self.project_slug
-        )
-
-        self.sub_project_slug = self.kwargs.get("sub_project_slug", None)
-
-        self.sub_project_count = self.sub_projects_qs.count()
-        self.all_feedback_qs = Feedback.objects.filter(project__slug=self.project_slug)
-        self.all_subproject_indicators = Indicator.objects.filter(
-            subproject_indicators__in=self.sub_projects_qs
-        )
-        context["citizen_feedback_list"] = self.all_feedback_qs
-        context["project"] = self.project
-        context["indicators"] = self.all_subproject_indicators
-        context["form"] = SubProjectForm
-        context["feedback_form"] = FeedbackForm
-        context["program_slug"] = self.kwargs.get("program_slug", None)
-        context["project_slug"] = self.kwargs.get("project_slug", None)
-        context["sub_project_list"] = self.sub_projects_qs
-        context["total_sub_projects"] = self.sub_project_count
-        return context
-
-    def form_valid(self, form):
-        form.save()
-        return super(ProjectDetailView, self).form_valid(form)
-
-
-class SubProjectListView(LoginRequiredMixin, TemplateView):
-    template_name = "project/sub_project_list.html"
-
-    def get_context_data(self):
-        context = super(SubProjectListView, self).get_context_data()
-        context["title"] = "Sub Project List"
-        return context
-
-
-@login_required(login_url="/login/")
-def update_sub_project(request, program_slug, project_slug, sub_project_slug):
-    sub_project_obj = SubProject.objects.get(slug=sub_project_slug)
-    sub_project_obj_to_dict = model_to_dict(sub_project_obj)
-
-    indicators = [
-        model_to_dict(indicator) for indicator in sub_project_obj_to_dict["indicators"]
-    ]
-
-    try:
-        sub_project_obj_to_dict["image_file"] = sub_project_obj.image_file.name
-        sub_project_obj_to_dict["image_url"] = sub_project_obj.image_file.url
-    except ValueError:
-        pass
-
-    sub_project_obj_to_dict["indicators"] = indicators
-    sub_project_obj_to_dict["total_num_of_indicators"] = len(indicators)
-
-    if request.method == "POST":
-        form = SubProjectForm(
-            request.POST, request.FILES or None, instance=sub_project_obj
-        )
-        if form.is_valid():
-            form.save()
-        messages.success(request, "Your SubProject was updated!")
-        return redirect(
-            reverse_lazy(
-                "tralard:project-detail",
-                kwargs={
-                    "program_slug": program_slug,
-                    "project_slug": project_slug,
-                },
+        if self.search_query:
+            self.subcomponents = SubComponent.objects.filter(
+                project__slug=self.project_object.slug
+            ).filter(name__icontains=self.search_query)
+        else:
+            self.subcomponents = SubComponent.objects.filter(
+                project__slug=self.project_object.slug
             )
-        )
-    return JsonResponse({"data": sub_project_obj_to_dict})
 
+        if self.subproject_search_query:
+            self.subprojects = SubProject.objects.filter(
+                subcomponent__project__slug=self.project_object.slug
+            ).filter(name__icontains=self.subproject_search_query)
+        else:
+            self.subprojects = SubProject.objects.filter(
+                subcomponent__project__slug=self.project_object.slug
+            )
 
-@login_required(login_url="/login/")
-def delete_sub_project(request, program_slug, project_slug, sub_project_slug):
-    sub_project = SubProject.objects.get(slug=sub_project_slug)
-    sub_project.delete()
-    return redirect(
-        reverse_lazy(
-            "tralard:project-detail",
-            kwargs={
-                "program_slug": program_slug,
-                "project_slug": project_slug,
-            },
-        )
-    )
-
-
-def create_feedback(request, program_slug, project_slug):
-    form = FeedbackForm()
-    if request.method == "POST":
-        form = FeedbackForm(request.POST)
-        project = Project.objects.get(slug=project_slug)
-        if form.is_valid():
-            instance = form.save(commit=False)
-            instance.project = project
-            instance.save()
-            messages.success(request, "Your feedback was added!")
-            return redirect(
-                reverse_lazy(
-                    "tralard:project-detail",
-                    kwargs={"program_slug": program_slug, "project_slug": project_slug},
+        if self.beneficiary_search_query:
+            self.beneficiaries = Beneficiary.objects.filter(
+                sub_project__subcomponent__project__slug=self.project_object.slug
+            ).filter(name__icontains=self.beneficiary_search_query)
+        else:
+            self.beneficiaries = Beneficiary.objects.filter(
+                sub_project__subcomponent__project__slug=self.project_object.slug
+            )
+        self.total_subproject_count = SubProject.objects.all().count()
+        self.total_beneficiary_count = Beneficiary.objects.all().count()
+        self.total_subcomponent_count = SubComponent.objects.filter(
+            project=self.project_object
+        ).count()
+        
+        try:
+            self.subcomponent_list = []
+            self.subproject_list = []
+            self.beneficiary_list = []
+            self.district_id = int(self.request.GET.get("district"))
+            self.ward_id = int(self.request.GET.get("ward"))
+            
+            self.sub_projects = SubProject.objects.filter(
+                subcomponent__project__slug=self.project_slug,
+                ward__district__id=self.district_id,
+            )
+            
+            for sub_project in self.sub_projects:
+                self.subcomponent_list.append(
+                    sub_project.subcomponent
                 )
-            )
-    return redirect(
-        reverse_lazy(
-            "tralard:project-detail",
-            kwargs={"program_slug": program_slug, "project_slug": project_slug},
+                self.beneficiary  = Beneficiary.objects.filter(
+                    sub_project__subcomponent__project__slug=self.project_slug,
+                    ward__district__id=sub_project.ward.district.id,
+                )
+                self.beneficiary_list.append(
+                    self.beneficiary
+                )
+            self.subcomponents = self.subcomponent_list
+            self.total_subcomponent_count = len(self.subcomponent_list)
+            
+            self.subprojects = self.sub_projects
+            self.total_subproject_count = self.subprojects.count()
+            
+            self.beneficiaries = self.beneficiary_list
+            self.total_beneficiary_count = len(self.beneficiary_list)
+        except:
+            pass
+        
+        self.subproject_paginator = Paginator(self.subprojects, 9)
+        self.subproject_page_number = self.request.GET.get("subproject_page")
+        self.subproject_paginator_list = self.subproject_paginator.get_page(
+            self.subproject_page_number
         )
-    )
+        self.beneficiary_paginator = Paginator(self.beneficiaries, 8)
+        self.beneficiary_page_number = self.request.GET.get("beneficiary_page")
+        self.beneficiary_paginator_list = self.beneficiary_paginator.get_page(
+            self.beneficiary_page_number
+        )
+        self.subcomponent_paginator = Paginator(self.subcomponents, 9)
+        self.subcomponent_page_number = self.request.GET.get("subcomponent_page")
+        self.subcomponent_paginator_list = self.subcomponent_paginator.get_page(
+            self.subcomponent_page_number
+        )
+
+        self.subproject_indicator_list = SubProject.objects.filter(
+             subcomponent__project__slug=self.project_object.slug
+            )
+            
+        indicator_forms = [
+            {
+                "modal_id": "indicator_form",
+                "form": IndicatorForm,
+                "modal_header": "Indicator Name",
+                "modal_subheader": "Create Indicator Name",
+                "action_url": "indicator_name",
+            },
+            {
+                "modal_id": "indicator_target_form",
+                "form": IndicatorTargetForm,
+                "modal_header": "Indicator Target",
+                "modal_subheader": "Create Indicator Target",
+                "action_url": "indicator_target",
+            },
+            {
+                "modal_id": "indicator_target_value_form",
+                "form": IndicatorTargetValueForm,
+                "modal_header": "Indicator Target Value",
+                "modal_subheader": "Create Indicator Target Value",
+                "action_url": "indicator_target_value",
+            },
+            {
+                "modal_id": "indicator_target_unit_form",
+                "form": IndicatorUnitOfMeasureForm,
+                "modal_header": "Indicator Unit of Measure",
+                "modal_subheader": "Create Indicator Unit of Measure",
+                "action_url": "indicator_target_unit",
+            },
+        ]
+
+        indicators_list = []
+        current_year = datetime.now().year
+        indicators = Indicator.objects.filter(
+             indicator_related_subprojects__in=self.subproject_indicator_list
+        ).distinct()
+            
+        for indicator in indicators:
+            indicator_data = {
+                "name": indicator.name,
+                "targets": [],
+                "slug": indicator.slug,
+            }
+            targets = indicator.indicatortarget_set.all()
+            for target in targets:
+                target_dict = {
+                    "id": target.id,
+                    "description": target.description,
+                    "unit_of_measure": target.unit_of_measure.unit_of_measure,
+                    "baseline": target.baseline_value,
+                    "yearly_target_values": [],
+                    "unit_of_measure_id": target.unit_of_measure.id,
+                }
+                target_values = target.indicatortargetvalue_set.all().order_by("year")
+                for year_count, yearly_target_values in enumerate(
+                    target_values, start=1
+                ):
+                    yearly_target_values_dict = {
+                        f"year_{year_count}": {
+                            "id": yearly_target_values.id,
+                            "year": yearly_target_values.year.year,
+                            "target_value": yearly_target_values.target_value,
+                            "actual_value": target.unit_of_measure.get_actual_data(
+                                indicator
+                            )
+                            if yearly_target_values.year.year <= current_year
+                            else 0,
+                        }
+                    }
+                    target_dict["yearly_target_values"].append(
+                        yearly_target_values_dict
+                    )
+                indicator_data["targets"].append(target_dict)
+            indicators_list.append(indicator_data)
+
+        context["title"] = "Project Detail"
+        context["subcomponent_form"] = SubComponentForm
+        context["search_form"] = SearchForm
+        context["subcomponents"] = self.subcomponent_paginator_list
+        context["project"] = self.project_object
+        context["project_slug"] = self.project_slug
+        context["sub_project_list"] = self.subproject_paginator_list
+        context["sub_project_page_number"] = self.subproject_page_number
+        context["beneficiary_list"] = self.beneficiary_paginator_list
+        context["total_subcomponents"] = self.total_subcomponent_count
+        context["total_sub_projects"] = self.total_subproject_count
+        context["total_beneficiary_count"] = self.total_beneficiary_count
+        context["indicators"] = indicators_list
+        context["indicator_forms"] = indicator_forms
+        return context
+
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super().dispatch(request, *args, **kwargs)
+        if request.is_ajax():
+            subcomponent_list_html = render_to_string(
+                template_name="includes/subcomponent/subcomponent-list.html",
+                context={"subcomponents": self.subcomponents},
+            )
+            subprojects_html = render_to_string(
+                template_name="includes/sub-project-list.html",
+                context={"sub_project_list": self.subprojects},
+            )
+            beneficiaries_html = render_to_string(
+                template_name="includes/beneficiary-list.html",
+                context={"beneficiary_list": self.beneficiaries},
+            )
+
+            data_dict = {
+                "search_result_view": subcomponent_list_html,
+                "subproj_search_result": subprojects_html,
+                "beneficiaries_search_result": beneficiaries_html,
+            }
+            return JsonResponse(data=data_dict, safe=False)
+        else:
+            return response
 
 
 @login_required(login_url="/login/")
-def edit_feedback(request, program_slug, project_slug, feedback_slug):
-    form = FeedbackForm()
+def preview_indicator_document(request, project_slug):
+    from tralard.tasks import build_indicator_report
 
-    feedback_obj = Feedback.objects.get(slug=feedback_slug)
-    feedback_obj_to_dict = model_to_dict(feedback_obj)
-    try:
-        feedback_obj_to_dict[
-            "moderator_name"
-        ] = f"{feedback_obj.moderator.first_name} {feedback_obj.moderator.last_name}"
-    except AttributeError:
-        pass
+    document_directory = f"{settings.MEDIA_ROOT}/temp/reports"
 
-    if request.method == "POST":
-        form = FeedbackForm(request.POST, instance=feedback_obj)
-        if form.is_valid():
-            form.save()
-        messages.success(request, "Your feedback was updated!")
-        return redirect(
-            reverse_lazy(
-                "tralard:project-detail",
-                kwargs={"program_slug": program_slug, "project_slug": project_slug},
-            )
-        )
-    return JsonResponse({"data": feedback_obj_to_dict})
+    # for now we just get a recently created file in the directory where the indicator reports are saved
+    # we can have a doc that can be generated and updated at regular intervals and ready for preview.
+    if not os.path.exists(document_directory):
+        os.makedirs(document_directory)
 
+    filenames_list = os.listdir(document_directory)
 
-@login_required(login_url="/login/")
-def delete_feedback(request, program_slug, project_slug, feedback_slug):
-    try:
-        feedback_obj = Feedback.objects.get(slug=feedback_slug)
-        feedback_obj.delete()
-    except Feedback.DoesNotExist:
-        pass
+    # TODO: Add background scheduled task that generates a file ready for preview in the browser
 
-    return redirect(
-        reverse_lazy(
-            "tralard:project-detail",
-            kwargs={"program_slug": program_slug, "project_slug": project_slug},
-        )
-    )
+    if not filenames_list:
+        # for now this is a temporary work around
+        results = build_indicator_report(project_slug)
+        filename = results["result"]["filename"]
+    else:
+        filename = filenames_list[0]
+
+    path = f"temp/reports/{filename}"
+    context = {"path": path, "project_slug": project_slug}
+    return render(request, "tralard/indicator_report_preview.html", context)

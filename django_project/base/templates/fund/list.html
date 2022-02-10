@@ -44,7 +44,7 @@
 							<a
 									class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
 									data-ripple-color=""
-									href="{% url 'tralard:project-detail' program_slug=project.program.slug project_slug=project.slug %}"
+									href="{% url 'tralard:subcomponent-detail' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug %}"
 							>
 								<span style="padding-right: 6px">SubProject </span>
 								<i class="material-icons">send</i>
@@ -117,7 +117,7 @@
 									<!-- Filter dropdown -->
 									<div class="dropdown filter-dropdown dropdown-trigger">
 										<div class="button">
-											<span>Intervention</span>
+											<span>SubProject</span>
 											<i class="material-icons">keyboard_arrow_down</i>
 										</div>
 									</div>
@@ -241,7 +241,7 @@
 														data-ripple-color=""
 														id="fund_list_modal"
 														data-modal="w3-modal"
-														onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{project.slug}}', '{{project.program.slug}}')"
+														onclick="document.getElementById('id01').style.display='block'; get_fund_disbursements('{{fund.slug}}', '{{subcomponent.slug}}', '{{subcomponent.project.slug}}')"
 												>
 													<i class="sl sl-icon-eye"></i>
 													<span>
@@ -262,7 +262,7 @@
 														data-fund-approved="{{ fund.approved }}"
 														data-currency="{{ fund.currency }}"
 														data-fund-date="{{ fund.funding_date }}"
-														onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ project.name|title}} fund', `{% url 'tralard:fund-update' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}`)"
+														onclick="populate_modal_form('{{fund.amount}}', '{{fund.approved}}', '{{fund.project}}', 'Update {{ project.name|title}} fund', `{% url 'tralard:fund-update' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug fund_slug=fund.slug %}`)"
 												>
 													<i class="sl sl-icon-pencil"></i>
 													<span>
@@ -282,7 +282,7 @@
 												<a
 														class="dropdown-item"
 														onclick="return confirm('Are you sure you want to delete this project fund?')"
-														href="{% url 'tralard:fund-delete' program_slug=project.program.slug project_slug=project.slug fund_slug=fund.slug %}"
+														href="{% url 'tralard:fund-delete' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug fund_slug=fund.slug %}"
 												>
 													<i class="sl sl-icon-trash"></i>
 													<span>
@@ -344,7 +344,7 @@
 						<div class="content">
 							<!-- New Project Fund form -->
 							<form
-									action="{% url 'tralard:fund-list' program_slug=project.program.slug project_slug=project.slug %}"
+									action="{% url 'tralard:fund-list' project_slug=subcomponent.project.slug subcomponent_slug=subcomponent.slug %}"
 									method="post"
 									id="project_fund_form_inputs"
 							>
@@ -392,14 +392,14 @@
   };
 
   const get_disbursement_expenditures = async (
-    program_slug,
     project_slug,
+    subcomponent_slug,
     fund_slug,
     disbursement_slug
   ) => {
     try {
       let res = await fetch(
-        `${location.origin}/program/${program_slug}/project/${project_slug}/fund/${fund_slug}/disbursement/${disbursement_slug}/expenditure/`,
+        `${location.origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/fund/${fund_slug}/disbursement/${disbursement_slug}/expenditure/`,
         {
           method: "GET",
           headers: {
@@ -415,10 +415,10 @@
   };
 
   // GET FUND DISBURSEMENTS
-  function get_fund_disbursements(fund_slug, project_slug, program_slug) {
+  function get_fund_disbursements(fund_slug, subcomponent_slug, project_slug) {
     let url = location.origin;
     $.ajax({
-      url: `${url}/program/${program_slug}/project/${project_slug}/fund/${fund_slug}/detail/`,
+      url: `${url}/project/${project_slug}/subcomponent/${subcomponent_slug}/fund/${fund_slug}/detail/`,
       type: "GET",
       dataType: "json",
       headers: {
@@ -465,8 +465,8 @@
             </div>
           `;
           get_disbursement_expenditures(
-            program_slug,
             project_slug,
+            subcomponent_slug,
             fund_slug,
             data.disbursements[disbursement].slug
           )

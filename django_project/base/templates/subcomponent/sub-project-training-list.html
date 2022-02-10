@@ -47,8 +47,8 @@
 					<div class="column is-9 is-three-quarters-mobile is-two-thirds-tablet is-half-desktop is-one-third-widescreen is-one-quarter-fullhd">
 						<div class="contacts-title-wrapper">
 							<div class="title-wrap">
-								<h2 class="project-title">Intervention Training Schedules</h2>
-								<h4 class="project-tagline">showing all intervention related training schedules.</h4>
+								<h2 class="project-title">SubProject Training Schedules</h2>
+								<h4 class="project-tagline">showing all subproject related training schedules.</h4>
 							</div>
 							<!-- Filter input -->
 							<div class="list-filter">
@@ -64,9 +64,9 @@
 								</div>
 								<a class="button btn-dash primary-btn btn-dash raised has-icon"
 								   data-ripple-color=""
-								   href="{% url 'tralard:subproject-manage' program_slug project_slug subproject_slug %}">
+								   href="{% url 'tralard:subproject-manage' project_slug subcomponent_slug subproject_slug %}">
 									<i class="material-icons">short_text</i>
-									Back to Intervention
+									Back to SubProject
 								</a>
 							</div>
 						</div>
@@ -196,7 +196,7 @@
         $(".pdf-cell").append($('.buttons-pdf'));
         $(".print-cell").append($('.buttons-print'));
 
-        //filter only title, intervention and training type columns
+        //filter only title, subproject and training type columns
         api.columns([0, 1, 2]).eq(0).each(function (colIdx) {
           // Set the filter header cells to contain the input element
           const cell = $('.filters th').eq(
