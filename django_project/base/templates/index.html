@@ -97,40 +97,10 @@
                             </div>
                         </div>
                     </div>
-                    {% comment %} end top bar cards {% endcomment %}
-
-    
-                    <!-- Widgets -->
                     {% comment %} dashboard widgets begin  {% endcomment %}
                     <div class="columns dashboard-columns">
                         
-                        {% comment %} map widget{% endcomment %}
-                        {% comment %} <div class="column is-4">
-                            <!-- Widget -->
-                            <div id="vmap-container" class="map-card">
-                                <div id="vmap"></div>
-                            </div>
-    
-                            <!-- Widget -->
-                            <div class="tasks-card">
-                                <svg class="circle-chart" viewbox="0 0 33.83098862 33.83098862" width="140" height="140"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <circle class="circle-chart-background" stroke="#efefef" stroke-width="2" fill="none" cx="16.91549431"
-                                        cy="16.91549431" r="15.91549431" />
-                                    <circle class="circle-chart-circle" stroke="#7F00FF" stroke-width="2" stroke-dasharray="68,100"
-                                        stroke-linecap="round" fill="none" cx="16.91549431" cy="16.91549431" r="15.91549431" />
-                                </svg>
-                                <div class="chart-avatar">
-                                    <img src="https://via.placeholder.com/250x250" alt="" data-demo-src="{% static 'assets/images/avatars/ray.jpg' %}">
-                                </div>
-                                <div class="ring-title has-text-centered">
-                                    <span>68% Deals Won</span>
-                                </div>
-                            </div>
-                            
-                        </div> {% endcomment %}
-
-                        {% comment %} program widget{% endcomment %}
+                  
                         <div class="column is-4">
                             <div class="members-card">
                                 <h3 class="card-heading">All Projects</h3>
@@ -206,8 +176,6 @@
     
                             {% include "includes/beneficiary_graphs.html" %}                          
                                
-                            
-                           
                             {% include "includes/fund_graphs.html" %}                          
                             
                         </div>
