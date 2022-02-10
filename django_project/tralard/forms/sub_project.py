@@ -8,12 +8,16 @@ from crispy_forms.layout import (
     Column,
 )
 from crispy_forms.helper import FormHelper
-from django_select2.forms import ModelSelect2Widget
+from django_select2.forms import ModelSelect2Widget, Select2TagWidget
 
 from tralard.models.ward import Ward
 from tralard.models.province import Province
 from tralard.models.district import District
-from tralard.models.sub_project import SubProject, ProgressStatus
+from tralard.models.sub_project import (
+    SubProject, 
+    ProgressStatus, 
+    Indicator
+)
 
 
 class SubProjectForm(ModelForm):
@@ -66,6 +70,19 @@ class SubProjectForm(ModelForm):
         ),
     )
 
+    custom_indicators = forms.ModelMultipleChoiceField(
+        queryset=Indicator.objects.all(),
+        label=_("Indicators"),
+        required=False,
+        widget= Select2TagWidget(
+            attrs={
+                'class': 'form-control',
+                'data-placeholder': '--- Search for an indicator ---',
+                'data-minimum-input-length': 0,
+                },
+        ),
+        help_text=_('search and select a single or multiple related indicators for this subproject.'),
+    )
     custom_description = forms.CharField(
         label="Description",
         required=False,
@@ -101,7 +118,7 @@ class SubProjectForm(ModelForm):
             "focus_area", 
             "project", 
             "slug", 
-            # "ward"
+            "indicators"
         ]
 
     def __init__(self, *args, **kwargs):
@@ -115,7 +132,7 @@ class SubProjectForm(ModelForm):
                 Column("name", css_class="form-group col-md-12 mb-0"),
                 Column("supervisor", css_class="form-group col-md-12 mb-0"),
                 Column("size", css_class="form-group col-md-12 mb-0"),
-                Column("indicators", css_class="form-group col-md-12 mb-0"),
+                Column("custom_indicators", css_class="form-group col-md-12 mb-0"),
                 Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
                 Column("province", css_class="form-group col-md-12 mb-0"),
                 Column("district", css_class="form-group col-md-12 mb-0"),
@@ -128,18 +145,22 @@ class SubProjectForm(ModelForm):
             ),
         )
 
+    def _get_indicators(self):
+        return self.cleaned_data['custom_indicators']
+    
     def save(self, commit=True):
         instance = super(SubProjectForm, self).save(commit=False)
         custom_description = self.cleaned_data["custom_description"]
         custom_focus_area = self.cleaned_data["custom_focus_area"]
-        
         if custom_description:
             instance.description = custom_description
         if custom_focus_area:
             instance.focus_area = custom_focus_area
-        
         instance.save()
-        self.save_m2m()
+        
+        indicators = self._get_indicators()
+        for indicator in indicators:
+            instance.indicators.add(indicator)
         return instance
 
 class ProgressStatusForm(ModelForm):
