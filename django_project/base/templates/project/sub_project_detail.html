@@ -1,9 +1,9 @@
 {% extends "layouts/base.html" %}
-<!--  -->
+
 {% load humanize %}
-<!--  -->
 {% load static %}
-<!--  -->
+{% load crispy_forms_tags %}
+
 {% block title %} Contacts Single {% endblock %}
 
 <!-- Specific CSS goes HERE -->
@@ -397,7 +397,7 @@
                             >
                               {% comment %}
                               <i class="material-icons">mail</i> {%endcomment %}
-                              Upload Photos
+                                Add Progress Status
                             </a> 
                           </span>
                                        
@@ -434,25 +434,20 @@
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="flex-card simple-shadow">
-      <h2 class="dark-text">Upload Files</h2>
+      <h2 class="dark-text">New Progress Status Entry</h2>
       <div class="card-body">
-        <div class="has-text-centered">
-          <div class="image">
-            <img
-              src="{% static 'assets/images/icons/send-message.svg' %}"
-              alt=""
-            />
-          </div>       
+             
          <!-- Drop Zone -->
          <form id="my-dropzone" action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
-          {% csrf_token %}              
-          <div class="fallback">
-            <input name="file" type="file" multiple>
-          </div>
-        </form>
+          {% csrf_token %}    
+          {% crispy progress_status_form progress_status_form.helper %}   
 
+            <div class="fallback">
+              <input name="file" type="file" multiple>
+            </div>
+              <button type="submit" class="button btn-primary">Create Status</button>
+        </form>
          
-        </div>
       </div>
     </div>
   </div>
@@ -558,10 +553,6 @@
 
 {% endblock content %}
 
-
-
-
-
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 
@@ -579,17 +570,39 @@
 
   const myDropzone = new Dropzone("#my-dropzone", {
     url:"upload/",
-    maxFiles: 4,
+    maxFiles: 5,
     maxFilesize: 2,
     acceptedFiles: ".jpeg,.jpg,.png,.gif",
     addRemoveLinks: true,
     dictDefaultMessage:
-      '<span class="text-center"><span class="font-weight-bold file-icon"></span> Drop files here to upload</span>',
+      '<span class="text-center"><span class="font-weight-bold file-icon"></span> Click or Drop progress status photos here</span>',
     dictRemoveFile: "Remove file",
     dictMaxFilesExceeded: "You can only upload 4 files",
     dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
     dictInvalidFileType: "You can't upload files of this type",
-  })
+    
+    // we dont want to auto upload photos 
+    // take control of submitting so that we  create progress status then  attach  the photos  after
+    autoProcessQueue: false,
+    init: function () {
+
+      var DropzoneInstance = this;
+
+      $("#button").click(function (e) {
+          e.preventDefault();
+          DropzoneInstance.processQueue();
+      });
+
+      this.on('sending', function(file, xhr, formData) {
+          // Append all form inputs to the formData that Dropzone will POST
+          var data = $('#frmTarget').serializeArray();
+          $.each(data, function(key, el) {
+              formData.append(el.name, el.value);
+          });
+      });
+    }
+  }
+)
   
 </script>
 

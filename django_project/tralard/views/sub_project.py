@@ -5,25 +5,11 @@ __revision__ = "$Format:%H$"
 __copyright__ = "sonlinux bei DigiProphets 2021"
 __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM CET"
 
-from django.template.loader import render_to_string
-
-from tralard.filters.beneficiary import BeneficiaryFilter
-from tralard.filters.funds import FundFilter
-from tralard.filters.training import TrainingFilter
-
 """
 View classes for a SubProject
 """
 import logging
 
-from django.db.models import Q
-from django.contrib import messages
-from django.db import IntegrityError
-from django.urls import reverse_lazy
-from django.core.exceptions import ValidationError
-from django.core.paginator import Paginator, EmptyPage
-from django.contrib.auth.decorators import login_required
-from django.contrib.messages.views import SuccessMessageMixin
 from django.http import (
     Http404,
     HttpResponse,
@@ -38,6 +24,16 @@ from django.views.generic import (
     DetailView,
     UpdateView,
 )
+from django.db.models import Q
+from django.contrib import messages
+from django.db import IntegrityError
+from django.http import HttpResponse
+from django.urls import reverse_lazy
+from django.core.exceptions import ValidationError
+from django.template.loader import render_to_string
+from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.decorators import login_required
+from django.contrib.messages.views import SuccessMessageMixin
 
 import reversion
 from exif import Image
@@ -47,26 +43,40 @@ from braces.views import LoginRequiredMixin
 from filer.models import Image as ImageSave
 from rolepermissions.decorators import has_role_decorator
 
-from tralard.models.training import Training, TrainingType
-from tralard.forms.training import TrainingForm
-from tralard.forms import BeneficiaryCreateForm
-from tralard.models.fund import (
-    Fund,
-    FundVersion,
-    Disbursement,
-)
-
-from tralard.forms.sub_project import SubProjectForm
-
-from tralard.models import Beneficiary, Project, SubProject, SubProjectImage
-from tralard.forms.fund import (
+from tralard.forms import (
     FundForm,
+    TrainingForm,
+    SubProjectForm,
     ExpenditureForm,
     FundApprovalForm,
     DisbursementForm,
+    ProgressStatusForm,
+    BeneficiaryCreateForm
+    
+)
+from tralard.models import (
+    Fund,
+    Photo,
+    Project, 
+    Training, 
+    SubProject, 
+    FundVersion,
+    Beneficiary, 
+    Disbursement,
+    TrainingType,
+    ProgressStatus
+)
+from tralard.utils import (
+    delete_temp_dir, 
+    save_to_temp_dir, 
+    delete_temp_file
+)
+from tralard.filters import (
+    FundFilter,
+    TrainingFilter,
+    BeneficiaryFilter
 )
 
-from tralard.utils import delete_temp_dir, save_to_temp_dir, delete_temp_file
 
 logger = logging.getLogger(__name__)
 
@@ -445,14 +455,23 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         sub_project = self.get_object()
-        sub_proj_indicators = sub_project.indicators.all()
-        sub_proj_images = SubProjectImage.objects.filter(
-            subproject__name=sub_project.name
-        ).order_by("-created")
-
+        self.sub_proj_indicators = sub_project.indicators.all()
+        
+        progress_status_data = []
+        self.progress_status_qs = ProgressStatus.objects.all().order_by("-created")
+        for progress_status in self.progress_status_qs:
+            progress_status_photos = Photo.objects.filter(
+                progress_statuses__in=self.progress_status_qs
+            ).order_by("-created")
+            progress_status_data.append(
+                {
+                    'progress_status_obj': progress_status,
+                    'photos': progress_status_photos
+                }
+            )
         indicators = []
 
-        for indicator_object in sub_proj_indicators:
+        for indicator_object in self.sub_proj_indicators:
             indicator_data = {}
             indicator_data["name"] = indicator_object.name
             indicator_data[
@@ -463,35 +482,51 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
         context["indicators"] = indicators
-        context["subproject_images"] = sub_proj_images
+        context["progress_status_qs"] = self.progress_status_qs
+        context['progress_status_form'] = ProgressStatusForm
         return context
 
-
+@login_required
 def file_upload_view(request, program_slug, project_slug, subproject_slug):
     subproject_obj = SubProject.objects.get(slug=subproject_slug)
 
     if request.method == "POST":
-        image_files = request.FILES.getlist("file")
-        for file in image_files:
-            created = ImageSave(file=file)
-            created.save()
-            instance = SubProjectImage(
-                name=file.name, image=created, subproject=subproject_obj
+        photos = request.FILES.getlist("file")
+        status = request.POST.get("status")
+        comment = request.POST.gett("comment")
+        is_completed = request.POST.get("is_completed")
+        created = request.POST.get("created")
+        
+        progress_trail = ProgressStatus(
+            status=status,
+            comment=comment,
+            is_completed=is_completed,
+            created=created
+        )
+        progress_trail.subproject = subproject_obj
+        progress_trail.save()
+        
+        for photo in photos:
+            temp_saved_photo = ImageSave(file=photo)
+            temp_saved_photo.save()
+            photo = Photo(
+                name=photo.name, image=temp_saved_photo
             )
-            instance.save()
+            photo.save()
+            progress_trail.photos.add(photo)
 
             clean_subproject_name = (
                 subproject_obj.name.lower().replace(" ", "_").replace(",", "")
             )
 
-            img_path = save_to_temp_dir(clean_subproject_name, file)
+            img_path = save_to_temp_dir(clean_subproject_name, photo)
 
             with open(img_path, "rb") as src:
                 image_bytes = src.read()
                 img = Image(image_bytes)
-                # print(img)
-            delete_temp_file(file)
+            delete_temp_file(photo)
 
+        
         delete_temp_dir(clean_subproject_name)
         return HttpResponse({}, content_type="applicaiton/json")
 
@@ -949,8 +984,8 @@ def fund_approval_view(request, program_slug, project_slug, subproject_slug, fun
             },
         )
     )
-
-
+  
+@login_required
 def subproject_fund_detail(
         request, program_slug, project_slug, subproject_slug, fund_slug
 ):
@@ -1008,7 +1043,6 @@ def subproject_fund_detail(
         }
     )
 
-
 @login_required
 def update_sub_project_fund(
         request, program_slug, project_slug, subproject_slug, fund_slug
@@ -1062,7 +1096,6 @@ def update_sub_project_fund(
         )
     )
 
-
 @login_required(login_url="/login/")
 def subproject_fund_delete(
         request, program_slug, project_slug, subproject_slug, fund_slug
@@ -1099,7 +1132,6 @@ def subproject_fund_delete(
                 },
             )
         )
-
 
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
@@ -1151,7 +1183,6 @@ def subproject_fund_disbursement_create(
             },
         )
     )
-
 
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(

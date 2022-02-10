@@ -15,6 +15,7 @@ from dj_beneficiary.models import (
 from tralard.models import (
     Ward,
     Fund,
+    Photo,
     Program,
     Project,
     District,
@@ -29,7 +30,7 @@ from tralard.models import (
     Expenditure,
     Disbursement,
     TrainingType,
-    SubProjectImage,
+    ProgressStatus,
     IndicatorTarget,
     IndicatorTargetValue,
     IndicatorUnitOfMeasure
@@ -334,12 +335,21 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
     ]
 
 
-class SubProjectImageAdmin(admin.ModelAdmin):
+class PhotoAdmin(admin.ModelAdmin):
     empty_value_display = "-empty-"
     list_display = [
         "name", 
         "image", 
+        "created",
+    ]
+
+
+class ProgressStatusAdmin(admin.ModelAdmin):
+    empty_value_display = "-empty-"
+    list_display = [
+        "status", 
         "subproject",
+        "is_completed",
         "created",
     ]
 
@@ -446,7 +456,6 @@ class IndicatorTargetValueAdmin(ImportExportActionModelAdmin):
         "year",
         "target_value",
     ]
-    
 
 
 class IndicatorUnitOfMeasureAdmin(ImportExportActionModelAdmin):
@@ -472,6 +481,7 @@ admin.site.register(FollowUp)
 admin.site.register(Attendance)
 admin.site.register(Ward, WardAdmin)
 admin.site.register(Fund, FundAdmin)
+admin.site.register(Photo, PhotoAdmin)
 admin.site.register(Program, ProgramAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Training, TrainingAdmin)
@@ -483,7 +493,7 @@ admin.site.register(Beneficiary, BeneficiaryAdmin)
 admin.site.register(Expenditure, ExpenditureAdmin)
 admin.site.register(Disbursement, DisbursementAdmin)
 admin.site.register(TrainingType, TrainingTypeAdmin)
-admin.site.register(SubProjectImage, SubProjectImageAdmin)
+admin.site.register(ProgressStatus, ProgressStatusAdmin)
 admin.site.register(IndicatorTarget, IndicatorTargetAdmin)
 admin.site.register(IndicatorTargetValue, IndicatorTargetValueAdmin)
 admin.site.register(IndicatorUnitOfMeasure, IndicatorUnitOfMeasureAdmin)

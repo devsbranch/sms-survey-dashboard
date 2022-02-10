@@ -1,9 +1,9 @@
 {% load thumbnail %}
-
+{% load static %}
 <!-- Blueimp -->
 <!-- The Gallery as lightbox dialog, should be a document body child element -->
 
-<div class="contacts-title-wrapper" style="display:absolute; position:fixed; z-index: -1; top:85vh;  left:6.5vw;"><h2 class="contacts-title">Gallery</h2></div>
+<div class="contacts-title-wrapper" style="display:absolute; position:fixed; z-index: -1; top:85vh;  left:6.5vw;"><h2 class="contacts-title">Progress Status Trail</h2></div>
 <p></p>
 <div
   id="blueimp-gallery"
@@ -35,20 +35,113 @@
   <ol class="indicator"></ol>
 </div>
 
-<!-- Images -->
+<div id="main-dashboard" class="section-wrapper">
+  <!-- Dashboard content -->
+  <div id="forum-home" class="dashboard-columns">
+          
+          <!-- Forum wrap -->
+          <div class="forum-wrap">
+              <!-- Forum Category -->
+              <div class="forum-container">
+                  <!-- toggle button -->
+                  <div class="toggle-button">
+                      <i class="material-icons">keyboard_arrow_down</i>
+                  </div>
+                  <!-- Heading -->
+                  <div class="channel-heading">
+                      <h3>Progress Status Trail</h3>
+                      <!-- Forum category dropdown -->
+                      <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+                          <div class="button">
+                              <i class="material-icons">more_vert</i>
+                          </div>
+                          <div class="dropdown-menu is-text-bigger" role="menu">
+                              <div class="dropdown-content">
+                                  <a class="dropdown-item">
+                                      <i class="material-icons">add</i>
+                                      <span>
+                                          <span>Add Progress Status</span>
+                                          <span>Add a new progress status entry</span>
+                                      </span>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>                            
+                    </div>
+              
+                    {% for progress_status in progress_status_qs %}
+                        {% comment %} {% for status_obj, related_photos in progress_status.items %} {% endcomment %}
+                            <!-- Channel -->
+                            <a class="forum-channel">
+                                <div class="channel-icon">
+                                    <i class="im im-icon-Air-Balloon"></i>
+                                </div>
+                                <div class="channel-meta">
+                                    <span>{{ progress_status.status }} </span>
+                                    <span>created: <small>{{ progress_status.created }}</small> | comment: {% if progress_status.comment %} {{ progress_status.comment }} {% else %} ... {% endif %}</span>
+                                </div>
+                                <div class="channel-topics">
+                                    <span>Photos</span>
+                                    <span>{{ progress_status.photos.count }}</span>
+                                </div>
+                                
+                              <div class="top-contributors links" id="links">
+                                {% for photo in progress_status.photos.all %}
+                                  {% if photo %}
+                                    {% comment %} <a  href="{{ photo.image.url }}" title="{{ photo.image.name }}"> {% endcomment %}
+                                      <img src="https://via.placeholder.com/150x150" alt=""
+                                          data-demo-src="{% thumbnail photo.image 150x150 crop %}"/>
+                                    {% comment %} </a> {% endcomment %}
+                                    
+                                  {% endif %}
+                                {% endfor %}
+                              </div>
 
-<div id="links" class="links"  style="height:50vh;">
-  <div id="image-gallery-container" style="display:absolute; position:fixed; top:87vh; left:6.5vw;">
+                            </a>
+                  {% endfor %}
+              </div>
 
-    {% for img in subproject_images %}
-    <a  href="{{ img.image.url }}" title="Photo">
-      <img src="{% thumbnail img.image 250x250 crop %}" width="155" alt="Photo" />
-    </a>
+                 <!-- Latest posts -->
+                 {% comment %} <div class="latest-posts-wrap">
+                  <div class="latest-posts">
+                      <div class="avatars">
+                          <img class="avatar" src="https://via.placeholder.com/150x150" alt=""
+                              data-demo-src="{% static 'assets/images/avatars/alan.jpg' %}">
+                          <img class="avatar" src="https://via.placeholder.com/150x150" alt=""
+                              data-demo-src="{% static 'assets/images/avatars/matt.jpg' %}">
+                          <img class="avatar" src="https://via.placeholder.com/150x150" alt=""
+                              data-demo-src="{% static 'assets/images/avatars/christina.jpg' %}">
+                          <div class="avatar">
+                              <span>+5</span>
+                          </div>
+                      </div>
+                      <div class="latest-meta">
+                          <span><a>Alan</a>, <a>Christina</a> and <a>5 more</a></span>
+                          <span>published posts in this category</span>
+                      </div>
+                      <div class="forum-stats">
+                          <div class="stat">
+                              <i class="sl sl-icon-people"></i>
+                              <span>112</span>
+                          </div>
+                          <div class="stat">
+                              <i class="sl sl-icon-speech"></i>
+                              <span>954</span>
+                          </div>
+                          <div class="stat">
+                              <i class="sl sl-icon-paper-clip"></i>
+                              <span>328</span>
+                          </div>
+                      </div>
+                  </div>
+              </div> {% endcomment %}
+              
+          </div>
 
-    {% endfor %}
+      </div>
   </div>
 </div>
-
+<!-- Images -->
 
 <script>
     document.getElementById('links').onclick = function (event) {

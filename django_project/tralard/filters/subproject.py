@@ -9,4 +9,4 @@ class SubprojectFilter(django_filters.FilterSet):
 
     class Meta:
         model = SubProject
-        fields = ["name", "program__project__slug"]
+        fields = ["name"]

@@ -4,12 +4,15 @@ Sub Project model definitions for tralard app.
 """
 import json
 import logging
+import datetime
 
 from django.db import models
 from django.utils.text import slugify
 from django.db.models.aggregates import Sum
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+
+from filer.fields.image import FilerImageField
 
 from tralard.models.fund import Fund
 from tralard.models.ward import Ward
@@ -21,8 +24,6 @@ from tralard.utils import (
 from tralard.models.training import Training
 from tralard.models.province import Province
 from tralard.models.beneficiary import Beneficiary
-
-from filer.fields.image import FilerImageField
 from tralard.constants import PROJECT_STATUS_CHOICES, MODEL_FIELD_CHOICES
 
 
@@ -271,7 +272,10 @@ class SubProject(models.Model):
         ),
     )
     approved = models.BooleanField(
-        default=False,
+        # changed to True beccause the create feature 
+        # of subproject shall be accessible at admdin level only 
+        # and all created subprojects by admins are preaproved.
+        default=True, 
         null=True,
         blank=True,
     )
@@ -383,9 +387,8 @@ class SubProject(models.Model):
         return form
 
 
-class SubProjectImage(models.Model):
+class Photo(models.Model):
     """Image model for subproject photos"""
-
     name = models.CharField(
         max_length=255,
         null=True,
@@ -394,10 +397,6 @@ class SubProjectImage(models.Model):
     image = FilerImageField(
         null=False, 
         db_column="img_id",
-        on_delete=models.CASCADE
-    )
-    subproject = models.ForeignKey(
-        'tralard.SubProject', 
         on_delete=models.CASCADE
     )
     created = models.DateTimeField(auto_now_add=True)
@@ -409,9 +408,44 @@ class SubProjectImage(models.Model):
     def get_image(self):
         return self.image.file
 
-
     @property
     def sub_project_create_form():
         """Assigns a form to Intervention after create."""
         form = sub_project_create_form()
         return "Hello form"
+
+
+class ProgressStatus(models.Model):
+    """SubProject status trail model."""
+    status = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        choices=PROJECT_STATUS_CHOICES
+    )
+    comment = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True
+    )
+    photos  = models.ManyToManyField(
+        'tralard.Photo',
+        blank=True,
+        related_name='progress_statuses'
+    )
+    subproject = models.ForeignKey(
+        'tralard.SubProject', 
+        on_delete=models.CASCADE
+    )
+    is_completed = models.BooleanField(default=False)
+    created = models.DateField(
+        auto_now_add=False, 
+        default=datetime.datetime.now
+    )
+    
+    class Meta:
+        verbose_name = _("Progress Status")
+        verbose_name_plural = _("Progress Statuses")
+
+    def __str__(self):
+        return f"{self.status} {self.created}"
