@@ -77,32 +77,17 @@
 				<input type="submit" value="Search" class="btn btn-outline-secondary" style="background: #21546d; color: white; padding-left: 2.5em; padding-right: 2.5em; margin-right: 0.25em;" /> <a style="background: #21546d; color: white; margin-left: 0.25em; margin-top: 0px; padding-left: 2.5em; padding-right: 2.5em;" href="{% url 'tralard:project-detail' project_slug %}" class="btn btn-outline-secondary">reset</a>
 			</div>
 		</form>
-	<style>
-		.left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single {
-			float: left;
-			width: 230px;
-			height: 100%;
-		  }
-		.select2-selection--single {
-			margin-bottom: 12px;
-		 }
-		.select2-search--dropdown {
-			width: 240px;
-			margin-left: -8px;
-			margin-top: -18px;
-		}
-		.select2-selection__arrow b {
-			visibility: hidden;
-			margin-left: -8em;
-		}
-
-		.select2-results__options {
-			background-color: white;
-			float: left;
-			width: 230px;
-			height: 100%;
-		}
-	</style>
+        <style>
+            .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single, .select2-selection--multiple {
+                width: 830px;
+                height: 100%;
+              }
+            .select2-results__options {
+                background-color: white;
+                width: 830px;
+                height: 100%;
+            }
+        </style>
 	<div id="dashboard-wrapper" class="dashboard-outer">
 		
 		<!-- Dashboard Wrapper -->
