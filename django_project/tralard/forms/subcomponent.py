@@ -21,13 +21,13 @@ from tralard.models.subcomponent import Feedback, SubComponent
 
 class SearchForm(forms.Form):
     
-    province = forms.ModelChoiceField(
+    province_id = forms.ModelChoiceField(
         queryset=Province.objects.all(),
         label=_("Province"),
-        required=True,
+        required=False,
         widget=ModelSelect2Widget(
             attrs={
-                'class': 'form-control mb-0 col-md-3',
+                'class': 'form-control mb-0 col-md-3 w-3',
                 'data-placeholder': '--- Click to select a province ---',
                 'data-minimum-input-length': 0,
                 },
@@ -36,7 +36,7 @@ class SearchForm(forms.Form):
         ),
     )
 
-    district = forms.ModelChoiceField(
+    district_id = forms.ModelChoiceField(
         queryset=District.objects.all(),
         label=_("District"),
         required=True,
@@ -48,11 +48,11 @@ class SearchForm(forms.Form):
                 },
             model=District,
             search_fields=['name__icontains'],
-            dependent_fields={'province': 'province'},
+            dependent_fields={'province_id': 'province'},
         ),
     )
     
-    ward = forms.ModelChoiceField(
+    ward_id = forms.ModelChoiceField(
         queryset=Ward.objects.all(),
         label=_("Ward"),
         required=True,
@@ -64,7 +64,7 @@ class SearchForm(forms.Form):
                 },
             model=Ward,
             search_fields=['name__icontains'],
-            dependent_fields={'district': 'district'},
+            dependent_fields={'district_id': 'district'},
         ),
     )
 

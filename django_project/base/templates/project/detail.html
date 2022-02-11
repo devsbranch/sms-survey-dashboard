@@ -10,9 +10,6 @@
 {% endblock %}
 
 <!-- Specific CSS goes HERE -->
-{% block stylesheets %} 
-	{{ search_form.media.css }}
-{% endblock stylesheets %}
 <!--suppress ALL -->
 <style>
     #subproject-filters {
@@ -64,46 +61,11 @@
 				data-demo-src="{% static '/assets/images/logos/logo.png' %}">
 		{% endif %}
 		<div>
-			<h2 class="project-title">Project Name: {{ project.name|upper }}</h2>
-			<h4 class="project-tagline no-margin-bottom">project landing page</h4>
+			<h2 class="project-title">SubComponent Name: {{ subcomponent.name|upper }}</h2>
+			<h4 class="project-tagline no-margin-bottom">subcomponent landing page</h4>
 		</div>
 	</div>
-<div id="dashboard-wrapper" class="dashboard-outer" style="display: flex;">
-		<form action="" class="left" id="search-form123" style="margin-top: 15.5em; padding-right: 0px;" method="get">
-			{{ search_form.province }}<br /> 
-			{{ search_form.district }}<br />
-			{{ search_form.ward }}<br />
-			<div style="display: flex; word-spacing: 12px;">
-				<input type="submit" value="Search" class="btn btn-outline-secondary" style="background: #21546d; color: white; padding-left: 2.5em; padding-right: 2.5em; margin-right: 0.25em;" /> <a style="background: #21546d; color: white; margin-left: 0.25em; margin-top: 0px; padding-left: 2.5em; padding-right: 2.5em;" href="{% url 'tralard:project-detail' project_slug %}" class="btn btn-outline-secondary">reset</a>
-			</div>
-		</form>
-		<style>
-		.left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single {
-			float: left;
-			width: 230px;
-			height: 100%;
-		  }
-		.select2-selection--single {
-			margin-bottom: 12px;
-		 }
-		.select2-search--dropdown {
-			width: 240px;
-			margin-left: -8px;
-			margin-top: -18px;
-		}
-		.select2-selection__arrow b {
-			visibility: hidden;
-			margin-left: -8em;
-		}
-
-		.select2-results__options {
-			background-color: white;
-			float: left;
-			width: 230px;
-			height: 100%;
-		}
-	</style>
-
+<div id="dashboard-wrapper" class="dashboard-outer">
 	<div id="dashboard-wrapper" class="dashboard-outer">
 		
 		<!-- Dashboard Wrapper -->
@@ -251,7 +213,7 @@
 							<div id="my-tasks" class="navtab-content">
 
 								<!-- Beneficiary List -->
-								<div style="" class="projects-list-wrapper">
+								<div class="projects-list-wrapper">
 									<div class="list-header">
 										<div class="list-title">
 											<span>Showing All Beneficiaries Under {{ project.name|upper }} </span>

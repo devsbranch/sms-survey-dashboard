@@ -19,6 +19,7 @@ from tralard.models.sub_project import Indicator, SubProject
 from tralard.forms.subcomponent import SearchForm, SubComponentForm
 from tralard.forms import (
     IndicatorForm,
+    SubComponentForm,
     IndicatorTargetForm,
     IndicatorTargetValueForm,
     IndicatorUnitOfMeasureForm,

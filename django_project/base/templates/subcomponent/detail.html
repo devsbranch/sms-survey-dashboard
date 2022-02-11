@@ -186,6 +186,7 @@
                             </div>
                         </div>
                         <!-- Deal content -->
+                        
                         <div class="columns deal-content">
                             <!-- Left side -->
                             <div class="column is-4">
@@ -281,6 +282,7 @@
                                     </div>
                                     <div class="deal-card-content is-active">
                                         <!-- Deal contact -->
+                                        
                                         <div class="deal-contact">
                                             {% if subcomponent.project.logo %}
                                                 <img src="https://via.placeholder.com/150x150" alt=""
@@ -315,38 +317,77 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <!-- Right side -->
                             <div class="column is-8">
+                                
                                 <!-- Action card -->
                                 <div class="flex-card action-card card-overflow">
                                     <!-- Header -->
                                     <div class="action-card-header">
                                         <!-- Write note action -->
-                                        <div class="action is-active" data-action="write-note">
+                                        <div class="action is-active" data-action="write-note" id="subproject_list123">
                                             <i class="sl sl-icon-doc"></i>
                                             <span>All {{ subcomponent.name|title }} Related SubProjects</span>
                                             <div class="arrow-down"></div>
                                         </div>
                                         <!-- Schedule event action -->
                                         {% if user|has_role:'project_manager, subcomponent_manager' or user.is_staff or user.is_superuser %}
-                                        <div class="action" data-action="schedule-event">
+                                        <div class="action" data-action="schedule-event" id="subproject_cr123">
                                             <i class="sl sl-icon-clock"></i>
                                             <span>Create a New SubProject</span>
                                             <div class="arrow-down"></div>
-                                        </div>                                   
+                                        </div>
                                          {% endif %}
                                         <!-- Upload files action -->
-                                        <div class="action" data-action="upload-files">
+                                        
+                                        <div class="action" data-action="upload-files" id="citizen_feedback123">
                                             <i class="sl sl-icon-paper-clip"></i>
                                             <span>Citizen's Feedback</span>
                                             <div class="arrow-down"></div>
                                         </div>
+                                        <span id="css_span123"></span>
+                                        <script>
+                                            document.getElementById("citizen_feedback123").addEventListener("click", () => {
+                                                document.getElementById("search-form123").hidden = true;
+                                                
+                                            })
+                                            document.getElementById("subproject_list123").addEventListener("click", () => {
+                                                document.getElementById("css_span123").innerHTML = '';
+                                                document.getElementById("search-form123").hidden = false;
+                                            })
+                                            document.getElementById("subproject_cr123").addEventListener("click", () => {
+                                                document.getElementById("css_span123").innerHTML = `
+                                                <style>
+                                                    .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single, .select2-selection--multiple {
+                                                        width: 830px;
+                                                        height: 100%;
+                                                      }
+                                                    .select2-results__options {
+                                                        background-color: white;
+                                                        width: 830px;
+                                                        height: 100%;
+                                                    }
+                                                </style>
+                                                `
+                                                document.getElementById("search-form123").hidden = true;
+
+                                            })
+                                        </script>
                                     </div>
                                     <!-- SubProject Listing -->
                                     <div class="action-card-body">
-                                        <!-- subproject list note -->
+                                        <form action="" class="justify-content-center" style="margin-left: 10em; margin-top: 12px;" id="search-form123" method="get">
+                                            <p >
+                                                {{ subcomponent_search_form.province_id }} 
+                                                {{ subcomponent_search_form.district_id }} 
+                                                {{ subcomponent_search_form.ward_id }} 
+                                                <button type="submit" class="btn btn-outline-secondary" style="background: #21546d; color: white; padding: 2px; padding-bottom: -2px;"><i class="material-icons">search</i></button> 
+                                                <a style="background: #21546d; color: white; padding: 2px; padding-bottom: -2px;" href="{% url 'tralard:subcomponent-detail' project_slug subcomponent.slug %}" class="btn btn-outline-secondary"><i class="material-icons">refresh</i></a>
+                                            </p>
+                                        </form>
+                                        <!-- subproject list note -->                               
                                         <div id="write-note" class="action-wrap">
-
                                             {% for subproject in sub_project_list %}
 
                                                 <!-- Timeline section -->
@@ -487,17 +528,7 @@
                                                     {% csrf_token %}
                                                     {% crispy form form.helper %}
                                                 </div>
-                                                    <style>
-                                                      .left, #select2-id_province-container, #select2-id_province-results, .select2-dropdown--below, .select2-selection--single, .select2-selection--multiple {
-                                                          width: 830px;
-                                                          height: 100%;
-                                                        }
-                                                      .select2-results__options {
-                                                          background-color: white;
-                                                          width: 830px;
-                                                          height: 100%;
-                                                      }
-                                                  </style>
+                                                    
                                                 <button type="submit" class="button is-modal primary-btn">Create SubProject</button>
                                             </form>
                                         </div>

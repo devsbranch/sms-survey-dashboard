@@ -12,7 +12,7 @@ from tralard.models.project import Project
 from tralard.models.subcomponent import SubComponent, Feedback
 from tralard.forms.sub_project import SubProjectForm
 from tralard.models.sub_project import SubProject, Indicator
-from tralard.forms.subcomponent import FeedbackForm, SubComponentForm
+from tralard.forms.subcomponent import FeedbackForm, SubComponentForm, SearchForm as SubComponentSearchForm
 
 
 @login_required(login_url="/login/")
@@ -187,6 +187,23 @@ class SubComponentDetailView(LoginRequiredMixin, ListView):
         self.all_indicator_related_subprojects = Indicator.objects.filter(
             indicator_related_subprojects__in=self.sub_projects_qs
         )
+        
+        try:
+            self.subproject_list = []
+            self.district_id = int(self.request.GET.get("district_id"))
+            self.ward_id = int(self.request.GET.get("ward_id"))
+            
+            self.sub_projects = SubProject.objects.filter(
+                ward__district__id=self.district_id,
+                ward__id=self.ward_id,
+            )
+            self.subproject_list.append(
+                self.sub_projects
+            )
+            self.sub_projects_qs = self.sub_projects
+        except:
+            pass
+        
         context["citizen_feedback_list"] = self.all_feedback_qs
         context["subcomponent"] = self.subcomponent
         context["indicators"] = self.all_indicator_related_subprojects
@@ -194,6 +211,7 @@ class SubComponentDetailView(LoginRequiredMixin, ListView):
         context["feedback_form"] = FeedbackForm
         context["project_slug"] = self.kwargs.get("project_slug", None)
         context["subcomponent_slug"] = self.kwargs.get("subcomponent_slug", None)
+        context["subcomponent_search_form"] = SubComponentSearchForm
         context["sub_project_list"] = self.sub_projects_qs
         context["total_sub_projects"] = self.sub_project_count
         return context

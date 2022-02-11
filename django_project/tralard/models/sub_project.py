@@ -385,6 +385,12 @@ class SubProject(models.Model):
         """Assigns a form to SubProject after create."""
         form = sub_project_update_form(self)
         return form
+    
+    @property
+    def subproject_manage_url(self):
+        url = f"/program/{self.project.program.slug}/project/{self.project.slug}/subproject/{self.slug}/manage/"
+        return url
+
 
 
 class Photo(models.Model):
