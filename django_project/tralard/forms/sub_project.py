@@ -102,7 +102,7 @@ class SubProjectForm(ModelForm):
             "created", 
             "description", 
             "focus_area", 
-            "project", 
+            "subcomponent", 
             "slug",
         ]
 
@@ -118,7 +118,6 @@ class SubProjectForm(ModelForm):
                 Column("supervisor", css_class="form-group col-md-12 mb-0"),
                 Column("size", css_class="form-group col-md-12 mb-0"),
                 Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
-                Column("subcomponent", css_class="form-group col-md-12 mb-0"),
                 Column("province", css_class="form-group col-md-12 mb-0"),
                 Column("district", css_class="form-group col-md-12 mb-0"),
                 Column("ward", css_class="form-group col-md-12 mb-0"),
@@ -130,9 +129,6 @@ class SubProjectForm(ModelForm):
             ),
         )
 
-    def _get_indicators(self):
-        return self.cleaned_data['custom_indicators']
-    
     def save(self, commit=True):
         instance = super(SubProjectForm, self).save(commit=False)
         custom_description = self.cleaned_data["custom_description"]
@@ -142,10 +138,6 @@ class SubProjectForm(ModelForm):
         if custom_focus_area:
             instance.focus_area = custom_focus_area
         instance.save()
-        
-        indicators = self._get_indicators()
-        for indicator in indicators:
-            instance.indicators.add(indicator)
         return instance
 
 class ProgressStatusForm(ModelForm):

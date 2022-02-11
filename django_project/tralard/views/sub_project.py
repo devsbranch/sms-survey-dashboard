@@ -319,11 +319,7 @@ def sub_project_update(request, project_slug, subcomponent_slug, subproject_slug
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
         if form.is_valid():
-            custom_description = form.cleaned_data["custom_description"]
-            custom_focus_area = form.cleaned_data["custom_focus_area"]
             form.save()
-            custom_description = form.cleaned_data["custom_description"]
-            custom_focus_area = form.cleaned_data["custom_focus_area"]
             subproject.save()
 
         messages.add_message(
@@ -331,9 +327,10 @@ def sub_project_update(request, project_slug, subcomponent_slug, subproject_slug
         )
         return redirect(
             reverse_lazy(
-                "tralard:project-detail",
+                "tralard:subcomponent-detail",
                 kwargs={
                     "project_slug": project_slug,
+                    "subcomponent_slug": subproject.subcomponent.slug
                 },
             )
         )
