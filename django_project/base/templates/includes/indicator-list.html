@@ -98,39 +98,6 @@
 								<!-- Row Entry for Project-->
 								<td width="15%" class="members">
 									{% for target in indicator.targets %}
-
-										{% comment %} <div class="dropdown is-right dropdown-trigger styled-dropdown is-round" style="justify-content: end;">
-											<div class="button">
-												<i class="material-icons">more_vert</i>
-											</div>
-											<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-												<div class="dropdown-content">
-													<a href="/project/subproject/detail/" class="dropdown-item">
-														<i class="sl sl-icon-eye"></i>
-														<span>
-															<span>Edit</span>
-															<span>Edit Indicator Target</span>
-														</span>
-													</a>
-													<a class="dropdown-item">
-														<i class="sl sl-icon-pencil"></i>
-														<span>
-															<span>Delete</span>
-															<span>Delete Indicator Target</span>
-														</span>
-													</a>
-													<div class="dropdown-divider"></div>
-													<a class="dropdown-item">
-														<i class="sl sl-icon-trash"></i>
-														<span>
-															<span>Delete</span>
-															<span>Delete this contact</span>
-														</span>
-													</a>
-												</div>
-											</div>
-										</div> {% endcomment %}
-
 										<a href="#" class="modal-trigger" data-modal="indicator_target_form" onClick="populateIndicatorTargetForm('POPULATE_FORM', '{{project.slug}}', '{{target.id}}')">
 											<div class="table_row m-1">
 												<p class="task-due-date m-1">

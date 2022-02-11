@@ -16,7 +16,6 @@ from tralard.models.district import District
 from tralard.models.sub_project import (
     SubProject, 
     ProgressStatus, 
-    Indicator
 )
 
 
@@ -70,19 +69,6 @@ class SubProjectForm(ModelForm):
         ),
     )
 
-    custom_indicators = forms.ModelMultipleChoiceField(
-        queryset=Indicator.objects.all(),
-        label=_("Indicators"),
-        required=False,
-        widget= Select2TagWidget(
-            attrs={
-                'class': 'form-control',
-                'data-placeholder': '--- Search for an indicator ---',
-                'data-minimum-input-length': 0,
-                },
-        ),
-        help_text=_('search and select a single or multiple related indicators for this subproject.'),
-    )
     custom_description = forms.CharField(
         label="Description",
         required=False,
@@ -117,8 +103,7 @@ class SubProjectForm(ModelForm):
             "description", 
             "focus_area", 
             "project", 
-            "slug", 
-            "indicators"
+            "slug",
         ]
 
     def __init__(self, *args, **kwargs):
@@ -132,8 +117,8 @@ class SubProjectForm(ModelForm):
                 Column("name", css_class="form-group col-md-12 mb-0"),
                 Column("supervisor", css_class="form-group col-md-12 mb-0"),
                 Column("size", css_class="form-group col-md-12 mb-0"),
-                Column("custom_indicators", css_class="form-group col-md-12 mb-0"),
                 Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
+                Column("subcomponent", css_class="form-group col-md-12 mb-0"),
                 Column("province", css_class="form-group col-md-12 mb-0"),
                 Column("district", css_class="form-group col-md-12 mb-0"),
                 Column("ward", css_class="form-group col-md-12 mb-0"),

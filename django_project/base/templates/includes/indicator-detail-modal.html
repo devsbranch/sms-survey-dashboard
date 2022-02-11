@@ -1,0 +1,234 @@
+{% for indicator in indicators %}
+<div class="modal icon-action-modal modal-hero"
+    id="indicator-detail-{{indicator.slug}}"
+    aria-labelledby="create-project">
+    <div class="modal-background modal-dismiss"></div>
+    <div class="modal-content" style="width:90%; !important;">
+        <div class="flex-card simple-shadow" style="overflow-y: auto;">
+            <div class="help-text has-text-left">
+                <h2 class="dark-text">Indicator Information for {{subcomponent.name}} SubComponent</h2>
+            </div>
+            <div class="card-body">
+
+                
+                <table class="table documents-table">
+                    <!-- Header -->
+                    <thead>
+                        <tr>
+                            
+                            <th>
+                                <span>Name</span>
+                            </th>
+
+                            <th>
+                                <span>Unit of Measure</span>
+                            </th>
+
+                            <th>
+                                <span>Baseline</span>
+                            </th>
+
+                            <th>
+                                <span>Year 1</span>
+                            </th>
+
+                            <th>
+                                <span>Year 2</span>
+                            </th>
+
+                            <th>
+                                <span>Year 3</span>
+                            </th>
+
+                            <th>
+                                <span>Year 4</span>
+                            </th>
+
+                            <th>
+                                <span>Year 5</span>
+                            </th>
+
+
+                        </tr>
+                    </thead>
+
+                    <!-- Body -->
+                    <tbody>
+                        
+
+                        <!-- Table row -->
+
+                        {% comment %} name, sub-project, project, total members, date joined {% endcomment %}
+                        <style>
+                            .table td {
+                                border-width: thin;
+                            }
+                        </style>
+
+                        <tr>
+
+                            <!-- Row Entry for Sub Project-->
+                            <td width="15%" class="members">
+                                <span class="inner">
+                                        <span class="no-margin-bottom">
+                                            {{ indicator.name}}
+                                        </span>
+                                </span>
+                            </td>
+
+                            <!-- Row Entry for Project-->
+                            <td width="20%" class="members">
+                                {% for target in indicator.targets %}
+                                        <div class="table_row m-1">
+                                            <p class="">
+                                                &#10148; {{target.description}} 
+                                            </p>
+                                        </div>
+                                        <p><b>{{target.unit_of_measure}}</b></p>
+                                        <hr class="m-1" width="80%">
+                                {% endfor %}
+                                
+                            </td>
+
+                            <!-- Row Entry for Members-->
+                            <td class="modifications" style="line-height: 5em;">
+                                <ul>
+                                    {% for target in indicator.targets %}
+                                        <li>
+                                            <div class="m-1">
+                                                <p class="">
+                                                    &#10148; {{target.baseline}} 
+                                                </p>
+                                                
+                                                <hr class="m-1" width="80%">
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </td>
+                            
+                            <!-- Row Entry for Registered-->
+                            <td class="modifications" style="line-height: 2.5em;">
+                                {% for target in indicator.targets%}
+                                    {% if target.yearly_target_values.0 %}
+                                        <div>
+                                                <p class="">
+                                                    Target &#10148; {{target.yearly_target_values.0.year_1.target_value}} 
+                                                </p>
+                                                <p class="">
+                                                    {% if target.yearly_target_values.0.year_1.year <= current_year %}
+                                                        Actual &#10148; {{target.yearly_target_values.0.year_1.actual_value}} 
+                                                    {% else %}
+                                                        Actual &#10148;  ------
+                                                    {% endif %}
+                                                </p>
+                                                <hr class="m-1" width="80%">
+                                        </div>
+                                    {% else %}
+                                        <div style="line-height: 6em;">
+                                            -
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class"modifications" style="line-height: 2.5em;">
+                                {% for target in indicator.targets%}
+                                    {% if target.yearly_target_values.1 %}
+                                            <p class="">
+                                                Target &#10148; {{target.yearly_target_values.1.year_2.target_value}} 
+                                            </p>
+                                            <p class="">
+                                                {% if target.yearly_target_values.1.year_2.year <= current_year %}
+                                                    Actual &#10148; {{target.yearly_target_values.1.year_2.actual_value}} 
+                                                {% else %}
+                                                    Actual &#10148;  ------
+                                                {% endif %}
+                                            </p>
+                                            <hr class="m-1" width="80%">
+                                    {% else %}
+                                            <div style="line-height: 2.5em;">
+                                            -
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+
+                            </td>
+                            <td class="modifications" style="line-height: 2.5em;">
+                                {% for target in indicator.targets%}
+                                    {% if target.yearly_target_values.2 %}
+                                            <p class="">
+                                                Target &#10148; {{target.yearly_target_values.2.year_3.target_value}} 
+                                            </p>
+                                            <p class="">
+                                                {% if target.yearly_target_values.2.year_3.year <= current_year %}
+                                                    Actual &#10148; {{target.yearly_target_values.2.year_3.actual_value}} 
+                                                {% else %}
+                                                    Actual &#10148;  ------
+                                                {% endif %}
+                                            </p>
+                                            <hr class="m-1" width="80%">
+                                    {% else %}
+                                        <div style="line-height: 2.5em;">
+                                            -
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="modifications" style="line-height: 2.5em;">
+                                {% for target in indicator.targets%}
+                                    {% if target.yearly_target_values.3 %}
+            
+                                            <p class="">
+                                                Target &#10148; {{target.yearly_target_values.3.year_4.target_value}} 
+                                            </p>
+                                            <p class="">
+                                                {% if target.yearly_target_values.3.year_4.year <= current_year %}
+                                                    Actual &#10148; {{target.yearly_target_values.3.year_4.actual_value}} 
+                                                {% else %}
+                                                    Actual &#10148;  ------
+                                                {% endif %}
+                                            </p>
+                                            <div class="dropdown-divider"></div>
+                                    {% else %}
+                                        <div style="line-height: 2.5em;">
+                                            -
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td class="modifications" style="line-height: 2.5em;">
+                                {% for target in indicator.targets%}
+                                    {% if target.yearly_target_values.4 %}
+                                            <p class="">
+                                                Target &#10148; {{target.yearly_target_values.4.year_5.target_value}} 
+                                            </p>
+                                            <p class="">
+                                                {% if target.yearly_target_values.4.year_5.year <= current_year %}
+                                                    Actual &#10148; {{target.yearly_target_values.4.year_5.actual_value}} 
+                                                {% else %}
+                                                    Actual &#10148;  ------
+                                                {% endif %}
+                                            </p>
+                                            <hr class="m-1" width="80%" style="color: black;">
+                                    {% else %}
+                                        <div style="line-height: 2.5em;">
+                                            -
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+                
+                <button 
+                    type="button" 
+                    class="button is-danger btn-dash modal-dismiss" >
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

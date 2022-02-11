@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
+
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.http.response import JsonResponse
@@ -9,9 +11,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
 from tralard.models.project import Project
-from tralard.models.subcomponent import SubComponent, Feedback
+from tralard.models.subcomponent import SubComponent, Feedback, Indicator
 from tralard.forms.sub_project import SubProjectForm
-from tralard.models.sub_project import SubProject, Indicator
+from tralard.models.sub_project import SubProject
 from tralard.forms.subcomponent import FeedbackForm, SubComponentForm, SearchForm as SubComponentSearchForm
 
 
@@ -179,14 +181,57 @@ class SubComponentDetailView(LoginRequiredMixin, ListView):
         self.sub_projects_qs = SubProject.objects.filter(
             subcomponent__slug=self.subcomponent_slug
         )
+        # self.subcomponent_indicators = sub_project.indicators.all()
 
         self.sub_project_slug = self.kwargs.get("sub_project_slug", None)
 
         self.sub_project_count = self.sub_projects_qs.count()
         self.all_feedback_qs = Feedback.objects.filter(subcomponent__slug=self.subcomponent_slug)
-        self.all_indicator_related_subprojects = Indicator.objects.filter(
-            indicator_related_subprojects__in=self.sub_projects_qs
-        )
+        
+        self.subcomponent_indicators = self.subcomponent.indicators.all()
+
+        indicators_list = []
+
+        current_year = datetime.now().year
+            
+        for indicator in self.subcomponent_indicators:
+            
+            indicator_data = {
+                "name": indicator.name,
+                "targets": [],
+                "slug": indicator.slug,
+            }
+            targets = indicator.indicatortarget_set.all()
+            for target in targets:
+                target_dict = {
+                    "id": target.id,
+                    "description": target.description,
+                    "unit_of_measure": target.unit_of_measure.unit_of_measure,
+                    "baseline": target.baseline_value,
+                    "yearly_target_values": [],
+                    "unit_of_measure_id": target.unit_of_measure.id,
+                }
+                target_values = target.indicatortargetvalue_set.all().order_by("year")
+                for year_count, yearly_target_values in enumerate(
+                    target_values, start=1
+                ):
+                    yearly_target_values_dict = {
+                        f"year_{year_count}": {
+                            "id": yearly_target_values.id,
+                            "year": yearly_target_values.year.year,
+                            "target_value": yearly_target_values.target_value,
+                            "actual_value": target.unit_of_measure.get_actual_data(
+                                indicator
+                            )
+                            if yearly_target_values.year.year <= current_year
+                            else 0,
+                        }
+                    }
+                    target_dict["yearly_target_values"].append(
+                        yearly_target_values_dict
+                    )
+                indicator_data["targets"].append(target_dict)
+            indicators_list.append(indicator_data)
         
         try:
             self.subproject_list = []
@@ -206,7 +251,8 @@ class SubComponentDetailView(LoginRequiredMixin, ListView):
         
         context["citizen_feedback_list"] = self.all_feedback_qs
         context["subcomponent"] = self.subcomponent
-        context["indicators"] = self.all_indicator_related_subprojects
+        context["indicators"] = indicators_list
+        context["current_year"] = current_year
         context["form"] = SubProjectForm
         context["feedback_form"] = FeedbackForm
         context["project_slug"] = self.kwargs.get("project_slug", None)
@@ -214,6 +260,7 @@ class SubComponentDetailView(LoginRequiredMixin, ListView):
         context["subcomponent_search_form"] = SubComponentSearchForm
         context["sub_project_list"] = self.sub_projects_qs
         context["total_sub_projects"] = self.sub_project_count
+        
         return context
 
     def form_valid(self, form):

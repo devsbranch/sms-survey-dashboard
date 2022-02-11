@@ -252,11 +252,6 @@ urlpatterns = [
         beneficiary_delete,
         name="beneficiary-delete",
     ),
-    path(
-        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
-        beneficiary_detail,
-        name="beneficiary-detail",
-    ),
     # -------- sub project beneficiary --------
     path(
         "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/beneficiary/",

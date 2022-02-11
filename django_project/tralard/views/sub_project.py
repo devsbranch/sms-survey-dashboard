@@ -455,7 +455,6 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         sub_project = self.get_object()
-        self.sub_proj_indicators = sub_project.indicators.all()
         
         progress_status_data = []
         self.progress_status_qs = ProgressStatus.objects.all().order_by("-created")
@@ -469,19 +468,9 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
                     'photos': progress_status_photos
                 }
             )
-        indicators = []
-
-        for indicator_object in self.sub_proj_indicators:
-            indicator_data = {}
-            indicator_data["name"] = indicator_object.name
-            indicator_data[
-                "indicator_targets"
-            ] = indicator_object.indicatortarget_set.all()
-            indicators.append(indicator_data)
 
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
-        context["indicators"] = indicators
         context["progress_status_qs"] = self.progress_status_qs
         context['progress_status_form'] = ProgressStatusForm
         return context

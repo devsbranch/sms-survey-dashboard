@@ -10,7 +10,11 @@
             "focus_area": "The focus of this project is in Livelihoods.",
             "project": 1,
             "created": "2021-01-13",
-            "slug": "livelihoods"
+            "slug": "livelihoods",
+            "indicators": [
+                2,
+                3
+            ]
         }
     },
     {
@@ -24,7 +28,11 @@
             "focus_area": "Focus on natural forest regeneration.",
             "project": 1,
             "created": "2021-01-13",
-            "slug": "natural-forest-regeneration"
+            "slug": "natural-forest-regeneration",
+            "indicators": [
+                4,
+                5
+            ]
         }
     },
     {
@@ -39,7 +47,11 @@
             "focus_area": "Infrastructure Development.",
             "project": 1,
             "created": "2021-01-13",
-            "slug": "infrastructures"
+            "slug": "infrastructures",
+            "indicators": [
+                6,
+                7
+            ]
         }
     }
 ]

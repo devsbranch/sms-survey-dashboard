@@ -21,7 +21,7 @@ from tralard.utils import unique_slugify
 # and not by imoprt - so its safe this way
 from tralard.models.sub_project import SubProject
 from tralard.models.beneficiary import Beneficiary
-from tralard.constants import PROJECT_STATUS_CHOICES
+from tralard.constants import PROJECT_STATUS_CHOICES, MODEL_FIELD_CHOICES
 
 from tinymce import HTMLField
 
@@ -48,85 +48,6 @@ class UnapprovedSubComponentManager(models.Manager):
             UnapprovedSubComponentManager, self).get_queryset().filter(
             approved=False)
 
-
-class Representative(models.Model):
-    """
-    SubComponent Representative.
-    """
-    GENDER_CHOICES = (
-        ("Male", _("Male")),
-        ("Female", _("Female")),
-        ("Transgender", _("Transgender")),
-        ("Other", _("Other"))
-    )
-    slug = models.SlugField(
-        max_length=255,
-        null=True,
-        blank=True
-    )
-    user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    first_name = models.CharField(
-        _("First Name"),
-        max_length=200,
-    )
-    last_name = models.CharField(
-        _("Last Name"),
-        max_length=200,
-        null=False
-    )
-    birthdate = models.DateField(
-        _("Birth Date"),
-        auto_now_add=False,
-        null=True,
-        blank=True
-    )
-    gender = models.CharField(
-        _("Gender"),
-        max_length=50,
-        choices=GENDER_CHOICES,
-        null=True,
-        blank=True
-    )
-    email = models.EmailField(
-        _("Email"),
-        null=True,
-        blank=True
-    )
-    cell = models.CharField(
-        _("Cell"),
-        max_length=50,
-        null=True,
-        blank=True
-    )
-    ward = models.ForeignKey(
-        'tralard.ward',
-        default='',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True
-    )
-    address = HTMLField(
-        help_text=_(
-            'Address details and other information necessary.'),
-        blank=True,
-        null=True
-    )
-    created = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = unique_slugify(self, slugify(f"{self.first_name} {self.last_name}"))
-        super().save(*args, **kwargs)
-
-
 class SubComponent(models.Model):
     """
     SubComponent definition.
@@ -136,10 +57,17 @@ class SubComponent(models.Model):
         null=True,
         blank=True
     )
+
     name = models.CharField(
         help_text=_('Name of this subcomponent.'),
         max_length=255,
         unique=True
+    )
+    indicators = models.ManyToManyField(
+        "tralard.Indicator",
+        related_name="indicator_related_subcomponents",
+        blank=True,
+        # null=True, null has no effect on ManyToManyField.
     )
     approved = models.BooleanField(
         help_text=_('Whether this subcomponent has been approved yet.'),
@@ -168,15 +96,6 @@ class SubComponent(models.Model):
         'tralard.project',
         default='',
         on_delete=models.CASCADE,
-    )
-    representative = models.ForeignKey(
-        User,
-        help_text=_(
-            "The Supervisor"
-        ),
-        on_delete=models.SET_NULL,
-        blank=True,
-        null=True
     )
     image_file = models.ImageField(
         help_text=_(
@@ -285,6 +204,13 @@ class SubComponent(models.Model):
         return sub_projects_queryset
 
     @property
+    def count_indicators(self):
+        indicator_related_subcomponents = Indicator.objects.filter(
+            indicator_related_subcomponents__slug=self.slug
+        ).count()
+        return indicator_related_subcomponents
+
+    @property
     def get_total_used_funds(self):
         """Computes total funds used related to this subcomponent."""
         total_subcomponent_funds = self.get_total_subcomponent_fund
@@ -308,6 +234,126 @@ class SubComponent(models.Model):
             return self.image_file.url
         return os.path.join(settings.STATIC_URL, "assets/images/logos/logo.png")
 
+
+class Indicator(models.Model):
+    """
+    Sub Project Indicator Representative.
+    """
+       
+    slug = models.SlugField(
+        max_length=255,
+        null=True,
+        blank=True,
+    )
+    name = models.CharField(
+        _("Name"),
+        max_length=200,
+    )
+
+    def __str__(self):
+        return self.name.lower()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
+
+class IndicatorTarget(models.Model):
+    """
+    Stores a single Indicator target entry, related to model 'Indicator'.
+    """
+    unit_of_measure = models.ForeignKey(
+        "tralard.IndicatorUnitOfMeasure", 
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    description = models.TextField(
+        _("Description"),
+        null=True,
+        blank=True,
+        help_text="A brief description of this indicator target.",
+    )
+    baseline_value = models.CharField(
+        _("Baseline Value"),
+        max_length=200,
+        null=True,
+        blank=True,
+        help_text="A baseline is data or measurement that is collected prior to the implementation of the project.",
+    )
+    indicator = models.ForeignKey(Indicator, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.description[:75]}| {self.unit_of_measure} Target"
+
+
+class IndicatorTargetValue(models.Model):
+    year =  models.DateField(_('Target Year'))
+    target_value =  models.CharField(
+        _('Target Value'),
+        max_length=200,
+        default=0
+    )
+    indicator_target =  models.ForeignKey(
+        IndicatorTarget,
+        on_delete=models.CASCADE
+    )
+
+    def __str__(self):
+        return f"{self.indicator_target.description} Target for: {self.year.year}"
+
+
+class IndicatorUnitOfMeasure(models.Model):
+    unit_of_measure = models.CharField(
+        _("Unit of Measure"), max_length=200,
+        null=True,
+        blank=True
+    )
+    data_source = models.CharField(
+        _("Source of data"), 
+        max_length=200,
+        choices=MODEL_FIELD_CHOICES
+    )
+
+    def __str__(self):
+        return self.unit_of_measure
+    
+    def get_actual_data(self, indicator_obj):
+        """
+        This method returns data to be used in the indicator report. This data
+        returned is a number which is a Sum total of the field data for all Sub Projects
+        under the given Indicator.
+        """
+
+        sub_project_filter = {"sub_project__subcomponent__indicators": indicator_obj}
+        
+        total = 0
+
+        if self.data_source == "size":
+            filter_by = {"subcomponent__indicators": indicator_obj}
+            try:
+                total = float(SubProject.objects.filter(**filter_by).aggregate(Sum('size'))['size__sum'])
+            except TypeError:
+                total = 0
+
+        elif self.data_source == "total_beneficiaries":
+            total = Beneficiary.custom_objects.get_total_beneficiaries(sub_project_filter)
+
+        elif self.data_source == "total_females":
+            total = Beneficiary.custom_objects.get_total_females(sub_project_filter)
+        
+        elif self.data_source == "total_males":
+            total = Beneficiary.custom_objects.get_total_males(sub_project_filter)
+        
+        elif self.data_source == "total_hhs":
+            total = Beneficiary.custom_objects.get_total_hhs(sub_project_filter)
+        
+        elif self.data_source == "female_hhs":
+            total = Beneficiary.custom_objects.get_female_hhs(sub_project_filter)
+        elif self.data_source == "beneficiary_orgs":
+            total = Beneficiary.objects.filter(**sub_project_filter).count()
+
+        return total
 
 class Feedback(models.Model):
     """

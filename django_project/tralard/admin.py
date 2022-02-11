@@ -17,7 +17,6 @@ from tralard.models import (
     Fund,
     Photo,
     Project,
-    SubComponent,
     District,
     FollowUp,
     Province,
@@ -28,6 +27,7 @@ from tralard.models import (
     SubProject,
     Beneficiary,
     Expenditure,
+    SubComponent,
     Disbursement,
     TrainingType,
     ProgressStatus,
@@ -313,7 +313,6 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
         "status",
         "subcomponent",
         "approved",
-        "representative",
     ]
     list_filter = (
         "name",
@@ -322,7 +321,6 @@ class SubProjectAdmin(ImportExportActionModelAdmin):
         "status",
         "subcomponent",
         "approved",
-        "representative",
     )
     search_fields = [
         "name",

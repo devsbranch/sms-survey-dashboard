@@ -6,7 +6,7 @@ from django.utils.translation import gettext_lazy as _
 import crispy_forms
 from crispy_forms.helper import FormHelper
 from crispy_forms.bootstrap import FormActions
-from django_select2.forms import ModelSelect2Widget
+from django_select2.forms import ModelSelect2Widget, Select2TagWidget
 from crispy_forms.layout import (
     Layout,
     Submit,
@@ -17,7 +17,7 @@ from crispy_forms.layout import (
 from tralard.models.ward import Ward
 from tralard.models.province import Province
 from tralard.models.district import District
-from tralard.models.subcomponent import Feedback, SubComponent
+from tralard.models.subcomponent import Feedback, SubComponent, Indicator
 
 class SearchForm(forms.Form):
     
@@ -80,10 +80,22 @@ class SubComponentForm(ModelForm):
         ),
         max_length=160,
     )
-
+    custom_indicators = forms.ModelMultipleChoiceField(
+        queryset=Indicator.objects.all(),
+        label=_("Indicators"),
+        required=False,
+        widget= Select2TagWidget(
+            attrs={
+                'class': 'form-control',
+                'data-placeholder': '--- Search for an indicator ---',
+                'data-minimum-input-length': 0,
+                },
+        ),
+        help_text=_('search and select a single or multiple related indicators for this subproject.'),
+    )
     class Meta:
         model = SubComponent
-        exclude = ["slug", "created"]
+        exclude = ["slug", "created", "indicators"]
         widgets = {
             'name': widgets.TextInput(
                 attrs={
@@ -109,7 +121,7 @@ class SubComponentForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for fieldname in ["image_file", "approved", "has_funding", "representative", "focus_area"]:
+        for fieldname in ["image_file", "approved", "has_funding", "focus_area"]:
             self.fields[fieldname].help_text = None
 
         self.helper = FormHelper()
@@ -119,8 +131,8 @@ class SubComponentForm(ModelForm):
             Row(
                 Column("name", css_class="form-group col-md-6 mb-0"),
                 Column("image_file", css_class="form-group col-md-6 mb-0"),
+                Column("custom_indicators", css_class="form-group col-md-12 mb-0"),
                 Column("project", css_class="form-group col-md-6 mb-0"),
-                Column("representative", css_class="form-group col-md-6 mb-0"),
                 Column("approved", css_class="form-group col-md-6 mb-0"),
                 Column("has_funding", css_class="form-group col-md-6 mb-0"),
                 Column("custom_precis", css_class="form-group col-md-6 mb-0"),
@@ -133,8 +145,15 @@ class SubComponentForm(ModelForm):
             ),
         )
 
+    def _get_indicators(self):
+        return self.cleaned_data['custom_indicators']
+
     def save(self, commit=True):
         instance = super(SubComponentForm, self).save(commit=False)
+
+        indicators = self._get_indicators()
+        for indicator in indicators:
+            instance.indicators.add(indicator)
         custom_precis = self.cleaned_data["custom_precis"]
         instance.precis = custom_precis
         instance.save()

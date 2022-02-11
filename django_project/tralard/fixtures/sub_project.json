@@ -13,10 +13,7 @@
             "description": "Integrated goat rearing and vegetable gardening. 2 male and 40 female goats to be procured. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Goat Rearing and Gardening.",
             "created": "2021-01-13",
-            "slug": "twasechela-goat-rearing-and-gardening",
-            "indicators": [
-                2
-            ]
+            "slug": "twasechela-goat-rearing-and-gardening"
         }
     },
     {
@@ -33,10 +30,7 @@
             "description": "Establishment of a smallscale vegetable oil production plant integrated with poultry production and gardening",
             "focus_area": "Poultry and Gardening.",
             "created": "2021-01-13",
-            "slug": "fichilisya-vegetable-oil-production-poultry-and-gardening",
-            "indicators": [
-                3
-            ]
+            "slug": "fichilisya-vegetable-oil-production-poultry-and-gardening"
         }
     },
     {
@@ -53,10 +47,7 @@
             "description": "Integrated goat rearing and vegetable gardening. 2 male and 50 female goats to be procured. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Poultry and Gaardening.",
             "created": "2021-01-13",
-            "slug": "tutulane-goat-rearing-and-gardening",
-            "indicators": [
-                2
-            ]
+            "slug": "tutulane-goat-rearing-and-gardening"
         }
     },
     {
@@ -73,10 +64,7 @@
             "description": "Integration of aquaculture, livestock and crop production",
             "focus_area": "Poultry & Garden Project",
             "created": "2021-01-13",
-            "slug": "chilanga-fish-harvest-winter-crop-farming-poultry-garden-subcomponent",
-            "indicators": [
-                2
-            ]
+            "slug": "chilanga-fish-harvest-winter-crop-farming-poultry-garden-subcomponent"
         }
     },
     {
@@ -93,10 +81,7 @@
             "description": "Integrated goat rearing and vegetable gardening. The subcomponent will incorporate pasture production to provide supplementary feed to the goats.",
             "focus_area": "Goat Rearing",
             "created": "2021-01-13",
-            "slug": "wuyakwelelo-goat-rearing-and-vegetable-gardening",
-            "indicators": [
-                11
-            ]
+            "slug": "wuyakwelelo-goat-rearing-and-vegetable-gardening"
         }
     },
     {
@@ -112,10 +97,7 @@
             "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
             "focus_area": "Infrastructure",
             "created": "2021-01-13",
-            "slug": "salamo-bulking-center",
-            "indicators": [
-                8
-            ]
+            "slug": "salamo-bulking-center"
         }
     },
     {
@@ -131,10 +113,7 @@
             "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
-            "slug": "chiundaponde-bulking-center",
-            "indicators": [
-                8
-            ]
+            "slug": "chiundaponde-bulking-center"
         }
     },
     {
@@ -150,10 +129,7 @@
             "description": "The subcomponent involves construction of a bulking center which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
-            "slug": "katangalika-bulking-center",
-            "indicators": [
-                8
-            ]
+            "slug": "katangalika-bulking-center"
         }
     },
     {
@@ -169,10 +145,7 @@
             "description": "The subcomponent involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a rice storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
-            "slug": "chibale-bulking-center",
-            "indicators": [
-                8
-            ]
+            "slug": "chibale-bulking-center"
         }
     },
     {
@@ -188,10 +161,7 @@
             "description": "The subcomponent involves construction of a bulking centers which will include fencing, landscaping, construction of a residential house, ablution block, loading and offloading bay and a groundnuts, beans and finger millet storage facility.",
             "focus_area": "Infratructure",
             "created": "2021-01-13",
-            "slug": "kabulamwiko-bulking-centre",
-            "indicators": [
-                8
-            ]
+            "slug": "kabulamwiko-bulking-centre"
         }
     },
     {
@@ -207,10 +177,7 @@
             "description": "Establishment of a honey processing plant that offtake comb honey from beekeepers in Kanchibiya and Lavushimanda",
             "focus_area": "Infratructure",
             "created": "2021-08-13",
-            "slug": "dytech-honey-processing-subcomponent",
-            "indicators": [
-                5
-            ]
+            "slug": "dytech-honey-processing-subcomponent"
         }
     },
     {
@@ -226,10 +193,7 @@
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2020-08-13",
-            "slug": "lumika-subcomponent",
-            "indicators": [
-                4
-            ]
+            "slug": "lumika-subcomponent"
         }
     },
     {
@@ -244,10 +208,7 @@
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-07-19",
-            "slug": "sambolye-subcomponent",
-            "indicators": [
-                1
-            ]
+            "slug": "sambolye-subcomponent"
         }
     },
     {
@@ -263,10 +224,7 @@
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kalwalwa-subcomponent",
-            "indicators": [
-                4
-            ]
+            "slug": "kalwalwa-subcomponent"
         }
     },
     {
@@ -282,10 +240,7 @@
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kabembe-subcomponent",
-            "indicators": [
-                4
-            ]
+            "slug": "kabembe-subcomponent"
         }
     },
     {
@@ -301,10 +256,7 @@
             "description": "Creation of legal entity that will through forest management plans sustainably use specified forest areas at the community level",
             "focus_area": "Forest Management",
             "created": "2021-11-21",
-            "slug": "kanyembo-subcomponent",
-            "indicators": [
-                4
-            ]
+            "slug": "kanyembo-subcomponent"
         }
     }
 ]

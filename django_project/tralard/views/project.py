@@ -13,9 +13,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from tralard.models.project import Project
-from tralard.models.subcomponent import SubComponent
+from tralard.models.subcomponent import SubComponent, Indicator
 from tralard.models.beneficiary import Beneficiary
-from tralard.models.sub_project import Indicator, SubProject
+from tralard.models.sub_project import SubProject
 from tralard.forms.subcomponent import SearchForm, SubComponentForm
 from tralard.forms import (
     IndicatorForm,
@@ -168,9 +168,9 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
             self.subcomponent_page_number
         )
 
-        self.subproject_indicator_list = SubProject.objects.filter(
-             subcomponent__project__slug=self.project_object.slug
-            )
+        # self.subcomponnt_indicator_list = SubProject.objects.filter(
+        #      subcomponent__project__slug=self.project_object.slug
+        #     )
             
         indicator_forms = [
             {
@@ -203,11 +203,12 @@ class ProjectDetailView(LoginRequiredMixin, ListView):
             },
         ]
 
-        indicators_list = []
         current_year = datetime.now().year
-        indicators = Indicator.objects.filter(
-             indicator_related_subprojects__in=self.subproject_indicator_list
-        ).distinct()
+        # indicators = Indicator.objects.filter(
+        #       indicator_related_subcomponents__in=self.subproject_indicator_list
+        # ).distinct()
+        indicators = Indicator.objects.all()
+        indicators_list = []
             
         for indicator in indicators:
             indicator_data = {

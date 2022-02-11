@@ -484,7 +484,7 @@
   async function fetchDetailModalData(project_slug, subcomponent_slug, beneficiary_slug) {
     const origin = location.origin;
     const baseUrl = `${origin}/project/${project_slug}/subcomponent/${subcomponent_slug}/beneficiary`
-    const fetchUrl = `${baseUrl}/${beneficiary_slug}/detail/`
+    const fetchUrl = `${baseUrl}/${beneficiary_slug}/update/`
     const data = await fetchData(fetchUrl)
     $('#org-logo').attr('src', data.logo_url || "")
     $('#org-name').text(data.name || "")
