@@ -14,8 +14,20 @@ The latest source code is available at
 
 ## Key features
 
-* To be added
-
+* Granular user and access control management 
+* Project level definition and meta data capture
+* SubComponent management - project first level child entity
+* SubcCmponent Indicator management
+* Citizen Feedback management
+* SubProject management - Subcomponent child entity
+* Beneficiary Organization management - SubProject child entity
+* Fund, Disbursement, Expediture management - SubProject child entity
+* Training management - SubProject child entity - a high level training schedule manager
+* Indicator report generation
+* Custom report generation management for various data points
+* Web Map - dynamic and feature rich GIS web map for subprojects
+* REST API for data sharing - both browsable and interactive documentations 
+* GraphQL API - a feature rich appolo graphQL API as an alternative to REST clients
 
 ## Quick Installation Guide
 
