@@ -1284,7 +1284,7 @@
       "district": 75,
       "created": "2021-01-13",
       "slug": "Musele",
-      "location": "POINT(-9.33333 23.8833)"
+      "location": "POINT(-9.43333 32.8167)"
     }
   },
   {
@@ -2824,7 +2824,7 @@
       "district": 8,
       "created": "2022-01-13",
       "slug": "Fumbo",
-      "location": "POINT(-1.91667 8.75)"
+      "location": "POINT(-10.1167 33.1667)"
     }
   },
   {
@@ -2912,7 +2912,7 @@
       "district": 107,
       "created": "2022-01-13",
       "slug": "Jimbe",
-      "location": "POINT(-21.35 116.133)"
+      "location": "POINT(-11.1167 24.0167)"
     }
   },
   {
