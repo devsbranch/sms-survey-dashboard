@@ -1047,6 +1047,7 @@ def update_sub_project_fund(
             if form.is_valid():
                 with reversion.create_revision():
                     form.save()
+                    fund_obj.save()
                     reversion.set_user(request.user)
                     reversion.set_comment(form.instance.slug + " Fund Updated")
                     messages.success(request, "Fund updated successfully.")
@@ -1137,6 +1138,7 @@ def subproject_fund_disbursement_create(
             if form.is_valid():
                 form.instance.fund = fund_obj
                 form.save()
+                fund_obj.save()
                 messages.success(request, "Disbursement created successfully")
                 return redirect(
                     reverse_lazy(
@@ -1200,6 +1202,7 @@ def subproject_disbursement_expenditure_create(
             if form.is_valid():
                 form.instance.disbursment = disbursement_obj
                 form.save()
+                disbursement_obj.save()
                 messages.success(request, "Expenditure created successfully")
                 return redirect(
                     reverse_lazy(
