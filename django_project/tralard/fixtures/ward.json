@@ -5565,5 +5565,555 @@
       "slug": "Mulobezi",
       "location": "POINT(-16.8333 25.1167)"
     }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 739,
+    "field": {
+      "name": "Nawinda",
+      "district": 117,
+      "created": "2022-01-13",
+      "slug": "Nawinda",
+      "location": "POINT(-17.45 24.8167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 740,
+    "field": {
+      "name": "Sichili",
+      "district": 117,
+      "created": "2022-01-14",
+      "slug": "Sichili",
+      "location": "POINT(-16.7333 24.95)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 741,
+    "field": {
+      "name": "Mumbwa",
+      "district": 52,
+      "created": "2022-01-15",
+      "slug": "Mumbwa",
+      "location": "POINT(-14.9833 27.0667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 742,
+    "field": {
+      "name": "Mpusu",
+      "district": 52,
+      "created": "2022-01-16",
+      "slug": "Mpusu",
+      "location": "POINT(-14.4 27.05)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 743,
+    "field": {
+      "name": "Mumba",
+      "district": 52,
+      "created": "2022-01-17",
+      "slug": "Mumba",
+      "location": "POINT(-13.4667 29.6)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 744,
+    "field": {
+      "name": "Myooye",
+      "district": 52,
+      "created": "2022-01-18",
+      "slug": "Myooye",
+      "location": "POINT(-15.1833 27.3167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 745,
+    "field": {
+      "name": "Nakasaka",
+      "district": 52,
+      "created": "2022-01-19",
+      "slug": "Nakasaka",
+      "location": "POINT(-9.88333 32.75)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 746,
+    "field": {
+      "name": "Nambala",
+      "district": 52,
+      "created": "2022-01-20",
+      "slug": "Nambala",
+      "location": "POINT(-15.1167 27.0333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 747,
+    "field": {
+      "name": "Nangoma",
+      "district": 52,
+      "created": "2022-01-21",
+      "slug": "Nangoma",
+      "location": "POINT(-14.3667 22.0333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 748,
+    "field": {
+      "name": "Mungwi",
+      "district": 125,
+      "created": "2022-01-22",
+      "slug": "Mungwi",
+      "location": "POINT(-10 31.3667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 749,
+    "field": {
+      "name": "Chambeshi",
+      "district": 125,
+      "created": "2022-01-23",
+      "slug": "Chambeshi",
+      "location": "POINT(-11.8833 29.8)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 750,
+    "field": {
+      "name": "Chibamba",
+      "district": 125,
+      "created": "2022-01-24",
+      "slug": "Chibamba",
+      "location": "POINT(-10.6 31.6)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 751,
+    "field": {
+      "name": "Fibwe",
+      "district": 125,
+      "created": "2022-01-25",
+      "slug": "Fibwe",
+      "location": "POINT(-9.65 30.0833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 752,
+    "field": {
+      "name": "Fube",
+      "district": 125,
+      "created": "2022-01-26",
+      "slug": "Fube",
+      "location": "POINT(-10.0833 31.6)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 753,
+    "field": {
+      "name": "Kabisha",
+      "district": 125,
+      "created": "2022-01-27",
+      "slug": "Kabisha",
+      "location": "POINT(-9.78333 31.6833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 754,
+    "field": {
+      "name": "Lubala",
+      "district": 125,
+      "created": "2022-01-28",
+      "slug": "Lubala",
+      "location": "POINT(-10.2 30.5833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 755,
+    "field": {
+      "name": "Mabula",
+      "district": 125,
+      "created": "2022-01-29",
+      "slug": "Mabula",
+      "location": "POINT(-10.3667 31.3167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 756,
+    "field": {
+      "name": "Mpanda",
+      "district": 125,
+      "created": "2022-01-30",
+      "slug": "Mpanda",
+      "location": "POINT(-14.7833 26.7167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 757,
+    "field": {
+      "name": "Mungwi",
+      "district": 125,
+      "created": "2022-01-31",
+      "slug": "Mungwi",
+      "location": "POINT(-10 31.3667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 758,
+    "field": {
+      "name": "Mabumbu",
+      "district": 88,
+      "created": "2022-02-01",
+      "slug": "Mabumbu",
+      "location": "POINT(-17.45 24.9167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 759,
+    "field": {
+      "name": "Sankolonga",
+      "district": 88,
+      "created": "2022-02-02",
+      "slug": "Sankolonga",
+      "location": "POINT(-17.1667 25)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 760,
+    "field": {
+      "name": "Simungoma",
+      "district": 88,
+      "created": "2022-02-03",
+      "slug": "Simungoma",
+      "location": "POINT(-17.4167 24.75)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 761,
+    "field": {
+      "name": "Kayo",
+      "district": 126,
+      "created": "2022-02-04",
+      "slug": "Kayo",
+      "location": "POINT(-16.6667 22.8667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 762,
+    "field": {
+      "name": "Lufubu",
+      "district": 126,
+      "created": "2022-02-05",
+      "slug": "Lufubu",
+      "location": "POINT(-10.65 28.9333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 763,
+    "field": {
+      "name": "Mbereshi",
+      "district": 126,
+      "created": "2022-02-06",
+      "slug": "Mbereshi",
+      "location": "POINT(-9.7 28.8)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 764,
+    "field": {
+      "name": "Mulele",
+      "district": 126,
+      "created": "2022-02-07",
+      "slug": "Mulele",
+      "location": "POINT(-9.7 28)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 765,
+    "field": {
+      "name": "Mununshi",
+      "district": 126,
+      "created": "2022-02-08",
+      "slug": "Mununshi",
+      "location": "POINT(-11.15 30.8)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 766,
+    "field": {
+      "name": "Mwense",
+      "district": 81,
+      "created": "2022-02-09",
+      "slug": "Mwense",
+      "location": "POINT(-10.3833 28.6833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 767,
+    "field": {
+      "name": "Chibembe",
+      "district": 81,
+      "created": "2022-02-10",
+      "slug": "Chibembe",
+      "location": "POINT(-12.7833 29.9)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 768,
+    "field": {
+      "name": "Kalanga",
+      "district": 81,
+      "created": "2022-02-11",
+      "slug": "Kalanga",
+      "location": "POINT(-13.4667 22.0667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 769,
+    "field": {
+      "name": "Kaombe",
+      "district": 81,
+      "created": "2022-02-12",
+      "slug": "Kaombe",
+      "location": "POINT(-13.6 30.6667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 770,
+    "field": {
+      "name": "Kapela",
+      "district": 81,
+      "created": "2022-02-13",
+      "slug": "Kapela",
+      "location": "POINT(-11.8833 29.55)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 771,
+    "field": {
+      "name": "Kasengu",
+      "district": 81,
+      "created": "2022-02-14",
+      "slug": "Kasengu",
+      "location": "POINT(-10.2167 31.2333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 772,
+    "field": {
+      "name": "Katiti",
+      "district": 81,
+      "created": "2022-02-15",
+      "slug": "Katiti",
+      "location": "POINT(-11.1167 32.25)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 773,
+    "field": {
+      "name": "Luche",
+      "district": 81,
+      "created": "2022-02-16",
+      "slug": "Luche",
+      "location": "POINT(-10.2 28.6333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 774,
+    "field": {
+      "name": "Lundashi",
+      "district": 81,
+      "created": "2022-02-17",
+      "slug": "Lundashi",
+      "location": "POINT(-10.6167 28.6833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 775,
+    "field": {
+      "name": "Mambilima",
+      "district": 81,
+      "created": "2022-02-18",
+      "slug": "Mambilima",
+      "location": "POINT(-10.5333 28.6167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 776,
+    "field": {
+      "name": "Munwa",
+      "district": 81,
+      "created": "2022-02-19",
+      "slug": "Munwa",
+      "location": "POINT(-13.3833 29.9167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 777,
+    "field": {
+      "name": "Musonda",
+      "district": 81,
+      "created": "2022-02-20",
+      "slug": "Musonda",
+      "location": "POINT(-9.18333 31.8667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 778,
+    "field": {
+      "name": "Nkanga",
+      "district": 81,
+      "created": "2022-02-21",
+      "slug": "Nkanga",
+      "location": "POINT(-11.3 32.8667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 779,
+    "field": {
+      "name": "Mwinilunga",
+      "district": 54,
+      "created": "2022-02-22",
+      "slug": "Mwinilunga",
+      "location": "POINT(-11.85 24.3667)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 780,
+    "field": {
+      "name": "Chibwika",
+      "district": 54,
+      "created": "2022-02-23",
+      "slug": "Chibwika",
+      "location": "POINT(-11.9 24.1)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 781,
+    "field": {
+      "name": "Chisasa",
+      "district": 54,
+      "created": "2022-02-24",
+      "slug": "Chisasa",
+      "location": "POINT(-12.1667 25.5833)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 782,
+    "field": {
+      "name": "Kakoma",
+      "district": 54,
+      "created": "2022-02-25",
+      "slug": "Kakoma",
+      "location": "POINT(-15.2167 28.15)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 783,
+    "field": {
+      "name": "Kamapanda",
+      "district": 54,
+      "created": "2022-02-26",
+      "slug": "Kamapanda",
+      "location": "POINT(-11.9833 24.05)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 784,
+    "field": {
+      "name": "Kanongesha",
+      "district": 54,
+      "created": "2022-02-27",
+      "slug": "Kanongesha",
+      "location": "POINT(-11.7 24.0333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 785,
+    "field": {
+      "name": "Kanyama",
+      "district": 54,
+      "created": "2022-02-28",
+      "slug": "Kanyama",
+      "location": "POINT(-11.4333 24.75)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 786,
+    "field": {
+      "name": "Kapundu",
+      "district": 54,
+      "created": "2022-03-01",
+      "slug": "Kapundu",
+      "location": "POINT(-11.5333 24.7333)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 787,
+    "field": {
+      "name": "Kasampula",
+      "district": 54,
+      "created": "2022-03-02",
+      "slug": "Kasampula",
+      "location": "POINT(-11.6167 25.2167)"
+    }
+  },
+  {
+    "model": "tralard.Ward",
+    "pk": 788,
+    "field": {
+      "name": "Lumwana",
+      "district": 54,
+      "created": "2022-03-03",
+      "slug": "Lumwana",
+      "location": "POINT(-12.4167 25.6333)"
+    }
   }
 ]
