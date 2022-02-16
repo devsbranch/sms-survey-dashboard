@@ -14,6 +14,7 @@
 {% include 'accounts/includes/user-delete-modal.html' %}
 {% include 'accounts/includes/user-roles-display-modal.html' %}
 {% include 'accounts/includes/user-detail-modal.html' %}
+{% include 'accounts/includes/staff-admin-display-modal.html' %}
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer" id="funds-list">
   <div class="dashboard-inner">
@@ -25,8 +26,7 @@
           <!-- Page title -->
           <div class="contacts-title-wrapper">
             <div class="title-wrap">
-              <h2 class="project-title">System Users</h2>
-              <h4 class="project-tagline">showing all available users: {{available_user_count}}</h4>
+              <h2 class="project-title">System Users</h2><br />
           </div>
             <!-- Filter input -->
             <div class="list-filter">
@@ -39,21 +39,119 @@
                 <div class="form-icon">
                   <i data-feather="filter"></i>
                 </div>
-              </div> 
+              </div>
 
-              <a href="/" style="color: white;"
-                class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
-                data-ripple-color=""
+              <a href="/accounts/user/management/list/" style="color: white;"
+              class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
+              data-ripple-color=""
               >
-                <span style="padding-right: 6px;">Home</span>
-                <i class="material-icons">send</i>
-              </a>
+              <i class="material-icons">refresh</i>
+              <span style="padding-right: 6px;">Reload page</span>
+            </a>
+            <a href="/" style="color: white;"
+              class="button btn-dash secondary-btn btn-dash raised {% comment %} ripple {% endcomment %} has-icon modal-trigger"
+              data-ripple-color=""
+            >
+              <span style="padding-right: 6px;">Home</span>
+              <i class="material-icons">send</i>
+            </a>
             </div>
+          </div>
+          <div class="d-flex justify-content-between">
+
+            <fieldset class="d-flex flex">
+              <span class="material-icons">group s</span>
+              <div data-toggle="popover"
+              data-placement="top" title="Users" data-trigger="hover"
+              data-content="total system users">
+                <span class="badge badge-info" style="border-radius: 0em; padding-right: 8px;">
+                  <b class="" style="cursor:pointer; color: white; padding: 12px;">
+                    {{ users.count }}
+                  </b>
+                </span>
+              </div>
+            </fieldset>
+        
+            <fieldset class="d-flex flex" onclick="">
+              <span class="material-icons" >group s</span>
+              <div data-toggle="popover"
+              data-placement="top" title="Superusers" data-trigger="hover"
+              data-content="total superuser count. Click for more info.">
+                <span onclick="document.getElementById('administrator_display_modal').style.display='block'" class="badge badge-info" style="border-radius: 0em; padding-right: 8px;">
+                  <b  class="" style="cursor:pointer; color: white; padding: 12px;">
+                    {{ superusers.count }}
+                  </b>
+                </span>
+              </div>
+              <script>
+                document.getElementById("card-data-container").innerHTML = `
+                  {% for superuser in superusers.all_superusers %}
+                      <div>
+                        <div class="card">
+                          
+                          <div class="card-body" stye="line-height: 2px; display: flex;">
+                            <form method="get" action="">
+                              <input type="hidden" value="{{ superuser.username }}" name="username"/>
+                              <button type="submit" style="float:right; background-color: #21546d; color: white; margin-top: 9px; margin-right: -9px;" href="#" class="btn"><span class="material-icons">search</span></button><br>
+                              <hr>
+                            </form>
+                            <h4>Username: {{ superuser.username }}</h4>
+                            <h4>First Name: {{ superuser.first_name }}</h4>
+                            <h4>Last Name: {{ superuser.last_name }}</h4>
+                            <h4>Email: {{ superuser.email }}</h4>
+                            <hr>
+                          </div>
+                        </div>
+                      </div><br>
+                      {% endfor %}
+                      `;
+                  
+              </script>
+
+            </fieldset>
+            <fieldset class="d-flex flex">
+              <span class="material-icons">group a</span>
+              <div data-toggle="popover"
+              data-placement="top" title="Staff" data-trigger="hover"
+              data-content="total staff count. Click for more info.">
+                <span class="badge badge-info" style="border-radius: 0em; padding-right: 8px;">
+                  <b onclick="document.getElementById('staff_display_modal').style.display='block'" class="" style="cursor:pointer; color: white; padding: 12px;">
+                    {{ staffs.count }}
+                  </b>
+                </span>
+              </div>
+              <script>
+                document.getElementById("card-data-container2").innerHTML = `
+                  {% for staff in staffs.all_staffs %}
+                      <div>
+                        <div class="card">
+                          
+                          <div class="card-body" stye="line-height: 2px; display: flex;">
+                            <form method="get" action="">
+                              <input type="hidden" value="{{ staff.username }}" name="username"/>
+                              <button type="submit" style="float:right; background-color: #21546d; color: white; margin-top: 9px; margin-right: -9px;" href="#" class="btn"><span class="material-icons">search</span></button><br>
+                              <hr>
+                            </form>
+                            <h4>Username: {{ staff.username }}</h4>
+                            <h4>First Name: {{ staff.first_name }}</h4>
+                            <h4>Last Name: {{ staff.last_name }}</h4>
+                            <h4>Email: {{ staff.email }}</h4>
+                            <hr>
+                          </div>
+                        </div>
+                      </div><br>
+                      {% endfor %}
+                      `;
+                  
+              </script>
+            </fieldset>
+            
           </div>
           <div
             class="flex-card is-contact-list light-bordered card-overflow is-hidden-mobile"
           >
             <!-- Contacts table -->
+            
             <table class="table contacts-table">
               <!-- Table header -->
               <div data-title="Add new user" class="add-button modal-trigger" 
@@ -180,7 +278,7 @@
               <!-- Table body -->
               <tbody style="color: gray;">
                 <!-- Table row -->
-                {% for user in all_users %}
+                {% for user in users.all_users %}
                 <tr>
                   <td>
                     <div class="b-checkbox is-secondary">

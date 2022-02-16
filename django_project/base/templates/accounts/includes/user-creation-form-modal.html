@@ -2,43 +2,38 @@
 <div id="user-register-modal123" class="modal create-task-modal modal-hero">
     <div class="modal-background"></div>
     <div class="modal-content" style="">
-        <div class="flex-card simple-shadow" style="min-width: 650px;">
-            <div class="navigation-tabs layout-tabs animated-tabs">
-                <div id="task-details" class="navtab-content is-active">
-                    <div class="card-body" style="max-height: 700px;">
-                            <div id="classic" class="login-form-wrapper">
-                                <div id="login-form" class="animated preFadeInLeft fadeInLeft">
-                                    <form id="user-creator-form123" role="form" method="post" action="/accounts/register/new-user/">
-                                        {% csrf_token %}
-                                        <div class="field has-text-centered">
-                                            <p>
-                                                Add user credentials
-                                            </p> 
-                                        </div>
-                                        <br />
-                                        <div class="auth-card" style="max-width: 600px;">
-                                            
-                                            <!-- Hide form fields, if the registration is successfull -->    
-                                            {% if not success %}    
-                                        
-                                            <div class="field">
-                                                <div class="control">
-                                                    {{ request.user.profile.user_create_form|crispy }}
-                                                </div>
-                                            </div>
-            
-                                            <br />
-                                        <div class="button-wrap">
-                                            <button type="submit" name="register" id="register-button123" class="button">Register</button>
-                                        </div>
-                                        {% endif %}
-            
-                                        </div>
-                                    
-                                    </form>
+        
+        <div class="flex-card simple-shadow" style="min-width: 650px; margin:4px, 4px; padding:4px; overflow-x: hidden; overflow-y: auto; text-align:justify;">
+            <div id="classic" class="login-form-wrapper">
+                <div id="login-form" class="animated preFadeInLeft fadeInLeft">
+                    <form id="user-creator-form123" role="form" method="post" action="/accounts/register/new-user/">
+                        {% csrf_token %}
+                        <div class="field has-text-centered">
+                            <p>
+                                Add user credentials
+                            </p> 
+                        </div>
+                        <br />
+                        <div class="auth-card" style="max-width: 600px;">
+                            
+                            <!-- Hide form fields, if the registration is successfull -->    
+                            {% if not success %}    
+                        
+                            <div class="field">
+                                <div class="control">
+                                    {{ request.user.profile.user_create_form|crispy }}
                                 </div>
                             </div>
-                    </div>
+
+                            <br />
+                        <div class="button-wrap">
+                            <button type="submit" name="register" id="register-button123" class="button">Register</button>
+                        </div>
+                        {% endif %}
+
+                        </div>
+                    
+                    </form>
                 </div>
             </div>
         </div>

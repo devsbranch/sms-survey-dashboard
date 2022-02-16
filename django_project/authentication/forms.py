@@ -43,6 +43,8 @@ class SignUpForm(UserCreationForm):
             'last_name',
             'email',
             'groups',
+            'is_staff',
+            'is_superuser',
             'password1',
             'password2'
         ]
@@ -82,7 +84,7 @@ class UserUpdateForm(UserCreationForm):
             }    
         ), 
         required=False
-    )  
+    )
     password2 = forms.CharField(
         label='Confirm password', 
         widget=forms.PasswordInput(
@@ -91,7 +93,7 @@ class UserUpdateForm(UserCreationForm):
             }    
         ), 
         required=False
-    )  
+    )
     class Meta:
         model = User
         fields = [

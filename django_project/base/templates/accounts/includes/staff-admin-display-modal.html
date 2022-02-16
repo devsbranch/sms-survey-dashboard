@@ -1,0 +1,152 @@
+{% load static %}
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+<div class="projects-list-wrapper">
+<div class="list-body">
+<div class="w3-container">
+<div id="administrator_display_modal" class="w3-modal">
+    <div class="w3-modal-content w3-card-4 w3-animate-zoom" style=" margin-top: -1em; background: #f4f6fb; max-height: 90%; overflow-y: scroll; border-radius: 1em;">
+        <!-- Main Training container -->
+        <div id="dashboard-wrapper" class="dashboard-outer">
+            <!-- <div class="dashboard-inner"> -->
+                
+                <!-- Dashboard Wrapper -->
+                <div class="dashboard-wrapper">
+                    <div id="main-dashboard" class="section-wrapper">
+                        <div class="columns contact-profile">
+                            <!-- Avatar Card -->
+                            <div class="column is-12">
+                                <div class="flex-card is-avatar light-bordered card-overflow">
+                                    <button onclick="document.getElementById('administrator_display_modal').style.display='none'" style="background-color: red; color:white;" class="w3-button w3-right w3-border w3-display-topright">X
+                                    </button>
+                                    <div class="info-card">
+                                        <div class="info-header">
+                                            <h3 id="group123">Superusers</h3>
+                                        </div>
+                                        <div class="info-block">
+                                            <div class="meta">
+                                                <label>showing all available superusers</label>
+                                                <div style="
+                                                display: flex-container;
+                                                font-size: 16px;
+                                                " class="flex-container" 
+                                                id="user-role-container">
+                                                <span class="e"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span id="card-data-container"></span>
+                                   
+                                    <div class="inner">
+                                        <div class="column is-6">
+                                            <hr>
+                                            </div>
+                                        </div>
+                                            <!-- <hr/> -->
+                                            <div class="stats-flex">
+                                                <div class="stat">
+                                                </div>
+                                                <div class="column is-12" id="group-list123">
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                        </div>
+                        <!-- Dashboard content -->
+                        <div id="basic-layout" class="dashboard-columns">
+                            <div class="contact-profile-wrap">
+                                <!-- Page title -->
+                                <div class="contacts-title-wrapper">
+                                    <span id="form-form1"></span>
+                                    <div id="form-form2">
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</div>
+</div>
+
+
+<div class="projects-list-wrapper">
+    <div class="list-body">
+    <div class="w3-container">
+    <div id="staff_display_modal" class="w3-modal">
+        <div class="w3-modal-content w3-card-4 w3-animate-zoom" style=" margin-top: -1em; background: #f4f6fb; max-height: 90%;  max-width: 100%; overflow-y: scroll; border-radius: 1em;">
+            <!-- Main Training container -->
+            <div id="dashboard-wrapper" class="dashboard-outer">
+                <!-- <div class="dashboard-inner"> -->
+                    <!-- Dashboard Wrapper -->
+                    <div class="dashboard-wrapper">
+                        <div id="main-dashboard" class="section-wrapper">
+                            <!-- Dashboard content -->
+                            <div id="basic-layout" class="dashboard-columns">
+                                <div class="contact-profile-wrap">
+                                    <!-- Page title -->
+                                    <div class="column is-12">
+                                        <div class="flex-card is-avatar light-bordered card-overflow">
+                                            <button onclick="document.getElementById('staff_display_modal').style.display='none'" style="background-color: red; color:white;" class="w3-button w3-right w3-border w3-display-topright">X
+                                            </button>
+                                            <div class="info-card">
+                                                <div class="info-header">
+                                                    <h3 id="group123">Staff</h3>
+                                                </div>
+                                                <div class="info-block">
+                                                    <div class="meta">
+                                                        <label>showing all available staff members</label>
+                                                        <div style="
+                                                        display: flex-container;
+                                                        font-size: 16px;
+                                                        " class="flex-container" 
+                                                        id="user-role-container">
+                                                        <span class="e"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <span id="card-data-container2"></span>
+                                           
+                                            <div class="inner">
+                                                <div class="column is-6">
+                                                    <!-- <hr> -->
+                                                    </div>
+                                                </div>
+                                                  <!-- Avatar -->
+                                                  <!-- <fieldset class="border w-auto" style="margin-right: -4em; width: fit-content;">
+                                                    <div class="contact-block">
+                                                        <div class="avatar-wrapper">
+                                                            <img id="user-profile-photo123" src="" alt="" data-demo-src="{% static 'assets/images/avatars/nick.jpg' %}">
+                                                        </div>
+                                                    </div>
+                                                    </fieldset> -->
+                                                    <!-- Stats -->
+                                                    <div class="stats-flex">
+                                                        <div class="stat">
+                                                        </div>
+                                                        <div class="column is-12" id="group-list123">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    </div>
+                                    <div class="contacts-title-wrapper">
+                                        <span id="form-form1"></span>
+                                        <div id="form-form2">
+                                        </div>
+                                    </div>
+                                    <div class="columns contact-profile" style="">
+                                        <!-- Avatar Card -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
+</div>

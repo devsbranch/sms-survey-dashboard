@@ -124,11 +124,32 @@ def list_user(request):
             return redirect("/accounts/user/management/list/")
 
     users = User.objects.all().order_by("-date_joined")
-    user_paginator = Paginator(users, 7)
-    user_page_number = request.GET.get('user_page_number', '')
-    user_paginator_list = user_paginator.get_page(user_page_number)
+    try:
+        username = request.GET.get("username")
+        users = User.objects.get(username=username)
+    except:
+        pass
+    try:
+        user_paginator = Paginator(users, 7)
+        user_page_number = request.GET.get('user_page_number', '')
+        user_paginator_list = user_paginator.get_page(user_page_number)
+    except:
+        user_paginator_list = [users]
+    superusers = User.objects.all().filter(is_superuser=True)
+    staffs = User.objects.all().filter(is_staff=True)
     context = {
         "all_users": user_paginator_list,
-        "available_user_count": users.count(),
+        "users": {
+            'count': User.objects.all().count(), 
+            'all_users': user_paginator_list
+        },
+        "superusers": {
+            'count': superusers.count(),
+            'all_superusers': superusers,
+        },
+        "staffs": {
+            'count': staffs.count(),
+            'all_staffs': staffs,
+        },
     }
     return render(request, 'accounts/includes/system-user-list.html', context)
