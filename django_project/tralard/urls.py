@@ -2,7 +2,6 @@
 from django.conf import settings
 from django.urls import path
 from django.conf.urls.static import static
-
 from tralard.views.beneficiary import (
     beneficiary_detail,
     beneficiary_update,
@@ -46,6 +45,7 @@ from tralard.views.subcomponent import (
     update_sub_project,
 )
 from tralard.views.sub_project import (
+    progress_status_detail,
     sub_project_update,
     SubProjectDetailView,
     file_upload_view,
@@ -70,7 +70,6 @@ from tralard.views.project import (
     ProjectDetailView, 
     preview_indicator_document,
 )
-
 app_name = "tralard"
 urlpatterns = [
     # -------- dashboard --------
@@ -331,9 +330,14 @@ urlpatterns = [
         name="subproject-fund-disbursement-expenditure-create",
     ),
     path(
-        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>update/",
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/update/",
         sub_project_update,
         name="subproject-update",
+    ),
+    path(
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/progress-status/<int:progress_status_id>/detail/",
+        progress_status_detail,
+        name="progress-status-detail",
     ),
     path(
         "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/subproject/<slug:subproject_slug>/manage/fund/<slug:fund_slug>/approve/",

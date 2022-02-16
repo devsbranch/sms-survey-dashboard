@@ -160,7 +160,8 @@ class ProgressStatusForm(ModelForm):
             "photos",
             "comment", 
             "subproject", 
-            "is_completed"
+            "is_completed",
+            "timestamp"
         ]
         widgets = {
             "created": widgets.DateInput(

@@ -269,6 +269,11 @@ class Photo(models.Model):
         db_column="img_id",
         on_delete=models.CASCADE
     )
+    progress_status = models.ForeignKey(
+        'tralard.ProgressStatus',
+        default="",
+        on_delete=models.CASCADE
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self) -> str:
@@ -277,6 +282,10 @@ class Photo(models.Model):
     @property
     def get_image(self):
         return self.image.file
+    
+    @property
+    def get_images(self):
+        return self.image
 
     @property
     def sub_project_create_form():
@@ -298,17 +307,16 @@ class ProgressStatus(models.Model):
         null=True,
         blank=True
     )
-    photos  = models.ManyToManyField(
-        'tralard.Photo',
-        blank=True,
-        related_name='progress_statuses'
-    )
     subproject = models.ForeignKey(
         'tralard.SubProject', 
         on_delete=models.CASCADE
     )
     is_completed = models.BooleanField(default=False)
     created = models.DateField(
+        auto_now_add=False, 
+        default=datetime.datetime.now
+    )
+    timestamp = models.DateTimeField(
         auto_now_add=False, 
         default=datetime.datetime.now
     )

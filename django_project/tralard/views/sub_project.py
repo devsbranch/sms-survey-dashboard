@@ -9,6 +9,7 @@ __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM
 View classes for a SubProject
 """
 import logging
+import datetime
 
 from django.http import (
     Http404,
@@ -16,7 +17,7 @@ from django.http import (
     JsonResponse,
     HttpResponseRedirect,
 )
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
     ListView,
     CreateView,
@@ -40,7 +41,7 @@ from exif import Image
 from reversion.models import Version
 from reversion.views import RevisionMixin
 from braces.views import LoginRequiredMixin
-from filer.models import Image as ImageSave
+from filer.models import Image as FilerImage
 from rolepermissions.decorators import has_role_decorator
 
 from tralard.forms import (
@@ -314,7 +315,7 @@ def sub_project_training_update(
 
 
 @login_required(login_url="/login/")
-def sub_project_update(request, project_slug, subcomponent_slug, subproject_slug):
+def sub_project_update(request, project_slug, subproject_slug):
     subproject = SubProject.objects.get(slug=subproject_slug)
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
@@ -327,7 +328,7 @@ def sub_project_update(request, project_slug, subcomponent_slug, subproject_slug
         )
         return redirect(
             reverse_lazy(
-                "tralard:subcomponent-detail",
+                "tralard:subproject-manage",
                 kwargs={
                     "project_slug": project_slug,
                     "subcomponent_slug": subproject.subcomponent.slug
@@ -452,70 +453,100 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         sub_project = self.get_object()
-        
+        self.progress_status_qs = ProgressStatus.objects.filter(subproject__name=sub_project.name).order_by("-created")
+
         progress_status_data = []
-        self.progress_status_qs = ProgressStatus.objects.all().order_by("-created")
-        for progress_status in self.progress_status_qs:
-            progress_status_photos = Photo.objects.filter(
-                progress_statuses__in=self.progress_status_qs
-            ).order_by("-created")
-            progress_status_data.append(
-                {
-                    'progress_status_obj': progress_status,
-                    'photos': progress_status_photos
-                }
-            )
+    
+        for status in self.progress_status_qs:
+            progress_status = {}
+            progress_status['id'] = status.id
+            progress_status['status'] = status.status
+            progress_status['comment'] = status.comment
+            progress_status['created'] = status.created
+            photos = []
+            for pic in status.photo_set.all().order_by('-created'):
+                photos.append(pic)
+            
+            progress_status['photos'] = photos
+
+            progress_status_data.append(progress_status)   
 
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
         context["progress_status_qs"] = self.progress_status_qs
         context['progress_status_form'] = ProgressStatusForm
+        context['progress_status_data'] = progress_status_data
+        context['project_slug'] = self.kwargs.get("project_slug", None)
+        context['subcomponent_slug'] = self.kwargs.get("subcomponent_slug", None)
+        context['subproject_slug'] = self.kwargs.get("subproject_slug", None)
         return context
 
 
-@login_required
-def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
-    subproject_obj = SubProject.objects.get(slug=subproject_slug)
+@login_required(login_url="/login/")
+def progress_status_detail(request, project_slug, subcomponent_slug, subproject_slug, progress_status_id):
+    progress_status = ProgressStatus.objects.get(id=progress_status_id)
+    context = {
+        'progress_status': progress_status, 
+        "photos": progress_status.photo_set.all(),
+        "project_slug": project_slug,
+        "subcomponent_slug": subcomponent_slug,
+        "subproject_slug": subproject_slug,
+    }
+    return render(request, 'project/progress_status_detail.html', context)
 
+
+@login_required
+def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):   
+    subproject_obj = SubProject.objects.get(slug=subproject_slug)
+    clean_subproject_name = (
+        subproject_obj.name.lower().replace(" ", "_").replace(",", "")
+    )
+    
+    current_time = datetime.datetime.now()
+    
     if request.method == "POST":
-        photos = request.FILES.getlist("file")
+        photos = request.FILES.items()
         status = request.POST.get("status")
-        comment = request.POST.gett("comment")
-        is_completed = request.POST.get("is_completed")
+        comment = request.POST.get("custom_comment")
+        is_completed = request.POST.get("custom_is_completed")
+        if is_completed == "on":
+            is_completed = True
+        else:
+            is_completed = False
         created = request.POST.get("created")
         
-        progress_trail = ProgressStatus(
+        ProgressStatus(
             status=status,
             comment=comment,
             is_completed=is_completed,
-            created=created
-        )
-        progress_trail.subproject = subproject_obj
-        progress_trail.save()
+            created=created,
+            subproject = subproject_obj,
+            timestamp=current_time
+        ).save()
+       
+        progress_status_obj = ProgressStatus.objects.get(
+            timestamp=current_time
+        ) 
+        for _, photo in photos:                      
+            if photo:
+                temp_saved_photo = FilerImage(file=photo)
+                temp_saved_photo.save()
+                photo_obj = Photo.objects.create(
+                    name=photo.name,
+                    image=temp_saved_photo,
+                    progress_status= progress_status_obj
+                )                              
+                photo_obj.save()
+
+                save_to_temp_dir(clean_subproject_name, photo)
+                            
+                delete_temp_file(photo_obj)        
         
-        for photo in photos:
-            temp_saved_photo = ImageSave(file=photo)
-            temp_saved_photo.save()
-            photo = Photo(
-                name=photo.name, image=temp_saved_photo
-            )
-            photo.save()
-            progress_trail.photos.add(photo)
-
-            clean_subproject_name = (
-                subproject_obj.name.lower().replace(" ", "_").replace(",", "")
-            )
-
-            img_path = save_to_temp_dir(clean_subproject_name, photo)
-
-            with open(img_path, "rb") as src:
-                image_bytes = src.read()
-                img = Image(image_bytes)
-            delete_temp_file(photo)
-
+        delete_temp_dir(clean_subproject_name)       
         
-        delete_temp_dir(clean_subproject_name)
-        return HttpResponse({}, content_type="applicaiton/json")
+        messages.success(request, "Your progress status has been saved.")
+        return HttpResponse({"message" : "success"}, status=200)
+    return JsonResponse({"message" : "error"}, status=400)
 
 
 # noinspection PyAttributeOutsideInit

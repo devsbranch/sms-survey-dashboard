@@ -9,10 +9,14 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-<!-- PAGE content goes HERE -->
+
 {% block content %}
+<!-- Update Subproject Modal -->
+{% include 'includes/subproject-update-modal.html' %}
 
 <!-- Main dashboard container -->
+{% include 'includes/image-gallery-modal.html' %}
+
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer">
   <div class="dashboard-inner">
@@ -36,7 +40,7 @@
                   <!-- Dropdown menu -->
                   <div class="dropdown-menu is-text-bigger" role="menu">
                     <div class="dropdown-content">
-                      <a id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
+                      <a id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2" data-modal="edit-subproject-modal"
                         class="dropdown-item modal-trigger"
                       >
                         <i class="sl sl-icon-pencil"></i>
@@ -45,6 +49,19 @@
                           <span>Edit subproject</span>
                         </span>
                       </a>
+                      <script>
+                        var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
+                          uniqueEditSelectorButton.addEventListener("click", () => {    
+                             if("{{ sub_project.slug }}" == "{{ sub_project.slug }}"){
+                                document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
+                                document.getElementById("update-sub_project-form").action = `{% url 'tralard:subproject-update' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug %}`;
+                                document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
+                                document.getElementById("subproject-update123").innerHTML += `{{ subproject.subproject_update_form|crispy }}`;
+                                document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
+                                document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
+                             }
+                           });
+                     </script>
                       <div class="dropdown-divider"></div>
                       <a class="dropdown-item">
                         <i class="sl sl-icon-trash"></i>
@@ -312,10 +329,9 @@
             {% include 'includes/subproject-image-gallery.html' %}
           </div>
         </div>
-        
+                       
 
 
-        
       </div>
     </div>
   </div>
@@ -329,119 +345,24 @@
   id="message-contact-modal"
   class="modal modal-md message-contact-modal modal-hero"
 >
+  
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="flex-card simple-shadow">
       <h2 class="dark-text">New Progress Status Entry</h2>
+      
       <div class="card-body">
-             
-         <!-- Drop Zone -->
-         <form id="my-dropzone" action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
+        <form id="my-dropzone-form" action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
           {% csrf_token %}    
           {% crispy progress_status_form progress_status_form.helper %}   
 
             <div class="fallback">
               <input name="file" type="file" multiple>
             </div>
-              <button type="submit" class="button btn-primary">Create Status</button>
+            <div class="modal-footer col-12">
+              <button type="submit" id="submit-status-data" class="btn btn-primary"  style="border-radius: 20px; width: 100%;">Create Status</button>
+            </div>
         </form>
-         
-      </div>
-    </div>
-  </div>
-  <button class="modal-close is-large is-hidden" aria-label="close"></button>
-</div>
-<!-- /Invite User Modal -->
-
-<!-- Update Subproject Modal -->
-
-{% include 'includes/subproject-update-modal.html' %}
-
-<!-- End of subproject modal -->
-
-
-<!-- Log call Modal -->
-<div
-  id="call-contact-modal"
-  class="modal modal-md call-contact-modal modal-hero"
->
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="dark-text">Log Call</h2>
-      <div class="card-body">
-        <div class="has-text-centered">
-          <div class="image">
-            <img src="{% static 'assets/images/icons/log-call.svg' %}" alt="" />
-          </div>
-          <div class="help-text has-text-centered">
-            Log a phone call you had with this contact
-          </div>
-
-          <div class="field">
-            <div class="control has-icons-left">
-              <input
-                id="call-picker"
-                class="input is-medium"
-                type="text"
-                placeholder="When was it?"
-              />
-              <span class="icon is-left">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <select class="chosen-select" data-placeholder="Type of Call">
-                <option label="Type of Call"></option>
-                <option>Outgoing</option>
-                <option>Incoming</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control has-icons-left">
-              <input
-                class="input is-medium"
-                type="number"
-                placeholder="Call duration (in minutes)"
-              />
-              <span class="icon is-left">
-                <i class="fa fa-clock-o"></i>
-              </span>
-            </div>
-          </div>
-
-          <div class="field">
-            <div class="control">
-              <textarea
-                class="textarea"
-                rows="6"
-                placeholder="Quick summary of the conversation"
-              ></textarea>
-            </div>
-          </div>
-
-          <div class="send-copy">
-            <div class="field">
-              <input
-                id="subscribedSwitch"
-                type="checkbox"
-                name="subscribedSwitch"
-                class="switch is-secondary"
-              />
-              <label for="subscribedSwitch"
-                ><span>Notify subscribed users?</span></label
-              >
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="submit" class="button is-modal">Log Call</button>
       </div>
     </div>
   </div>
@@ -466,43 +387,55 @@
 
   Dropzone.autoDiscover = false;
 
-  const myDropzone = new Dropzone("#my-dropzone", {
-    url:"upload/",
-    maxFiles: 5,
+  const myDropzone = new Dropzone("#my-dropzone-form", {
+    autoProcessQueue: false,
+    url: $('#my-dropzone-form').attr('action'),
+    uploadMultiple: true,
     maxFilesize: 2,
-    acceptedFiles: ".jpeg,.jpg,.png,.gif",
-    addRemoveLinks: true,
+    maxFiles: 10,
+    acceptedFiles: ".jpeg,.jpg,.png,.PNG,.JPEG,.JPG",
+    parallelUploads: 10,
     dictDefaultMessage:
       '<span class="text-center"><span class="font-weight-bold file-icon"></span> Click or Drop progress status photos here</span>',
     dictRemoveFile: "Remove file",
-    dictMaxFilesExceeded: "You can only upload 4 files",
+    dictMaxFilesExceeded: "You can only upload 10 files",
     dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
     dictInvalidFileType: "You can't upload files of this type",
     
     // we dont want to auto upload photos 
-    // take control of submitting so that we  create progress status then  attach  the photos  after
-    autoProcessQueue: false,
+    // take control of submitting so that we create progress status then  attach  the photos  after
     init: function () {
-
+      var submitButton = document.querySelector("#submit-status-data");
+      var url = $('#my-dropzone-form').attr('action');
       var DropzoneInstance = this;
 
-      $("#button").click(function (e) {
-          e.preventDefault();
-          DropzoneInstance.processQueue();
-      });
+      // process queued images on click
+      submitButton.addEventListener("click", function(e){
+        e.preventDefault();
+        DropzoneInstance.processQueue();
+      })
 
-      this.on('sending', function(file, xhr, formData) {
+      //fire the images to url
+      DropzoneInstance.on("processing", function(file) {
+          DropzoneInstance.options.url = url;
+        });
+
+      DropzoneInstance.on('sending', function(file, xhr, formData) {
           // Append all form inputs to the formData that Dropzone will POST
           var data = $('#frmTarget').serializeArray();
           $.each(data, function(key, el) {
+            console.log("FILE", file)
+            console.log("FORM DATA", formData)
               formData.append(el.name, el.value);
           });
+      });
+      DropzoneInstance.on("complete", function(file) {
+        DropzoneInstance.removeFile(file);
       });
     }
   }
 )
   
 </script>
-
 
 {% endblock javascripts %}
