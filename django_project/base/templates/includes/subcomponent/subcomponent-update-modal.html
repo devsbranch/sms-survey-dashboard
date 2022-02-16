@@ -3,9 +3,8 @@
 {% load crispy_forms_tags %}
 
 <!-- Update project Modal --><!-- update-project-modal -->
-<div class="modal icon-action-modal modal-hero"
-     id="update-project-modal"
-     aria-labelledby="update-project">
+<div id="update-project-modal" class="modal icon-action-modal modal-hero" aria-labelledby="update-project">
+
     <div class="modal-background modal-dismiss"></div>
     <div class="modal-content" style="width:720px; !important;">
         <div class="flex-card simple-shadow" style="overflow-y: auto;">
@@ -14,25 +13,30 @@
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
+                    {% if subcomponent.project.logo %}
                     <div class="image">
-                        <img src="{% static 'assets/images/icons/project-management.svg' %}">
+                        <img src="{{ subcomponent.project.logo.url }}">
                     </div>
+                    {% endif %}
                     <div class="m-3">
                         <span class="m-2">Edit {{ subcomponent.name|title }} subcomponent.</span>
                     </div>
                 </div>
                 <form id="edit-project-form"
                       method="post"
-                      action=""
+                      action="{% url 'tralard:subcomponent-update' subcomponent.project.slug subcomponent.slug%}"
                       enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="m-4 column is-multiline">
-                        {% crispy subcomponent_form subcomponent_form.helper %}
+                        {% crispy update_form update_form.helper %}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="button modal-dismiss">
-                            Cancel
+                        <button type="submit" class="button btn-dash primary-btn btn-dash raised">
+                            Update
                         </button>
+                        <a href="{% url 'tralard:project-detail' subcomponent.project.slug %}" class="button btn-dash modal-dismiss">
+                            Cancel
+                        </a>
                     </div>
                 </form>
             </div>

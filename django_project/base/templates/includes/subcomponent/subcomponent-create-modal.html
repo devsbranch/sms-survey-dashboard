@@ -10,13 +10,15 @@
     <div class="modal-content" style="width:800px; !important;">
         <div class="flex-card simple-shadow" style="overflow-y: auto;">
             <div class="help-text has-text-left">
-                <h2 class="dark-text">New Project</h2>
+                <h2 class="dark-text">New SubComponent</h2>
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
-                    <div class="image">
-                        <img src="{% static 'assets/images/icons/project-management.svg' %}">
-                    </div>
+                    {% if project.logo %}
+                        <div class="image">
+                            <img src="{{ project.logo.url }}">
+                        </div>
+                    {% endif %}
                     <div class="m-3">
                         <span class="m-2">Create a new subcomponent</span>
                     </div>
@@ -30,6 +32,9 @@
                         {% crispy subcomponent_form subcomponent_form.helper %}
                     </div>
                     <div class="modal-footer">
+                        <button type="submit" class="button btn-dash primary-btn btn-dash raised">
+                            Create
+                        </button>
                         <button type="button" class="button modal-dismiss">
                             Cancel
                         </button>

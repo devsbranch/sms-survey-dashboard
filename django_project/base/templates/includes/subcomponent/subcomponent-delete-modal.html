@@ -14,9 +14,11 @@
             </div>
             <div class="card-body">
                 <div class="has-text-centered">
+                    {% if project.logo %}
                     <div class="image">
-                        <img src="{% static 'assets/images/icons/project-management.svg' %}">
+                        <img src="{{ project.logo.url}}">
                     </div>
+                    {% endif %}
                     <div class="m-3">
                         <span class="m-2">Deleting {{ subcomponent.name }}  subcomponent</span>
                     </div>

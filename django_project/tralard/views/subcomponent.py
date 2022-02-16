@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.http.response import JsonResponse
 from django.forms.models import model_to_dict
 from django.views.generic import TemplateView, ListView
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 
@@ -19,13 +19,14 @@ from tralard.forms.subcomponent import FeedbackForm, SubComponentForm, SearchFor
 
 @login_required(login_url="/login/")
 def subcomponent_create(request, project_slug):
+    project_obj = get_object_or_404(Project, slug=project_slug)
+
     subcomponent_slug = None
     if request.method == "POST":
         form = SubComponentForm(request.POST)
         if form.is_valid():
-            instance = form.save(commit=False)
-            instance.save()
-            form.save()
+            form.instance.project = project_obj
+            instance = form.save()
             messages.success(request, "The subcomponent was created successfully!")
             subcomponent_slug = instance.slug
             return redirect(
@@ -44,34 +45,27 @@ def subcomponent_create(request, project_slug):
 
 @login_required(login_url="/login/")
 def subcomponent_update(request, project_slug, subcomponent_slug):
-    subcomponent_form = SubComponentForm()
     subcomponent_object = SubComponent.objects.get(slug=subcomponent_slug)
-    subcomponent_obj_to_dict = model_to_dict(subcomponent_object)
-
-    try:
-        subcomponent_obj_to_dict["image_file"] = subcomponent_object.image_file.name
-        subcomponent_obj_to_dict["image_url"] = subcomponent_object.image_file.url
-    except ValueError:
-        pass
 
     if request.method == "POST":
         subcomponent_form = SubComponentForm(
             request.POST, request.FILES or None, instance=subcomponent_object
         )
         if subcomponent_form.is_valid():
-            instance = subcomponent_form.save(commit=False)
-            instance.save()
-        messages.success(request, "SubComponent was updated successfully!")
-        return redirect(
-            reverse_lazy(
-                "tralard:subcomponent-detail",
-                kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
+            subcomponent_form.instance.project = subcomponent_object.project
+            subcomponent_form.save()
+            messages.success(request, "SubComponent was updated successfully!")
+            return redirect(
+                reverse_lazy(
+                    "tralard:subcomponent-detail",
+                    kwargs={"project_slug": project_slug, "subcomponent_slug": subcomponent_slug},
+                )
             )
-        )
     else:
-        subcomponent_form = get_object_or_404(SubComponent, slug=subcomponent_slug)
-    data = {"subcomponent": subcomponent_obj_to_dict}
-    return JsonResponse(data)
+        subcomponent_form = SubComponentForm(instance=subcomponent_object)
+
+    data = {"subcomponent": subcomponent_object, "update_form": subcomponent_form}
+    return render(request, "includes/subcomponent/subcomponent-update-modal.html", data)
 
 
 @login_required(login_url="/login/")

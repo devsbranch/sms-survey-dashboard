@@ -106,6 +106,7 @@ class SubComponent(models.Model):
         blank=True
     )
     precis = HTMLField(
+        _("Precise Summary"),
         help_text=_(
             'A detailed summary of the subcomponent. Rich text edditing is supported.'),
         blank=True,

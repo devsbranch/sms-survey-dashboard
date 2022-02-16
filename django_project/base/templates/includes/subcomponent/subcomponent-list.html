@@ -12,10 +12,10 @@
 				</a>
 				<!-- Project card dropdown -->
 				<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-					<div class="button">
-						<i class="material-icons">more_vert</i>
-					</div>
-					<div class="dropdown-menu is-text-bigger has-text-left"
+						<div class="button"	hx-get="{% url 'tralard:subcomponent-update' project.slug subcomponent.slug%}" hx-target="#update-subcomponent-form">
+							<i class="material-icons">more_vert</i>
+						</div>
+					<div class="dropdown-menu is-text-bigger has-text-left" 
 					     role="menu">
 						<div class="dropdown-content">
 							<a href="{{ subcomponent.get_absolute_url }}"
@@ -28,9 +28,7 @@
 							</a>
 							<a href="#"
 							   class="dropdown-item modal-trigger"
-							   onClick="populateSubComponentForm('{{ project.slug }}', '{{ subcomponent.slug }}');"
-							   data-modal="update-project-modal"
-							>
+							   data-modal="update-project-modal">
 								<i class="sl sl-icon-note text-success"></i>
 								<span>
                                     <span class="dark-text">Edit subcomponent</span>

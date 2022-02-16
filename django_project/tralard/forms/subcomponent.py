@@ -70,32 +70,9 @@ class SearchForm(forms.Form):
 
 
 class SubComponentForm(ModelForm):
-    custom_precis = forms.CharField(
-        label="Precise summary",
-        widget=forms.Textarea(
-            attrs={
-                "rows": 1,
-                "cols": 2,
-            }
-        ),
-        max_length=160,
-    )
-    custom_indicators = forms.ModelMultipleChoiceField(
-        queryset=Indicator.objects.all(),
-        label=_("Indicators"),
-        required=False,
-        widget= Select2TagWidget(
-            attrs={
-                'class': 'form-control',
-                'data-placeholder': '--- Search for an indicator ---',
-                'data-minimum-input-length': 0,
-                },
-        ),
-        help_text=_('search and select a single or multiple related indicators for this subproject.'),
-    )
     class Meta:
         model = SubComponent
-        exclude = ["slug", "created", "indicators"]
+        exclude = ["slug", "created", "project"]
         widgets = {
             'name': widgets.TextInput(
                 attrs={
@@ -107,6 +84,14 @@ class SubComponentForm(ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'subcomponent focus area'
+                }
+            ),
+            'precis': widgets.Textarea(
+                attrs={
+                    'class': 'form-control',
+                    "placeholder": "write subcomponent precise summary here",
+                    "rows": 1,
+                    "cols": 3,
                 }
             ),
             'description': widgets.Textarea(
@@ -130,33 +115,20 @@ class SubComponentForm(ModelForm):
         self.helper.layout = Layout(
             Row(
                 Column("name", css_class="form-group col-md-6 mb-0"),
-                Column("image_file", css_class="form-group col-md-6 mb-0"),
-                Column("custom_indicators", css_class="form-group col-md-12 mb-0"),
-                Column("project", css_class="form-group col-md-6 mb-0"),
+                Column("image_file", css_class="form-group col-md-6 mb-0 P-0"),
+                Column("indicators", css_class="form-group col-md-12 mb-0"),
                 Column("approved", css_class="form-group col-md-6 mb-0"),
                 Column("has_funding", css_class="form-group col-md-6 mb-0"),
-                Column("custom_precis", css_class="form-group col-md-6 mb-0"),
                 Column("focus_area", css_class="form-group col-md-6 mb-0"),
-                Column("description", css_class="form-group col-md-12 mb-0"),
+                Column("precis", css_class="form-group col-md-6 mb-0"),
+                Column("description", css_class="form-group col-md-6 mb-0"),
                 css_class="form-row",
-            ),
-            FormActions(
-                Submit("save", "Submit"),
-            ),
+            )
         )
 
-    def _get_indicators(self):
-        return self.cleaned_data['custom_indicators']
-
-    def save(self, commit=True):
-        instance = super(SubComponentForm, self).save(commit=False)
-
-        indicators = self._get_indicators()
-        for indicator in indicators:
-            instance.indicators.add(indicator)
-        custom_precis = self.cleaned_data["custom_precis"]
-        instance.precis = custom_precis
-        instance.save()
+    def save(self):
+        instance = super(SubComponentForm, self).save()
+        # self.save_m2m()
         return instance
 
 

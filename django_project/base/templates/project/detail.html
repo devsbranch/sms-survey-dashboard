@@ -31,7 +31,6 @@
 <!-- PAGE content goes HERE -->
 {% block content %}
 {% include 'includes/subcomponent/subcomponent-create-modal.html' %}
-{% include 'includes/subcomponent/subcomponent-update-modal.html' %}
 {% include 'includes/subcomponent/subcomponent-delete-modal.html' %}
 {% include 'includes/subcomponent/sub-project-update-modal.html' %}
 {% include 'includes/subcomponent/sub-project-delete-modal.html' %}
@@ -153,8 +152,10 @@
 												<h4 class="project-tagline no-margin-bottom">total count: {{ total_sub_projects }}</h4>
                                             </span>
 											<div class="add-button modal-trigger"
-											data-modal="project-form-modal">
-											<i class="material-icons" title="Create new project">add</i>
+											data-modal="project-form-modal"
+											style="display: none;"
+											>
+											
 										</div>
 									</div>
 									<div class="list-filter">
@@ -730,6 +731,11 @@
 
 		</div>
 	</div>
+</div>
+
+{% comment %} Will be populated with the SubComponent update form using htmlx {% endcomment %}
+<div id="update-subcomponent-form">
+
 </div>
 
 {% endblock content %}
