@@ -4031,7 +4031,7 @@
     "pk": 595,
     "fields": {
       "name": "Kasama",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Kasama",
       "location": "POINT(-8.31667 30)"
@@ -4042,7 +4042,7 @@
     "pk": 596,
     "fields": {
       "name": "Bululu",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Bululu",
       "location": "POINT(-14.1167 29.4667)"
@@ -4053,7 +4053,7 @@
     "pk": 597,
     "fields": {
       "name": "Chiba",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Chiba",
       "location": "POINT(-8.71667 30.6667)"
@@ -4064,7 +4064,7 @@
     "pk": 598,
     "fields": {
       "name": "Chilunga",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Chilunga",
       "location": "POINT(-14.0167 28.5)"
@@ -4075,7 +4075,7 @@
     "pk": 599,
     "fields": {
       "name": "Chumba",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Chumba",
       "location": "POINT(-14.6667 31.0667)"
@@ -4086,7 +4086,7 @@
     "pk": 600,
     "fields": {
       "name": "Kapongolo",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Kapongolo",
       "location": "POINT(-10.25 31.2333)"
@@ -4097,7 +4097,7 @@
     "pk": 602,
     "fields": {
       "name": "Lukulu",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Lukulu",
       "location": "POINT(-12.8833 30.7833)"
@@ -4108,7 +4108,7 @@
     "pk": 603,
     "fields": {
       "name": "Lukupa",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Lukupa",
       "location": "POINT(-10 31.2)"
@@ -4119,7 +4119,7 @@
     "pk": 604,
     "fields": {
       "name": "Lusenga",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Lusenga",
       "location": "POINT(-10.0667 31.95)"
@@ -4130,7 +4130,7 @@
     "pk": 605,
     "fields": {
       "name": "Mukanga",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Mukanga",
       "location": "POINT(-11.1 24.2167)"
@@ -4141,7 +4141,7 @@
     "pk": 606,
     "fields": {
       "name": "Mulilansolo",
-      "district": 122,
+      "district": 120,
       "created": "2022-01-13",
       "slug": "Mulilansolo",
       "location": "POINT(-10.0833 32.3167)"
@@ -4482,7 +4482,7 @@
     "pk": 637,
     "field": {
       "name": "Mikomfwa",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Mikomfwa",
       "location": "POINT(-13.2 28.3833)"
@@ -4493,7 +4493,7 @@
     "pk": 638,
     "field": {
       "name": "Mipundu",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Mipundu",
       "location": "POINT(-13.35 30.1)"
@@ -4504,7 +4504,7 @@
     "pk": 639,
     "field": {
       "name": "Misaka",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Misaka",
       "location": "POINT(-13.2833 30.1167)"
@@ -4515,7 +4515,7 @@
     "pk": 640,
     "field": {
       "name": "Mpelembe",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Mpelembe",
       "location": "POINT(-14.7 28.8667)"
@@ -4526,7 +4526,7 @@
     "pk": 641,
     "field": {
       "name": "Mulungushi",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Mulungushi",
       "location": "POINT(-14.7 28.8667)"
@@ -4537,7 +4537,7 @@
     "pk": 642,
     "field": {
       "name": "Muva Hill",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Muva Hill",
       "location": "POINT(-13.0333 28.3167)"
@@ -4548,7 +4548,7 @@
     "pk": 643,
     "field": {
       "name": "Nkoloma",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Nkoloma",
       "location": "POINT(-14.7167 28.0333)"
@@ -4559,7 +4559,7 @@
     "pk": 644,
     "field": {
       "name": "Nkulumashiba",
-      "district": 123,
+      "district": 121,
       "created": "2022-01-13",
       "slug": "Nkulumashiba",
       "location": "POINT(-12.6 31.1667)"
@@ -5076,7 +5076,7 @@
     "pk": 694,
     "field": {
       "name": "Bemba",
-      "district": 124,
+      "district": 122,
       "created": "2022-01-13",
       "slug": "Bemba",
       "location": "POINT(-10.0833 32.3333)"
@@ -5087,7 +5087,7 @@
     "pk": 695,
     "field": {
       "name": "Kakoma",
-      "district": 124,
+      "district": 122,
       "created": "2022-01-13",
       "slug": "Kakoma",
       "location": "POINT(-11.3 25.2167)"
@@ -5098,7 +5098,7 @@
     "pk": 696,
     "field": {
       "name": "Kalanga",
-      "district": 124,
+      "district": 122,
       "created": "2022-01-13",
       "slug": "Kalanga",
       "location": "POINT(-10.5667 33.5167)"
@@ -5670,7 +5670,7 @@
     "pk": 748,
     "field": {
       "name": "Mungwi",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-22",
       "slug": "Mungwi",
       "location": "POINT(-10 31.3667)"
@@ -5681,7 +5681,7 @@
     "pk": 749,
     "field": {
       "name": "Chambeshi",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-23",
       "slug": "Chambeshi",
       "location": "POINT(-11.8833 29.8)"
@@ -5692,7 +5692,7 @@
     "pk": 750,
     "field": {
       "name": "Chibamba",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-24",
       "slug": "Chibamba",
       "location": "POINT(-10.6 31.6)"
@@ -5703,7 +5703,7 @@
     "pk": 751,
     "field": {
       "name": "Fibwe",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-25",
       "slug": "Fibwe",
       "location": "POINT(-9.65 30.0833)"
@@ -5714,7 +5714,7 @@
     "pk": 752,
     "field": {
       "name": "Fube",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-26",
       "slug": "Fube",
       "location": "POINT(-10.0833 31.6)"
@@ -5725,7 +5725,7 @@
     "pk": 753,
     "field": {
       "name": "Kabisha",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-27",
       "slug": "Kabisha",
       "location": "POINT(-9.78333 31.6833)"
@@ -5736,7 +5736,7 @@
     "pk": 754,
     "field": {
       "name": "Lubala",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-28",
       "slug": "Lubala",
       "location": "POINT(-10.2 30.5833)"
@@ -5747,7 +5747,7 @@
     "pk": 755,
     "field": {
       "name": "Mabula",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-29",
       "slug": "Mabula",
       "location": "POINT(-10.3667 31.3167)"
@@ -5758,7 +5758,7 @@
     "pk": 756,
     "field": {
       "name": "Mpanda",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-30",
       "slug": "Mpanda",
       "location": "POINT(-14.7833 26.7167)"
@@ -5769,7 +5769,7 @@
     "pk": 757,
     "field": {
       "name": "Mungwi",
-      "district": 125,
+      "district": 123,
       "created": "2022-01-31",
       "slug": "Mungwi",
       "location": "POINT(-10 31.3667)"
@@ -5813,7 +5813,7 @@
     "pk": 761,
     "field": {
       "name": "Kayo",
-      "district": 126,
+      "district": 124,
       "created": "2022-02-04",
       "slug": "Kayo",
       "location": "POINT(-16.6667 22.8667)"
@@ -5824,7 +5824,7 @@
     "pk": 762,
     "field": {
       "name": "Lufubu",
-      "district": 126,
+      "district": 124,
       "created": "2022-02-05",
       "slug": "Lufubu",
       "location": "POINT(-10.65 28.9333)"
@@ -5835,7 +5835,7 @@
     "pk": 763,
     "field": {
       "name": "Mbereshi",
-      "district": 126,
+      "district": 124,
       "created": "2022-02-06",
       "slug": "Mbereshi",
       "location": "POINT(-9.7 28.8)"
@@ -5846,7 +5846,7 @@
     "pk": 764,
     "field": {
       "name": "Mulele",
-      "district": 126,
+      "district": 124,
       "created": "2022-02-07",
       "slug": "Mulele",
       "location": "POINT(-9.7 28)"
@@ -5857,7 +5857,7 @@
     "pk": 765,
     "field": {
       "name": "Mununshi",
-      "district": 126,
+      "district": 124,
       "created": "2022-02-08",
       "slug": "Mununshi",
       "location": "POINT(-11.15 30.8)"
@@ -6165,7 +6165,7 @@
     "pk": 793,
     "field": {
       "name": "Nakonde",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Nakonde",
       "location": "POINT(-9.66667 32.7167)"
@@ -6176,7 +6176,7 @@
     "pk": 794,
     "field": {
       "name": "Luchinde",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Luchinde",
       "location": "POINT(-9.65 32.35)"
@@ -6187,7 +6187,7 @@
     "pk": 795,
     "field": {
       "name": "Mulalo",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Mulalo",
       "location": "POINT(-14.3 31.25)"
@@ -6198,7 +6198,7 @@
     "pk": 797,
     "field": {
       "name": "Ng'umba",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Ng'umba",
       "location": "POINT(-9.81667 32.8)"
@@ -6209,7 +6209,7 @@
     "pk": 798,
     "field": {
       "name": "Old Fife",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Old Fife",
       "location": "POINT(-9.31667 32.8)"
@@ -6220,7 +6220,7 @@
     "pk": 799,
     "field": {
       "name": "Popomozi",
-      "district": 126,
+      "district": 124,
       "created": "2022-01-13",
       "slug": "Popomozi",
       "location": "POINT(-9.5 32.5667)"
