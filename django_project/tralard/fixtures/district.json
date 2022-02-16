@@ -1329,6 +1329,61 @@
             "slug": "Nkeyama",
             "location": "POINT(-14.8508 25.1493)"
         }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 120,
+        "fields": {
+            "name": "Kasama",
+            "province": 16,
+            "created": "2021-01-13",
+            "slug": "Kasama",
+            "location": "POINT(-10.3578 30.9898)"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 121,
+        "fields": {
+            "name": "Luanshya",
+            "province": 19,
+            "created": "2021-01-13",
+            "slug": "Luanshya",
+            "location": "POINT(-13.0592 28.3608)"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 122,
+        "fields": {
+            "name": "Mafinga",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "Mafinga",
+            "location": "POINT(-10.3765 33.3987)"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 123,
+        "fields": {
+            "name": "Mungwi",
+            "province": 17,
+            "created": "2021-01-13",
+            "slug": "Mungwi",
+            "location": "POINT(-9.93 31.735)"
+        }
+    },
+    {
+        "model": "tralard.district",
+        "pk": 124,
+        "fields": {
+            "name": "Mwansabombwe",
+            "province": 21,
+            "created": "2021-01-13",
+            "slug": "Mwansabombwe",
+            "location": "POINT(-9.93397815 28.777314268042)"
+        }
     }
 ]
 
