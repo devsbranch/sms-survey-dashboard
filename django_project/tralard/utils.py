@@ -1,11 +1,16 @@
+import math
+import logging
 import os
 import shutil
 from datetime import datetime
+
+from django.contrib import messages
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.core.files.storage import FileSystemStorage
 
 from PIL import Image
+from exif import Image as ImageSource
 from djmoney.money import Money
 from rolepermissions.roles import get_user_roles, RolesManager
 
@@ -15,13 +20,16 @@ from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.lib.pagesizes import A4, landscape
 from reportlab.platypus import (
-    Spacer, 
+    Spacer,
     Table,
-    Paragraph, 
+    Paragraph,
     SimpleDocTemplate,
 )
 
 from tralard.constants import BASE_TEMP_DIR
+
+logger = logging.getLogger(__name__)
+
 
 def unique_slugify(instance, slug):
     """
@@ -94,7 +102,7 @@ def get_balance(initial_amount: float, total_amount: float) -> Money:
 
 
 def check_requested_deduction_against_balance(
-    balance, requested_amount, requested_semantic, balance_semantic
+        balance, requested_amount, requested_semantic, balance_semantic
 ) -> Money:
     """
     Check if the requested amount is greater than the balance.
@@ -165,6 +173,7 @@ def new_user_create_form():
     user_update_form = SignUpForm()
     return user_update_form
 
+
 def user_update_form(instance):
     try:
         from authentication.forms import UserUpdateForm
@@ -173,13 +182,15 @@ def user_update_form(instance):
     user_update_form = UserUpdateForm(instance=instance)
     return user_update_form
 
+
 def all_users():
     try:
-        from django.contrib.auth.models import User # don't move this import on top
+        from django.contrib.auth.models import User  # don't move this import on top
     except:
         pass
     available_user_list = User.objects.all()
     return available_user_list
+
 
 def training_update_form(training):
     try:
@@ -436,7 +447,7 @@ class IndicatorReportBuild(SimpleDocTemplate):
                             sub_row_count, Paragraph("")
                         )
                     sub_row_count += 1
-                    
+
                 data.append(row)
                 data.append(sub_row)
 
@@ -503,38 +514,161 @@ def save_to_temp_dir(base_dir, file_obj):
 
     if not os.path.exists(path_name):
         os.makedirs(path_name)
-    
+
     clean_image_name = file_obj.name.lower().replace(' ', '_')
 
     file_system_storage.save(f"{path_name}/{clean_image_name}", file_obj)
 
     local_v = os.path.join(path_name, clean_image_name)
-    
+
     return local_v
+
 
 def delete_temp_dir(base_dir):
     path_name = f"{BASE_TEMP_DIR}{base_dir}"
-
     if os.path.exists(path_name):
         shutil.rmtree(path_name)
+
 
 def delete_temp_file(file_obj):
     clean_image_name = file_obj.name.lower().replace(' ', '_')
     if os.path.exists(clean_image_name):
         os.remove(clean_image_name)
-   
+
+
 def sub_project_update_form(instance):
     try:
-        from tralard.forms.sub_project import SubProjectForm # don't move this import on top
+        from tralard.forms.sub_project import SubProjectForm  # don't move this import on top
     except:
         pass
     subproject_update_form = SubProjectForm(instance=instance)
     return subproject_update_form
 
+
 def sub_project_create_form():
     try:
-        from tralard.forms.sub_project import SubProjectForm # don't move this import on top
+        from tralard.forms.sub_project import SubProjectForm  # don't move this import on top
     except:
         pass
     subproject_update_form = SubProjectForm()
     return subproject_update_form
+
+
+def validate_photo_gps_range(max_magnitude, img_path, ward_location):
+    range_is_valid = False
+    distance = 0
+    # Verify that this is a valid image
+    try:
+        image_pil = Image.open(img_path)
+        image_pil.verify()
+    except IOError as e:
+        error_flag = f"[URL> {img_path}] This image could not be opened due to: {e}"
+        logger.error(error_flag)
+
+    with open(img_path, "r+b") as src_file:
+        image = ImageSource(src_file)
+        if image.has_exif:
+            # extract geographics
+            geotags = get_image_geotagging(image)
+            image_latitude = use_decimal_from_dms_util(geotags["GPSLatitude"], geotags["GPSLatitudeRef"])
+            image_longitude = use_decimal_from_dms_util(geotags['GPSLongitude'], geotags['GPSLongitudeRef'])
+            coordinates_obj = {
+                "image_latitude": image_latitude,
+                "image_longitude": image_longitude,
+                "ward_latitude": float(ward_location.coords[0]),
+                "ward_longitude": float(ward_location.coords[1]),
+            }
+            logger.info(f"Completed obtaining location points:\n {coordinates_obj}")
+            distance = use_haversine_util(coordinates_obj)
+            if distance > max_magnitude:
+                validation_flag = f"Invalid Distance of {distance} km. Only images within {max_magnitude} kilometer " \
+                                  f"from ward location allowed."
+                logger.warning(validation_flag)
+            else:
+                range_is_valid = True
+    response = {
+        "range_is_valid": range_is_valid,
+        "distance": distance
+    }
+    return response
+
+
+def use_haversine_util(coordinates):
+    """
+        Calculate distance between ward location & image GPS with haversine trigonometric formulae
+
+        Parameters
+        ----------
+        coordinates : GPS coordinates for the image and ward location
+
+        Returns
+        -------
+        distance: (float): shortest distance between two points in kilometers.
+        i.e >>> '1.2324' kilometers
+
+    """
+    distance = 0  # initial distance
+    earth_radius = 6371  # mean radius
+
+    ward_latitude = float(coordinates["ward_latitude"])
+    image_latitude = float(coordinates["image_latitude"])
+    ward_longitude = float(coordinates["ward_longitude"])
+    image_longitude = float(coordinates["image_longitude"])
+    logger.error(f"Image Coords: ({image_latitude, image_longitude}) \n Ward Coords: ({ward_latitude, ward_longitude})")
+
+    # distance between latitudes and longitudes
+    latitude_magitude = (ward_latitude - image_latitude) * math.pi / 180.0
+    longitude_magitude = (ward_longitude - image_longitude) * math.pi / 180.0
+
+    # convert to radians to pass to the trig functions
+    image_latitude = image_latitude * math.pi / 180.0
+    ward_latitude = ward_latitude * math.pi / 180.0
+
+    # apply function of the sine and get the angle
+    angle = (
+            pow(math.sin(latitude_magitude / 2), 2) +
+            pow(math.sin(longitude_magitude / 2), 2) *
+            math.cos(image_latitude) *
+            math.cos(ward_latitude)
+    )
+    cosine_magnitude = 2 * math.asin(math.sqrt(angle))
+    distance = cosine_magnitude * earth_radius
+    logger.error(f"Calculated distance: {distance} kilometers")
+    return distance
+
+
+def use_decimal_from_dms_util(dms, ref):
+    """
+        Sexagesimal DMS value conversion system
+        Parameters
+        ----------
+        dms : Coords in Degrees, minutes and seconds
+        ref: Reference
+        Returns
+        -------
+        decimal_degrees: (float): GPS coordinates as decimals.
+        i.e >>> '((-15.440784222222222, 28.359679111111113))' kilometers
+    """
+    decimal_degrees = float(dms[0]) + float(dms[1]) / 60 + float(dms[2]) / 3600
+    if ref == "S" or ref == "W":
+        decimal_degrees = -decimal_degrees
+    return decimal_degrees
+
+
+def get_image_geotagging(exif):
+    """
+            Extract from image demographics the degrees, minutes, and seconds.
+            Parameters
+            ----------
+            exif : Image meta data
+            Returns
+            -------
+            geotagging: (dict): GPS coordinates for the image in DMS format.
+            i.e >>> '(Latitude: 15; 35; 16.43543858658), (Longitude: 28; 16; 29.324234200)'
+    """
+    # K^V labeled collection
+    geotagging = {
+        "GPSLatitude": exif.gps_latitude, "GPSLatitudeRef": exif.gps_latitude_ref,
+        "GPSLongitude": exif.gps_longitude, "GPSLongitudeRef": exif.gps_longitude_ref
+    }
+    return geotagging

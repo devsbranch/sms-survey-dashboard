@@ -3,92 +3,95 @@
 <!-- Blueimp -->
 <!-- The Gallery as lightbox dialog, should be a document body child element -->
 
-<div class="contacts-title-wrapper" ><h2 class="contacts-title">Progress Status Trail</h2></div>
+<div class="contacts-title-wrapper flex-md-wrap">
+	<h2 class="contacts-title">Progress Status Trail</h2>
+</div>
 <p></p>
-<div
-  id="blueimp-gallery"
-  class="blueimp-gallery blueimp-gallery-controls"
-  aria-label="image gallery"
-  aria-modal="true"
-  role="dialog"
->
-  <div class="slides" aria-live="polite"></div>
-  <h3 class="title"></h3>
-  <a
-    class="prev"
-    aria-controls="blueimp-gallery"
-    aria-label="previous slide"
-    aria-keyshortcuts="ArrowLeft"
-  ></a>
-  <a
-    class="next"
-    aria-controls="blueimp-gallery"
-    aria-label="next slide"
-    aria-keyshortcuts="ArrowRight"
-  ></a>
-  <a
-    class="close"
-    aria-controls="blueimp-gallery"
-    aria-label="close"
-    aria-keyshortcuts="Escape"
-  ></a>
-  <ol class="indicator"></ol>
+<div id="blueimp-gallery"
+     class="blueimp-gallery blueimp-gallery-controls"
+     aria-label="image gallery"
+     aria-modal="true"
+     role="dialog">
+	<div class="slides" aria-live="polite"></div>
+	<a class="prev"
+	   aria-controls="blueimp-gallery"
+	   aria-label="previous slide"
+	   aria-keyshortcuts="ArrowLeft"
+	></a>
+	<a
+			class="next"
+			aria-controls="blueimp-gallery"
+			aria-label="next slide"
+			aria-keyshortcuts="ArrowRight"
+	></a>
+	<a
+			class="close"
+			aria-controls="blueimp-gallery"
+			aria-label="close"
+			aria-keyshortcuts="Escape"
+	></a>
+	<ol class="indicator"></ol>
 </div>
 
 <div id="main-dashboard" class="section-wrapper">
-  <div id="forum-home" class="dashboard-columns">
-          
-          <div class="forum-wrap">
-              <div class="forum-container">        
-                <div class="channel-heading">
-                      <h3>Progress Status Trail</h3>
-                      <div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-                          <div class="button">
-                              <i class="material-icons">more_vert</i>
-                          </div>
-                          <div class="dropdown-menu is-text-bigger" role="menu">
-                              <div class="dropdown-content">
-                                  <a class="dropdown-item">
-                                      <i class="material-icons">add</i>
-                                      <span>
+	<div id="forum-home" class="dashboard-columns">
+
+		<div class="forum-wrap">
+			<div class="forum-container">
+				<div class="channel-heading">
+					<h3>Progress Status Trail</h3>
+					<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+						<div class="button">
+							<i class="material-icons">more_vert</i>
+						</div>
+						<div class="dropdown-menu is-text-bigger" role="menu">
+							<div class="dropdown-content">
+								<a class="dropdown-item">
+									<i class="material-icons">add</i>
+									<span>
                                           <span>Add Progress Status</span>
                                           <span>Add a new progress status entry</span>
                                       </span>
-                                  </a>
-                              </div>
-                          </div>
-                      </div>                            
-                </div>              
-                    {% for progress_status in progress_status_data %}
-                            <a id="photo-modal-tab{{progress_status.id}}" hx-get="{% url 'tralard:progress-status-detail' project_slug subcomponent_slug subproject_slug progress_status.id %}" hx-target="#progress-status-detail-modal" class="forum-channel modal-trigger" data-modal="subproject-photo-modal">
-                                <div class="channel-icon">
-                                    <i class="im im-icon-Air-Balloon"></i>
-                                </div>
-                                <div class="channel-meta">
-                                    <span>{{ progress_status.status }} </span>
-                                    <span>created: <small>{{ progress_status.created }}</small> | comment: {% if progress_status.comment %} {{ progress_status.comment }} {% else %} ... {% endif %}</span>
-                                </div>
-                                <div class="channel-topics">
-                                    <span>Photos</span>
-                                    <span>{{ progress_status.photos.count }}</span>
-                                </div>
-                                
-                              <div class="top-contributors links" id="links">
-                                {% for photo in progress_status.photos %}
-                                  {% if photo %}
-                                    {% comment %} <a  href="{{ photo.image.url }}" title="{{ photo.name }}"> {% endcomment %}
-                                      <img src="https://via.placeholder.com/150x150" alt=""
-                                          data-demo-src="{% thumbnail photo.image 150x150 crop %}"/>
-                                    {% comment %} </a> {% endcomment %}
-                                    
-                                  {% endif %}
-                                {% endfor %}
-                              </div>
-                            </a>
-                    {% endfor %}         
-                </div>             
-              
-          </div>
-      </div>
-           
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{% for progress_status in progress_status_data %}
+				<a id="photo-modal-tab{{progress_status.id}}"
+				   hx-get="{% url 'tralard:progress-status-detail' project_slug subcomponent_slug subproject_slug progress_status.id %}"
+				   hx-target="#progress-status-detail-modal" class="forum-channel modal-trigger"
+				   data-modal="subproject-photo-modal">
+					<div class="channel-icon">
+						<i class="im im-icon-Air-Balloon"></i>
+					</div>
+					<div class="channel-meta">
+						<span>{{ progress_status.status }} </span>
+						<span>created: <small>{{ progress_status.created }}</small> | comment: {% if progress_status.comment %} {{ progress_status.comment }} {% else %} ... {% endif %}</span>
+					</div>
+					<div class="channel-topics">
+						<span>Photos</span>
+						<span>{{ progress_status.photos.count }}</span>
+					</div>
+
+					<div class="top-contributors links" id="links">
+						{% for photo in progress_status.photos %}
+						{% if photo %}
+						{% comment %}
+						<a href="{{ photo.image.url }}" title="{{ photo.name }}">
+							{% endcomment %}
+							<img src="https://via.placeholder.com/150x150" alt=""
+							     data-demo-src="{% thumbnail photo.image 150x150 crop %}"/>
+							{% comment %}
+						</a>
+						{% endcomment %}
+						{% endif %}
+						{% endfor %}
+					</div>
+				</a>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
 </div>

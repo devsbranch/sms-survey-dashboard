@@ -9,7 +9,7 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
-
+<!-- PAGE content goes HERE -->
 {% block content %}
 <!-- Update Subproject Modal -->
 {% include 'includes/subproject-update-modal.html' %}
@@ -19,423 +19,416 @@
 
 <!-- Main dashboard container -->
 <div id="dashboard-wrapper" class="dashboard-outer">
-  <div class="dashboard-inner">
-    <!-- Dashboard Wrapper -->
-    <div class="dashboard-wrapper">
-      <div id="main-dashboard" class="section-wrapper">
-        <!-- Dashboard content -->
-        <div id="basic-layout" class="dashboard-columns">
-          <div class="contact-profile-wrap">
-            <!-- Page title -->
-            <div class="contacts-title-wrapper">
-              <h3 class="contacts-title">{{ sub_project.name|title }}</h3>
-              <!-- Filter input -->
-              <div class="list-filter">
-                <div
-                  class="dropdown is-right dropdown-trigger contact-events-dropdown"
-                >
-                  <div class="button">
-                    <i class="material-icons">more_vert</i>
-                  </div>
-                  <!-- Dropdown menu -->
-                  <div class="dropdown-menu is-text-bigger" role="menu">
-                    <div class="dropdown-content">
-                      <a id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2" data-modal="edit-subproject-modal"
-                        class="dropdown-item modal-trigger"
-                      >
-                        <i class="sl sl-icon-pencil"></i>
-                        <span>
+	<div class="dashboard-inner">
+		<!-- Dashboard Wrapper -->
+		<div class="dashboard-wrapper">
+			<div id="main-dashboard" class="section-wrapper">
+				<!-- Dashboard content -->
+				<div id="basic-layout" class="dashboard-columns">
+					<div class="contact-profile-wrap">
+						<!-- Page title -->
+						<div class="contacts-title-wrapper">
+							<h3 class="contacts-title">{{ sub_project.name|title }}</h3>
+							<!-- Filter input -->
+							<div class="list-filter">
+								<div
+										class="dropdown is-right dropdown-trigger contact-events-dropdown"
+								>
+									<div class="button">
+										<i class="material-icons">more_vert</i>
+									</div>
+									<!-- Dropdown menu -->
+									<div class="dropdown-menu is-text-bigger" role="menu">
+										<div class="dropdown-content">
+											<a id="edit-button"
+											   class="dropdown-item modal-trigger modal-trigger edit-btn2"
+											   data-modal="edit-subproject-modal"
+											   class="dropdown-item modal-trigger"
+											>
+												<i class="sl sl-icon-pencil"></i>
+												<span>
                           <span>Update</span>
                           <span>Edit subproject</span>
                         </span>
-                      </a>
-                      <script>
-                        var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
-                          uniqueEditSelectorButton.addEventListener("click", () => {    
-                             if("{{ sub_project.slug }}" == "{{ sub_project.slug }}"){
-                                document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
-                                document.getElementById("update-sub_project-form").action = `{% url 'tralard:subproject-update' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug %}`;
-                                document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
-                                document.getElementById("subproject-update123").innerHTML += `{{ subproject.subproject_update_form|crispy }}`;
-                                document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
-                                document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
-                             }
-                           });
-                     </script>
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item">
-                        <i class="sl sl-icon-trash"></i>
-                        <span>
+											</a>
+											<script>
+                                              var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
+                                              uniqueEditSelectorButton.addEventListener("click", () => {
+                                                if ("{{ sub_project.slug }}" == "{{ sub_project.slug }}") {
+                                                  document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
+                                                  document.getElementById("update-sub_project-form").action = `{% url 'tralard:subproject-update' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug %}`;
+                                                  document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
+                                                  document.getElementById("subproject-update123").innerHTML += `{{ subproject.subproject_update_form|crispy }}`;
+                                                  document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
+                                                  document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
+                                                }
+                                              });
+											</script>
+											<div class="dropdown-divider"></div>
+											<a class="dropdown-item">
+												<i class="sl sl-icon-trash"></i>
+												<span>
                           <span>Delete</span>
                           <span>Delete subproject</span>
                         </span>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-                <!-- Funding -->
-                <a
-                  class="button btn-dash primary-btn btn-dash raised has-icon"
-                  data-ripple-color=""
-                  href="{% url 'tralard:subproject-fund-list' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
-                >
-                  <i class="material-icons">short_text</i>
-                  Funding
-                </a>
-                <!-- Training Schedules -->
-                <a
-                  class="button btn-dash primary-btn btn-dash raised has-icon"
-                  data-ripple-color=""
-                  href="{% url 'tralard:subproject-training' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
-                >
-                  <i class="material-icons">short_text</i>
-                  Training
-                </a>
-                <!-- Beneficiaries -->
-                <a
-                  class="button btn-dash primary-btn btn-dash raised has-icon"
-                  data-ripple-color=""
-                  href="{% url 'tralard:subproject-beneficiary' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug%}"
-                >
-                  <i class="material-icons">short_text</i>
-                  Beneficiaries
-                </a>
-                <!-- Back to project button -->
-                <a
-                  class="button btn-dash primary-btn btn-dash raised has-icon"
-                  data-ripple-color=""
-                  href="{% url 'tralard:subcomponent-detail' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug %}"
-                >
-                  <i class="material-icons">short_text</i>
-                  SubComponent
-                </a>
-              </div>
-            </div>
+											</a>
+										</div>
+									</div>
+								</div>
+								<!-- Funding -->
+								<a
+										class="button btn-dash primary-btn btn-dash raised has-icon"
+										data-ripple-color=""
+										href="{% url 'tralard:subproject-fund-list' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
+								>
+									<i class="material-icons">short_text</i>
+									Funding
+								</a>
+								<!-- Training Schedules -->
+								<a
+										class="button btn-dash primary-btn btn-dash raised has-icon"
+										data-ripple-color=""
+										href="{% url 'tralard:subproject-training' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug subproject_slug=sub_project.slug  %}"
+								>
+									<i class="material-icons">short_text</i>
+									Training
+								</a>
+								<!-- Beneficiaries -->
+								<a
+										class="button btn-dash primary-btn btn-dash raised has-icon"
+										data-ripple-color=""
+										href="{% url 'tralard:subproject-beneficiary' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug%}"
+								>
+									<i class="material-icons">short_text</i>
+									Beneficiaries
+								</a>
+								<!-- Back to project button -->
+								<a
+										class="button btn-dash primary-btn btn-dash raised has-icon"
+										data-ripple-color=""
+										href="{% url 'tralard:subcomponent-detail' project_slug=sub_project.subcomponent.project.slug subcomponent_slug=sub_project.subcomponent.slug %}"
+								>
+									<i class="material-icons">short_text</i>
+									SubComponent
+								</a>
+							</div>
+						</div>
 
-            <div class="columns contact-profile">
-              <!-- Avatar Card -->
-              <div class="column is-4">
-                <div class="flex-card is-avatar light-bordered card-overflow">
-                  <div class="inner">
-                    <div class="contact-block">
-                      <!-- Avatar -->
-                      <div class="avatar-wrapper">
-                        {% if sub_project.image_file %}
-                        <img
-                          src="https://via.placeholder.com/150x150"
-                          alt=""
-                          data-demo-src="{{ sub_project.image_file.url }}"
-                        />
-                        {% else %}
-                        <img
-                          src="https://via.placeholder.com/150x150"
-                          alt=""
-                          data-demo-src="{% static 'assets/images/logos/logo.png' %}"
-                        />
-                        {% endif %}
-                      </div>
-                      <!-- Meta -->
-                      <div class="contact-name">
-                        {{ sub_project.supervisor|title }}
-                      </div>
-                      <div class="contact-company">
-                        {{ sub_project.project.name }}.
-                      </div>
-                      <!-- Stats -->
-                      <div class="stats-block">
-                        <div class="stat">
-                          <span>Beneficiaries</span>
-                          <span>
+						<div class="columns contact-profile">
+							<!-- Avatar Card -->
+							<div class="column is-4">
+								<div class="flex-card is-avatar light-bordered card-overflow">
+									<div class="inner">
+										<div class="contact-block">
+											<!-- Avatar -->
+											<div class="avatar-wrapper">
+												{% if sub_project.image_file %}
+												<img
+														src="https://via.placeholder.com/150x150"
+														alt=""
+														data-demo-src="{{ sub_project.image_file.url }}"
+												/>
+												{% else %}
+												<img
+														src="https://via.placeholder.com/150x150"
+														alt=""
+														data-demo-src="{% static 'assets/images/logos/logo.png' %}"
+												/>
+												{% endif %}
+											</div>
+											<!-- Meta -->
+											<div class="contact-name">
+												{{ sub_project.supervisor|title }}
+											</div>
+											<div class="contact-company">
+												{{ sub_project.project.name }}.
+											</div>
+											<!-- Stats -->
+											<div class="stats-block">
+												<div class="stat">
+													<span>Beneficiaries</span>
+													<span>
                             {% if sub_project.count_beneficiaries %}
-                            <!--  -->
+														<!--  -->
                             {{sub_project.count_beneficiaries }}
-                            <!--  -->
+														<!--  -->
                             {% else %} None {% endif %}
                           </span>
-                        </div>
-                        <div class="stat">
-                          <span>Training Schedules</span>
-                          <span>
+												</div>
+												<div class="stat">
+													<span>Training Schedules</span>
+													<span>
                             {% if sub_project.count_training_schedules %}
-                            <!--  -->
+														<!--  -->
                             {{sub_project.count_training_schedules }}
-                            <!--  -->
+														<!--  -->
                             {% else %} None {% endif %}
-                            <!--  -->
+														<!--  -->
                           </span>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+												</div>
 
-              <div class="column is-8">
-                <!-- Contact informations -->
-                <div
-                  class="flex-card is-contact-info light-bordered card-overflow"
-                >
-                  <!-- Tabs -->
-                  <div
-                    class="navigation-tabs single-contact-tabs animated-tabs simple-tabs"
-                  >
-                    <div class="tabs">
-                      <ul>
-                        <li class="is-active" data-tab="tab-general">
-                          <a>Details</a>
-                        </li>
-                      </ul>
-                    </div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
 
-                    <!-- General informations -->
-                    <div id="tab-general" class="navtab-content is-active">
-                      <div class="columns">
-                        <div class="column is-6">
-                          <!-- Info block -->
-                          <div class="info-block">
-                            <div class="info-label">Email</div>
-                            <div class="info-content is-email">
-                              {{ sub_project.representative.email }}
-                            </div>
-                          </div>
-                          <!-- Info block -->
-                          <div class="info-block">
-                            <div class="info-label">Phone</div>
-                            <div class="info-content">
-                              {{ sub_project.representative.cell }}
-                            </div>
-                          </div>
-                          <!-- Info block -->
-                          <div class="info-block">
-                            <div class="info-label">Size</div>
-                            <div class="info-content">
-                              {{ sub_project.size }} Hectors
-                            </div>
-                          </div>
-                          <!-- Info block -->
-                          <div class="info-block">
-                            <div class="info-label">Status</div>
-                            <div class="info-content">
-                              {{ sub_project.status }}
-                            </div>
-                          </div>
-                          <!-- Info block -->
-                          <div class="info-block">
-                            <div class="info-label">Location</div>
-                            <div class="info-content">
-                              {{ sub_project.ward.district.province.name }},
-                              {{ sub_project.ward.district.name }} District,
-                              {{sub_project.ward.name }}
-                            </div>
-                          </div>
-                        </div>
-                        <div class="column is-6">
-                          <!-- Contact summary -->
-                          <div class="info-block">
-                            <div class="info-label">Focus Area</div>
-                            <div class="info-content is-notes">
-                              {{ sub_project.focus_area|safe }}
-                            </div>
-                            <!-- Switch -->
-                            <div class="field is-prospect">
-                                {% if sub_project.status == "Completed" %}
-                                <input
-                                  id="prospectSwitch"
-                                  type="checkbox"
-                                  name="prospectSwitch"
-                                  class="switch is-secondary"
-                                  checked
-                                />
-                                <label for="prospectSwitch"
-                                  ><span
-                                    >This subproject is Completed</span
-                                  ></label
-                                >
-                              {% elif sub_project.status == "Identified" %}
-                                  <input
-                                    id="prospectSwitch"
-                                    type="checkbox"
-                                    name="prospectSwitch"
-                                    class="switch is-secondary"
-                                    unchecked
-                                  />
-                                  <label for="prospectSwitch"
-                                    ><span
-                                      >This subproject has been Identified</span
-                                    ></label
-                                  >
+							<div class="column is-8">
+								<!-- Contact informations -->
+								<div
+										class="flex-card is-contact-info light-bordered card-overflow"
+								>
+									<!-- Tabs -->
+									<div
+											class="navigation-tabs single-contact-tabs animated-tabs simple-tabs"
+									>
+										<div class="tabs">
+											<ul>
+												<li class="is-active" data-tab="tab-general">
+													<a>Details</a>
+												</li>
+											</ul>
+										</div>
 
-                                {% else %}
-                                  <input
-                                    id="prospectSwitch"
-                                    type="checkbox"
-                                    name="prospectSwitch"
-                                    class="switch is-secondary"
-                                    unchecked
-                                  />
-                                  <label for="prospectSwitch"
-                                    ><span
-                                      >This subproject is still in Progress</span
-                                    ></label
-                                  >
-                                  {% endif %}
-                                </div>
-                            </div>
-                        </div>
-                      </div>
+										<!-- General informations -->
+										<div id="tab-general" class="navtab-content is-active">
+											<div class="columns">
+												<div class="column is-6">
+													<!-- Info block -->
+													<div class="info-block">
+														<div class="info-label">Email</div>
+														<div class="info-content is-email">
+															{{ sub_project.representative.email }}
+														</div>
+													</div>
+													<!-- Info block -->
+													<div class="info-block">
+														<div class="info-label">Phone</div>
+														<div class="info-content">
+															{{ sub_project.representative.cell }}
+														</div>
+													</div>
+													<!-- Info block -->
+													<div class="info-block">
+														<div class="info-label">Size</div>
+														<div class="info-content">
+															{{ sub_project.size }} Hectors
+														</div>
+													</div>
+													<!-- Info block -->
+													<div class="info-block">
+														<div class="info-label">Status</div>
+														<div class="info-content">
+															{{ sub_project.status }}
+														</div>
+													</div>
+													<!-- Info block -->
+													<div class="info-block">
+														<div class="info-label">Location</div>
+														<div class="info-content">
+															{{ sub_project.ward.district.province.name }},
+															{{ sub_project.ward.district.name }} District,
+															{{sub_project.ward.name }}
+														</div>
+													</div>
+												</div>
+												<div class="column is-6">
+													<!-- Contact summary -->
+													<div class="info-block">
+														<div class="info-label">Focus Area</div>
+														<div class="info-content is-notes">
+															{{ sub_project.focus_area|safe }}
+														</div>
+														<!-- Switch -->
+														<div class="field is-prospect">
+															{% if sub_project.status == "Completed" %}
+															<input
+																	id="prospectSwitch"
+																	type="checkbox"
+																	name="prospectSwitch"
+																	class="switch is-secondary"
+																	checked
+															/>
+															<label for="prospectSwitch"
+															><span
+															>This subproject is Completed</span
+															></label
+															>
+															{% elif sub_project.status == "Identified" %}
+															<input
+																	id="prospectSwitch"
+																	type="checkbox"
+																	name="prospectSwitch"
+																	class="switch is-secondary"
+																	unchecked
+															/>
+															<label for="prospectSwitch"
+															><span
+															>This subproject has been Identified</span
+															></label
+															>
 
-                      <hr />
+															{% else %}
+															<input
+																	id="prospectSwitch"
+																	type="checkbox"
+																	name="prospectSwitch"
+																	class="switch is-secondary"
+																	unchecked
+															/>
+															<label for="prospectSwitch"
+															><span
+															>This subproject is still in Progress</span
+															></label
+															>
+															{% endif %}
+														</div>
+													</div>
+												</div>
+											</div>
 
-                      <!-- Lifetime earnings -->
-                      <div class="lifetime-wrapper">
-                        <div class="lifetime-won">
-                          <div class="lifetime-label">Total Funding</div>
-                          {% if sub_project.get_total_sub_project_fund %}
-                          <span>
+											<hr/>
+
+											<!-- Lifetime earnings -->
+											<div class="lifetime-wrapper">
+												<div class="lifetime-won">
+													<div class="lifetime-label">Total Funding</div>
+													{% if sub_project.get_total_sub_project_fund %}
+													<span>
                             {{ sub_project.get_total_sub_project_fund|intcomma}}
                           </span>
-                          {% else %}
-                          <span> 0.00</span>
-                          {% endif %}
-                        </div>
+													{% else %}
+													<span> 0.00</span>
+													{% endif %}
+												</div>
 
-                        <!-- Send email action -->
-                        <div class="list-filter">
-                          <div class="control">
+												<!-- Send email action -->
+												<div class="list-filter">
+													<div class="control">
                               <span style="float: right;">
-                              <a
-                              class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                              data-ripple-color=""
-                              data-modal="message-contact-modal"
-                              href="#"
-                            >
-                              {% comment %}
-                              <i class="material-icons">mail</i> {%endcomment %}
+                              <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
+                                 data-ripple-color=""
+                                 data-modal="progress-status-modal"
+                                 href="#">
+                                {% comment %}
+                                    <i class="material-icons">mail</i>
+	                            {%endcomment %}
                                 Add Progress Status
                             </a> 
                           </span>
-                                       
-                          </div>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-            {% include 'includes/subproject-image-gallery.html' %}
-          </div>
-        </div>
-                       
+
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						{% include 'includes/subproject-image-gallery.html' %}
+					</div>
+				</div>
 
 
-      </div>
-    </div>
-  </div>
-  
+			</div>
+		</div>
+	</div>
+
 
 </div>
 
 <!-- Dropzone modal -->
 <!-- Image Upload Modal -->
-<div
-  id="message-contact-modal"
-  class="modal modal-md message-contact-modal modal-hero"
->
-  
-  <div class="modal-background"></div>
-  <div class="modal-content">
-    <div class="flex-card simple-shadow">
-      <h2 class="dark-text">New Progress Status Entry</h2>
-      
-      <div class="card-body">
-        <form id="my-dropzone-form" action="upload/" method="POST" class="dropzone" enctype="multipart/form-data" >   
-          {% csrf_token %}    
-          {% crispy progress_status_form progress_status_form.helper %}   
+<div id="progress-status-modal" class="modal modal-md message-contact-modal modal-hero">
 
-            <div class="fallback">
-              <input name="file" type="file" multiple>
-            </div>
-            <div class="modal-footer col-12">
-              <button type="submit" id="submit-status-data" class="btn btn-primary"  style="border-radius: 20px; width: 100%;">Create Status</button>
-            </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  <button class="modal-close is-large is-hidden" aria-label="close"></button>
+	<div class="modal-background"></div>
+	<div class="modal-content">
+		<div class="flex-card simple-shadow">
+			<h2 class="dark-text">New Progress Status Entry</h2>
+
+			<div class="card-body">
+				<form id="my-dropzone-form" action="upload/" method="POST" class="dropzone"
+				      enctype="multipart/form-data">
+					{% csrf_token %}
+					{% crispy progress_status_form progress_status_form.helper %}
+
+					<div class="fallback">
+						<input name="file" type="file" multiple>
+					</div>
+					<div class="modal-footer col-12">
+						<button type="submit" id="submit-status-data" class="btn btn-primary"
+						        style="border-radius: 20px; width: 100%;">Create Status
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<button class="modal-close is-large is-hidden" aria-label="close"></button>
 </div>
-
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
-
 <script>
   $("#indicator-trigger").on('mouseover', (e) => {
     document.querySelector('#indicator-trigger-container').style.zIndex = 99999
     document.querySelector('#image-gallery-container').style.zIndex = -1
   })
 </script>
-
-
 <script>
 
   Dropzone.autoDiscover = false;
 
   const myDropzone = new Dropzone("#my-dropzone-form", {
-    autoProcessQueue: false,
-    url: $('#my-dropzone-form').attr('action'),
-    uploadMultiple: true,
-    maxFilesize: 2,
-    maxFiles: 10,
-    acceptedFiles: ".jpeg,.jpg,.png,.PNG,.JPEG,.JPG",
-    parallelUploads: 10,
-    dictDefaultMessage:
-      '<span class="text-center"><span class="font-weight-bold file-icon"></span> Click or Drop progress status photos here</span>',
-    dictRemoveFile: "Remove file",
-    dictMaxFilesExceeded: "You can only upload 10 files",
-    dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
-    dictInvalidFileType: "You can't upload files of this type",
-    
-    // we dont want to auto upload photos 
-    // take control of submitting so that we create progress status then  attach  the photos  after
-    init: function () {
-      var submitButton = document.querySelector("#submit-status-data");
-      var url = $('#my-dropzone-form').attr('action');
-      var DropzoneInstance = this;
+      autoProcessQueue: false,
+      url: $('#my-dropzone-form').attr('action'),
+      uploadMultiple: true,
+      maxFilesize: 15,
+      maxFiles: 10,
+      acceptedFiles: ".jpeg,.jpg,.png,.PNG,.JPEG,.JPG",
+      parallelUploads: 10,
+      dictDefaultMessage:
+        '<span class="text-center"><span class="font-weight-bold file-icon"></span> Click or Drop progress status photos here</span>',
+      dictRemoveFile: "Remove file",
+      dictMaxFilesExceeded: "You can only upload 10 files",
+      dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
+      dictInvalidFileType: "You can't upload files of this type",
 
-      // process queued images on click
-      submitButton.addEventListener("click", function(e){
-        e.preventDefault();
-        DropzoneInstance.processQueue();
-      })
+      // we dont want to auto upload photos
+      // take control of submitting so that we create progress status then  attach  the photos  after
+      init: function () {
+        var submitButton = document.querySelector("#submit-status-data");
+        var url = $('#my-dropzone-form').attr('action');
+        var DropzoneInstance = this;
 
-      //fire the images to url
-      DropzoneInstance.on("processing", function(file) {
+        // process queued images on click
+        submitButton.addEventListener("click", function (e) {
+          e.preventDefault();
+          DropzoneInstance.processQueue();
+        })
+
+        //fire the images to url
+        DropzoneInstance.on("processing", function (file) {
           DropzoneInstance.options.url = url;
         });
 
-      DropzoneInstance.on('sending', function(file, xhr, formData) {
+        DropzoneInstance.on('sending', function (file, xhr, formData) {
           // Append all form inputs to the formData that Dropzone will POST
           var data = $('#frmTarget').serializeArray();
-          $.each(data, function(key, el) {
+          $.each(data, function (key, el) {
             console.log("FILE", file)
             console.log("FORM DATA", formData)
-              formData.append(el.name, el.value);
+            formData.append(el.name, el.value);
           });
-      });
-      DropzoneInstance.on("complete", function(file) {
-        DropzoneInstance.removeFile(file);
-      });
+        });
+        DropzoneInstance.on("complete", function (file) {
+          DropzoneInstance.removeFile(file);
+        });
+      }
     }
-  }
-)
-  
+  )
 </script>
-
 {% endblock javascripts %}

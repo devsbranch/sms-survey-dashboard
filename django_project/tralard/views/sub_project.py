@@ -8,76 +8,75 @@ __annotations__ = "Written from 31/12/2021 23:34 AM CET -> 01/01/2022, 00:015 AM
 """
 View classes for a SubProject
 """
-import logging
 import datetime
+import logging
+import re
+import reversion
 
-from django.http import (
-    Http404,
-    HttpResponse,
-    JsonResponse,
-    HttpResponseRedirect,
-)
-from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import (
-    ListView,
     CreateView,
     DeleteView,
     DetailView,
+    ListView,
     UpdateView,
 )
-from django.db.models import Q
+from django.http import (
+    Http404,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.contrib import messages
-from django.db import IntegrityError
-from django.http import HttpResponse
-from django.urls import reverse_lazy
-from django.core.exceptions import ValidationError
-from django.template.loader import render_to_string
-from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator, EmptyPage
+from django.db import IntegrityError
+from django.db.models import Q
+from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, redirect, render
+from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 
-import reversion
-from exif import Image
-from reversion.models import Version
-from reversion.views import RevisionMixin
 from braces.views import LoginRequiredMixin
 from filer.models import Image as FilerImage
+from reversion.models import Version
+from reversion.views import RevisionMixin
 from rolepermissions.decorators import has_role_decorator
 
-from tralard.forms import (
-    FundForm,
-    TrainingForm,
-    SubProjectForm,
-    ExpenditureForm,
-    FundApprovalForm,
-    DisbursementForm,
-    ProgressStatusForm,
-    BeneficiaryCreateForm,
-    
-)
-from tralard.models import (
-    Fund,
-    Photo,
-    Training, 
-    SubProject, 
-    FundVersion,
-    Beneficiary, 
-    Disbursement,
-    TrainingType,
-    SubComponent,
-    ProgressStatus,
-)
-from tralard.utils import (
-    delete_temp_dir, 
-    save_to_temp_dir, 
-    delete_temp_file
-)
 from tralard.filters import (
+    BeneficiaryFilter,
     FundFilter,
     TrainingFilter,
-    BeneficiaryFilter
 )
-
+from tralard.forms import (
+    BeneficiaryCreateForm,
+    DisbursementForm,
+    ExpenditureForm,
+    FundApprovalForm,
+    FundForm,
+    ProgressStatusForm,
+    SubProjectForm,
+    TrainingForm,
+)
+from tralard.models import (
+    Beneficiary,
+    Disbursement,
+    Fund,
+    FundVersion,
+    Photo,
+    ProgressStatus,
+    SubComponent,
+    SubProject,
+    Training,
+    TrainingType,
+    Ward,
+)
+from tralard.utils import (
+    delete_temp_dir,
+    delete_temp_file,
+    save_to_temp_dir,
+    validate_photo_gps_range
+)
 
 logger = logging.getLogger(__name__)
 
@@ -285,7 +284,7 @@ class SubProjectTrainingUpdateView(LoginRequiredMixin, UpdateView):
 
 @login_required(login_url="/login/")
 def sub_project_training_update(
-    request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
+        request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
 ):
     form = TrainingForm()
     training = Training.objects.get(slug=training_entry_slug)
@@ -339,7 +338,7 @@ def sub_project_update(request, project_slug, subproject_slug):
 
 @login_required(login_url="/login/")
 def sub_project_training_delete(
-    request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
+        request, project_slug, subcomponent_slug, subproject_slug, training_entry_slug
 ):
     training = Training.objects.get(slug=training_entry_slug)
     training.delete()
@@ -456,7 +455,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
         self.progress_status_qs = ProgressStatus.objects.filter(subproject__name=sub_project.name).order_by("-created")
 
         progress_status_data = []
-    
+
         for status in self.progress_status_qs:
             progress_status = {}
             progress_status['id'] = status.id
@@ -466,10 +465,10 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
             photos = []
             for pic in status.photo_set.all().order_by('-created'):
                 photos.append(pic)
-            
+
             progress_status['photos'] = photos
 
-            progress_status_data.append(progress_status)   
+            progress_status_data.append(progress_status)
 
         context = super(SubProjectDetailView, self).get_context_data(**kwargs)
         context["title"] = "Sub Project"
@@ -486,7 +485,7 @@ class SubProjectDetailView(SubProjectMixin, DetailView):
 def progress_status_detail(request, project_slug, subcomponent_slug, subproject_slug, progress_status_id):
     progress_status = ProgressStatus.objects.get(id=progress_status_id)
     context = {
-        'progress_status': progress_status, 
+        'progress_status': progress_status,
         "photos": progress_status.photo_set.all(),
         "project_slug": project_slug,
         "subcomponent_slug": subcomponent_slug,
@@ -496,57 +495,75 @@ def progress_status_detail(request, project_slug, subcomponent_slug, subproject_
 
 
 @login_required
-def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):   
+def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
+    photo = None
+    photo_obj = None
+    image_url = None
+    max_magnitude = 1.5  # distance validation in kilometers accross the sphere portion of the ward
+
     subproject_obj = SubProject.objects.get(slug=subproject_slug)
-    clean_subproject_name = (
-        subproject_obj.name.lower().replace(" ", "_").replace(",", "")
-    )
-    
+    subproject_ward = Ward.objects.get(slug=subproject_obj.ward.slug)
+    subproject_ward_location = subproject_ward.location  # get ward coords
     current_time = datetime.datetime.now()
-    
+    clean_subproject_name = re.sub(r'\W+', '', f"{subproject_obj.name}")
+
     if request.method == "POST":
         photos = request.FILES.items()
         status = request.POST.get("status")
         comment = request.POST.get("custom_comment")
-        is_completed = request.POST.get("custom_is_completed")
-        if is_completed == "on":
-            is_completed = True
-        else:
-            is_completed = False
+        is_completed = True if request.POST.get("custom_is_completed") is "on" else False
         created = request.POST.get("created")
-        
+
         ProgressStatus(
             status=status,
             comment=comment,
             is_completed=is_completed,
             created=created,
-            subproject = subproject_obj,
+            subproject=subproject_obj,
             timestamp=current_time
         ).save()
-       
+
         progress_status_obj = ProgressStatus.objects.get(
             timestamp=current_time
-        ) 
-        for _, photo in photos:                      
+        )
+        for _, photo in photos:
             if photo:
+                image_url = save_to_temp_dir(photo.name, photo)
                 temp_saved_photo = FilerImage(file=photo)
                 temp_saved_photo.save()
                 photo_obj = Photo.objects.create(
                     name=photo.name,
                     image=temp_saved_photo,
-                    progress_status= progress_status_obj
-                )                              
-                photo_obj.save()
+                    progress_status=progress_status_obj
+                )
 
-                save_to_temp_dir(clean_subproject_name, photo)
-                            
-                delete_temp_file(photo_obj)        
-        
-        delete_temp_dir(clean_subproject_name)       
-        
-        messages.success(request, "Your progress status has been saved.")
-        return HttpResponse({"message" : "success"}, status=200)
-    return JsonResponse({"message" : "error"}, status=400)
+                range_is_valid, distance = validate_photo_gps_range(max_magnitude, image_url, subproject_ward_location)
+                if range_is_valid:
+                    photo_obj.save()
+                    delete_temp_file(photo_obj)
+                    message = f"{photo_obj.name} suucessfully added to subproject with status of {progress_status_obj.status}."
+                    messages.info(request, message)
+                else:
+                    message = f"The image {photo.name} of {distance} kilometers is not in the allowed ward \n" \
+                              f"distance range limit of {max_magnitude}. The image will be discarded."
+                    logger.warning(message)
+                    messages.warning(request, message)
+                    delete_temp_file(photo_obj)
+            delete_temp_dir(clean_subproject_name)
+    else:
+        message = "Something went wrong, image upload was unsuccessful."
+        messages.error(request, message)
+        raise Http404(message)
+
+    template_name = "project/progress_status_detail.html"
+    context = {
+        'progress_status': progress_status_obj,
+        "photos": progress_status_obj.photo_set.all(),
+        "project_slug": project_slug,
+        "subcomponent_slug": subcomponent_slug,
+        "subproject_slug": subproject_slug,
+    }
+    return render(request, template_name, context)
 
 
 # noinspection PyAttributeOutsideInit
@@ -733,9 +750,9 @@ class SubProjectUpdateView(LoginRequiredMixin, SubProjectMixin, UpdateView):
             return qs.filter(
                 Q(subcomponent=subcomponent)
                 & (
-                    Q(subcomponent__subcomponent_funders=self.request.user)
-                    | Q(subcomponent__subcomponent_managers=self.request.user)
-                    | Q(subcomponent__subcomponent_representatives=self.request.user)
+                        Q(subcomponent__subcomponent_funders=self.request.user)
+                        | Q(subcomponent__subcomponent_managers=self.request.user)
+                        | Q(subcomponent__subcomponent_representatives=self.request.user)
                 )
             )
 
@@ -1002,10 +1019,11 @@ def fund_approval_view(request, project_slug, subcomponent_slug, subproject_slug
             },
         )
     )
-  
+
+
 @login_required
 def subproject_fund_detail(
-    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
+        request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Display a single fund
@@ -1061,9 +1079,10 @@ def subproject_fund_detail(
         }
     )
 
+
 @login_required
 def update_sub_project_fund(
-    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
+        request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Update a single subproject fund.
@@ -1115,9 +1134,10 @@ def update_sub_project_fund(
         )
     )
 
+
 @login_required(login_url="/login/")
 def subproject_fund_delete(
-    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
+        request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Delete a single subproject fund.
@@ -1152,9 +1172,10 @@ def subproject_fund_delete(
             )
         )
 
+
 @login_required(login_url="/login/")
 def subproject_fund_disbursement_create(
-    request, project_slug, subcomponent_slug, subproject_slug, fund_slug
+        request, project_slug, subcomponent_slug, subproject_slug, fund_slug
 ):
     """
     Create a single subproject fund disbursement.
@@ -1204,9 +1225,10 @@ def subproject_fund_disbursement_create(
         )
     )
 
+
 @login_required(login_url="/login/")
 def subproject_disbursement_expenditure_create(
-    request, project_slug, subcomponent_slug, subproject_slug, fund_slug, disbursement_slug
+        request, project_slug, subcomponent_slug, subproject_slug, fund_slug, disbursement_slug
 ):
     """
     Create a single subproject fund disbursement expenditure.

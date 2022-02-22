@@ -156,7 +156,7 @@ urlpatterns = [
         user_profile_update,
         name="profile-update",
     ),
-    # -------- project paths --------
+    # -------- subcomponent paths --------
     path(
         "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/detail/",
         SubComponentDetailView.as_view(),
