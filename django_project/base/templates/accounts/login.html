@@ -1,7 +1,5 @@
 {% extends "layouts/base-fullscreen.html" %}
-
 {% load static %}
-
 {% block title %} Login {% endblock %}
 
 {% block content %}
@@ -31,6 +29,7 @@
                                     {{ msg|safe }}
                                     {% else %}
                                     Add your credentials
+									{{ tag }}
                                     {% endif %}
                                 </p>
                             </div>

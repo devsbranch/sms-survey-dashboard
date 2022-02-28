@@ -1,4 +1,5 @@
 {% load static %}
+{% load version_tag %}
 
     <!-- Top Navbar -->
     <nav class="navbar dashboard-nav">
@@ -58,6 +59,7 @@
         <!-- Nav right -->
         <div class="navbar-menu">
             <div class="navbar-end">
+				{{ version }}
     
                 <!-- Notifications dropdown (hidden on mobile) -->
                 <div class="drop-pop">
@@ -69,6 +71,7 @@
                         <div class="drop-inner has-arrow">
                             <div class="notifications-header has-text-left">
                                 <h3>Notifications</h3>
+								{{ version }}
                             </div>
                             <div class="notifications-body">
                                 <ul class="notifications-list">

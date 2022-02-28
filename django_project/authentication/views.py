@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-
+from multiprocessing import context
 # Create your views here.
 from django.shortcuts import (
     render, 
@@ -17,6 +17,7 @@ from .forms import LoginForm, SignUpForm
 from rolepermissions.roles import assign_role
 from rolepermissions.checkers import has_role
 from rolepermissions.decorators import has_role_decorator
+
 
 def login_view(request):
     form = LoginForm(request.POST or None)
@@ -38,7 +39,6 @@ def login_view(request):
             msg = "Error validating the form"
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
-
 def register_user(request, extra_arg):
     if request.method == "POST":
         form = SignUpForm(request.POST or None)
