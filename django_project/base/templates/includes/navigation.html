@@ -2,10 +2,10 @@
 {% load version_tag %}
 
     <!-- Top Navbar -->
+
     <nav class="navbar dashboard-nav">
         <!-- Nav left -->
         <div class="navbar-brand">
-    
             <!-- Reader mode switch -->
             <div class="navbar-item reader-switch is-hidden-desktop is-hidden-tablet">
                 <div class="field">
@@ -15,6 +15,7 @@
                 </div>
             </div>
             <div class="control searchbox container" style="margin-left: 10em;">
+
                 {% include 'includes/messages.html' %}
             </div>
             <div class="notify-bar-message">
@@ -58,11 +59,14 @@
     
         <!-- Nav right -->
         <div class="navbar-menu">
+			
             <div class="navbar-end">
-				{{ version }}
-    
+				
+				<span style="font-size: smaller; position: relative; justify-content: right;">Running Version&nbsp;&nbsp;&#10084;&#65039;<span style="color: #1ABC9C;">&nbsp;&nbsp;{%tag%}</span></span>
+
                 <!-- Notifications dropdown (hidden on mobile) -->
                 <div class="drop-pop">
+
                     <div class="icon-button">
                         <i data-feather="bell"></i>
                         <span class="indicator"></span>
@@ -71,7 +75,6 @@
                         <div class="drop-inner has-arrow">
                             <div class="notifications-header has-text-left">
                                 <h3>Notifications</h3>
-								{{ version }}
                             </div>
                             <div class="notifications-body">
                                 <ul class="notifications-list">

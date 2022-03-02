@@ -1,9 +1,8 @@
 {% extends "layouts/base-fullscreen.html" %}
 {% load static %}
 {% block title %} Login {% endblock %}
-
+{% load version_tag %}
 {% block content %}
-
 <section class="hero is-fullheight is-light-grey is-bold" id="main-login-body">
 
     <div class="hero-body">
@@ -65,7 +64,7 @@
 
                     <p class="has-text-centered">
                         &copy; <a href="#">THINK</a> -
-                        <a href="#">2044</a>
+                        <a href="#">2044  version : {%tag%}</a>						
                     </p>
                 </div>
                 <!-- /Classic login form -->

@@ -1,18 +1,22 @@
+from email import contentmanager
+from ensurepip import version
+#from multiprocessing import context
 from pathlib import Path
-from django.template import Library
+from re import template
+from django import template
 
-register = Library()
+register = template.Library()
+
 
 @register.simple_tag(takes_context=True)
-def version_tag(context):
+def tag(context):
     """Reads current project release from the VERSION file."""
-    version_file = Path(Path(__file__).resolve(strict=True).parent.parent.parent, "VERSION")
-
+    version_file = Path(Path(__file__).resolve(
+        strict=True).parent.parent.parent, 'VERSION')
     try:
         with open(version_file, 'r') as file:
             version = file.read()
             context['version'] = version
     except IOError:
-        context['version'] = 'Unknown'
+        context['version'] = 'unknown'
     return context['version']
-

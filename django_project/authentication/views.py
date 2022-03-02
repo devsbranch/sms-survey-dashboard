@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-from multiprocessing import context
-# Create your views here.
+# Create your views here
+
 from django.shortcuts import (
     render, 
     redirect, 
