@@ -2,14 +2,14 @@
 """Settings for when running under docker in development mode."""
 from .dev import *  # noqa
 
-DEBUG = True
+DEBUG = os.environ.get("DEBUG",  False) == 'True'
 ALLOWED_HOSTS = ['*',
                  u'0.0.0.0']
 
 ADMINS = ()
 
 # Set debug to True for development
-DEBUG = True
+DEBUG = os.environ.get("DEBUG",  False) == 'True'
 TEMPLATE_DEBUG = DEBUG
 LOGGING_OUTPUT_ENABLED = DEBUG
 LOGGING_LOG_SQL = DEBUG

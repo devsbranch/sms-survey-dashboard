@@ -12,7 +12,7 @@ from tralard.utils import IndicatorReportBuild
 def build_indicator_report(project_slug):
     from tralard.models import Indicator
 
-    indicators = Indicator.objects.filter(indicator_related_subprojects__subcomponent__project__slug=project_slug)
+    indicators = Indicator.objects.filter(indicator_related_subcomponents__project__slug=project_slug)
 
     temporary_dir = f"{settings.MEDIA_ROOT}/temp/reports"
 
@@ -24,7 +24,6 @@ def build_indicator_report(project_slug):
     # Create a unique filename for the pdf to be created
     filename = f"indicator_report_{timestamp}.pdf"
 
-
     # Create a full path to the directory containing to save the file
     save_to_dir = f"{temporary_dir}/{filename}"
 
@@ -32,4 +31,3 @@ def build_indicator_report(project_slug):
     builder.build_doc()
 
     return {"task_type": "indicator_report", "result": {"dir": temporary_dir, "filename": filename}}
-    

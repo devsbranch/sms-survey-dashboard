@@ -388,13 +388,13 @@ class IndicatorReportBuild(SimpleDocTemplate):
         iter_count = 0
 
         current_year = datetime.now().year
-        print(self.indicators)
         for indicator_obj in self.indicators:
             indicator_targets = indicator_obj.indicatortarget_set.all()
             targets_count = indicator_targets.count()
 
-            # This 'row' will have column data such as Indicator name, description, Baseline ,Target, Year 1, Year 2, Year 3, Year 4, Year 5
-            # The 'sub_row' is part of the row and will have column data like Unit of mearsure, Actual, and the rest of values for each year.
+            # This 'row' will have column data such as Indicator name, description, Baseline ,Target, Year 1, Year 2,
+            # Year 3, Year 4, Year 5 The 'sub_row' is part of the row and will have column data like Unit of
+            # mearsure, Actual, and the rest of values for each year.
             row = []
             sub_row = ["", ""]
 
@@ -403,95 +403,98 @@ class IndicatorReportBuild(SimpleDocTemplate):
             indicator_end_row = (targets_count * 2) + indicator_end_row
 
             # Example of tuple: ('SPAN', (0, 1), (0, 2)) This is to be used to style each Indicator row in the table
-            row_column_spans.append(
-                (
-                    "SPAN",
-                    (indicator_start_column, indicator_start_row),
-                    (indicator_end_column, indicator_end_row),
-                )
-            )
 
-            for target in indicator_targets:
-                row.append(
-                    Paragraph(indicator_obj.name)
-                )  # Append Indicator name as first column)
-                row.append(Paragraph(target.description))
-                row.append(Paragraph(target.baseline_value))
-                row.append(Paragraph("<b>Targets</b>"))
-                try:
-                    sub_row.insert(1, Paragraph(f"<b>{target.unit_of_measure.unit_of_measure}</b>"))
-                except AttributeError:
-                    sub_row.insert(1, Paragraph(""))
-
-                sub_row.insert(3, Paragraph("<b>Actual</b>"))
-
-                sub_row_count = 5
-
-                # Get target values and actual values for each target in the
-                # Indicator e.g 5000 - year(2022), 8000 - year(2023), 12000 - year(2024)
-                for (yearly_target_value) in target.indicatortargetvalue_set.all().order_by("year"):
-                    row.append(
-                        f"year-{yearly_target_value.year.year}\n\n{yearly_target_value.target_value}"
-                    )
-                    if yearly_target_value.year.year <= current_year:
-                        try:
-                            sub_row.insert(
-                                sub_row_count, Paragraph(str(target.unit_of_measure.get_actual_data(indicator_obj)))
-                            )
-                        except AttributeError:
-                            sub_row.insert(
-                                sub_row_count, Paragraph("")
-                            )
-                    else:
-                        sub_row.insert(
-                            sub_row_count, Paragraph("")
-                        )
-                    sub_row_count += 1
-
-                data.append(row)
-                data.append(sub_row)
-
-                # This iter_count is used to create a tuple for styling the Baseline column(by how much the coumn should span)
-                # in the table e.g ('SPAN', (0, 1), (0, 2))
-                if iter_count == 0:
-                    third_column_sr += 1
-                    third_column_er = third_column_sr + 1
-                else:
-                    third_column_sr += 2
-                    third_column_er = third_column_sr + 1
-                iter_count += 1
-
+            if indicator_targets:
                 row_column_spans.append(
                     (
                         "SPAN",
-                        (third_column_sc, third_column_sr),
-                        (third_column_ec, third_column_er),
+                        (indicator_start_column, indicator_start_row),
+                        (indicator_end_column, indicator_end_row),
                     )
                 )
+                for target in indicator_targets:
+                    row.append(
+                        Paragraph(indicator_obj.name)
+                    )  # Append Indicator name as first column)
+                    row.append(Paragraph(target.description))
+                    row.append(Paragraph(target.baseline_value))
+                    row.append(Paragraph("<b>Targets</b>"))
+                    try:
+                        sub_row.insert(1, Paragraph(f"<b>{target.unit_of_measure.unit_of_measure}</b>"))
+                    except AttributeError:
+                        sub_row.insert(1, Paragraph(""))
 
-                actual_values_row_colorfills.append(
-                    (
-                        "BACKGROUND",
+                    sub_row.insert(3, Paragraph("<b>Actual</b>"))
+
+                    sub_row_count = 5
+
+                    # Get target values and actual values for each target in the
+                    # Indicator e.g 5000 - year(2022), 8000 - year(2023), 12000 - year(2024)
+                    for (yearly_target_value) in target.indicatortargetvalue_set.all().order_by("year"):
+                        row.append(
+                            f"year-{yearly_target_value.year.year}\n\n{yearly_target_value.target_value}"
+                        )
+                        if yearly_target_value.year.year <= current_year:
+                            try:
+                                sub_row.insert(
+                                    sub_row_count, Paragraph(str(target.unit_of_measure.get_actual_data(indicator_obj)))
+                                )
+                            except AttributeError:
+                                sub_row.insert(
+                                    sub_row_count, Paragraph("")
+                                )
+                        else:
+                            sub_row.insert(
+                                sub_row_count, Paragraph("")
+                            )
+                        sub_row_count += 1
+
+                    data.append(row)
+                    data.append(sub_row)
+
+                    # This iter_count is used to create a tuple for styling the Baseline column(by how much the coumn
+                    # should span) in the table e.g ('SPAN', (0, 1), (0, 2))
+                    if iter_count == 0:
+                        third_column_sr += 1
+                        third_column_er = third_column_sr + 1
+                    else:
+                        third_column_sr += 2
+                        third_column_er = third_column_sr + 1
+                    iter_count += 1
+
+                    row_column_spans.append(
                         (
-                            actual_values_col_colorfill_start,
-                            actual_values_row_colorfill_start,
-                        ),
-                        (
-                            actual_values_col_colorfill_end,
-                            actual_values_row_colorfill_end,
-                        ),
-                        colors.Color(
-                            red=(216.0 / 255), green=(215.0 / 255), blue=(215 / 255)
-                        ),
+                            "SPAN",
+                            (third_column_sc, third_column_sr),
+                            (third_column_ec, third_column_er),
+                        )
                     )
-                )
-                actual_values_row_colorfill_start += 2
-                actual_values_row_colorfill_end += 2
 
-                # Start over the iteration with empty list
-                row = []
-                # Start over the iteration with two empty rows
-                sub_row = ["", ""]
+                    actual_values_row_colorfills.append(
+                        (
+                            "BACKGROUND",
+                            (
+                                actual_values_col_colorfill_start,
+                                actual_values_row_colorfill_start,
+                            ),
+                            (
+                                actual_values_col_colorfill_end,
+                                actual_values_row_colorfill_end,
+                            ),
+                            colors.Color(
+                                red=(216.0 / 255), green=(215.0 / 255), blue=(215 / 255)
+                            ),
+                        )
+                    )
+                    actual_values_row_colorfill_start += 2
+                    actual_values_row_colorfill_end += 2
+
+                    # Start over the iteration with empty list
+                    row = []
+                    # Start over the iteration with two empty rows
+                    sub_row = ["", ""]
+            else:
+                continue
 
         return (data, row_column_spans, actual_values_row_colorfills)
 

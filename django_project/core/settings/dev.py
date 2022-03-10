@@ -1,7 +1,7 @@
 from .project import *  # noqa
 
 # Set debug to True for development
-DEBUG = True
+DEBUG = os.environ.get("DEBUG",  False) == 'True'
 TEMPLATE_DEBUG = DEBUG
 LOGGING_OUTPUT_ENABLED = DEBUG
 LOGGING_LOG_SQL = DEBUG

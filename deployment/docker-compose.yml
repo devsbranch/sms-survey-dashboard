@@ -55,6 +55,7 @@ services:
     links:
       - redis:redis
     environment:
+      - DEBUG=True
       - DATABASE_NAME=gis
       - DATABASE_USERNAME=docker
       - DATABASE_PASSWORD=docker

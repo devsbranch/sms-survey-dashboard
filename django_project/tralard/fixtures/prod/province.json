@@ -1,0 +1,92 @@
+[
+    {
+        "model": "tralard.province",
+        "pk": 1,
+        "fields": {
+            "name": "Lusaka Province",
+            "created": "2021-01-13",
+            "slug": "lusaka-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 14,
+        "fields": {
+            "name": "Southern Province",
+            "created": "2021-01-13",
+            "slug": "southern-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 15,
+        "fields": {
+            "name": "Western Province",
+            "created": "2021-01-13",
+            "slug": "western-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 16,
+        "fields": {
+            "name": "Northern Province",
+            "created": "2021-01-13",
+            "slug": "northern-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 17,
+        "fields": {
+            "name": "Muchinga Province",
+            "created": "2021-01-13",
+            "slug": "muchinga-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 18,
+        "fields": {
+            "name": "Eastern Province",
+            "created": "2021-01-13",
+            "slug": "eastern-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 19,
+        "fields": {
+            "name": "Copperbelt Province",
+            "created": "2021-01-13",
+            "slug": "copperbelt-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 20,
+        "fields": {
+            "name": "North-Western Province",
+            "created": "2021-01-13",
+            "slug": "north-western-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 21,
+        "fields": {
+            "name": "Luapula Province",
+            "created": "2021-01-13",
+            "slug": "luapula-province"
+        }
+    },
+    {
+        "model": "tralard.province",
+        "pk": 22,
+        "fields": {
+            "name": "Central Province",
+            "created": "2021-01-13",
+            "slug": "central-province"
+        }
+    }
+]

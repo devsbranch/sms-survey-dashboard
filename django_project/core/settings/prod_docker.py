@@ -4,7 +4,7 @@
 from .prod import *  # noqa
 import os
 
-DEBUG = True # just to quickly get dev work going until ready for prod rollout
+DEBUG = os.environ.get("DEBUG",  False) == 'True' # just to quickly get dev work going until ready for prod rollout
 
 ALLOWED_HOSTS = ['*']
 

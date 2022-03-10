@@ -88,7 +88,7 @@ update-migrations:
 	@echo "------------------------------------------------------------------"
 	@docker-compose -p $(PROJECT_ID) run uwsgi python manage.py makemigrations
 	
-dev-data:
+fixture-data:
 	@echo
 	@echo "------------------------------------------------------------------"
 	@echo "Running load fixture data in production mode"
