@@ -10,6 +10,7 @@ from rest_framework import permissions
 from drf_yasg2.views import get_schema_view
 from dj_beneficiary import urls as dj_beneficiary_urls
 
+
 schema_view = get_schema_view(
    openapi.Info(
       title="THINK2044 PPCR - TRALARD API",
@@ -54,3 +55,10 @@ if settings.DEBUG:
     urlpatterns += static(
         settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
     )
+
+if not settings.DEBUG:
+    from base.views import error_403, error_404, error_500
+
+    handler403 = error_403
+    handler404 = error_404
+    handler500 = error_500

@@ -10,93 +10,92 @@
 	<table class="table is-hoverable documents-table" id="beneficiary-tbl">
 		<!-- Beneficiaries table header -->
 		<thead>
-		<tr class="bg-light">
-			<th class="text-center"></th>
-			<th class="text-center" style="width: 35%"><span class="text-primary">Name</span></th>
-			<th class="text-center"><span class="text-primary">Sub Project</span></th>
-			<th class="text-center"><span class="text-primary">Members</span></th>
-			<th class="text-center"><span class="text-primary">Registered</span></th>
-			<th class="w-5">
-			</th>
-		</tr>
-		<!-- Beneficiary Filters; rows with search inputs -->
-		<tr class="filters">
-			<th class="bg-light" scope="col"></th>
-			<th class="bg-light" scope="col"><span class="text-info ">Name</span></th>
-			<th class="bg-light" scope="col"><span class="text-info ">Sub Project</span></th>
-			<th class="bg-light" scope="col"></th>
-			<th class="bg-light" scope="col"></th>
-			<th class="bg-light" scope="col"><span class="text-info "></span></th>
-		</tr>
+			<tr class="bg-light">
+				<th class="text-center"></th>
+				<th class="text-center" style="width: 35%"><span class="text-primary">Name</span></th>
+				<th class="text-center"><span class="text-primary">Sub Project</span></th>
+				<th class="text-center"><span class="text-primary">Members</span></th>
+				<th class="text-center"><span class="text-primary">Registered</span></th>
+				<th class="w-5">
+				</th>
+			</tr>
+			<!-- Beneficiary Filters; rows with search inputs -->
+			<tr class="filters">
+				<th class="bg-light" scope="col"></th>
+				<th class="bg-light" scope="col"><span class="text-info ">Name</span></th>
+				<th class="bg-light" scope="col"><span class="text-info ">Sub Project</span></th>
+				<th class="bg-light" scope="col"></th>
+				<th class="bg-light" scope="col"></th>
+				<th class="bg-light" scope="col"><span class="text-info "></span></th>
+			</tr>
 		</thead>
 		<tbody>
-		{% for beneficiary in beneficiaries %}
-		<tr>
-			<td></td>
-			<!-- Row Entry for Name-->
-			<td class="document-preview">
-				<span class="inner">
-                    <img src="https://via.placeholder.com/150x150"
-                         alt="" {% if beneficiary.logo %} data-demo-src="{{ beneficiary.logo.url }} {% endif %}">
-                    <a href="#"
-                       class="is-modal modal-trigger modal-trigger"
-                       data-modal="beneficiary-detail-modal"
-                       onClick="fetchDetailModalData('{{subcomponent.project.slug}}', '{{ subcomponent.slug}}', '{{beneficiary.slug}}')">
-	                    {{beneficiary.name}}
-                    </a>
-                </span>
-			</td>
-			<!-- Row Entry for subproject-->
-			<td class="members">
-				<span class="inner">
-					{{ beneficiary.sub_project.name}}
-				</span>
-			</td>
-			<!-- Row Entry for Members-->
-			<td class="members">
-				<span class="inner">
-					{{ beneficiary.total_beneficiaries}} members
-				</span>
-			</td>
-			<td class="modifications">
-				<span class="date">{{beneficiary.registered_date}}</span>
-			</td>
-			<td class="actions">
-				<div class="dropdown is-right dropdown-trigger document-list-dropdown">
-					<div class="button">
-						<strong><i class="material-icons text-info">more_horiz</i></strong>
-					</div>
-					<div class="more-drop">
-						<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
-							<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
-								<div class="dropdown-content">
-									<a class="dropdown-item modal-trigger modal-trigger"
-									   data-modal="create-beneficiary-modal"
-									   onClick="handleBeneficiaryForm('POPULATE_FORM','tralard', 'livelihoods', '{{beneficiary.slug}}');">
-										<i class="sl sl-icon-note text-success"></i>
-										<span>
-											<span class="dark-text">Update</span>
-											<span>Edit this beneficiary entry</span>
-										</span>
-									</a>
-									<a class="dropdown-item modal-trigger"
-									   data-modal="delete-beneficiary-modal"
-									   onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{subcomponent.project.slug}}', '{{subcomponent.slug}}', '{{beneficiary.slug}}')">
-										<i class="sl sl-icon-trash text-danger"></i>
-										<span>
-					                        <span class="dark-text">Delete</span>
-					                        <span>Delete this beneficiary entry</span>
-					                    </span>
-									</a>
+			{% for beneficiary in beneficiaries %}
+			<tr>
+				<td></td>
+				<!-- Row Entry for Name-->
+				<td class="document-preview">
+					<span class="inner">
+						<img src="https://via.placeholder.com/150x150" alt="" {% if beneficiary.logo %}
+							data-demo-src="{{ beneficiary.logo.url }} {% endif %}">
+						<a href="#"
+							hx-get="{% url 'tralard:beneficiary-detail' subcomponent.project.slug subcomponent.slug beneficiary.slug %}"
+							hx-target="#beneficiary-list">
+							{{beneficiary.name}}
+						</a>
+					</span>
+				</td>
+				<!-- Row Entry for subproject-->
+				<td class="members">
+					<span class="inner">
+						{{ beneficiary.sub_project.name}}
+					</span>
+				</td>
+				<!-- Row Entry for Members-->
+				<td class="members">
+					<span class="inner">
+						{{ beneficiary.total_beneficiaries}} members
+					</span>
+				</td>
+				<td class="modifications">
+					<span class="date">{{beneficiary.registered_date}}</span>
+				</td>
+				<td class="actions">
+					<div class="dropdown is-right dropdown-trigger document-list-dropdown">
+						<div class="button">
+							<strong><i class="material-icons text-info">more_horiz</i></strong>
+						</div>
+						<div class="more-drop">
+							<div class="dropdown is-right dropdown-trigger styled-dropdown is-round">
+								<div class="dropdown-menu is-text-bigger has-text-left" role="menu">
+									<div class="dropdown-content">
+										<a href="#" class="dropdown-item">
+											<i class="sl sl-icon-note text-success"></i>
+											<span
+											
+												hx-get="{% url 'tralard:beneficiary-update' subcomponent.project.slug subcomponent.slug beneficiary.slug %}"
+												hx-target="#beneficiary-list">
+												<span class="dark-text">Update</span>
+												<span>Edit this beneficiary entry</span>
+											</span>
+										</a>
+										<a class="dropdown-item modal-trigger" data-modal="delete-beneficiary-modal"
+											onClick="handleDeleteBeneficiary('SET_ACTION_URL', '{{subcomponent.project.slug}}', '{{subcomponent.slug}}', '{{beneficiary.slug}}')">
+											<i class="sl sl-icon-trash text-danger"></i>
+											<span>
+												<span class="dark-text">Delete</span>
+												<span>Delete this beneficiary entry</span>
+											</span>
+										</a>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<a href="#" class="button is-hidden"><i class="material-icons">remove_red_eye</i></a>
-			</td>
-		</tr>
-		{% endfor %}
+					<a href="#" class="button is-hidden"><i class="material-icons">remove_red_eye</i></a>
+				</td>
+			</tr>
+			{% endfor %}
 		</tbody>
 	</table>
 </div>

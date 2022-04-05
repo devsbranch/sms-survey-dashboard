@@ -1,0 +1,39 @@
+{% load crispy_forms_tags %}
+<div id="task-details" class="navtab-content is-active">
+    <div style="display: flex; justify-content: end;">
+        <a href="" class="button btn-dash primary-btn raised">Close</a>
+    </div>
+    <div class="card-body" style="">
+        <div class="content">
+            <!-- New Project form -->
+            <form id="beneficiary-form"
+                action="{% url 'tralard:beneficiary-update' project_slug subcomponent_slug beneficiary.slug %}"
+                method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {% crispy form form.helper %}
+                <div class="form-footer">
+                    <button id="form-submit-button" type="submit" class="button btn-dash primary-btn raised">
+                        Update Beneficiary
+                    </button>
+                </div>
+                <style>
+                    .left,
+                    #select2-id_province-container,
+                    #select2-id_province-results,
+                    .select2-dropdown--below,
+                    .select2-selection--single {
+                        width: 690px;
+                        height: 100%;
+                    }
+
+                    .select2-results__options {
+                        background-color: white;
+                        width: 690px;
+                        height: 100%;
+                    }
+                </style>
+            </form>
+            <!-- /New Project form -->
+        </div>
+    </div>
+</div>

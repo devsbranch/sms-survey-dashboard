@@ -36,7 +36,7 @@
                                     
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button"  class="button modal-dismiss"></a>Cancel</button>
+                                    <button type="button"  class="button modal-dismiss">Cancel</button>
                                     <button type="submit" class="button is-modal">Update SubProject</button>
                                 </div>
                                 
@@ -44,7 +44,7 @@
                         </div>
                     </div>
                 </div>
-                {% comment %} <button class="modal-close is-large" aria-label="close">X</button> {% endcomment %}
+                <button class="modal-close is-large" aria-label="close">X</button>
             </div>
         <!-- Edit SubProject Modal -->
 
@@ -305,7 +305,7 @@
                             </div>
                             
                             <!-- Right side -->
-                            <div class="column is-8">
+                            <div id="subprojects-card" class="column is-8">
                                 
                                 <!-- Action card -->
                                 <div class="flex-card action-card card-overflow">
@@ -421,29 +421,15 @@
                                                                               
                                                                                 {% if user|has_role:'project_manager, project_manager' or user.is_staff or user.is_superuser %}
                                                                                 <a
-                                                                                id="edit-button" class="dropdown-item modal-trigger modal-trigger edit-btn2{{ subproject.id }} edit-btn2{{ subproject.id }}" data-modal="edit-subproject-modal"
-                                                                                  class="dropdown-item modal-trigger"
-                                                                                >
+                                                                                    class="dropdown-item"
+                                                                                    hx-get="{% url 'tralard:subproject-update' project_slug subcomponent_slug subproject.slug %}"
+                                                                                    hx-target="#subprojects-card">
                                                                                   <i class="sl sl-icon-pencil"></i>
                                                                                   <span>
                                                                                     <span>Update</span>
                                                                                     <span>Edit subproject</span>
                                                                                   </span>
                                                                                 </a>
-                                                                        
-                                                                                <script>
-                                                                                    var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
-                                                                                      uniqueEditSelectorButton.addEventListener("click", () => {    
-                                                                                         if("{{ subproject.slug }}" == "{{ subproject.slug }}"){
-                                                                                            document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
-                                                                                            document.getElementById("update-subproject-form").action = `{% url 'tralard:subproject-update' subproject.subcomponent.project.slug subproject.subcomponent.slug subproject.slug %}`;
-                                                                                            document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
-                                                                                            document.getElementById("subproject-update123").innerHTML += `{{ subproject.sub_project_update_form|crispy }}`;
-                                                                                            document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
-                                                                                            document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
-                                                                                         }
-                                                                                       });
-                                                                                 </script>
 
                                                                                 {% endif %}
                                                                                 <div class="dropdown-divider"></div>

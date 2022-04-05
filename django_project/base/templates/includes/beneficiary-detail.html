@@ -1,0 +1,151 @@
+<div class="contact-profile-wrap" style="margin: 20px;">
+
+    <div class="columns contact-profile">
+        <!-- Avatar Card -->
+        <div class="column is-4">
+            <div class="flex-card is-avatar light-bordered card-overflow">
+                <div id="detail-modal-inner" class="inner">
+                    <div class="contact-block">
+                        <!-- Avatar -->
+                        <div class="avatar-wrapper">
+                            {% if beneficiary.logo %}
+                            <img id="org-logo" src="{{ beneficiary.logo.url }}" alt="" data-demo-src="">
+                            {% else %}
+                            <img id="org-logo" src="https://via.placeholder.com/150x150" alt="" data-demo-src="">
+                            {% endif %}
+                        </div>
+                        <!-- Meta -->
+                        <div id="org-name-card" class="contact-name"></div>
+                        <div id="org-type" class="contact-company"></div>
+                        <!-- Stats -->
+                        <ul class="">
+                            <li>
+                                <div class="stat">
+                                    <span>Total  &#10148;  </span>
+                                    <span
+                                        id="total-beneficiaries">{{beneficiary.total_beneficiarie|default_if_none:"-" }}</span>
+                                    </div>
+                            </li>
+                            <li>
+                                <div class="stat ml-2">
+                                    <span>Females  &#10148;  </span>
+                                    <span id="total-females">{{beneficiary.total_female|default_if_none:"-" }}</span>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="stat ml-2">
+                                    <span>Males  &#10148;  </span>
+                                    <span id="total-males">{{beneficiary.total_male|default_if_none:"-" }}</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="column is-8">
+            <!-- Contact informations -->
+            <div class="flex-card is-contact-info light-bordered card-overflow">
+                <!-- Tabs -->
+                <div class="navigation-tabs single-contact-tabs animated-tabs simple-tabs">
+                    <div class="tabs">
+                        <ul>
+                            <li class="is-active" data-tab="tab-general"><a>General</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- General information -->
+                    <div id="tab-general" class="navtab-content is-active">
+                        <div class="columns">
+                            <div class="column is-6">
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Email
+                                    </div>
+                                    <div id="org-email" class="info-content is-email">{{ beneficiary.email|default_if_none:"-" }}</div>
+                                </div>
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Phone (1)
+                                    </div>
+                                    <div id="org-phone" class="info-content">{{ beneficiary.cell|default_if_none:"-" }}
+                                    </div>
+                                </div>
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Organization Type
+                                    </div>
+                                    <div id="org-type-inner" class="info-content">{{ beneficiary.org_type|default_if_none:"-" }}</div>
+                                </div>
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Registered Date
+                                    </div>
+                                    <div id="org-registered-date" class="info-content">{{ beneficiary.registered_date|default_if_none:"-"}}
+                                    </div>
+                                </div>
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Location
+                                    </div>
+                                    <div id="org-location" class="info-content">{{ beneficiary.location|default_if_none:"-" }}</div>
+                                </div>
+                                <!-- Info block -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Ward
+                                    </div>
+                                    <div id="org-ward" class="info-content">{{ beneficiary.ward.name|default_if_none:"-" }}</div>
+                                </div>
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Sub-Project
+                                    </div>
+                                    <div id="org-sub-project" class="info-content">{{ beneficiary.subproject.name|default_if_none:"-" }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="column is-6">
+                                <!-- Contact summary -->
+                                <div class="info-block">
+                                    <div class="info-label">
+                                        Organization Description
+                                    </div>
+                                    <div id="org-description" class="info-content is-notes">{{ beneficiary.descriptio|default_if_none:"-"}}
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Lifetime earnings -->
+                        <div class="lifetime-wrapper">
+                            <div class="">
+                                <div class="lifetime-label">Total Beneficiaries</div>
+                                <span id="total-beneficiaries-inner">{{ beneficiary.total_beneficiaries|default_if_none:"-" }}</span>
+                            </div>
+
+                            <!-- Send email action -->
+                            <a href=""
+                                class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-dismiss"
+                                data-ripple-color="" data-modal="message-contact-modal" style="color: white">
+                                Close
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

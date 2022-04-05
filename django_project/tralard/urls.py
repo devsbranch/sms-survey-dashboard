@@ -67,7 +67,7 @@ from tralard.views.training import (
     TrainingListView,
 )
 from tralard.views.project import (
-    ProjectDetailView, 
+    ProjectDetailView,
     preview_indicator_document,
 )
 app_name = "tralard"
@@ -240,6 +240,11 @@ urlpatterns = [
         "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/list/",
         BeneficiaryOrgListView.as_view(),
         name="beneficiary-list",
+    ),
+    path(
+        "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/detail/",
+        beneficiary_detail,
+        name="beneficiary-detail",
     ),
     path(
         "project/<slug:project_slug>/subcomponent/<slug:subcomponent_slug>/beneficiary/<slug:beneficiary_slug>/update/",

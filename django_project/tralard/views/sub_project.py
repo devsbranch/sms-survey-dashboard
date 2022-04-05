@@ -194,6 +194,11 @@ class SubProjectTrainingListView(LoginRequiredMixin, CreateView):
             },
         )
 
+    def get_queryset(self):
+        subproject_slug = self.kwargs.get("subproject_slug")
+        qs = Training.objects.filter(sub_project__slug=subproject_slug)
+        return qs
+
     def get_context_data(self, **kwargs):
         context = super(SubProjectTrainingListView, self).get_context_data()
         self.subproject_slug = self.kwargs.get("subproject_slug", None)
@@ -314,8 +319,9 @@ def sub_project_training_update(
 
 
 @login_required(login_url="/login/")
-def sub_project_update(request, project_slug, subproject_slug):
+def sub_project_update(request, project_slug, subcomponent_slug,subproject_slug):
     subproject = SubProject.objects.get(slug=subproject_slug)
+    form = SubProjectForm(instance=subproject)
     if request.method == "POST":
         form = SubProjectForm(request.POST or None, request.FILES, instance=subproject)
         if form.is_valid():
@@ -330,10 +336,16 @@ def sub_project_update(request, project_slug, subproject_slug):
                 "tralard:subproject-manage",
                 kwargs={
                     "project_slug": project_slug,
-                    "subcomponent_slug": subproject.subcomponent.slug
+                    "subcomponent_slug": subcomponent_slug,
+                    "subproject_slug": subproject_slug
                 },
             )
         )
+    return render(
+        request,
+        "includes/subproject-update-form.html",
+        {"form": form, "subproject": subproject}
+    )
 
 
 @login_required(login_url="/login/")
@@ -499,7 +511,7 @@ def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
     photo = None
     photo_obj = None
     image_url = None
-    max_magnitude = 1.5  # distance validation in kilometers accross the sphere portion of the ward
+    max_magnitude = 10  # distance validation in kilometers across the sphere portion of the ward
 
     subproject_obj = SubProject.objects.get(slug=subproject_slug)
     subproject_ward = Ward.objects.get(slug=subproject_obj.ward.slug)
@@ -541,7 +553,7 @@ def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
                 if range_is_valid:
                     photo_obj.save()
                     delete_temp_file(photo_obj)
-                    message = f"{photo_obj.name} suucessfully added to subproject with status of {progress_status_obj.status}."
+                    message = f"{photo_obj.name} successfully added to subproject with status of {progress_status_obj.status}."
                     messages.info(request, message)
                 else:
                     message = f"The image {photo.name} of {distance} kilometers is not in the allowed ward \n" \
@@ -896,6 +908,11 @@ class SubProjectFundListAndCreateView(RevisionMixin, LoginRequiredMixin, CreateV
                 "subproject_slug": self.object.sub_project.slug,
             },
         )
+
+    def get_queryset(self):
+        subproject_slug = self.kwargs.get("subproject_slug")
+        qs = Fund.objects.filter(sub_project__slug=subproject_slug)
+        return qs
 
     def get_context_data(self, **kwargs):
         context = super(SubProjectFundListAndCreateView, self).get_context_data(

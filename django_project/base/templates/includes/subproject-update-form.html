@@ -1,0 +1,17 @@
+{% load static %}
+
+{% load crispy_forms_tags %}
+
+<div style="display: flex; justify-content: end;">
+    <a class="button btn-dash primary-btn btn-dash" href="">View Sub-Project</a>
+</div>
+
+<form action="{% url 'tralard:subproject-update' subproject.subcomponent.project.slug subproject.subcomponent.slug subproject.slug %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    {% crispy form form.helper %}
+    <div class="modal-footer">
+        <button type="button" class="button modal-dismiss"><a href="">Cancel</a></button>
+        <button type="submit" class="button is-modal">Update SubProject</button>
+    </div>
+</form>

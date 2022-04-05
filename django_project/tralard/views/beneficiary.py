@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.forms.models import model_to_dict
 from django.core.paginator import Paginator, EmptyPage
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404, redirect, render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
@@ -33,7 +33,7 @@ class PaginatorMixin(Paginator):
 
 class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = Beneficiary
-    template_name = "beneficiary/list.html"
+    # template_name = "beneficiary/list.html"
     form_class = BeneficiaryCreateForm
     paginate_by = 20
     paginator_class = PaginatorMixin
@@ -99,51 +99,18 @@ class BeneficiaryOrgListView(LoginRequiredMixin, SuccessMessageMixin, CreateView
 def beneficiary_detail(request, project_slug, subcomponent_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
 
-    obj_to_dict = model_to_dict(beneficiary_obj)
-
-    ward_id = obj_to_dict["ward"]
-    sub_project_id = obj_to_dict["sub_project"]
-
-    obj_to_dict["ward"] = Ward.objects.get(id=ward_id).name
-    obj_to_dict["sub_project"] = SubProject.objects.get(id=sub_project_id).name
-
-    try:
-        # get cordinates [latitude, longitude]
-        obj_to_dict["location"] = obj_to_dict["location"].coords
-    except AttributeError:
-        pass
-
-    try:
-        # get image name and url
-        obj_to_dict["logo_url"] = obj_to_dict["logo"].url
-        obj_to_dict["logo"] = obj_to_dict["logo"].name
-    except ValueError:
-        # remove the logo since its an object that can't serialized, because it does not have
-        # the name and url.
-        obj_to_dict.pop("logo")
-
-    return JsonResponse(obj_to_dict)
+    context = {
+        "beneficiary": beneficiary_obj,
+        "project_slug": project_slug,
+        "subcomponent_slug": subcomponent_slug
+    }
+    return render(request, "includes/beneficiary-detail.html", context)
 
 
 @login_required(login_url="/login/")
 def beneficiary_update(request, project_slug, subcomponent_slug, beneficiary_slug):
     beneficiary_obj = get_object_or_404(Beneficiary, slug=beneficiary_slug)
-
     form = BeneficiaryCreateForm(instance=beneficiary_obj)
-    model_as_dict = form.initial
-
-    image_file_data = model_as_dict["logo"]
-
-    try:
-        model_as_dict["logo"] = image_file_data.name
-        model_as_dict["logo_image_url"] = image_file_data.url
-    except ValueError:
-        pass
-
-    try:
-        model_as_dict["location"] = model_as_dict.location.coords
-    except AttributeError:
-        pass
 
     if request.method == "POST":
         form = BeneficiaryCreateForm(
@@ -182,8 +149,17 @@ def beneficiary_update(request, project_slug, subcomponent_slug, beneficiary_slu
             )
         )
 
-    return JsonResponse(model_as_dict)
-
+    context = {
+        "form": form,
+        "project_slug": project_slug,
+        "subcomponent_slug": subcomponent_slug,
+        "beneficiary": beneficiary_obj
+    }
+    return render(
+        request,
+        "beneficiary/update-beneficiary-form.html",
+        context
+    )
 
 @login_required(login_url="/login/")
 def beneficiary_delete(request, project_slug, subcomponent_slug, beneficiary_slug):

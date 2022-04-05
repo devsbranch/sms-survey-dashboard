@@ -41,36 +41,25 @@
 									<div class="dropdown-menu is-text-bigger" role="menu">
 										<div class="dropdown-content">
 											<a id="edit-button"
-											   class="dropdown-item modal-trigger modal-trigger edit-btn2"
-											   data-modal="edit-subproject-modal"
-											   class="dropdown-item modal-trigger"
+											   class="dropdown-item"
+
+											   hx-get="{% url 'tralard:subproject-update' project_slug subcomponent_slug subproject_slug %}"
+											   hx-target="#tab-general"
 											>
 												<i class="sl sl-icon-pencil"></i>
 												<span>
-                          <span>Update</span>
-                          <span>Edit subproject</span>
-                        </span>
+												  <span>Update</span>
+												  <span>Edit subproject</span>
+												</span>
 											</a>
-											<script>
-                                              var uniqueEditSelectorButton = document.querySelector(".edit-btn2{{ subproject.id }}");
-                                              uniqueEditSelectorButton.addEventListener("click", () => {
-                                                if ("{{ sub_project.slug }}" == "{{ sub_project.slug }}") {
-                                                  document.getElementById("subproject-update123").innerHTML = `{% csrf_token %}`;
-                                                  document.getElementById("update-sub_project-form").action = `{% url 'tralard:subproject-update' sub_project.subcomponent.project.slug sub_project.subcomponent.slug sub_project.slug %}`;
-                                                  document.getElementById("subproject-update123").innerHTML += `{% load crispy_forms_tags %}`;
-                                                  document.getElementById("subproject-update123").innerHTML += `{{ subproject.subproject_update_form|crispy }}`;
-                                                  document.getElementById("id_custom_focus_area").innerText = `{{ subproject.focus_area }}`;
-                                                  document.getElementById("id_custom_description").innerText = `{{ subproject.description }}`;
-                                                }
-                                              });
-											</script>
+
 											<div class="dropdown-divider"></div>
 											<a class="dropdown-item">
 												<i class="sl sl-icon-trash"></i>
 												<span>
-                          <span>Delete</span>
-                          <span>Delete subproject</span>
-                        </span>
+												  <span>Delete</span>
+												  <span>Delete subproject</span>
+												</span>
 											</a>
 										</div>
 									</div>
@@ -148,23 +137,23 @@
 												<div class="stat">
 													<span>Beneficiaries</span>
 													<span>
-                            {% if sub_project.count_beneficiaries %}
-														<!--  -->
-                            {{sub_project.count_beneficiaries }}
-														<!--  -->
-                            {% else %} None {% endif %}
-                          </span>
+													{% if sub_project.count_beneficiaries %}
+																				<!--  -->
+													{{sub_project.count_beneficiaries }}
+																				<!--  -->
+													{% else %} None {% endif %}
+												  </span>
 												</div>
 												<div class="stat">
 													<span>Training Schedules</span>
 													<span>
-                            {% if sub_project.count_training_schedules %}
-														<!--  -->
-                            {{sub_project.count_training_schedules }}
-														<!--  -->
-                            {% else %} None {% endif %}
-														<!--  -->
-                          </span>
+														{% if sub_project.count_training_schedules %}
+																					<!--  -->
+														{{sub_project.count_training_schedules }}
+																					<!--  -->
+														{% else %} None {% endif %}
+																					<!--  -->
+													  </span>
 												</div>
 
 											</div>
@@ -175,9 +164,7 @@
 
 							<div class="column is-8">
 								<!-- Contact informations -->
-								<div
-										class="flex-card is-contact-info light-bordered card-overflow"
-								>
+								<div class="flex-card is-contact-info light-bordered card-overflow">
 									<!-- Tabs -->
 									<div
 											class="navigation-tabs single-contact-tabs animated-tabs simple-tabs"
@@ -190,7 +177,7 @@
 											</ul>
 										</div>
 
-										<!-- General informations -->
+										<!-- General information -->
 										<div id="tab-general" class="navtab-content is-active">
 											<div class="columns">
 												<div class="column is-6">
@@ -212,7 +199,7 @@
 													<div class="info-block">
 														<div class="info-label">Size</div>
 														<div class="info-content">
-															{{ sub_project.size }} Hectors
+															{{ sub_project.size }}
 														</div>
 													</div>
 													<!-- Info block -->
@@ -295,8 +282,8 @@
 													<div class="lifetime-label">Total Funding</div>
 													{% if sub_project.get_total_sub_project_fund %}
 													<span>
-                            {{ sub_project.get_total_sub_project_fund|intcomma}}
-                          </span>
+														{{ sub_project.get_total_sub_project_fund|intcomma}}
+													  </span>
 													{% else %}
 													<span> 0.00</span>
 													{% endif %}
@@ -305,17 +292,17 @@
 												<!-- Send email action -->
 												<div class="list-filter">
 													<div class="control">
-                              <span style="float: right;">
-                              <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
-                                 data-ripple-color=""
-                                 data-modal="progress-status-modal"
-                                 href="#">
-                                {% comment %}
-                                    <i class="material-icons">mail</i>
-	                            {%endcomment %}
-                                Add Progress Status
-                            </a> 
-                          </span>
+													  <span style="float: right;">
+													  <a class="button btn-dash secondary-btn btn-dash raised ripple has-icon modal-trigger"
+															 data-ripple-color=""
+															 data-modal="progress-status-modal"
+															 href="#">
+															{% comment %}
+																<i class="material-icons">mail</i>
+															{%endcomment %}
+															Add Progress Status
+														</a>
+													  </span>
 
 													</div>
 												</div>
