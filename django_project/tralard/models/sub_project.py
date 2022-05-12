@@ -17,15 +17,14 @@ from filer.fields.image import FilerImageField
 from tralard.models.fund import Fund
 from tralard.models.ward import Ward
 from tralard.utils import (
-    unique_slugify, 
-    sub_project_update_form, 
+    unique_slugify,
+    sub_project_update_form,
     sub_project_create_form,
 )
 from tralard.models.training import Training
 from tralard.models.province import Province
 from tralard.models.beneficiary import Beneficiary
 from tralard.constants import PROJECT_STATUS_CHOICES, MODEL_FIELD_CHOICES
-
 
 User = get_user_model()
 logger = logging.getLogger(__name__)
@@ -34,8 +33,8 @@ logger = logging.getLogger(__name__)
 class SubProjectManager(models.Manager):
     """ Custom manager that aggregates subcomponents and subprojects provincial overview. """
 
-    def get_sub_projects_district_json(self):    
-        """ Queryset to aggregate suprojects in each province """            
+    def get_sub_projects_district_json(self):
+        """ Queryset to aggregate suprojects in each province """
         province_labels = []
         sub_projects_count = []
 
@@ -50,11 +49,11 @@ class SubProjectManager(models.Manager):
 
         return {
             "labels": province_labels_json,
-            "data" : sub_projects_count_json
+            "data": sub_projects_count_json
         }
 
-    def get_subcomponents_in_district_json(self):    
-        """ Queryset to aggregate subcomponents in each province """            
+    def get_subcomponents_in_district_json(self):
+        """ Queryset to aggregate subcomponents in each province """
         province_labels = []
         subcomponents_count = []
         subcomponent_names = []
@@ -70,23 +69,24 @@ class SubProjectManager(models.Manager):
             unique_subproject_names = list(set(subcomponent_names))
             subcomponents_count.append(len(unique_subproject_names))
 
-
         province_labels_json = json.dumps(province_labels)
         subcomponents_count_json = json.dumps(subcomponents_count)
 
         return {
             "labels": province_labels_json,
-            "data" : subcomponents_count_json,
-        }     
+            "data": subcomponents_count_json,
+        }
+
 
 class CountProjects(models.Manager):
     """ Custom manager that aggregates subcomponents in each province. """
-    
+
+
 class SubProject(models.Model):
     """
     Sub Project definition.
-    """    
-    
+    """
+
     slug = models.SlugField(
         max_length=255,
         null=True,
@@ -98,18 +98,18 @@ class SubProject(models.Model):
         unique=True
     )
     size = models.DecimalField(
-        help_text=_("Size (number of Hectors, SquareMeters, Products etc)."),
+        help_text=_("Capture project data in quantity i.e. 2, 3.7, 159.44"),
         decimal_places=3,
         max_digits=10,
         blank=True,
         null=True,
     )
     size_description = models.TextField(
-        help_text=_("A brief description of the project size, like what the size implies."),
+        help_text=_("A brief description of the project size i.e. 24 Hectors of Land"),
         max_length=500,
         blank=True,
         null=True,
-    ) 
+    )
     ward = models.ForeignKey(
         Ward,
         help_text=_('The ward in which this SubProject has been implemented.'),
@@ -143,10 +143,10 @@ class SubProject(models.Model):
         ),
     )
     approved = models.BooleanField(
-        # changed to True beccause the create feature 
-        # of subproject shall be accessible at admdin level only 
+        # changed to True beccause the create feature
+        # of subproject shall be accessible at admdin level only
         # and all created subprojects by admins are preaproved.
-        default=True, 
+        default=True,
         null=True,
         blank=True,
     )
@@ -184,7 +184,7 @@ class SubProject(models.Model):
         null=True,
     )
     created = models.DateTimeField(auto_now_add=True)
-    
+
     objects = models.Manager()
     custom_objects = SubProjectManager()
 
@@ -214,8 +214,8 @@ class SubProject(models.Model):
         balance_value = funds_balance_qs["balance__sum"]
         if amount_value is not None and balance_value is not None:
             fund_utilization_percent = (
-                float(balance_value) / float(amount_value)
-            ) * 100
+                                               float(balance_value) / float(amount_value)
+                                       ) * 100
         else:
             fund_utilization_percent = 0
         return round(fund_utilization_percent)
@@ -249,12 +249,11 @@ class SubProject(models.Model):
         """Assigns a form to SubProject after create."""
         form = sub_project_update_form(self)
         return form
-    
+
     @property
     def subproject_manage_url(self):
         url = f"/program/{self.project.program.slug}/project/{self.project.slug}/subproject/{self.slug}/manage/"
         return url
-
 
 
 class Photo(models.Model):
@@ -265,7 +264,7 @@ class Photo(models.Model):
         blank=True
     )
     image = FilerImageField(
-        null=False, 
+        null=False,
         db_column="img_id",
         on_delete=models.CASCADE
     )
@@ -282,13 +281,13 @@ class Photo(models.Model):
     @property
     def get_image(self):
         return self.image.file
-    
+
     @property
     def get_images(self):
         return self.image
 
     @property
-    def sub_project_create_form():
+    def sub_project_create_form(self):
         """Assigns a form to SubProject after create."""
         form = sub_project_create_form()
         return "Hello form"
@@ -308,19 +307,19 @@ class ProgressStatus(models.Model):
         blank=True
     )
     subproject = models.ForeignKey(
-        'tralard.SubProject', 
+        'tralard.SubProject',
         on_delete=models.CASCADE
     )
     is_completed = models.BooleanField(default=False)
     created = models.DateField(
-        auto_now_add=False, 
+        auto_now_add=False,
         default=datetime.datetime.now
     )
     timestamp = models.DateTimeField(
-        auto_now_add=False, 
+        auto_now_add=False,
         default=datetime.datetime.now
     )
-    
+
     class Meta:
         verbose_name = _("Progress Status")
         verbose_name_plural = _("Progress Statuses")
