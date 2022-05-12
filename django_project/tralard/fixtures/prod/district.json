@@ -584,17 +584,6 @@
     },
     {
         "model": "tralard.district",
-        "pk": 53,
-        "fields": {
-            "name": "Muyombe",
-            "province": 17,
-            "created": "2021-01-13",
-            "slug": "muyombe",
-            "location": "POINT(-10.583331 33.4666648)"
-        }
-    },
-    {
-        "model": "tralard.district",
         "pk": 54,
         "fields": {
             "name": "Mwinilunga",
@@ -1367,10 +1356,10 @@
         "model": "tralard.district",
         "pk": 123,
         "fields": {
-            "name": "Mungwi",
+            "name": "Nakonde",
             "province": 17,
             "created": "2021-01-13",
-            "slug": "Mungwi",
+            "slug": "Nakonde",
             "location": "POINT(-9.93 31.735)"
         }
     },
