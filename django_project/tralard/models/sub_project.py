@@ -183,6 +183,20 @@ class SubProject(models.Model):
         blank=True,
         null=True,
     )
+    latitude = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=8,
+        decimal_places=5,
+        help_text="Enter the latitude coordinate. For example -14.09233"
+    )
+    longitude = models.DecimalField(
+        null=True,
+        blank=True,
+        max_digits=8,
+        decimal_places=5,
+        help_text="Enter the latitude coordinate. For example 27.09233"
+    )
     created = models.DateTimeField(auto_now_add=True)
 
     objects = models.Manager()

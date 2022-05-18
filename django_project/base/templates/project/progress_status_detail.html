@@ -6,11 +6,13 @@
             <i class="fa fa-camera"></i>
         </span>
         <span>Photos</span>
+
     </div>
     <div class="content">
-                <div class="columns">
-                    <div class="column is-12 is-6-mobile">
-                        <div
+        <div class="columns">
+            <div class="column is-12 is-6-mobile">
+                <p class="m-4">{{progress_status.comment}}</p>
+                <div
                         id="blueimp-gallery"
                         class="blueimp-gallery blueimp-gallery-controls"
                         aria-label="image gallery"
@@ -47,23 +49,23 @@
                             ></a>
                             <ol class="indicator"></ol>
                         </div>
-                        
+
                         <div id="links">
                             {% for photo in photos %}
                                 {% if photo %}
                                 <a  href="{{ photo.image.url }}" title="{{ photo.image.name }}">
                                     <img src="{% thumbnail photo.image 250x250 crop %}" alt="" width="155" />
-                                </a>                                     
+                                </a>
                                 {% endif %}
                             {% endfor %}
                         </div>
-                        
-                    </div>
-                </div> 
-    </div>
-</div>  
 
- 
+                    </div>
+                </div>
+    </div>
+</div>
+
+
 
 <script>
       document.getElementById('links').onclick = function (event) {

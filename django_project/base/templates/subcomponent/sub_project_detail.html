@@ -332,8 +332,26 @@
 
 	<div class="modal-background"></div>
 	<div class="modal-content">
-		<div class="flex-card simple-shadow">
+		<div class="flex-card simple-shadow" style="overflow-y: scroll;">
+			<div x-data="{success: false, fail: false}">
+				<button @click="success = true; fail = false" id="success-message-btn" style="display: none;"></button>
+				<button @click="fail = true; success = false;" id="fail-message-btn" style="display: none;"></button>
+
+                <div x-show="success" style="overflow: auto;">
+					<div class="alert alert-success alert-dismissible">
+						<p id="success-message" class="is-size-5">The Progress Status was saved successfully</p><a class="is-size-4 ml-6" @click="success = false; fail = false">&#10761;</a>
+					</div>
+				</div>
+                <div x-show="fail"  style="overflow: auto;">
+					<div class="alert alert-danger">
+						<p id="error-message" class="is-size-5"></p><a class="is-size-4 ml-6" @click="success = false; fail = false">&#10761;</a>
+					</div>
+				</div>
+			</div>
+
 			<h2 class="dark-text">New Progress Status Entry</h2>
+
+			<!-- <div x-data @uploadSuccessful.window="console.log('Upload was successfull')"></div> -->
 
 			<div class="card-body">
 				<form id="my-dropzone-form" action="upload/" method="POST" class="dropzone"
@@ -375,7 +393,7 @@
       uploadMultiple: true,
       maxFilesize: 15,
       maxFiles: 10,
-      acceptedFiles: ".jpeg,.jpg,.png,.PNG,.JPEG,.JPG",
+      acceptedFiles: ".jpeg,.jpg,.JPEG,.JPG",
       parallelUploads: 10,
       dictDefaultMessage:
         '<span class="text-center"><span class="font-weight-bold file-icon"></span> Click or Drop progress status photos here</span>',
@@ -383,6 +401,18 @@
       dictMaxFilesExceeded: "You can only upload 10 files",
       dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB",
       dictInvalidFileType: "You can't upload files of this type",
+	  success: (_, response) => {
+		  document.querySelector("#success-message-btn").click()
+	  },
+	  error: (_, response, xhr) => {
+		  message = response.message
+
+		  if (xhr.status == 413) {
+			  message = "The uploaded images are too large. Ensure total size does not exceed 15MB";
+		  }
+		  document.querySelector("#fail-message-btn").click()
+		  document.getElementById('error-message').innerHTML = message
+	  },
 
       // we dont want to auto upload photos
       // take control of submitting so that we create progress status then  attach  the photos  after
@@ -406,8 +436,6 @@
           // Append all form inputs to the formData that Dropzone will POST
           var data = $('#frmTarget').serializeArray();
           $.each(data, function (key, el) {
-            console.log("FILE", file)
-            console.log("FORM DATA", formData)
             formData.append(el.name, el.value);
           });
         });

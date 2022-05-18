@@ -1,16 +1,14 @@
-import math
 import logging
 import os
 import shutil
 from datetime import datetime
+from math import radians, cos, sin, asin, sqrt
 
-from django.contrib import messages
 from django.conf import settings
 from django.utils.crypto import get_random_string
 from django.core.files.storage import FileSystemStorage
 
-from PIL import Image
-from exif import Image as ImageSource
+from exif import Image
 from djmoney.money import Money
 from rolepermissions.roles import get_user_roles, RolesManager
 
@@ -510,21 +508,19 @@ def sub_project_form(training):
     return subproject_update_form
 
 
-def save_to_temp_dir(base_dir, file_obj):
+def save_image(dirname=None, filename=None, binary_file=None):
     file_system_storage = FileSystemStorage()
 
-    path_name = f"{BASE_TEMP_DIR}{base_dir}"
+    path_name = f"{settings.MEDIA_ROOT}/{dirname}"
 
     if not os.path.exists(path_name):
         os.makedirs(path_name)
 
-    clean_image_name = file_obj.name.lower().replace(' ', '_')
+    clean_image_name = filename.lower().replace(' ', '_')
 
-    file_system_storage.save(f"{path_name}/{clean_image_name}", file_obj)
+    file_system_storage.save(f"{path_name}/{clean_image_name}", binary_file)
 
-    local_v = os.path.join(path_name, clean_image_name)
-
-    return local_v
+    return f"{dirname}/{clean_image_name}"
 
 
 def delete_temp_dir(base_dir):
@@ -557,121 +553,273 @@ def sub_project_create_form():
     return subproject_update_form
 
 
-def validate_photo_gps_range(max_magnitude, img_path, ward_location):
-    range_is_valid = False
-    distance = 0
-    # Verify that this is a valid image
+def get_subproject_coordinates(subproject_query_obj):
     try:
-        image_pil = Image.open(img_path)
-        image_pil.verify()
-    except IOError as e:
-        error_flag = f"[URL> {img_path}] This image could not be opened due to: {e}"
-        logger.error(error_flag)
-
-    with open(img_path, "r+b") as src_file:
-        image = ImageSource(src_file)
-        if image.has_exif:
-            # extract geographics
-            geotags = get_image_geotagging(image)
-            image_latitude = use_decimal_from_dms_util(geotags["GPSLatitude"], geotags["GPSLatitudeRef"])
-            image_longitude = use_decimal_from_dms_util(geotags['GPSLongitude'], geotags['GPSLongitudeRef'])
-            coordinates_obj = {
-                "image_latitude": image_latitude,
-                "image_longitude": image_longitude,
-                "ward_latitude": float(ward_location.coords[0]),
-                "ward_longitude": float(ward_location.coords[1]),
-            }
-            logger.info(f"Completed obtaining location points:\n {coordinates_obj}")
-            distance = use_haversine_util(coordinates_obj)
-            if distance > max_magnitude:
-                validation_flag = f"Invalid Distance of {distance} km. Only images within {max_magnitude} kilometer " \
-                                  f"from ward location allowed."
-                logger.warning(validation_flag)
-            else:
-                range_is_valid = True
-    response = {
-        "range_is_valid": range_is_valid,
-        "distance": distance
-    }
-    return response
+        subproject_coordinates = subproject_query_obj.ward.location.coords
+        return True, subproject_coordinates
+    except AttributeError:
+        return False, ""
 
 
-def use_haversine_util(coordinates):
+def check_image_format_valid(image_path=None, binary_image_file=None, required_format=None):
     """
-        Calculate distance between ward location & image GPS with haversine trigonometric formulae
+    Checks if the image of the required format.
+
+    Parameters
+    ----------
+    image_path: str
+        A path to the image
+    binary_image_file: bytes
+        An in-memory image object
+
+    required_format: str
+        A format the image should have.
+
+    Returns
+    -------
+    bool
+    """
+    from PIL import Image
+
+    try:
+        pil_image_obj = Image.open(image_path or binary_image_file)
+        pil_image_obj.verify()
+        image_format =  pil_image_obj.format
+
+        if image_format == required_format:
+            return True
+        return False
+    except IOError as err:
+        logger.error(f"This image could not be opened due to: {err}")
+        return False
+
+
+def images_pass_checks(images_list, location_point=(-0, 0)):
+    """
+    Perfoms checks on the images, ensure the image has location data and
+    they are within range.
+
+    Parameters
+    ----------
+    images_list: list
+        A list of images, which can be image paths or in-memory binary objects.
+
+    location_point: tuple
+        A tuple with latitude and longitude.
+
+    Returns
+    -------
+    tuple (bool, str)
+    """
+    for image in images_list:
+        image_exif = ExtractImageExif(image_binary=image.open())
+
+        has_location_data = image_exif.has_location_data()
+        if not has_location_data:
+            return False, f"The uploaded Images have no location data"
+
+        point1 = (image_exif.get_latitude(), image_exif.get_longitude())
+        distance = DistanceCalculator(
+            point1=point1,
+            point2=location_point,
+            range_in_kilometers=4
+        )
+
+        is_within_range, distance_in_km = distance.is_within_range()
+        if not is_within_range:
+            return False, f"The uploaded Images are not within range of 4 KM,\
+            Distance {distance.round_distance(distance_in_km, num_of_decimals=2)} KM exceeds 4 KM"
+
+    return True, "Valid"
+
+
+
+class ExtractImageExif:
+    def __init__(self, image_path=None, image_binary=None):
+        """
+        Sets the initial attributes.
 
         Parameters
         ----------
-        coordinates : GPS coordinates for the image and ward location
+        image_path: string
+            A path to the image file
+        image_binary: bytes
+            A bytes-like object e.g An opened in-memory uploaded file.
+        """
+        self.image = Image(image_path or image_binary)
+
+    def has_exif(self):
+        """
+        Checks if an iamges has exif meta data.
 
         Returns
         -------
-        distance: (float): shortest distance between two points in kilometers.
-        i.e >>> '1.2324' kilometers
+        bool
 
-    """
-    distance = 0  # initial distance
-    earth_radius = 6371  # mean radius
+        """
+        return self.image.has_exif
 
-    ward_latitude = float(coordinates["ward_latitude"])
-    image_latitude = float(coordinates["image_latitude"])
-    ward_longitude = float(coordinates["ward_longitude"])
-    image_longitude = float(coordinates["image_longitude"])
-    logger.error(f"Image Coords: ({image_latitude, image_longitude}) \n Ward Coords: ({ward_latitude, ward_longitude})")
+    def has_location_data(self):
+        """
+        Checks if the image has location data like GPS Coordinates.k
 
-    # distance between latitudes and longitudes
-    latitude_magitude = (ward_latitude - image_latitude) * math.pi / 180.0
-    longitude_magitude = (ward_longitude - image_longitude) * math.pi / 180.0
+        Returns
+        -------
+        bool
 
-    # convert to radians to pass to the trig functions
-    image_latitude = image_latitude * math.pi / 180.0
-    ward_latitude = ward_latitude * math.pi / 180.0
+        """
+        try:
+            if all([self.get_latitude(), self.get_longitude()]):
+                return True
+            return False
+        except (KeyError, AttributeError):
+            return False
 
-    # apply function of the sine and get the angle
-    angle = (
-            pow(math.sin(latitude_magitude / 2), 2) +
-            pow(math.sin(longitude_magitude / 2), 2) *
-            math.cos(image_latitude) *
-            math.cos(ward_latitude)
-    )
-    cosine_magnitude = 2 * math.asin(math.sqrt(angle))
-    distance = cosine_magnitude * earth_radius
-    logger.error(f"Calculated distance: {distance} kilometers")
-    return distance
+    def get_latitude(self):
+        """
+        Gets the latitude from the image object.
 
+        Returns
+        -------
+        None or latitude : float
+        """
+        try:
+            gps_latitude = self.image.gps_latitude
+            gps_latitude_ref = self.image.gps_latitude_ref
 
-def use_decimal_from_dms_util(dms, ref):
-    """
-        Sexagesimal DMS value conversion system
+            converted_coords = self._convert_dms_coordinates_to_dd(gps_latitude, gps_latitude_ref)
+            return converted_coords
+        except KeyError:
+            return None
+
+    def get_longitude(self):
+        """
+        Gets the latitude from the image object.
+
+        Returns
+        -------
+        None or longitude : float
+        """
+        try:
+            gps_longitude = self.image.gps_longitude
+            gps_longitude_ref = self.image.gps_longitude_ref
+
+            converted_coords = self._convert_dms_coordinates_to_dd(gps_longitude, gps_longitude_ref)
+            return converted_coords
+        except KeyError:
+            return None
+
+    def _convert_dms_coordinates_to_dd(self, coordinate_dms, coordinate_ref):
+        """
+        Converts the given coordinates in Degree, Minutes, Seconds(DMS) to Decimal Degrees(DD).
+
         Parameters
         ----------
-        dms : Coords in Degrees, minutes and seconds
-        ref: Reference
+        coordinates_dms : tuple
+            A tuple containing 3 elements, Degrees, Minutes, Seconds
+            e.g (27, 21, 3000)
+
+        coordinate_ref: string
+            A letter representing a coordinate reference. e.g 'N', 'E', 'S', 'W'
+
         Returns
         -------
-        decimal_degrees: (float): GPS coordinates as decimals.
-        i.e >>> '((-15.440784222222222, 28.359679111111113))' kilometers
-    """
-    decimal_degrees = float(dms[0]) + float(dms[1]) / 60 + float(dms[2]) / 3600
-    if ref == "S" or ref == "W":
-        decimal_degrees = -decimal_degrees
-    return decimal_degrees
+        float
+
+        Example
+        -------
+        self.__convert_dms_coordinates_to_dd((23, 43, 2322), 'W') returns -15.2343455
+        """
+        degrees, minutes, seconds = coordinate_dms
+        decimal_degrees = degrees + (minutes / 60) + (seconds / 3600)
+        if coordinate_ref == "W" or coordinate_ref == "S":
+            return -decimal_degrees
+        return decimal_degrees
 
 
-def get_image_geotagging(exif):
+class DistanceCalculator:
     """
-            Extract from image demographics the degrees, minutes, and seconds.
-            Parameters
-            ----------
-            exif : Image meta data
-            Returns
-            -------
-            geotagging: (dict): GPS coordinates for the image in DMS format.
-            i.e >>> '(Latitude: 15; 35; 16.43543858658), (Longitude: 28; 16; 29.324234200)'
+    A class for calculating distance from the given cooordinates.
     """
-    # K^V labeled collection
-    geotagging = {
-        "GPSLatitude": exif.gps_latitude, "GPSLatitudeRef": exif.gps_latitude_ref,
-        "GPSLongitude": exif.gps_longitude, "GPSLongitudeRef": exif.gps_longitude_ref
-    }
-    return geotagging
+    AVG_EARTH_RADIUS_METERS = 6371000
+
+    def __init__(self, point1=None, point2=None, range_in_kilometers=0):
+        """
+        Set the initial attributes.
+
+        Parameters
+        ----------
+        point1: tuoke
+            A tuple with two elements representing latitude and longitude respectively
+        point2: tuple
+             A tuple with two elements representing latitude and longitude respectively
+
+        """
+        self.point1 = point1
+        self.point2 = point2
+        self.range = range_in_kilometers
+
+    def _haversine(self):
+        """
+        Determines the `great-circle` distance between two points on a given sphere.
+        """
+        lat1, long1 = self.point1
+        lat2, long2 = self.point2
+
+        lat1_in_radians = radians(lat1)
+        lat2_in_radians = radians(lat2)
+        long1_in_radians = radians(long1)
+        long2_in_radians = radians(long2)
+
+        lat_diff = lat2_in_radians - lat1_in_radians
+        long_diff = long2_in_radians - long1_in_radians
+
+        haversine = sin(lat_diff * 0.5) ** 2 + cos(lat1) * cos(lat2) * sin(long_diff * 0.5) ** 2
+
+        return haversine
+
+    def calculate_distance(self):
+        """
+        Calcutates the distance between points.
+        """
+        haversine = self._haversine()
+        distance = 2 * self.AVG_EARTH_RADIUS_METERS * asin(sqrt(haversine))
+        return distance
+
+    def to_kilometers(self, distance):
+        """
+        Converts the distance from Meters to Kilometers.
+
+        parameters
+        ----------
+        distance: float
+
+        Returns
+        -------
+        distance: float
+        """
+        return distance / 1000
+
+    def is_within_range(self):
+        """
+        Calculates the distance between to points is within a given range.
+        """
+        distance = self.to_kilometers(self.calculate_distance())
+        if distance <= self.range:
+            return True, distance
+        return False, distance
+
+    def round_distance(self, distance, num_of_decimals=0):
+        """
+        Rounds the distance to a specified number of decimal places.
+
+        Parameters
+        ----------
+        distance: float
+        number_of_decimals: int
+
+        Returns
+        -------
+        distance: float
+        """
+        return round(distance, num_of_decimals)

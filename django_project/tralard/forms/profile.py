@@ -32,7 +32,6 @@ class ProfileForm(ModelForm):
                     Column("birth_date", css_class="form-group col-md-12 mb-0"),
                     Column("gender", css_class="form-group col-md-12 mb-0"),
                     Column("about_me", css_class="form-group col-md-12 mb-0"),
-                    Column("education_level", css_class="form-group col-md-12 mb-0"),
                     Column("cell", css_class="form-group col-md-12 mb-6"),
                     Column("postal_code", css_class="form-group col-lg-12"),
                     Column("district", css_class="form-group col-lg-12"),
@@ -43,7 +42,7 @@ class ProfileForm(ModelForm):
                 HTML("<button class='btn' type='submit' style='background: #21546d; color: white; font-size: 14px;'>Update Profile Details</button>"),
             ),
         )
-        
+
     def save(self, commit=True):
         instance = super(ProfileForm, self).save(commit=False)
         instance.save()

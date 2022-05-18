@@ -1,5 +1,5 @@
 from django import forms
-from django.forms import ModelForm, widgets
+from django.forms import ModelForm, widgets, ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from crispy_forms.layout import (
@@ -14,13 +14,13 @@ from tralard.models.ward import Ward
 from tralard.models.province import Province
 from tralard.models.district import District
 from tralard.models.sub_project import (
-    SubProject, 
-    ProgressStatus, 
+    SubProject,
+    ProgressStatus,
 )
 
 
 class SubProjectForm(ModelForm):
-    
+
     province = forms.ModelChoiceField(
         queryset=Province.objects.all(),
         label=_("Province"),
@@ -52,7 +52,7 @@ class SubProjectForm(ModelForm):
             dependent_fields={'province': 'province'},
         ),
     )
-    
+
     ward = forms.ModelChoiceField(
         queryset=Ward.objects.all(),
         label=_("Ward"),
@@ -99,10 +99,10 @@ class SubProjectForm(ModelForm):
 
         model = SubProject
         exclude = [
-            "created", 
-            "description", 
-            "focus_area", 
-            "subcomponent", 
+            "created",
+            "description",
+            "focus_area",
+            "subcomponent",
             "slug",
         ]
 
@@ -125,9 +125,25 @@ class SubProjectForm(ModelForm):
                 Column("image_file", css_class="form-group col-md-12 mb-0"),
                 Column("custom_description", css_class="form-group col-md-12 mb-0"),
                 Column("custom_focus_area", css_class="form-group col-md-12 mb-0"),
+                Column("latitude", css_class="form-group col-md-12 mb-0"),
+                Column("longitude", css_class="form-group col-md-12 mb-0"),
                 css_class="form-row",
             ),
         )
+
+    def clean(self):
+        # Get the user submitted names from the cleaned_data dictionary
+        cleaned_data = super().clean()
+        latitude = cleaned_data.get("latitude")
+        longitude = cleaned_data.get("longitude")
+
+        # Check if the first letter of both names is the same
+        if latitude is None and longitude is not None:
+            raise ValidationError("You need to provide both the latitude and longitude")
+        elif longitude is None and latitude is not None:
+            raise ValidationError("You need to provide both the latitude and longitude")
+
+        return cleaned_data
 
     def save(self, commit=True):
         instance = super(SubProjectForm, self).save(commit=False)
@@ -158,8 +174,8 @@ class ProgressStatusForm(ModelForm):
         model = ProgressStatus
         exclude= [
             "photos",
-            "comment", 
-            "subproject", 
+            "comment",
+            "subproject",
             "is_completed",
             "timestamp"
         ]
