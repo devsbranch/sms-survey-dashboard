@@ -558,7 +558,13 @@ def get_subproject_coordinates(subproject_query_obj):
         subproject_coordinates = subproject_query_obj.ward.location.coords
         return True, subproject_coordinates
     except AttributeError:
-        return False, ""
+        latitude = subproject_query_obj.latitude
+        longitude = subproject_query_obj.longitude
+
+        if latitude and longitude:
+            subproject_coordinates = (latitude, longitude)
+            return True, subproject_coordinates
+    return False, ""
 
 
 def check_image_format_valid(image_path=None, binary_image_file=None, required_format=None):

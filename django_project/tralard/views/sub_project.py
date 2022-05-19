@@ -544,7 +544,6 @@ def file_upload_view(request, project_slug, subcomponent_slug, subproject_slug):
         is_completed = True if request.POST.get("custom_is_completed") is "on" else False
         created = request.POST.get("created", None)
 
-
         progress_status_obj = ProgressStatus(
             status=status,
             comment=comment,
