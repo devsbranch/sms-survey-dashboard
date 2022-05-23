@@ -20,7 +20,6 @@ from tralard.models.sub_project import (
 
 
 class SubProjectForm(ModelForm):
-
     province = forms.ModelChoiceField(
         queryset=Province.objects.all(),
         label=_("Province"),
@@ -30,7 +29,7 @@ class SubProjectForm(ModelForm):
                 'class': 'form-control mb-0 col-md-12',
                 'data-placeholder': '--- Select a province ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=Province,
             search_fields=['name__icontains'],
         ),
@@ -46,7 +45,7 @@ class SubProjectForm(ModelForm):
                 'class': 'form-control',
                 'data-placeholder': '--- select a related district ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=District,
             search_fields=['name__icontains'],
             dependent_fields={'province': 'province'},
@@ -62,7 +61,7 @@ class SubProjectForm(ModelForm):
                 'class': 'form-control mb-0 col-md-12',
                 'data-placeholder': '--- Select a related ward ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=Ward,
             search_fields=['name__icontains'],
             dependent_fields={'district': 'district'},
@@ -116,7 +115,8 @@ class SubProjectForm(ModelForm):
             Row(
                 Column("name", css_class="form-group col-md-12 mb-0"),
                 Column("supervisor", css_class="form-group col-md-12 mb-0"),
-                Column("size", css_class="form-group col-md-12 mb-0"),
+                Column("size", css_class="form-group col-md-6 mb-0"),
+                Column("size_description", css_class="form-group col-md-6 mb-0"),
                 Column("subproject_managers", css_class="form-group col-md-12 mb-0"),
                 Column("province", css_class="form-group col-md-12 mb-0"),
                 Column("district", css_class="form-group col-md-12 mb-0"),
@@ -156,6 +156,7 @@ class SubProjectForm(ModelForm):
         instance.save()
         return instance
 
+
 class ProgressStatusForm(ModelForm):
     custom_is_completed = forms.BooleanField(label="completed", initial=False, required=False)
     custom_comment = forms.CharField(
@@ -170,9 +171,10 @@ class ProgressStatusForm(ModelForm):
         ),
         max_length=160,
     )
+
     class Meta:
         model = ProgressStatus
-        exclude= [
+        exclude = [
             "photos",
             "comment",
             "subproject",
@@ -184,6 +186,7 @@ class ProgressStatusForm(ModelForm):
                 format=("%m/%d/%Y"), attrs={"class": "form-control", "type": "date"}
             ),
         }
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper()

@@ -1,4 +1,3 @@
-
 from django import forms
 from django.forms import ModelForm, widgets
 from django.utils.translation import gettext_lazy as _
@@ -19,8 +18,8 @@ from tralard.models.province import Province
 from tralard.models.district import District
 from tralard.models.subcomponent import Feedback, SubComponent, Indicator
 
+
 class SearchForm(forms.Form):
-    
     province_id = forms.ModelChoiceField(
         queryset=Province.objects.all(),
         label=_("Province"),
@@ -30,7 +29,7 @@ class SearchForm(forms.Form):
                 'class': 'form-control mb-0 col-md-3 w-3',
                 'data-placeholder': '--- Click to select a province ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=Province,
             search_fields=['name__icontains'],
         ),
@@ -45,13 +44,13 @@ class SearchForm(forms.Form):
                 'class': 'form-control mb-0 col-md-3',
                 'data-placeholder': '--- Click to select a district ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=District,
             search_fields=['name__icontains'],
             dependent_fields={'province_id': 'province'},
         ),
     )
-    
+
     ward_id = forms.ModelChoiceField(
         queryset=Ward.objects.all(),
         label=_("Ward"),
@@ -61,7 +60,7 @@ class SearchForm(forms.Form):
                 'class': 'form-control mb-0 col-md-3',
                 'data-placeholder': '--- Click to select a ward ---',
                 'data-minimum-input-length': 0,
-                },
+            },
             model=Ward,
             search_fields=['name__icontains'],
             dependent_fields={'district_id': 'district'},
@@ -84,14 +83,6 @@ class SubComponentForm(ModelForm):
                 attrs={
                     'class': 'form-control',
                     'placeholder': 'subcomponent focus area'
-                }
-            ),
-            'precis': widgets.Textarea(
-                attrs={
-                    'class': 'form-control',
-                    "placeholder": "write subcomponent precise summary here",
-                    "rows": 1,
-                    "cols": 3,
                 }
             ),
             'description': widgets.Textarea(
@@ -120,7 +111,6 @@ class SubComponentForm(ModelForm):
                 Column("approved", css_class="form-group col-md-6 mb-0"),
                 Column("has_funding", css_class="form-group col-md-6 mb-0"),
                 Column("focus_area", css_class="form-group col-md-6 mb-0"),
-                Column("precis", css_class="form-group col-md-6 mb-0"),
                 Column("description", css_class="form-group col-md-6 mb-0"),
                 css_class="form-row",
             )
