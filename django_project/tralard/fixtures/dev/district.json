@@ -157,11 +157,11 @@
         "model": "tralard.district",
         "pk": 15,
         "fields": {
-            "name": "Kanyembo",
+            "name": "Kabwambwa",
             "province": 21,
             "created": "2021-01-13",
-            "slug": "kanyembo",
-            "location": "POINT(-9.617 28.767)"
+            "slug": "kabwambwa",
+            "location": "POINT(-9.8 29.1)"
         }
     },
     {
@@ -245,11 +245,11 @@
         "model": "tralard.district",
         "pk": 23,
         "fields": {
-            "name": "Kazembe (Mwansabombwe)",
+            "name": "Mwansabombwe",
             "province": 21,
             "created": "2021-01-13",
-            "slug": "kazembe-mwansabombwe",
-            "location": "POINT(-9.8166634 28.749997)"
+            "slug": "Mwansabombwe",
+            "location": "POINT(-9.933398 28.777314)"
         }
     },
     {
@@ -287,7 +287,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 26,
+        "pk": 27,
         "fields": {
             "name": "Luwingu",
             "province": 16,
@@ -298,7 +298,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 27,
+        "pk": 28,
         "fields": {
             "name": "Lufwanyama",
             "province": 19,
@@ -309,7 +309,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 28,
+        "pk": 29,
         "fields": {
             "name": "Lukulu",
             "province": 15,
@@ -320,7 +320,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 29,
+        "pk": 30,
         "fields": {
             "name": "Lundazi",
             "province": 18,
@@ -331,7 +331,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 30,
+        "pk": 31,
         "fields": {
             "name": "Macha Mission",
             "province": 14,
@@ -342,7 +342,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 31,
+        "pk": 32,
         "fields": {
             "name": "Makeni",
             "province": 1,
@@ -353,7 +353,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 32,
+        "pk": 33,
         "fields": {
             "name": "Maliti",
             "province": 15,
@@ -364,7 +364,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 33,
+        "pk": 34,
         "fields": {
             "name": "Chiengi",
             "province": 21,
@@ -375,7 +375,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 34,
+        "pk": 35,
         "fields": {
             "name": "Chibombo",
             "province": 22,
@@ -386,7 +386,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 35,
+        "pk": 36,
         "fields": {
             "name": "Chembe",
             "province": 21,
@@ -397,7 +397,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 36,
+        "pk": 37,
         "fields": {
             "name": "Chavuma",
             "province": 20,
@@ -408,7 +408,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 37,
+        "pk": 38,
         "fields": {
             "name": "Chambeshi",
             "province": 19,
@@ -419,7 +419,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 38,
+        "pk": 39,
         "fields": {
             "name": "Chama",
             "province": 17,
@@ -430,7 +430,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 39,
+        "pk": 40,
         "fields": {
             "name": "Chadiza",
             "province": 18,
@@ -441,7 +441,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 40,
+        "pk": 41,
         "fields": {
             "name": "Mansa",
             "province": 21,
@@ -452,7 +452,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 41,
+        "pk": 42,
         "fields": {
             "name": "Mazabuka",
             "province": 14,
@@ -463,7 +463,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 42,
+        "pk": 43,
         "fields": {
             "name": "Mbala",
             "province": 16,
@@ -474,7 +474,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 43,
+        "pk": 44,
         "fields": {
             "name": "Mfuwe",
             "province": 1,
@@ -485,7 +485,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 44,
+        "pk": 45,
         "fields": {
             "name": "Milenge",
             "province": 21,
@@ -496,7 +496,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 45,
+        "pk": 46,
         "fields": {
             "name": "Misisi",
             "province": 1,
@@ -507,7 +507,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 46,
+        "pk": 47,
         "fields": {
             "name": "Mkushi",
             "province": 22,
@@ -518,7 +518,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 47,
+        "pk": 48,
         "fields": {
             "name": "Mongu",
             "province": 15,
@@ -529,7 +529,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 48,
+        "pk": 49,
         "fields": {
             "name": "Monze",
             "province": 14,
@@ -540,7 +540,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 49,
+        "pk": 50,
         "fields": {
             "name": "Mpika",
             "province": 17,
@@ -551,7 +551,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 50,
+        "pk": 51,
         "fields": {
             "name": "Mporokoso",
             "province": 16,
@@ -562,7 +562,7 @@
     },
     {
         "model": "tralard.district",
-        "pk": 51,
+        "pk": 52,
         "fields": {
             "name": "Mpulungu",
             "province": 16,
@@ -573,24 +573,13 @@
     },
     {
         "model": "tralard.district",
-        "pk": 52,
+        "pk": 53,
         "fields": {
             "name": "Mumbwa",
             "province": 22,
             "created": "2021-01-13",
             "slug": "mumbwa",
             "location": "POINT(-15.0 26.499998)"
-        }
-    },
-    {
-        "model": "tralard.district",
-        "pk": 53,
-        "fields": {
-            "name": "Muyombe",
-            "province": 17,
-            "created": "2021-01-13",
-            "slug": "muyombe",
-            "location": "POINT(-10.583331 33.4666648)"
         }
     },
     {
@@ -763,7 +752,7 @@
         "pk": 69,
         "fields": {
             "name": "Zambezi",
-            "province":20,
+            "province": 20,
             "created": "2021-01-13",
             "slug": "zambezi",
             "location": "POINT(-13.499998 22.749997)"
@@ -1192,7 +1181,7 @@
         "pk": 107,
         "fields": {
             "name": "Ikelenge",
-            "province":20,
+            "province": 20,
             "created": "2021-01-13",
             "slug": "Ikelenge",
             "location": "POINT(-11.23888 24.27406 )"
@@ -1367,23 +1356,11 @@
         "model": "tralard.district",
         "pk": 123,
         "fields": {
-            "name": "Mungwi",
+            "name": "Nakonde",
             "province": 17,
             "created": "2021-01-13",
-            "slug": "Mungwi",
+            "slug": "Nakonde",
             "location": "POINT(-9.93 31.735)"
-        }
-    },
-    {
-        "model": "tralard.district",
-        "pk": 124,
-        "fields": {
-            "name": "Mwansabombwe",
-            "province": 21,
-            "created": "2021-01-13",
-            "slug": "Mwansabombwe",
-            "location": "POINT(-9.93397815 28.777314268042)"
         }
     }
 ]
-

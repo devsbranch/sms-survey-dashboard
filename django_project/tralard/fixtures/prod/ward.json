@@ -5870,7 +5870,7 @@
       "district": 23,
       "created": "2022-02-07",
       "slug": "Mulele",
-      "location": "POINT(-9..96667 28.7833)"
+      "location": "POINT(-9.96667 28.7833)"
     }
   },
   {
@@ -7135,7 +7135,7 @@
           "district": 23,
           "created": "2022-05-12",
           "slug": "Chipita",
-          "location": "POINT(-13.71619, 24.15588)"
+          "location": "POINT(-13.71619 24.15588)"
         }
       },
       {
@@ -7146,7 +7146,7 @@
           "district": 23,
           "created": "2022-05-12",
           "slug": "Kayo",
-          "location": "POINT(-16.6667, 22.8667)"
+          "location": "POINT(-16.6667 22.8667)"
         }
       },
       {
