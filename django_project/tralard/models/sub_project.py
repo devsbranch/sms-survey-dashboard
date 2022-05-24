@@ -200,94 +200,94 @@ class SubProject(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
 
-longitude = models.FloatField(
-    help_text='this number must be in Decimal degrees (DD) e.g 65.1189',
-    blank=True,
-    null=True,
-)
-latitude = models.FloatField(
-    help_text='this number must be in Decimal degrees (DD) e.g 44.94',
-    blank=True,
-    null=True,
-)
-objects = models.Manager()
-custom_objects = SubProjectManager()
-
-
-def __str__(self):
-    return self.name.title()
-
-
-def save(self, *args, **kwargs):
-    if not self.slug:
-        self.slug = unique_slugify(self, slugify(self.name))
-    super().save(*args, **kwargs)
-
-
-@property
-def get_related_project(self):
-    return self.subcomponent.name
-
-
-@property
-def fund_utilization_percent(self):
-    subcomponent_id = self.subcomponent.id
-    funds_amount_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
-        Sum("amount")
+    longitude = models.FloatField(
+        help_text='this number must be in Decimal degrees (DD) e.g 65.1189',
+        blank=True,
+        null=True,
     )
-
-    funds_balance_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
-        Sum("balance")
+    latitude = models.FloatField(
+        help_text='this number must be in Decimal degrees (DD) e.g 44.94',
+        blank=True,
+        null=True,
     )
-    amount_value = funds_amount_qs["amount__sum"]
-    balance_value = funds_balance_qs["balance__sum"]
-    if amount_value is not None and balance_value is not None:
-        fund_utilization_percent = (
-                                           float(balance_value) / float(amount_value)
-                                   ) * 100
-    else:
-        fund_utilization_percent = 0
-    return round(fund_utilization_percent)
+    objects = models.Manager()
+    custom_objects = SubProjectManager()
 
 
-@property
-def count_beneficiaries(self):
-    beneficiary_count_queryset = Beneficiary.objects.filter(
-        sub_project__slug=self.slug
-    ).count()
-    return beneficiary_count_queryset
+    def __str__(self):
+        return self.name.title()
 
 
-@property
-def count_training_schedules(self):
-    training_entries_qs = Training.objects.filter(
-        sub_project__slug=self.slug
-    ).count()
-    return training_entries_qs
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = unique_slugify(self, slugify(self.name))
+        super().save(*args, **kwargs)
 
 
-@property
-def get_total_sub_project_fund(self):
-    """Computes total funds related to this SubProject."""
-    related_funds_sum_qs = Fund.objects.filter(
-        sub_project__slug=self.slug
-    ).aggregate(Sum("amount"))
-
-    amount_value = related_funds_sum_qs["amount__sum"]
-    return amount_value
+    @property
+    def get_related_project(self):
+        return self.subcomponent.name
 
 
-@property
-def sub_project_update_form(self):
-    """Assigns a form to SubProject after create."""
-    form = sub_project_update_form(self)
-    return form
+    @property
+    def fund_utilization_percent(self):
+        subcomponent_id = self.subcomponent.id
+        funds_amount_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
+            Sum("amount")
+        )
+
+        funds_balance_qs = Fund.objects.filter(sub_project__slug=self.slug).aggregate(
+            Sum("balance")
+        )
+        amount_value = funds_amount_qs["amount__sum"]
+        balance_value = funds_balance_qs["balance__sum"]
+        if amount_value is not None and balance_value is not None:
+            fund_utilization_percent = (
+                                            float(balance_value) / float(amount_value)
+                                    ) * 100
+        else:
+            fund_utilization_percent = 0
+        return round(fund_utilization_percent)
 
 
-@property
-def subproject_manage_url(self):
-    url = f"/program/{self.project.program.slug}/project/{self.project.slug}/subproject/{self.slug}/manage/"
-    return url
+    @property
+    def count_beneficiaries(self):
+        beneficiary_count_queryset = Beneficiary.objects.filter(
+            sub_project__slug=self.slug
+        ).count()
+        return beneficiary_count_queryset
+
+
+    @property
+    def count_training_schedules(self):
+        training_entries_qs = Training.objects.filter(
+            sub_project__slug=self.slug
+        ).count()
+        return training_entries_qs
+
+
+    @property
+    def get_total_sub_project_fund(self):
+        """Computes total funds related to this SubProject."""
+        related_funds_sum_qs = Fund.objects.filter(
+            sub_project__slug=self.slug
+        ).aggregate(Sum("amount"))
+
+        amount_value = related_funds_sum_qs["amount__sum"]
+        return amount_value
+
+
+    @property
+    def sub_project_update_form(self):
+        """Assigns a form to SubProject after create."""
+        form = sub_project_update_form(self)
+        return form
+
+
+    @property
+    def subproject_manage_url(self):
+        url = f"/program/{self.project.program.slug}/project/{self.project.slug}/subproject/{self.slug}/manage/"
+        return url
 
 
 class Photo(models.Model):

@@ -117,7 +117,7 @@
       "district": 46,
       "created": "2021-01-13",
       "slug": "kasongole",
-      "location": "POINT(-8.4 29.6333)" 
+      "location": "POINT(-8.4 29.6333)"
     }
   },
   {
@@ -6186,7 +6186,7 @@
     "pk": 793,
     "fields": {
       "name": "Nakonde",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Nakonde",
       "location": "POINT(-9.66667 32.7167)"
@@ -6197,7 +6197,7 @@
     "pk": 794,
     "fields": {
       "name": "Luchinde",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Luchinde",
       "location": "POINT(-9.65 32.35)"
@@ -6208,7 +6208,7 @@
     "pk": 795,
     "fields": {
       "name": "Mulalo",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Mulalo",
       "location": "POINT(-14.3 31.25)"
@@ -6219,7 +6219,7 @@
     "pk": 797,
     "fields": {
       "name": "Ng'umba",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Ng'umba",
       "location": "POINT(-9.81667 32.8)"
@@ -6230,7 +6230,7 @@
     "pk": 798,
     "fields": {
       "name": "Old Fife",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Old Fife",
       "location": "POINT(-9.31667 32.8)"
@@ -6241,7 +6241,7 @@
     "pk": 799,
     "fields": {
       "name": "Popomozi",
-      "district": 124,
+      "district": 123,
       "created": "2022-01-13",
       "slug": "Popomozi",
       "location": "POINT(-9.5 32.5667)"
