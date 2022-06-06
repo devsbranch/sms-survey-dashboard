@@ -13,7 +13,7 @@ from dj_beneficiary import urls as dj_beneficiary_urls
 
 schema_view = get_schema_view(
    openapi.Info(
-      title="THINK2044 PPCR - TRALARD API",
+      title="sms-survery-dashboard PPCR - TRALARD API",
       default_version='v1',
       description="PPCR - TRALARD Program Data sharing API.",
    ),

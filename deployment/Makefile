@@ -1,4 +1,4 @@
-PROJECT_ID := think2044
+PROJECT_ID := sms-survery-dashboard
 
 SHELL := /bin/bash
 

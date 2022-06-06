@@ -12,7 +12,7 @@ services:
 
   smtp:
     # Note you cannot scale if you use container_name
-    container_name: think2044-smtp
+    container_name: sms-survey-dashboard-smtp
     image: catatnight/postfix
     hostname: postfix
     environment:
@@ -25,7 +25,7 @@ services:
 
   db:
     # Note you cannot scale if you use container_name
-    container_name: think2044-db
+    container_name: sms-survey-dashboard-db
     image: kartoza/postgis:9.6-2.4
     volumes:
       # - ./pg/postgres_data:/var/lib/postgresql
@@ -47,7 +47,7 @@ services:
   uwsgi:
     # Note you cannot scale if you use container_name
     &uwsgi
-    container_name: think2044-uwsgi
+    container_name: sms-survey-dashboard-uwsgi
     build:
       context: ./docker
       dockerfile: Dockerfile
@@ -61,7 +61,7 @@ services:
       - DATABASE_PASSWORD=docker
       - DATABASE_HOST=db
       - DJANGO_SETTINGS_MODULE=core.settings.dev_docker
-      - VIRTUAL_HOST=think2044.com
+      - VIRTUAL_HOST=sms-survey-dashboard.com
       - VIRTUAL_PORT=8080
       - RABBITMQ_HOST=rabbitmq
       - EMAIL_HOST_USER=${EMAIL_HOST_USER}
@@ -83,7 +83,7 @@ services:
 
   # dbbackups:
   #   # Note you cannot scale if you use container_name
-  #   container_name: think2044-db-backups
+  #   container_name: sms-survey-dashboard-db-backups
   #   image: kartoza/pg-backup:9.4
   #   hostname: pg-backups
   #   volumes:
@@ -91,7 +91,7 @@ services:
   #   environment:
   #     # take care to let the project name below match that
   #     # declared in the top of the makefile
-  #     - DUMPPREFIX=PG_think2044
+  #     - DUMPPREFIX=PG_sms-survey-dashboard
   #     # These are all defaults anyway, but setting explicitly in
   #     # case we ever want to ever use different credentials
   #     - PGUSER=docker
@@ -106,7 +106,7 @@ services:
   # This is normally the main entry point for a production server
   web:
     # Note you cannot scale if you use container_name
-    container_name: think2044-web
+    container_name: sms-survey-dashboard-web
     image: nginx
     hostname: nginx
     depends_on:
@@ -119,7 +119,7 @@ services:
       - ./media:/home/web/media:ro
       - ./logs:/var/log/nginx
     ports:
-      - "8009:8080"
+      - "8005:8080"
     restart: unless-stopped
     networks:
       - backend
@@ -197,7 +197,7 @@ services:
       - HASURA_GRAPHQL_ENABLE_CONSOLE=true
       - HASURA_GRAPHQL_ADMIN_SECRET=docker
     ports:
-      - "8008:8080"
+      - "8006:8080"
     networks:
       - backend
 

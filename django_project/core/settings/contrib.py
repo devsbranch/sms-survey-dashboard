@@ -217,24 +217,11 @@ MESSAGE_TAGS = {
 # reports
 REPORT_BUILDER_INCLUDE = [
     'tralard.beneficiary',
-    'tralard.province',
-    'tralard.district',
-    'tralard.ward',
-    'tralard.fund',
-    'tralard.disbursement',
-    'tralard.expenditure',
-    'tralard.program',
-    'tralard.project',
-    'tralard.subproject',
-    'tralard.training',
-    'tralard.trainingtype',
-    'tralard.attendance',
-    'tralard.profile',
-    'tralard.feedback',
+    
 ]
 
 # Admin interface
-GRAPPELLI_ADMIN_TITLE = 'Think2044 Admin'
+GRAPPELLI_ADMIN_TITLE = 'sms-survery-dashboard Admin'
 GRAPPELLI_SWITCH_USER = True
 
 # Google map API widget

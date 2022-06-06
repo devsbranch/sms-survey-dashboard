@@ -1,1 +1,0 @@
-from ppcr.forms.sub_project import * #noqa

@@ -20,8 +20,8 @@ INSTALLED_APPS += (
     'roles',
     'dj_beneficiary',
     'base',
-    'ppcr',
-    'tralard.apps.TralardConfig',
+    '',
+    '',
 )
 
 try:
