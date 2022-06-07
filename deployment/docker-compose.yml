@@ -162,7 +162,7 @@ services:
 
   redis:
     image: redis:6
-    container_name: redis-cache
+    container_name: sms-survey-dashboard
     restart: unless-stopped
     networks:
       - backend
@@ -171,7 +171,7 @@ services:
     <<: *uwsgi
     build: docker
     hostname: worker
-    container_name: worker
+    container_name: sms-survey-worker
     command: celery -A core.celery worker -l INFO
 
     volumes:
